@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>pondero-packaging</name>
+	<comment></comment>
+	<projects>
+		<project>pondero</project>
+		<project>pondero-ic</project>
+		<project>pondero-install</project>
+		<project>pondero-libs</project>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+</projectDescription>

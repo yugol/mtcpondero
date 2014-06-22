@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="all" name="Create Runnable Jar for Project pondero-libs">
+
+	<target name="all" depends="pondero-install, pondero-libs, pondero, pondero-test-ic" />
+
+	<target name="pondero-install">
+		<ant antfile="../pondero-install/make-jar-pondero-install.xml" />
+	</target>
+
+	<target name="pondero-libs">
+		<ant antfile="../pondero-libs/make-jar-pondero-libs.xml" />
+	</target>
+
+	<target name="pondero">
+		<ant antfile="../pondero/make-jar-pondero.xml" />
+	</target>
+
+    <target name="pondero-test-ic">
+        <ant antfile="../pondero-ic/make-jar-pondero-test-ic.xml" />
+    </target>
+
+</project>
