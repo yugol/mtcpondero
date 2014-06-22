@@ -145,7 +145,6 @@ public class TestInstructions extends JPanel {
     }
 
     private void handleKeyEvent(final KeyEvent e) {
-        // System.out.println(e.getKeyChar());
         final PrevNextResponse input = new PrevNextResponse();
         input.setNext(e.getKeyChar() == test.getInstructions()._getNextkey());
         input.setPrev(e.getKeyChar() == test.getInstructions()._getPrevkey());

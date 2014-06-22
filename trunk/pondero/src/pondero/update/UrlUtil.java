@@ -29,7 +29,6 @@ public class UrlUtil {
             BufferedReader urlReader = new BufferedReader(new InputStreamReader(urlStream));
             String line = null;
             while ((line = urlReader.readLine()) != null) {
-                System.out.println(line);
                 int beginIndex = line.indexOf("HREF=");
                 if (beginIndex >= 0) {
                     beginIndex += 6;
