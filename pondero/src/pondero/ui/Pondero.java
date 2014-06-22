@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -192,6 +193,7 @@ public class Pondero implements TaskLauncher {
     private void initialize() {
 
         frmMain = new JFrame();
+        frmMain.setIconImage(Toolkit.getDefaultToolkit().getImage(Pondero.class.getResource("/pondero/res/pondero-48x48.png")));
         frmMain.addWindowListener(new WindowAdapter() {
 
             @Override
