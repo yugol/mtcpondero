@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="create_run_jar" name="Create Runnable Jar for Project pondero-install with libraries in sub-folder">
-	<!--this file was created by Eclipse Runnable JAR Export Wizard-->
-	<!--ANT 1.7 is required                                        -->
+
 	<target name="create_run_jar">
-		<jar destfile="F:/Workspace/Pondero/bin/pondero-install.jar">
+		<jar destfile="${pkgdir}/bin/pondero-install.jar">
 			<manifest>
 				<attribute name="Main-Class" value="pondero.UpdateInstaller" />
 				<attribute name="Class-Path" value="." />
@@ -13,7 +12,8 @@
 				<attribute name="Pondero-Artifact-Minor" value="1" />
 				<attribute name="Pondero-Artifact-Maturity" value="alpha" />
 			</manifest>
-			<fileset dir="F:/Workspace/psih/pondero-install/bin" />
+			<fileset dir="${soldir}/pondero-install/bin" />
 		</jar>
 	</target>
+
 </project>

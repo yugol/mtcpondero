@@ -6,8 +6,7 @@
 #define MyAppPublisher "Mindtrips Communications"
 #define MyAppURL "http://www.purl.org/net/pondero/home"
 #define MyAppExeName "pondero.bat"
-#define WorkspacePath "F:\Workspace\psih"
-#define PonderoRoot "F:\Workspace\Pondero"
+#define PonderoRoot "F:\temp\Pondero"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -21,40 +20,41 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={userdocs}\{#MyAppName}
+DefaultDirName=D:\{#MyAppName}
 DefaultGroupName={#MyAppName}
-LicenseFile={#WorkspacePath}\pondero\qa\license\lgpl-brief.ro.txt
+LicenseFile={#PonderoRoot}\res\lgpl-brief.ro.txt
 OutputDir={#PonderoRoot}
 OutputBaseFilename=install-pondero
 Compression=lzma
 SolidCompression=yes
 
 [Languages]
-Name: "romanian"; MessagesFile: "{#WorkspacePath}\pondero\qa\setup\inno\Romanian.isl"
+Name: "romanian"; MessagesFile: "{#PonderoRoot}\Romanian.isl"
           
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source:   "{#PonderoRoot}\pondero.bat";                            DestDir: "{app}";       Flags: ignoreversion
-Source:   "{#PonderoRoot}\bin\pondero.jar";                        DestDir: "{app}\bin";   Flags: ignoreversion
-Source:   "{#PonderoRoot}\bin\pondero-libs.jar";                   DestDir: "{app}\bin";   Flags: ignoreversion
-Source:   "{#PonderoRoot}\bin\pondero-install.jar";                DestDir: "{app}\bin";   Flags: ignoreversion
-Source:   "{#PonderoRoot}\res\pondero.properties";                 DestDir: "{app}\res";   Flags: ignoreversion
-Source:   "{#PonderoRoot}\tests\pondero-test-ic.jar";              DestDir: "{app}\tests"; Flags: ignoreversion
-Source: "{#WorkspacePath}\pondero\qa\license\pondero-license.txt"; DestDir: "{app}\res";   Flags: ignoreversion
-Source:   "{#PonderoRoot}\jre\*";                                  DestDir: "{app}\jre";   Flags: ignoreversion recursesubdirs createallsubdirs
+Source:   "{#PonderoRoot}\pondero.bat";                DestDir: "{app}";       Flags: ignoreversion
+Source:   "{#PonderoRoot}\bin\pondero.jar";            DestDir: "{app}\bin";   Flags: ignoreversion
+Source:   "{#PonderoRoot}\bin\pondero-libs.jar";       DestDir: "{app}\bin";   Flags: ignoreversion
+Source:   "{#PonderoRoot}\bin\pondero-install.jar";    DestDir: "{app}\bin";   Flags: ignoreversion
+Source:   "{#PonderoRoot}\res\pondero.properties";     DestDir: "{app}\res";   Flags: ignoreversion
+Source:   "{#PonderoRoot}\res\pondero-48x48.ico";      DestDir: "{app}\res";   Flags: ignoreversion
+Source:   "{#PonderoRoot}\res\pondero-license.txt";    DestDir: "{app}\res";   Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-ic.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\jre\*";                      DestDir: "{app}\jre";   Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Dirs]
 Name: "{app}\results"
 
 [Icons]
-Name: "{group}\{#MyAppName}";                       Filename: "{app}\{#MyAppExeName}"
-Name: "{group}\Licenta";                            Filename: "{app}\res\pondero-license.txt"
-Name: "{group}\Rezultate";                          Filename: "{app}\results"
+Name: "{group}\{#MyAppName}";         Filename: "{app}\{#MyAppExeName}";         IconFilename: "{app}\res\pondero-48x48.ico"
+Name: "{group}\Licenta";              Filename: "{app}\res\pondero-license.txt"
+Name: "{group}\Test Results";      Filename: "{app}\results"
+Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\res\pondero-48x48.ico"; Tasks: desktopicon
 ; Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\{#MyAppName}";               Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall skipifsilent

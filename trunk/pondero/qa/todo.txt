@@ -1,14 +1,13 @@
+- experience: use diacritics in install app
+- experience: font sizes for all LAFs
+- experience: font sizes for participants grid
+- experience: adjust install fonts sizes
+- experience: scale UI depending on DPI
+- experience: wizard based interface
 - config: send production flag in command line
 - config: further develop ant files
 - config: make it run on OSX
 - config: check for installed java versions before installing
-- experience: add an application icon
-- experience: font sizes for all LAFs
-- experience: font sizes for participants grid
-- experience: install fonts sizes
-- experience: scale UI depending on DPI
-- experience: use diacritics in install app
-- experience: wizard based interface
 - menu: Application -> Preferences...
 - menu: Application -> Update...
 - menu: Help -> About
