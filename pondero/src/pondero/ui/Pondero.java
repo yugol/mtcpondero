@@ -163,10 +163,8 @@ public class Pondero implements TaskLauncher {
     public void setCurrentParticipant(final Participant currentParticipant) {
         this.currentParticipant = currentParticipant;
         if (currentParticipant == null) {
-            lblParticipant.setForeground(Color.BLUE);
             lblParticipantName.setText(Messages.getString("lbl.n-a")); //$NON-NLS-1$
         } else {
-            lblParticipant.setForeground(Color.BLACK);
             lblParticipantName.setText(currentParticipant.getName() + " " + currentParticipant.getSurname()); //$NON-NLS-1$
         }
     }

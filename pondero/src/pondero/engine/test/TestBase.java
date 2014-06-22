@@ -1,5 +1,6 @@
 package pondero.engine.test;
 
+import static pondero.Logger.trace;
 import java.awt.EventQueue;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -187,12 +188,12 @@ public abstract class TestBase implements Runnable {
 
     protected void startTimer() {
         startTime = System.currentTimeMillis();
-        System.out.println("Test started at " + startTime);
+        trace("Test started at ", startTime);
     }
 
     protected void stopTimer() {
         stopTime = System.currentTimeMillis();
-        System.out.println("Test ended at " + stopTime);
+        trace("Test ended at ", stopTime);
     }
 
 }
