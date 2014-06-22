@@ -13,39 +13,40 @@ import java.util.Set;
 import pondero.engine.staples.StringUtil;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
-import pondero.update.ArtifactDescriptor;
+import pondero.update.Artifact;
 
 public final class Globals {
 
-    public static final String                   HOME_PAGE_ADDRESS       = "http://www.purl.org/net/pondero/home";
-    public static final String                   UPDATE_REGISTRY_ADDRESS = "http://www.purl.org/net/pondero/update/registry.xml";
-    public static final String                   CONTACT_MAIL_ADDRESS    = "mindtrips.communications@gmail.com";
+    public static final String         PURL_HOME               = "http://www.purl.org";                         //$NON-NLS-1$
+    public static final String         HOME_PAGE_ADDRESS       = PURL_HOME + "/net/pondero/home";
+    public static final String         UPDATE_REGISTRY_ADDRESS = PURL_HOME + "/net/pondero/update/registry.xml";
+    public static final String         CONTACT_MAIL_ADDRESS    = "mindtrips.communications@gmail.com";
 
-    private static final String                  DEFAULT_WORKBOOK_NAME   = "default.xlsx";                                       //$NON-NLS-1$
+    private static final String        DEFAULT_WORKBOOK_NAME   = "default.xlsx";                                //$NON-NLS-1$
 
-    private static final String                  LOCALE_STRING_KEY       = "localeString";                                       //$NON-NLS-1$
-    private static final String                  UI_SCALE_FACTOR_KEY     = "uiScaleFactor";                                      //$NON-NLS-1$
-    private static final String                  UI_LAF_KEY              = "uiLaf";                                              //$NON-NLS-1$
+    private static final String        LOCALE_STRING_KEY       = "localeString";                                //$NON-NLS-1$
+    private static final String        UI_SCALE_FACTOR_KEY     = "uiScaleFactor";                               //$NON-NLS-1$
+    private static final String        UI_LAF_KEY              = "uiLaf";                                       //$NON-NLS-1$
 
-    private static File                          homeFolder;
-    private static File                          binFolder;
-    private static File                          testsFolder;
-    private static File                          resFolder;
-    private static File                          resultsFolder;
+    private static File                homeFolder;
+    private static File                binFolder;
+    private static File                testsFolder;
+    private static File                resFolder;
+    private static File                resultsFolder;
 
-    private static final Set<ArtifactDescriptor> artifacts               = new HashSet<ArtifactDescriptor>();
+    private static final Set<Artifact> artifacts               = new HashSet<Artifact>();
 
-    private static File                          propertiesFile;
-    private static String                        localeString            = "ro";                                                 //$NON-NLS-1$
-    private static double                        uiScaleFactor           = 1;
-    private static String                        uiLaf                   = "system";                                             //$NON-NLS-1$
-    private static boolean                       executedFromIde;
+    private static File                propertiesFile;
+    private static String              localeString            = "ro";                                          //$NON-NLS-1$
+    private static double              uiScaleFactor           = 1;
+    private static String              uiLaf                   = "system";                                      //$NON-NLS-1$
+    private static boolean             executedFromIde;
 
     public static boolean backupWorkbookOnOpen() {
         return true;
     }
 
-    public static Set<ArtifactDescriptor> getArtifacts() {
+    public static Set<Artifact> getArtifacts() {
         return artifacts;
     }
 
@@ -145,12 +146,12 @@ public final class Globals {
         }
         info("home folder: ", homeFolder.getCanonicalPath());
         info("properties file: ", propertiesFile.getCanonicalPath());
-        registerArtifact(ArtifactDescriptor.fromJarFile(new File(binFolder, "pondero.jar")));
-        registerArtifact(ArtifactDescriptor.fromJarFile(new File(binFolder, "pondero-libs.jar")));
-        registerArtifact(ArtifactDescriptor.fromJarFile(new File(binFolder, "pondero-install.jar")));
+        registerArtifact(Artifact.fromJarFile(new File(binFolder, "pondero.jar")));
+        registerArtifact(Artifact.fromJarFile(new File(binFolder, "pondero-libs.jar")));
+        registerArtifact(Artifact.fromJarFile(new File(binFolder, "pondero-install.jar")));
     }
 
-    public static void registerArtifact(final ArtifactDescriptor artifact) {
+    public static void registerArtifact(final Artifact artifact) {
         if (artifact != null && artifacts.add(artifact)) {
             info("registered artifact: " + artifact.getCodeName());
         }

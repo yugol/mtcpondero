@@ -8,11 +8,11 @@ public interface UpdateListener {
 
     void readRegistryStarted();
 
-    void updateArtifactEnded(ArtifactDescriptor update);
+    void updateArtifactEnded(Artifact update);
 
-    void updateArtifactFailed(ArtifactDescriptor update, Exception e);
+    void updateArtifactFailed(Artifact update, Exception e);
 
-    void updateArtifactStarted(ArtifactDescriptor update);
+    void updateArtifactStarted(Artifact update);
 
     void updateProcessEnded();
 

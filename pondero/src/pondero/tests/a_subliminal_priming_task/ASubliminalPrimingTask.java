@@ -10,19 +10,19 @@ import pondero.engine.elements.other.Page;
 import pondero.engine.elements.stimulus.Text;
 import pondero.engine.elements.trial.Trial;
 import pondero.engine.test.Test;
-import pondero.update.ArtifactDescriptor;
+import pondero.update.Artifact;
 import pondero.update.ArtifactType;
 
 public class ASubliminalPrimingTask extends Test {
 
-    private static final ArtifactDescriptor DESCRIPTOR = new ArtifactDescriptor(ArtifactType.TEST, "ASPT", 0, 1, "dev");
+    private static final Artifact DESCRIPTOR = new Artifact(ArtifactType.TEST, "ASPT", 0, 1, "dev");
 
     public static void main(final String... args) {
         new ASubliminalPrimingTask().start();
     }
 
     @Override
-    public ArtifactDescriptor getArtifactDescriptor() {
+    public Artifact getArtifactDescriptor() {
         return DESCRIPTOR;
     }
 

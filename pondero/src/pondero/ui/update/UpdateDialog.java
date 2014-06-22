@@ -28,7 +28,7 @@ import javax.swing.border.EmptyBorder;
 import pondero.Globals;
 import pondero.engine.staples.StringUtil;
 import pondero.ui.Messages;
-import pondero.update.ArtifactDescriptor;
+import pondero.update.Artifact;
 import pondero.update.UpdateEngine;
 import pondero.update.UpdateListener;
 import pondero.update.Updates;
@@ -58,7 +58,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
     private final JPanel              contentPanel = new JPanel();
     private JLabel                    lblTopStatus;
     private JProgressBar              progressBar;
-    private JList<ArtifactDescriptor> listUpdates;
+    private JList<Artifact> listUpdates;
     private JButton                   btnStart;
     private JScrollPane               scrollPane;
 
@@ -115,14 +115,14 @@ public class UpdateDialog extends JDialog implements UpdateListener {
             gbc_scrollPane.gridy = 2;
             contentPanel.add(scrollPane, gbc_scrollPane);
             {
-                listUpdates = new JList<ArtifactDescriptor>();
+                listUpdates = new JList<Artifact>();
                 listUpdates.addMouseListener(new MouseAdapter() {
 
                     @Override
                     public void mouseClicked(MouseEvent evt) {
                         if (listUpdates.isEnabled()) {
                             int index = listUpdates.locationToIndex(evt.getPoint());
-                            ArtifactDescriptor update = listUpdates.getModel().getElementAt(index);
+                            Artifact update = listUpdates.getModel().getElementAt(index);
                             if (!update.isMandatory()) {
                                 cellRenderer.toggle(index);
                                 listUpdates.setSelectedIndices(new int[] {});
@@ -134,7 +134,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
                 });
                 listUpdates.setVisibleRowCount(4);
                 listUpdates.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                listUpdates.setModel(new DefaultListModel<ArtifactDescriptor>());
+                listUpdates.setModel(new DefaultListModel<Artifact>());
                 listUpdates.setCellRenderer(cellRenderer);
                 scrollPane.setViewportView(listUpdates);
             }
@@ -184,7 +184,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
 
     @Override
     public void readRegistryEnded(Updates applicableUpdates) {
-        for (ArtifactDescriptor update : applicableUpdates) {
+        for (Artifact update : applicableUpdates) {
             info("found update: " + update.getCodeName());
         }
         info("read update registry: ended");
@@ -226,22 +226,22 @@ public class UpdateDialog extends JDialog implements UpdateListener {
     }
 
     @Override
-    public void updateArtifactEnded(ArtifactDescriptor update) {
-        DefaultListModel<ArtifactDescriptor> model = (DefaultListModel<ArtifactDescriptor>) listUpdates.getModel();
+    public void updateArtifactEnded(Artifact update) {
+        DefaultListModel<Artifact> model = (DefaultListModel<Artifact>) listUpdates.getModel();
         int index = model.indexOf(update);
         model.remove(index);
         cellRenderer.removeElement(index);
     }
 
     @Override
-    public void updateArtifactFailed(ArtifactDescriptor update, Exception e) {
+    public void updateArtifactFailed(Artifact update, Exception e) {
         setTopStatusMessage(update.getCodeName() + " - " + Messages.getString("msg.update-failed"));
         lblTopStatus.setForeground(Color.red);
         e.printStackTrace();
     }
 
     @Override
-    public void updateArtifactStarted(ArtifactDescriptor update) {
+    public void updateArtifactStarted(Artifact update) {
         setTopStatusMessage(Messages.getString("msg.downloading-update") + ": " + update.getCodeName());
     }
 
@@ -271,9 +271,9 @@ public class UpdateDialog extends JDialog implements UpdateListener {
     }
 
     private void populateList(Updates applicableUpdates) {
-        DefaultListModel<ArtifactDescriptor> listModel = (DefaultListModel<ArtifactDescriptor>) listUpdates.getModel();
+        DefaultListModel<Artifact> listModel = (DefaultListModel<Artifact>) listUpdates.getModel();
         listModel.removeAllElements();
-        for (ArtifactDescriptor update : applicableUpdates) {
+        for (Artifact update : applicableUpdates) {
             listModel.addElement(update);
             if (update.isMandatory()) {
                 cellRenderer.addElement(true);

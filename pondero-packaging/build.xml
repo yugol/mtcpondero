@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="all" name="Create Runnable Jar for Project pondero-libs">
 
-	<property name="soldir" location="F:/Workspace/psih" />
-	<property name="jredir" location="F:/Java/jre7" />
-	<property name="pkgdir" location="F:/Workspace/Pondero" />
+	<property name="jredir" location="/Java/jre7" />
+	<property name="soldir" location="/Workspace/pondero-dev" />
+	<property name="pkgdir" location="/Workspace/Pondero" />
 
 	<target name="all" depends="pondero, pondero-test-ic" />
 
@@ -38,7 +38,7 @@
 	</target>
 
 	<target name="pondero-test-ic" depends="create-context, pondero">
-		<ant antfile="${soldir}/pondero-ic/make-jar-pondero-test-ic.xml" />
+		<ant antfile="${soldir}/pondero-test-ic/make-jar-pondero-test-ic.xml" />
 	</target>
 
 </project>

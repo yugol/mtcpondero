@@ -20,10 +20,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import pondero.engine.staples.DateUtil;
 import pondero.ui.Messages;
-import pondero.update.ArtifactDescriptor;
+import pondero.update.Artifact;
 
 @SuppressWarnings("serial")
-public class UpdateCellRenderer extends JPanel implements ListCellRenderer<ArtifactDescriptor> {
+public class UpdateCellRenderer extends JPanel implements ListCellRenderer<Artifact> {
 
     private final List<Boolean> selection = new ArrayList<Boolean>();
     private final JLabel        lblId;
@@ -80,8 +80,8 @@ public class UpdateCellRenderer extends JPanel implements ListCellRenderer<Artif
 
     @Override
     public Component getListCellRendererComponent(
-            JList<? extends ArtifactDescriptor> arg0,
-            ArtifactDescriptor value,
+            JList<? extends Artifact> arg0,
+            Artifact value,
             int index,
             boolean isSelected,
             boolean cellHasFocus) {

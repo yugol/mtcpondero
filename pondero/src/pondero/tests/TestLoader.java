@@ -9,7 +9,7 @@ import java.util.List;
 import pondero.Globals;
 import pondero.engine.test.Test;
 import pondero.ui.Pondero;
-import pondero.update.ArtifactDescriptor;
+import pondero.update.Artifact;
 
 public class TestLoader {
 
@@ -19,11 +19,11 @@ public class TestLoader {
         try {
             final File pluginFolder = Globals.getTestsFolder();
 
-            final List<ArtifactDescriptor> artifacts = new ArrayList<ArtifactDescriptor>();
+            final List<Artifact> artifacts = new ArrayList<Artifact>();
             final List<URL> jarUrls = new ArrayList<URL>();
             for (final File jarFile : pluginFolder.listFiles()) {
                 if (jarFile.getName().toLowerCase().endsWith(".jar")) {
-                    ArtifactDescriptor artifact = ArtifactDescriptor.fromJarFile(jarFile);
+                    Artifact artifact = Artifact.fromJarFile(jarFile);
                     if (artifact != null && artifact.getTestClassName() != null) {
                         jarUrls.add(jarFile.toURI().toURL());
                         artifacts.add(artifact);
@@ -37,7 +37,7 @@ public class TestLoader {
                 testClassLoader = TestLoader.class.getClassLoader();
             }
 
-            for (final ArtifactDescriptor candidate : artifacts) {
+            for (final Artifact candidate : artifacts) {
                 try {
                     final Class<? extends Test> testClass = testClassLoader.loadClass(candidate.getTestClassName()).asSubclass(Test.class);
                     Test testInstance = testClass.newInstance();
