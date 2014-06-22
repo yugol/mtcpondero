@@ -1,6 +1,3 @@
-- dev: move repository on google code
-
-
 - config: send production flag in command line
 - config: further develop ant files
 - config: make it run on OSX
