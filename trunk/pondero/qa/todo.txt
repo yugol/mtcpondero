@@ -1,8 +1,9 @@
-- update: let the user know that updates will be available after restarting the application
 - menu: Application -> Update...
+- properties: update at startup
 
 - experience: use diacritics in install app
 - experience: adjust install fonts sizes
+
 - experience: scale UI depending on DPI
 - experience: font sizes for all LAFs
 - experience: font sizes for participants grid

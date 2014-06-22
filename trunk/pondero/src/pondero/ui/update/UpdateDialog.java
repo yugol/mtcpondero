@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -51,16 +52,16 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         }
     }
 
-    private final UpdateEngine        engine       = new UpdateEngine();
-    private final UpdateCellRenderer  cellRenderer = new UpdateCellRenderer();
-    private boolean                   downloading  = false;
+    private final UpdateEngine       engine       = new UpdateEngine();
+    private final UpdateCellRenderer cellRenderer = new UpdateCellRenderer();
+    private boolean                  downloading  = false;
 
-    private final JPanel              contentPanel = new JPanel();
-    private JLabel                    lblTopStatus;
-    private JProgressBar              progressBar;
-    private JList<Artifact> listUpdates;
-    private JButton                   btnStart;
-    private JScrollPane               scrollPane;
+    private final JPanel             contentPanel = new JPanel();
+    private JLabel                   lblTopStatus;
+    private JProgressBar             progressBar;
+    private JList<Artifact>          listUpdates;
+    private JButton                  btnStart;
+    private JScrollPane              scrollPane;
 
     public UpdateDialog() {
         this(null);
@@ -251,6 +252,8 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         setTopStatusMessage(Messages.getString("msg.downloading-updates-finished"));
         progressBar.setVisible(false);
         btnStart.setVisible(false);
+        JOptionPane.showMessageDialog(this, Messages.getString("msg.update-process-finished"), getTitle(), JOptionPane.INFORMATION_MESSAGE);
+        dispose();
     }
 
     @Override
