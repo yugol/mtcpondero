@@ -6,7 +6,7 @@ public class UpdateUtilTest {
 
     @Test
     public void testDownload() throws Exception {
-        ArtifactDescriptor update = new ArtifactDescriptor(ArtifactType.TEST, "test", 0, 1, "dev");
+        Artifact update = new Artifact(ArtifactType.TEST, "test", 0, 1, "dev");
         update.setUrl("http://en.wikipedia.org/wiki/JAR_(file_format)#mediaviewer/File:Nuvola_mimetypes_java_jar.png");
         UpdateUtil.download(update);
     }

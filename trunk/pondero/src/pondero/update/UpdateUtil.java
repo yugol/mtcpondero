@@ -20,7 +20,7 @@ public class UpdateUtil {
 
     public static final String UPDATE_EXTENSION = ".update";
 
-    public static void download(ArtifactDescriptor update) throws Exception {
+    public static void download(Artifact update) throws Exception {
         final URL url = new URL(update.getUrl());
         File destination = null;
         switch (update.getType()) {
@@ -52,9 +52,9 @@ public class UpdateUtil {
 
     public static Updates getApplicableUpdates(Updates availableUpdates) {
         Updates applicableUpdates = new Updates();
-        for (ArtifactDescriptor update : availableUpdates) {
+        for (Artifact update : availableUpdates) {
             boolean found = false;
-            for (ArtifactDescriptor installed : Globals.getArtifacts()) {
+            for (Artifact installed : Globals.getArtifacts()) {
                 if (installed.equals(update)) {
                     found = true;
                     if (installed.compareTo(update) < 0) {
@@ -72,7 +72,7 @@ public class UpdateUtil {
     public static Updates getAvailableUpdates() throws Exception {
         InputStream registryStream = null;
         try {
-            registryStream = UrlUtil.openUrlStream(UrlUtil.purlToUrl(Globals.UPDATE_REGISTRY_ADDRESS));
+            registryStream = UrlUtil.openCloudStream(Globals.UPDATE_REGISTRY_ADDRESS);
             Updates availableArtifacts = new Updates();
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -83,7 +83,7 @@ public class UpdateUtil {
             NodeList nList = doc.getElementsByTagName("application");
             for (int foo = 0; foo < nList.getLength(); ++foo) {
                 Element applicationElement = (Element) nList.item(foo);
-                ArtifactDescriptor descriptor = readArtifactDescriptor(ArtifactType.APPLICATION, applicationElement);
+                Artifact descriptor = readArtifactDescriptor(ArtifactType.APPLICATION, applicationElement);
                 if (descriptor != null) {
                     availableArtifacts.add(descriptor);
                 }
@@ -91,7 +91,7 @@ public class UpdateUtil {
             nList = doc.getElementsByTagName("test");
             for (int foo = 0; foo < nList.getLength(); ++foo) {
                 Element testElement = (Element) nList.item(foo);
-                ArtifactDescriptor descriptor = readArtifactDescriptor(ArtifactType.TEST, testElement);
+                Artifact descriptor = readArtifactDescriptor(ArtifactType.TEST, testElement);
                 if (descriptor != null) {
                     availableArtifacts.add(descriptor);
                 }
@@ -112,7 +112,7 @@ public class UpdateUtil {
         return "true".equals(str);
     }
 
-    private static ArtifactDescriptor readArtifactDescriptor(ArtifactType artifactType, Element artifactElement) {
+    private static Artifact readArtifactDescriptor(ArtifactType artifactType, Element artifactElement) {
         boolean valid = parseBoolean(artifactElement.getAttribute("valid"));
         if (valid) {
             String id = artifactElement.getAttribute("id");
@@ -146,7 +146,7 @@ public class UpdateUtil {
                     }
                 }
             }
-            ArtifactDescriptor aDesc = new ArtifactDescriptor(artifactType, id, Integer.parseInt(major), Integer.parseInt(minor), maturity);
+            Artifact aDesc = new Artifact(artifactType, id, Integer.parseInt(major), Integer.parseInt(minor), maturity);
             aDesc.setProtected(isProtected);
             aDesc.setMandatory(mandatory);
             aDesc.setReleaseDate(DateUtil.parseIsoDate(releaseDate));

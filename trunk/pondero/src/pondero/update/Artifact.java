@@ -9,9 +9,9 @@ import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
 import pondero.security.PasswordHash;
 
-public class ArtifactDescriptor implements Comparable<ArtifactDescriptor> {
+public class Artifact implements Comparable<Artifact> {
 
-    public static ArtifactDescriptor fromJarFile(File jarFile) {
+    public static Artifact fromJarFile(File jarFile) {
         try {
             trace(jarFile.getCanonicalPath());
             final JarInputStream jarStream = new JarInputStream(new FileInputStream(jarFile));
@@ -23,7 +23,7 @@ public class ArtifactDescriptor implements Comparable<ArtifactDescriptor> {
             final int major = Integer.parseInt(attrs.getValue("Pondero-Artifact-Major"));
             final int minor = Integer.parseInt(attrs.getValue("Pondero-Artifact-Minor"));
             final String maturity = attrs.getValue("Pondero-Artifact-Maturity");
-            ArtifactDescriptor artifact = new ArtifactDescriptor(type, id, major, minor, maturity);
+            Artifact artifact = new Artifact(type, id, major, minor, maturity);
             if (ArtifactType.TEST.equals(type)) {
                 artifact.setTestClassName(attrs.getValue("Main-Class"));
             }
@@ -46,7 +46,7 @@ public class ArtifactDescriptor implements Comparable<ArtifactDescriptor> {
 
     private String             passwordHash;
 
-    public ArtifactDescriptor(ArtifactType type, String id, int major, int minor, String maturity) {
+    public Artifact(ArtifactType type, String id, int major, int minor, String maturity) {
         this.type = type;
         this.id = id;
         this.major = major;
@@ -55,7 +55,7 @@ public class ArtifactDescriptor implements Comparable<ArtifactDescriptor> {
     }
 
     @Override
-    public int compareTo(ArtifactDescriptor other) {
+    public int compareTo(Artifact other) {
         int cmp = type.compareTo(other.type);
         if (cmp == 0) {
             cmp = id.compareTo(other.id);
@@ -71,8 +71,8 @@ public class ArtifactDescriptor implements Comparable<ArtifactDescriptor> {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ArtifactDescriptor) {
-            ArtifactDescriptor other = (ArtifactDescriptor) obj;
+        if (obj instanceof Artifact) {
+            Artifact other = (Artifact) obj;
             return type.equals(other.type) && id.equals(other.id);
         }
         return false;

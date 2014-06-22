@@ -22,18 +22,18 @@ public class UpdaterTest {
         }
 
         @Override
-        public void updateArtifactEnded(ArtifactDescriptor update) {
+        public void updateArtifactEnded(Artifact update) {
             System.out.println("updateArtifactEnded " + update.getCodeName());
         }
 
         @Override
-        public void updateArtifactFailed(ArtifactDescriptor update, Exception e) {
+        public void updateArtifactFailed(Artifact update, Exception e) {
             System.out.println("updateArtifactFailed");
             e.printStackTrace();
         }
 
         @Override
-        public void updateArtifactStarted(ArtifactDescriptor update) {
+        public void updateArtifactStarted(Artifact update) {
             System.out.println("updateArtifactStarted " + update.getCodeName());
         }
 

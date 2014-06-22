@@ -26,7 +26,7 @@ public class UpdateEngine implements PasswordReader {
                     for (UpdateListener listener : listeners) {
                         listener.updateProcessStarted(updates.size());
                     }
-                    for (ArtifactDescriptor update : updates) {
+                    for (Artifact update : updates) {
                         if (!cancelled && validatePassword(update)) {
                             for (UpdateListener listener : listeners) {
                                 listener.updateArtifactStarted(update);
@@ -53,7 +53,7 @@ public class UpdateEngine implements PasswordReader {
     }
 
     @Override
-    public String readPassword(ArtifactDescriptor update) {
+    public String readPassword(Artifact update) {
         JPasswordField pf = new JPasswordField();
         int okCxl = JOptionPane.showConfirmDialog(null, pf,
                 // Messages.getString("lbl.enter-password-for", update.getCodeName()),
@@ -92,7 +92,7 @@ public class UpdateEngine implements PasswordReader {
         this.passwordReader = passwordReader;
     }
 
-    private boolean validatePassword(ArtifactDescriptor update) {
+    private boolean validatePassword(Artifact update) {
         if (update.isProtected()) {
             while (!update.validatePassword(password)) {
                 password = passwordReader.readPassword(update);

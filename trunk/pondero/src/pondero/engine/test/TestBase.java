@@ -21,7 +21,7 @@ import pondero.engine.test.launch.TaskLauncher;
 import pondero.model.Workbook;
 import pondero.model.entities.Participant;
 import pondero.model.entities.TrialRecord;
-import pondero.update.ArtifactDescriptor;
+import pondero.update.Artifact;
 
 public abstract class TestBase implements Runnable {
 
@@ -101,7 +101,7 @@ public abstract class TestBase implements Runnable {
         }
     }
 
-    public abstract ArtifactDescriptor getArtifactDescriptor();
+    public abstract Artifact getArtifactDescriptor();
 
     public Block getBlock(final String name) {
         return blocks.get(name);
