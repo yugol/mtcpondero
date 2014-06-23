@@ -19,7 +19,7 @@ public class UrlUtil {
 
     private static InputStream openUrlStream(String urlString) throws IOException {
         URL url = new URL(urlString);
-        trace(url);
+        trace("opening:", url);
         InputStream urlStream = url.openStream();
         return urlStream;
     }

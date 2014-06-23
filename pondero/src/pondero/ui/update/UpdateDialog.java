@@ -1,5 +1,6 @@
 package pondero.ui.update;
 
+import static pondero.Logger.debug;
 import static pondero.Logger.info;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -188,7 +189,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         for (Artifact update : applicableUpdates) {
             info("found update: " + update.getCodeName());
         }
-        info("read update registry: ended");
+        debug("reading update registry: ended");
         downloading = false;
         progressBar.setVisible(false);
         if (applicableUpdates.size() > 0) {
@@ -217,7 +218,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
 
     @Override
     public void readRegistryStarted() {
-        info("read update registry: started");
+        debug("reading update registry: started");
         downloading = true;
         setTopStatusMessage(Messages.getString("msg.downloading-update-list"));
         setHeight(150);

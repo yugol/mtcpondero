@@ -2,6 +2,7 @@ package pondero.ui.participants;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -34,6 +35,7 @@ public class ParticipantSelectionDialog extends JDialog {
     private final JButton             cancelButton;
 
     public ParticipantSelectionDialog(final Workbook wb) throws Exception {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantSelectionDialog.class.getResource("/com/famfamfam/silk/user_go.png")));
         setTitle(Messages.getString("lbl.participants")); //$NON-NLS-1$
         setBounds(100, 100, 400, 450);
         getContentPane().setLayout(new BorderLayout());

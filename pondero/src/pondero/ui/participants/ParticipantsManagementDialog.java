@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -103,6 +104,7 @@ public class ParticipantsManagementDialog extends JDialog {
                                                       };
 
     public ParticipantsManagementDialog(final Workbook wb) throws Exception {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantsManagementDialog.class.getResource("/com/famfamfam/silk/group.png")));
         participants = new Participants(wb);
 
         setTitle(Messages.getString("lbl.manage-participants")); //$NON-NLS-1$

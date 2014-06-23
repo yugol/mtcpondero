@@ -1,5 +1,6 @@
 package pondero;
 
+import static pondero.Logger.debug;
 import static pondero.Logger.info;
 import java.io.File;
 import java.io.FileReader;
@@ -27,6 +28,7 @@ public final class Globals {
     private static final String        LOCALE_STRING_KEY       = "localeString";                                //$NON-NLS-1$
     private static final String        UI_SCALE_FACTOR_KEY     = "uiScaleFactor";                               //$NON-NLS-1$
     private static final String        UI_LAF_KEY              = "uiLaf";                                       //$NON-NLS-1$
+    private static final String        UPDATE_ON_STARTUP_KEY   = "updateOnStartup";                             //$NON-NLS-1$
 
     private static File                homeFolder;
     private static File                binFolder;
@@ -39,7 +41,8 @@ public final class Globals {
     private static File                propertiesFile;
     private static String              localeString            = "ro";                                          //$NON-NLS-1$
     private static double              uiScaleFactor           = 1;
-    private static String              uiLaf                   = "system";                                      //$NON-NLS-1$
+    private static String              uiLaf                   = "metal";                                       //$NON-NLS-1$
+    private static boolean             updateOnStartup         = false;
     private static boolean             executedFromIde;
 
     public static boolean backupWorkbookOnOpen() {
@@ -95,6 +98,10 @@ public final class Globals {
         return executedFromIde;
     }
 
+    public static boolean isUpdateOnStartup() {
+        return updateOnStartup;
+    }
+
     public static void loadPreferences(String homeFolderName) throws Exception {
         final String propertiesFileName = "pondero.properties";
         if (StringUtil.isNullOrBlank(homeFolderName)) {
@@ -141,11 +148,16 @@ public final class Globals {
             if (!StringUtil.isNullOrBlank(foo)) {
                 uiLaf = foo.trim().toLowerCase();
             }
+            foo = properties.getProperty(UPDATE_ON_STARTUP_KEY);
+            if (!StringUtil.isNullOrBlank(foo)) {
+                updateOnStartup = Boolean.parseBoolean(foo.trim().toLowerCase());
+            }
+
         } else {
             savePreferences();
         }
         info("home folder: ", homeFolder.getCanonicalPath());
-        info("properties file: ", propertiesFile.getCanonicalPath());
+        debug("properties file: ", propertiesFile.getCanonicalPath());
         registerArtifact(Artifact.fromJarFile(new File(binFolder, "pondero.jar")));
         registerArtifact(Artifact.fromJarFile(new File(binFolder, "pondero-libs.jar")));
         registerArtifact(Artifact.fromJarFile(new File(binFolder, "pondero-install.jar")));
@@ -162,6 +174,7 @@ public final class Globals {
         properties.setProperty(LOCALE_STRING_KEY, String.valueOf(localeString));
         properties.setProperty(UI_SCALE_FACTOR_KEY, String.valueOf(uiScaleFactor));
         properties.setProperty(UI_LAF_KEY, String.valueOf(uiLaf));
+        properties.setProperty(UPDATE_ON_STARTUP_KEY, String.valueOf(updateOnStartup));
         final Writer propertiesWriter = new FileWriter(propertiesFile);
         properties.store(propertiesWriter, null);
         propertiesWriter.close();
