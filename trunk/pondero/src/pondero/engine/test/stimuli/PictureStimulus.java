@@ -49,8 +49,8 @@ public class PictureStimulus extends VisualStimulus {
             imgData = ImageIO.read(imgFile);
         } else {
             final String folder = "/" + getParent()._getTest().getClass().getPackage().getName().replace(".", "/") + "/";
-            // final URL url = getClass().getResource(folder + path);
-            final InputStream imageStream = getParent()._getTest().getClass().getResourceAsStream(folder + path);
+            final String source = folder + path;
+            final InputStream imageStream = getParent()._getTest().getClass().getResourceAsStream(source);
             imgData = ImageIO.read(imageStream);
             imageStream.close();
         }

@@ -2,9 +2,9 @@ package pondero.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -41,11 +41,13 @@ import pondero.ui.actions.QuitAction;
 import pondero.ui.actions.SaveDocumentAction;
 import pondero.ui.actions.StartTaskAction;
 import pondero.ui.actions.TaskAction;
+import pondero.ui.actions.UpdateAction;
 import pondero.ui.update.UpdateDialog;
 
 public class Pondero implements TaskLauncher {
 
     private static final float START_BUTTON_SIZE_FACTOR = 1.2f;
+
     private static final int   INFO                     = 0;
     private static final int   WARNING                  = 1;
     private static final int   ERROR                    = 2;
@@ -59,10 +61,12 @@ public class Pondero implements TaskLauncher {
     public static void main(final String... args) throws Exception {
         String home = args.length >= 1 ? args[0] : null;
         Globals.loadPreferences(home);
+
         OsUtil.setupMainWindow(Messages.getString("lbl.pondero"));//$NON-NLS-1$
         OsUtil.setLaf();
         OsUtil.factorFontSize(Globals.getUiScaleFactor());
         OsUtil.localizeJOptionPaneButtons();
+
         EventQueue.invokeLater(new Runnable() {
 
             @Override
@@ -70,10 +74,11 @@ public class Pondero implements TaskLauncher {
                 try {
                     final Pondero window = new Pondero();
                     TestLoader.registerTests(window);
-                    OsUtil.factorFontSize(Globals.getUiScaleFactor());
+                    if (Globals.isUpdateOnStartup()) {
+                        new UpdateDialog(window.frmMain).beginUpdate();
+                    }
                     window.openWorkbook(Globals.getLastWorkbookFile());
                     window.frmMain.setVisible(true);
-                    new UpdateDialog(window.frmMain).beginUpdate();
                 } catch (final Exception e) {
                     e.printStackTrace();
                 }
@@ -87,12 +92,13 @@ public class Pondero implements TaskLauncher {
     private final Action mnApplication            = new SaveDocumentAction(this);
     private final Action openDocumentAction       = new OpenDocumentAction(this);
     private final Action quitAction               = new QuitAction(this);
-    private final Action startTaskAction          = new StartTaskAction(this);
+    private final Action updateAction             = new UpdateAction(this);
 
+    private final Action startTaskAction          = new StartTaskAction(this);
     private Participant  currentParticipant       = null;
     private Test         currentTask              = null;
-    private Workbook     currentWorkbook          = null;
 
+    private Workbook     currentWorkbook          = null;
     private JButton      btnStartTask;
     private JFrame       frmMain;
     private JLabel       lblDocumentName;
@@ -125,7 +131,7 @@ public class Pondero implements TaskLauncher {
         return currentWorkbook;
     }
 
-    public Component getFrame() {
+    public Frame getFrame() {
         return frmMain;
     }
 
@@ -186,7 +192,7 @@ public class Pondero implements TaskLauncher {
     }
 
     /**
-     * Initialize the contents of the frame.
+     * Initialise the contents of the frame.
      */
     private void initialize() {
 
@@ -213,6 +219,12 @@ public class Pondero implements TaskLauncher {
         final JMenuItem mntmPreferences = new JMenuItem(Messages.getString("lbl.preferences")); //$NON-NLS-1$
         mntmPreferences.setEnabled(false);
         mnApp.add(mntmPreferences);
+
+        mnApp.addSeparator();
+
+        final JMenuItem mntmUpdate = new JMenuItem(Messages.getString("Pondero.mntmUpdate.text")); //$NON-NLS-1$
+        mntmUpdate.setAction(updateAction);
+        mnApp.add(mntmUpdate);
 
         mnApp.addSeparator();
 
@@ -378,5 +390,4 @@ public class Pondero implements TaskLauncher {
                 break;
         }
     }
-
 }

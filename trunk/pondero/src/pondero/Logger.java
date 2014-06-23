@@ -4,14 +4,14 @@ import pondero.engine.staples.DateUtil;
 
 public class Logger {
 
-    private static final int MAX_LEVEL = 50;
+    private static final int CRITICAL  = 10;
+    private static final int ERROR     = 20;
+    private static final int WARNING   = 30;
+    private static final int INFO      = 40;
+    private static final int DEBUG     = 50;
+    private static final int TRACE     = 60;
 
-    public static final int  CRITICAL  = 10;
-    public static final int  ERROR     = 20;
-    public static final int  WARNING   = 30;
-    public static final int  INFO      = 40;
-    public static final int  DEBUG     = 50;
-    public static final int  TRACE     = 60;
+    private static final int MAX_LEVEL = TRACE;
 
     public static void critical(Object... obj) {
         log(CRITICAL, obj);
