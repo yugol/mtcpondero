@@ -1,28 +1,29 @@
+- experience: use diacritics in license
 - experience: use diacritics in install app
 - experience: adjust install fonts sizes
 
-- experience: scale UI depending on DPI
-- experience: font sizes for all LAFs
-- experience: font sizes for participants grid
 - experience: wizard based interface
 
 - web: develop the home page (mention that this is a licence project)
 - web: develop a screenshot page
+- core: open web pages in external browser
 - menu: Help -> Home Page
 
 - config: send production flag in command line
-- config: further develop ant files
 - config: check for installed java versions before installing
 - menu: Application -> Preferences...
-- menu: Help -> About
-- menu: Help -> Documentation
+- menu: Help -> Documenation page
+- menu: Help -> Home page
+
 - properties: save last workbook path
+- testing: use a new UUID every time a new test is launched
+
 - test-ic: extensive test
 - testing: extract a subliminal priming task in a separate project
-- testing: generate a new UUID every time a new test is launched
-- testing: some more sample tests
+- test-plugins: some more sample tests
 - testing: support different structures for output (test specific TrialRecords)
-- update: implement two download sources: MS + Dropbox
-- update: store file name in ArtifactDescriptor
 
+- update: implement two download sources: MS + Dropbox
+
+- config: make it run on Linux
 - config: make it run on OSX
