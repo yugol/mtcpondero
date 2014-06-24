@@ -6,7 +6,7 @@
 #define MyAppPublisher "Mindtrips Communications"
 #define MyAppURL "http://www.purl.org/net/pondero/home"
 #define MyAppExeName "pondero.bat"
-#define PonderoRoot "F:\temp\Pondero"
+#define PonderoRoot "F:\Workspace\Pondero"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -42,7 +42,7 @@ Source:   "{#PonderoRoot}\bin\pondero-install.jar";    DestDir: "{app}\bin";   F
 Source:   "{#PonderoRoot}\res\pondero-48x48.ico";      DestDir: "{app}\res";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\res\pondero-license.txt";    DestDir: "{app}\res";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-ic.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
-Source:   "{#PonderoRoot}\jre\*";                      DestDir: "{app}\jre";   Flags: ignoreversion recursesubdirs createallsubdirs
+; Source:   "{#PonderoRoot}\jre\*";                      DestDir: "{app}\jre";   Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Dirs]

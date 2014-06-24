@@ -18,13 +18,14 @@ LanguageCodePage=1250
 ; If the language you are translating to requires special font faces or
 ; sizes, uncomment any of the following entries and change them accordingly.
 ;DialogFontName=
-;DialogFontSize=8
+DialogFontSize=10
 ;WelcomeFontName=Verdana
-;WelcomeFontSize=12
+WelcomeFontSize=14
 ;TitleFontName=Arial
-;TitleFontSize=29
+TitleFontSize=29
 ;CopyrightFontName=Arial
 ;CopyrightFontSize=8
+
 
 [Messages]
 
@@ -43,10 +44,10 @@ ErrorTitle=Eroare
 
 
 ; *** Common wizard text
-ClickNext=Apasați butonul <Continuare> pentru a avansa sau butonul <Anulare> pentru a abandona.
+ClickNext=Apasați butonul [Continuare] pentru a avansa sau butonul [Anulare] pentru a abandona.
 BeveledLabel=
 BrowseDialogTitle=Alegere Destinație
-BrowseDialogLabel=Selectați un dosar din lista de mai jos, apoi apasați butonul <OK>
+BrowseDialogLabel=Selectați un dosar din lista de mai jos, apoi apasați butonul [OK]
 NewFolderName=Dosar Nou
 
 
@@ -75,15 +76,15 @@ WelcomeLabel2=Aplicația [name/ver] va fi instalată pe calculatorul dumneavoast
 WizardLicense=Acord de Licențiere
 LicenseLabel=Următoarele informații sunt importante. Vă rugăm să le citiți înaite de a continua.
 LicenseLabel3=Acesta este Acordul de Licențiere. Este necesară acceptarea termenilor acestui acord înainte ca instalarea să poată continua:
-LicenseAccepted=&Accept Termenii
-LicenseNotAccepted=&Refuz Termenii
+LicenseAccepted=&Accept termenii
+LicenseNotAccepted=&Refuz termenii
 
 
 ; *** "Select Destination Location" wizard page
-WizardSelectDir=Selectarea Dosarului de Destinație a Aplicației
+WizardSelectDir=Selectarea dosarului de destinație a aplicației
 SelectDirDesc=Unde doriți să fie instalată aplicația [name]?
 SelectDirLabel3=Aplicația [name] va fi instalată în dosarul specificat mai jos.
-SelectDirBrowseLabel=Apasați butonul <Continuare> pentru a avansa.%nPentru selectarea un alt dosar apasați butonul <Explorare...>
+SelectDirBrowseLabel=Apasați butonul [Continuare] pentru a avansa.%nPentru alegerea un alt dosar apasați butonul [Explorare...]
 DiskSpaceMBLabel=Este necesar un spațiu liber de stocare de cel puțin [mb] MB
 CannotInstallToNetworkDrive=Instalarea nu poate fi realizată de pe un dispozitiv de rețea.
 CannotInstallToUNCPath=Instalarea nu poate fi realizată de pe o cale în format UNC.
@@ -101,10 +102,10 @@ DirDoesntExist=Dosarul:%n%n%1%n%nnu există. Doriți crearea sa?
 
 
 ; *** "Select Start Menu Folder" wizard page
-WizardSelectProgramGroup=Selectarea Secțiunii din Meniul de Start
-SelectStartMenuFolderDesc=Unde doriți să fie plasate scurtăturile programului?
+WizardSelectProgramGroup=Selectarea secțiunii din Meniul de Start
+SelectStartMenuFolderDesc=Unde doriți să fie create scurtăturile programului?
 SelectStartMenuFolderLabel3=Scurtăturile vor fi plasate în secțiunea Meniului de Start specificată mai jos.
-SelectStartMenuFolderBrowseLabel=Apasați butonul <Continuare> pentru a avansa.%nDaca doriți selectarea unei alte secțiuni apasați butonul <Explorare...>
+SelectStartMenuFolderBrowseLabel=Apasați butonul [Continuare] pentru a avansa.%nDaca doriți alegerea unei alte secțiuni apasați butonul [Explorare...]
 MustEnterGroupName=Este necesară specificarea numelui dosaului de destinație.
 GroupNameTooLong=Numele dosarului sau al căii este prea lung.
 InvalidGroupName=Numele dosarului nu este valid.
@@ -113,14 +114,15 @@ NoProgramGroupCheck2=Crearea unui dosar în Meniul de Start nu este posibilă
 
 
 ; *** "Select Additional Tasks" wizard page
-WizardSelectTasks=Selectarea Sarcinilor Suplimentare
+WizardSelectTasks=Selectarea sarcinilor suplimentare
 SelectTasksDesc=Ce sarcini suplimentare doriți să fie îndeplinite?
-SelectTasksLabel2=Selectați sarcinile suplimentare care doriți să fie îndeplinite în timpul instalării aplicației [name], apoi apăsați butonul <Continuare>
+SelectTasksLabel2=Selectați sarcinile suplimentare care doriți să fie îndeplinite în timpul instalării aplicației [name], apoi apăsați butonul [Continuare]
+
 
 ; *** "Ready to Install" wizard page
 WizardReady=Instalarea este pregătită
 ReadyLabel1=Toate datele necesare pentru instalarea aplicației [name] au fost colectate.
-ReadyLabel2a=Apasați butonul <Instalare> pentru a avansa sau butonul <Intoarcere> dacă doriți revizuirea/schimbarea configurației de instalare.
+ReadyLabel2a=Apasați butonul [Instalare] pentru a avansa sau butonul [Întoarcere] dacă doriți revizuirea/schimbarea configurației de instalare.
 ReadyLabel2b=Apăsați butonul [Instalare] pentru a continua cu instalarea.
 ReadyMemoUserInfo=Informații utilizator:
 ReadyMemoDir=Dosarul de destinație:
@@ -129,49 +131,33 @@ ReadyMemoComponents=Componente selectate:
 ReadyMemoGroup=Secțiunea din Meniul de Start:
 ReadyMemoTasks=Sarcini suplimentare:
 
+
 ; *** "Installing" wizard page
 WizardInstalling=Procesul de instalare se află în desfășurare
 InstallingLabel=Vă rugăm să așteaptați finalizarea instalării aplicației [name] pe calculator.
 
+
 ; *** "Setup Completed" wizard page
-FinishedHeadingLabel=Finalizarea Instalarii [name]
-FinishedLabelNoIcons=Instalarea aplicatiei [name] pe calculator s-a terminat cu succes.
-FinishedLabel=Instalarea aplicatiei [name] pe calculator s-a terminat cu succes. Aplicatia poate fi lansata prin actionarea scurtaturilor instalate.
-ClickFinish=Apasați butonul <Finalizeaza> pentru a parasi Aplicatia de Instalare.
-FinishedRestartLabel=Pentru a termina instalarea [name], trebuie repornit calculatorul. Vrei sa fie repornit acum?
-FinishedRestartMessage=Pentru a termina instalarea [name], trebuie repornit calculatorul.%n%nVrei sa fie repornit acum?
-ShowReadmeCheck=Da, vreau sa vad fila de informare (README)
-YesRadio=&Da, reporneste calculatorul acum
-NoRadio=&Nu, voi reporni eu calculatorul mai trziu
+FinishedHeadingLabel=Finalizarea Instalării [name]
+FinishedLabelNoIcons=Instalarea aplicației [name] s-a terminat cu succes.
+FinishedLabel=Instalarea aplicației [name] pe calculator s-a terminat cu succes. Aplicația poate fi lansată prin actionarea scurtăturilor adăugate.
+ClickFinish=Apasați butonul [Finalizeaza] pentru a parasi Aplicația de Instalare.
+FinishedRestartLabel=Pentru a termina instalarea aplicației [name], trebuie repornit calculatorul. Doriți să efectuați această operație chiar acum?
+FinishedRestartMessage=Pentru a termina instalarea aplicației [name], trebuie repornit calculatorul.%n%nDoriți să efectuați această operație chiar acum?
+ShowReadmeCheck=Da, doresc afișarea paginii informative ("README")
+YesRadio=&Da, repornește calculatorul acum
+NoRadio=&Nu, voi reporni calculatorul mai trziu
 ; used for example as 'Run MyProg.exe'
-RunEntryExec=Ruleaza %1
+RunEntryExec=Rulează %1
 ; used for example as 'View Readme.txt'
 RunEntryShellExec=Vezi %1
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ; *** SetupLdr messages
-SetupLdrStartupMessage=Aplicatia "%1" urmeaza sa fie instalata. Doriti sa continuati?
-LdrCannotCreateTemp=Nu se poate crea un fisier temporar. Instalarea va fi abandonata
-LdrCannotExecTemp=Nu se poate executa un fisier din dosarul temporar. Instalarea va fi abandonata
+SetupLdrStartupMessage=Aplicația "%1" urmează să fie instalată. Doriți să continuați?
+LdrCannotCreateTemp=Nu se poate crea un fișier temporar. Instalarea va fi abandonată
+LdrCannotExecTemp=Nu se poate executa un fișier din dosarul temporar. Instalarea va fi abandonată
+
 
 ; *** Startup error messages
 LastErrorMessage=%1.%n%nEroarea %2: %3
@@ -193,9 +179,11 @@ PowerUserPrivilegesRequired=Trebuie sa fii logat ca Administrator sau ca Membru 
 SetupAppRunningError=Instalatorul a detectat ca %1 ruleaza in acest moment.%n%nÎnchide toate instantele programului respectiv, apoi clicheaza OK pentru a continua sau Anuleaza pentru a abandona instalarea.
 UninstallAppRunningError=Dezinstalatorul a detectat ca %1 ruleaza n acest moment.%n%nÎnchide toate instantele programului respectiv, apoi clicheaza OK pentru a continua sau Anuleaza pentru a abandona dezinstalarea.
 
+
 ; *** Misc. errors
 ErrorCreatingDir=Dosarul "%1" nu a putu fi creat
 ErrorTooManyFilesInDir=Numarul maxim de fisiere din dosarul "%1" a fost depasit
+
 
 ; *** Setup common messages
 ExitSetupTitle=Abandonarea Instalarii
@@ -212,14 +200,12 @@ SelectLanguageTitle=Selectarea Limbii Aplicatiei de Instalare
 SelectLanguageLabel=Selectati limba folosita pentru instalare:
 
 
-
 ; *** "Password" wizard page
 WizardPassword=Parola
 PasswordLabel1=Aceasta instalare este protejata prin parola
-PasswordLabel3=Completati parola, apoi apasati pe butonul <Continua> pentru a merge mai departe. Tipul literelor din parola (Majuscule/minuscule) este semnificativ
+PasswordLabel3=Completati parola, apoi apasati pe butonul [Continuare] pentru a merge mai departe. Tipul literelor din parola (Majuscule/minuscule) este semnificativ
 PasswordEditLabel=&Parola:
 IncorrectPassword=Parola introdusa nu este corecta. Va rugam sa mai incercati o data
-
 
 
 ; *** "Information" wizard pages
@@ -229,6 +215,7 @@ InfoBeforeClickLabel=Cnd esti gata de a trece la Instalare, clicheaza pe Continu
 WizardInfoAfter=Informatii
 InfoAfterLabel=Citeste informatiile urmatoare nainte de a continua, snt importante.
 InfoAfterClickLabel=Cnd esti gata de a trece la Instalare, clicheaza pe Continua.
+
 
 ; *** "User Information" wizard page
 WizardUserInfo=Informatii despre Utilizator
@@ -254,8 +241,6 @@ ComponentSize2=%1 MB
 ComponentsDiskSpaceMBLabel=Selectia curenta necesita cel putin [mb] MB spatiu de stocare.
 
 
-
-
 ; *** "Preparing to Install" wizard page
 WizardPreparing=Pregatire pentru Instalare
 PreparingDesc=Instalatorul pregateste instalarea [name] pe calculator.
@@ -268,8 +253,6 @@ DontCloseApplications=Nu nchi&de aplicatiile
 ErrorCloseApplications=Instalatorul nu a putut nchide automat toate aplicatiile. Înainte de a continua, e recomandat sa nchizi manual toate aplicatiile care folosesc file ce trebuie actualizate de Instalator.
 
 
-
-
 ; *** "Setup Needs the Next Disk" stuff
 ChangeDiskTitle=Instalatorul Necesita Discul Urmator
 SelectDiskLabel2=Introdu Discul %1 si clicheaza pe OK.%n%nDaca filele de pe acest disc pot fi gasite ntr-un alt dosar dect cel afisat mai jos, introdu calea corecta sau clicheaza pe Exploreaza.
@@ -277,37 +260,40 @@ PathLabel=&Cale:
 FileNotInDir2=Fila "%1" nu poate fi gasita n "%2". Introdu discul corect sau selecteaza alt dosar.
 SelectDirectoryLabel=Specifica locul discului urmator.
 
+
 ; *** Installation phase messages
 SetupAborted=Instalarea nu a fost terminata.%n%nCorecteaza problema si apoi ruleaza Instalarea din nou.
 EntryAbortRetryIgnore=Clicheaza pe Rencearca pentru a ncerca din nou, pe Ignora pentru a continua oricum, sau pe Abandoneaza pentru a anula instalarea.
 
+
 ; *** Installation status messages
-StatusClosingApplications=Închid aplicatiile...
-StatusCreateDirs=Creez dosarele...
-StatusExtractFiles=Se copie fisirele aplicatiei...
-StatusCreateIcons=Creez scurtaturile...
-StatusCreateIniEntries=Creez intrarile INI...
-StatusCreateRegistryEntries=Creez intrarile n registru...
-StatusRegisterFiles=Înregistrez filele...
-StatusSavingUninstall=Salvez informatiile de dezinstalare...
-StatusRunProgram=Finalizez instalarea...
-StatusRestartingApplications=Repornesc aplicatiile...
-StatusRollback=Rentorc la starea initiala, prin anularea modificarilor facute...
+StatusClosingApplications=Se închid aplicațiile...
+StatusCreateDirs=Se crează dosarele...
+StatusExtractFiles=Se copie fișirele aplicației...
+StatusCreateIcons=Se crează scurtăturile...
+StatusCreateIniEntries=Se crează intrările INI...
+StatusCreateRegistryEntries=Se crează intrările în registru...
+StatusRegisterFiles=Se înregistrează fișierele...
+StatusSavingUninstall=Se salvează informațiile de dezinstalare...
+StatusRunProgram=Se finalizează instalarea...
+StatusRestartingApplications=Se repornesc aplicațiile...
+StatusRollback=Se restaurează starea inițială, prin anularea modificărilor efectuate în timpul instalării...
+
 
 ; *** Misc. errors
-ErrorInternal2=Eroare Interna: %1
-ErrorFunctionFailedNoCode=%1 a esuat
-ErrorFunctionFailed=%1 a esuat; cod %2
-ErrorFunctionFailedWithMessage=%1 a esuat; cod %2.%n%3
-ErrorExecutingProgram=Nu pot executa fila:%n%1
+ErrorInternal2=Eroare internă: %1
+ErrorFunctionFailedNoCode=%1 a eșuat
+ErrorFunctionFailed=%1 a eșuat; cod %2
+ErrorFunctionFailedWithMessage=%1 a eșuat; cod %2.%n%3
+ErrorExecutingProgram=Nu pot executa:%n%1
 
 ; *** Registry errors
 ErrorRegOpenKey=Eroare la deschiderea cheii de registru:%n%1\%2
 ErrorRegCreateKey=Eroare la crearea cheii de registru:%n%1\%2
-ErrorRegWriteKey=Eroare la scrierea n cheia de registru:%n%1\%2
+ErrorRegWriteKey=Eroare la scrierea în cheia de registru:%n%1\%2
 
 ; *** INI errors
-ErrorIniEntry=Eroare la crearea intrarii INI n fisierul "%1".
+ErrorIniEntry=Eroare la crearea intrării INI în fișierul "%1".
 
 ; *** File copying errors
 FileAbortRetryIgnore=Clicheaza pe Rencearca pentru a ncerca din nou, pe Ignora pentru a sari aceasta fila (nerecomandat), sau pe Abandoneaza pentru a anula instalarea.
@@ -369,14 +355,14 @@ SharedFileLocationLabel=Loc:
 [CustomMessages]
 
 NameAndVersion=%1 (v%2)
-AdditionalIcons=Adaugare de scurtaturi suplimentare:
-CreateDesktopIcon=Creeaza o iconita pe &Ecranul Principal ("Desktop")
-CreateQuickLaunchIcon=Creeaza o iconita in Bara de Lansare &Rapida ("Quick Launch")
-ProgramOnTheWeb=%1 pe internet
-UninstallProgram=Dezinstaleaza %1
-LaunchProgram=Lanseaza %1
-AssocFileExtension=&Asociaza %1 cu extensia de file %2
-AssocingFileExtension=Asociez %1 cu extensia de file %2...
+AdditionalIcons=Adăugare de scurtături suplimentare:
+CreateDesktopIcon=Creeaza o iconiță pe &Ecranul Principal ("Desktop")
+CreateQuickLaunchIcon=Creeaza o iconiță în Bara de Lansare &Rapidă ("Quick Launch")
+ProgramOnTheWeb=%1 pe Internet
+UninstallProgram=Dezinstalează %1
+LaunchProgram=Lansează %1
+AssocFileExtension=&Asociază %1 fișierelor cu extensia %2
+AssocingFileExtension=Asociez %1 fișierelor cu extensia %2...
 AutoStartProgramGroupDescription=Pornire:
-AutoStartProgram=Porneste automat %1
-AddonHostProgramNotFound=%1 nu poate fi gasit n dosarul selectat.%n%nVrei sa continui oricum?
+AutoStartProgram=Pornește în mod automat %1
+AddonHostProgramNotFound=%1 nu poate fi găsit în dosarul ales.%n%nDoriți să continuați operațiunea?
