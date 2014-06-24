@@ -14,4 +14,10 @@ public class CharacterDictionary {
     // Ș \u0218
     // Ț \u021a
 
+    public static void main(final String... args) {
+        final int a = Integer.MIN_VALUE;
+        final int b = -a;
+        System.out.println(a + "   " + b);
+    }
+
 }
