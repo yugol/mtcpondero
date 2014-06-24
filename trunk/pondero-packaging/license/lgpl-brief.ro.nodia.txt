@@ -1,0 +1,13 @@
+Acest program este un software gratuit: il puteti redistribui
+si / sau modifica in conformitate cu termenii GNU General Public License
+publicata de Free Software Foundation, fie versiunea 3 a Licentei,
+sau (la optiunea dumneavoastra) orice versiune ulterioara.
+
+Acest program este distribuit in speranta ca va fi util,
+dar FARA NICI O GARANTIE; fara nici macar garantia implicita
+de VANDABILITATE sau POTRIVIRE PENTRU UN ANUMIT SCOP.
+A se vedea GNU General Public License pentru mai multe detalii.
+
+Ar trebui sa fi primit o copie a GNU General Public License
+impreuna cu acest program.
+Daca nu, se poate consulta <http://www.gnu.org/licenses/>.

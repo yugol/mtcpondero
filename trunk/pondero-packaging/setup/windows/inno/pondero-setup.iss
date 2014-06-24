@@ -39,7 +39,6 @@ Source:   "{#PonderoRoot}\pondero.bat";                DestDir: "{app}";       F
 Source:   "{#PonderoRoot}\bin\pondero.jar";            DestDir: "{app}\bin";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\bin\pondero-libs.jar";       DestDir: "{app}\bin";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\bin\pondero-install.jar";    DestDir: "{app}\bin";   Flags: ignoreversion
-Source:   "{#PonderoRoot}\res\pondero.properties";     DestDir: "{app}\res";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\res\pondero-48x48.ico";      DestDir: "{app}\res";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\res\pondero-license.txt";    DestDir: "{app}\res";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-ic.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
