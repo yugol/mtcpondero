@@ -1,3 +1,5 @@
+- fix: save file
+
 - experience: use diacritics in license
 - experience: use diacritics in install app
 - experience: adjust install fonts sizes
