@@ -25,10 +25,10 @@ public class UpdateUtil {
         File destination = null;
         switch (update.getType()) {
             case APPLICATION:
-                destination = new File(Globals.getBinFolder(), update.getFileName());
+                destination = new File(Globals.getFolderBin(), update.getFileName());
                 break;
             case TEST:
-                destination = new File(Globals.getTestsFolder(), update.getFileName());
+                destination = new File(Globals.getFolderTests(), update.getFileName());
                 break;
             default:
                 return;
