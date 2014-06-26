@@ -1,20 +1,19 @@
-- fix: save file
+- fix: save file + intense logging
+- testing: use a new UUID every time a new test is launched
+- properties: save last workbook path
+
+- menu: Help -> Home Page
+- core: open web pages in external browser
 
 - experience: wizard based interface
 
 - web: develop the home page (mention that this is a licence project)
 - web: develop a screenshot page
-- core: open web pages in external browser
-- menu: Help -> Home Page
 
 - config: send production flag in command line
 - config: check for installed java versions before installing
 - menu: Application -> Preferences...
 - menu: Help -> Documenation page
-- menu: Help -> Home page
-
-- properties: save last workbook path
-- testing: use a new UUID every time a new test is launched
 
 - test-ic: extensive test
 - testing: extract a subliminal priming task in a separate project
