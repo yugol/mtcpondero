@@ -18,32 +18,29 @@ import pondero.update.Artifact;
 
 public final class Globals {
 
-    public static final String         PURL_HOME               = "http://www.purl.org";                         //$NON-NLS-1$
+    public static final String         PURL_HOME               = "http://www.purl.org";
     public static final String         HOME_PAGE_ADDRESS       = PURL_HOME + "/net/pondero/home";
     public static final String         UPDATE_REGISTRY_ADDRESS = PURL_HOME + "/net/pondero/update/registry.xml";
     public static final String         CONTACT_MAIL_ADDRESS    = "mindtrips.communications@gmail.com";
 
-    private static final String        DEFAULT_WORKBOOK_NAME   = "default.xlsx";                                //$NON-NLS-1$
+    private static final String        CONSOLE_LOG_LEVEL_KEY   = "consoleLogLevel";
+    private static final String        FILE_LOG_LEVEL_KEY      = "fileLogLevel";
+    private static final String        LOCALE_STRING_KEY       = "localeString";
+    private static final String        UI_LAF_KEY              = "uiLaf";
+    private static final String        UI_SCALE_FACTOR_KEY     = "uiScaleFactor";
+    private static final String        UPDATE_ON_STARTUP_KEY   = "updateOnStartup";
 
-    private static final String        LOCALE_STRING_KEY       = "localeString";                                //$NON-NLS-1$
-    private static final String        UI_SCALE_FACTOR_KEY     = "uiScaleFactor";                               //$NON-NLS-1$
-    private static final String        UI_LAF_KEY              = "uiLaf";                                       //$NON-NLS-1$
-    private static final String        UPDATE_ON_STARTUP_KEY   = "updateOnStartup";                             //$NON-NLS-1$
+    private static final String        DEFAULT_WORKBOOK_NAME   = "default.xlsx";
 
     private static File                homeFolder;
-    private static File                binFolder;
-    private static File                testsFolder;
-    private static File                resFolder;
-    private static File                resultsFolder;
-
+    private static boolean             executedFromIde;
+    private static File                propertiesFile;
     private static final Set<Artifact> artifacts               = new HashSet<Artifact>();
 
-    private static File                propertiesFile;
-    private static String              localeString            = "ro";                                          //$NON-NLS-1$
-    private static double              uiScaleFactor           = 1;
-    private static String              uiLaf                   = "metal";                                       //$NON-NLS-1$
+    private static String              localeString            = "ro";
+    private static String              uiLaf                   = "metal";
     private static boolean             updateOnStartup         = false;
-    private static boolean             executedFromIde;
+    private static double              uiScaleFactor           = 1;
 
     public static boolean backupWorkbookOnOpen() {
         return true;
@@ -53,17 +50,32 @@ public final class Globals {
         return artifacts;
     }
 
-    public static File getBinFolder() {
-        return binFolder;
-    }
-
     public static Workbook getDefaultWorkbook() throws Exception {
         return WorkbookFactory.openWorkbook(Globals.getDefaultWorkbookFile());
     }
 
     public static File getDefaultWorkbookFile() {
-        if (resultsFolder.isDirectory()) { return new File(resultsFolder, DEFAULT_WORKBOOK_NAME); }
-        return new File(DEFAULT_WORKBOOK_NAME);
+        return new File(getFolderResults(), DEFAULT_WORKBOOK_NAME);
+    }
+
+    public static File getFolderBin() {
+        return getFolder("bin");
+    }
+
+    public static File getFolderLog() {
+        return getFolder("log");
+    }
+
+    public static File getFolderRes() {
+        return getFolder("res");
+    }
+
+    public static File getFolderResults() {
+        return getFolder("results");
+    }
+
+    public static File getFolderTests() {
+        return getFolder("tests");
     }
 
     public static String getLaf() {
@@ -76,14 +88,6 @@ public final class Globals {
 
     public static Locale getLocale() {
         return new Locale(localeString);
-    }
-
-    public static File getResultsFolder() {
-        return resultsFolder;
-    }
-
-    public static File getTestsFolder() {
-        return testsFolder;
     }
 
     public static double getUiScaleFactor() {
@@ -114,53 +118,45 @@ public final class Globals {
         if (!homeFolder.exists()) {
             homeFolder.mkdirs();
         }
-        binFolder = new File(homeFolder, "bin");
-        if (!binFolder.exists()) {
-            binFolder.mkdirs();
-        }
-        resFolder = new File(homeFolder, "res");
-        if (!resFolder.exists()) {
-            resFolder.mkdirs();
-        }
-        testsFolder = new File(homeFolder, "tests");
-        if (!testsFolder.exists()) {
-            testsFolder.mkdirs();
-        }
-        resultsFolder = new File(homeFolder, "results");
-        if (!resultsFolder.exists()) {
-            resultsFolder.mkdirs();
-        }
-        propertiesFile = new File(resFolder, propertiesFileName);
+        propertiesFile = new File(getFolderRes(), propertiesFileName);
         if (propertiesFile.exists()) {
             final Reader propertiesReader = new FileReader(propertiesFile);
             final Properties properties = new Properties();
             properties.load(propertiesReader);
             propertiesReader.close();
-            String foo = properties.getProperty(LOCALE_STRING_KEY);
+            String foo = null;
+            foo = properties.getProperty(CONSOLE_LOG_LEVEL_KEY);
+            if (!StringUtil.isNullOrBlank(foo)) {
+                Logger.maxConsoleLevel = Integer.parseInt(foo.trim());
+            }
+            foo = properties.getProperty(FILE_LOG_LEVEL_KEY);
+            if (!StringUtil.isNullOrBlank(foo)) {
+                Logger.maxFileLevel = Integer.parseInt(foo.trim());
+            }
+            foo = properties.getProperty(LOCALE_STRING_KEY);
             if (!StringUtil.isNullOrBlank(foo)) {
                 localeString = foo;
-            }
-            foo = properties.getProperty(UI_SCALE_FACTOR_KEY);
-            if (!StringUtil.isNullOrBlank(foo)) {
-                uiScaleFactor = Double.parseDouble(foo);
             }
             foo = properties.getProperty(UI_LAF_KEY);
             if (!StringUtil.isNullOrBlank(foo)) {
                 uiLaf = foo.trim().toLowerCase();
             }
+            foo = properties.getProperty(UI_SCALE_FACTOR_KEY);
+            if (!StringUtil.isNullOrBlank(foo)) {
+                uiScaleFactor = Double.parseDouble(foo);
+            }
             foo = properties.getProperty(UPDATE_ON_STARTUP_KEY);
             if (!StringUtil.isNullOrBlank(foo)) {
                 updateOnStartup = Boolean.parseBoolean(foo.trim().toLowerCase());
             }
-
         } else {
             savePreferences();
         }
         info("home folder: ", homeFolder.getCanonicalPath());
         debug("properties file: ", propertiesFile.getCanonicalPath());
-        registerArtifact(Artifact.fromJarFile(new File(binFolder, "pondero.jar")));
-        registerArtifact(Artifact.fromJarFile(new File(binFolder, "pondero-libs.jar")));
-        registerArtifact(Artifact.fromJarFile(new File(binFolder, "pondero-install.jar")));
+        registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero.jar")));
+        registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero-libs.jar")));
+        registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero-install.jar")));
     }
 
     public static void registerArtifact(final Artifact artifact) {
@@ -171,13 +167,23 @@ public final class Globals {
 
     public static void savePreferences() throws Exception {
         final Properties properties = new Properties();
+        properties.setProperty(CONSOLE_LOG_LEVEL_KEY, String.valueOf(Logger.maxConsoleLevel));
+        properties.setProperty(FILE_LOG_LEVEL_KEY, String.valueOf(Logger.maxFileLevel));
         properties.setProperty(LOCALE_STRING_KEY, String.valueOf(localeString));
-        properties.setProperty(UI_SCALE_FACTOR_KEY, String.valueOf(uiScaleFactor));
         properties.setProperty(UI_LAF_KEY, String.valueOf(uiLaf));
+        properties.setProperty(UI_SCALE_FACTOR_KEY, String.valueOf(uiScaleFactor));
         properties.setProperty(UPDATE_ON_STARTUP_KEY, String.valueOf(updateOnStartup));
         final Writer propertiesWriter = new FileWriter(propertiesFile);
         properties.store(propertiesWriter, null);
         propertiesWriter.close();
+    }
+
+    private static File getFolder(String name) {
+        File folder = new File(homeFolder, name);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        return folder;
     }
 
     private Globals() {

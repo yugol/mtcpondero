@@ -17,7 +17,7 @@ public class TestLoader {
 
     public static void registerTests(final Pondero pondero) {
         try {
-            final File pluginFolder = Globals.getTestsFolder();
+            final File pluginFolder = Globals.getFolderTests();
 
             final List<Artifact> artifacts = new ArrayList<Artifact>();
             final List<URL> jarUrls = new ArrayList<URL>();
