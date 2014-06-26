@@ -1,0 +1,12 @@
+- creat fisier(e) de setup
+- creat fisier(e) de test
+- upload fisiere OneDrive + Dropbox
+- adaugat inregistrari purl
+- adaugat mapari purl
+- construit homepage (legaturi permanente pri + sec)
+- adaugat imagini la capturi de ecran
+- creat tutorial de instalare
+- creat tutorial de instalare
+- creat pagina pentru dezvoltatori (google code + changes)
+- testat pe win XP
+- scris mesaj
