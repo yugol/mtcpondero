@@ -30,6 +30,7 @@ public final class Globals {
     private static final String        UI_SCALE_FACTOR_KEY     = "uiScaleFactor";
     private static final String        UPDATE_ON_STARTUP_KEY   = "updateOnStartup";
 
+    private static final String        PROPERTIES_FILE_NAME    = "pondero.properties";
     private static final String        DEFAULT_WORKBOOK_NAME   = "default.xlsx";
 
     private static File                homeFolder;
@@ -107,7 +108,6 @@ public final class Globals {
     }
 
     public static void loadPreferences(String homeFolderName) throws Exception {
-        final String propertiesFileName = "pondero.properties";
         if (StringUtil.isNullOrBlank(homeFolderName)) {
             executedFromIde = true;
             homeFolderName = "../../Pondero";
@@ -118,7 +118,7 @@ public final class Globals {
         if (!homeFolder.exists()) {
             homeFolder.mkdirs();
         }
-        propertiesFile = new File(getFolderRes(), propertiesFileName);
+        propertiesFile = new File(getFolderRes(), PROPERTIES_FILE_NAME);
         if (propertiesFile.exists()) {
             final Reader propertiesReader = new FileReader(propertiesFile);
             final Properties properties = new Properties();

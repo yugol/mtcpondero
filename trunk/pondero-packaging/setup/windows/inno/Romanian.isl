@@ -73,8 +73,8 @@ WelcomeLabel2=Aplicaþia [name/ver] va fi instalatã pe calculatorul dumneavoastrã
 
 
 ; *** "License Agreement" wizard page
-WizardLicense=Acord de Licenþiere
-LicenseLabel=Urmãtoarele informaþii sunt importante. Vã rugãm sã le citiþi înaite de a continua.
+WizardLicense=Acord de licenþiere
+LicenseLabel=Urmãtoarele informaþii sunt importante. Vã rugãm sã le citiþi înainte de a continua.
 LicenseLabel3=Acesta este Acordul de Licenþiere. Este necesarã acceptarea termenilor acestui acord înainte ca instalarea sã poatã continua:
 LicenseAccepted=&Accept termenii
 LicenseNotAccepted=&Refuz termenii
@@ -120,7 +120,7 @@ SelectTasksLabel2=Selectaþi sarcinile suplimentare care doriþi sã fie îndeplinit
 
 
 ; *** "Ready to Install" wizard page
-WizardReady=Instalarea este pregãtitã
+WizardReady=Configuraþia de instalarea este pregãtitã
 ReadyLabel1=Toate datele necesare pentru instalarea aplicaþiei [name] au fost colectate.
 ReadyLabel2a=Apasaþi butonul [Instalare] pentru a avansa sau butonul [Întoarcere] dacã doriþi revizuirea/schimbarea configuraþiei de instalare.
 ReadyLabel2b=Apãsaþi butonul [Instalare] pentru a continua cu instalarea.
@@ -138,10 +138,10 @@ InstallingLabel=Vã rugãm sã aºteaptaþi finalizarea instalãrii aplicaþiei [name] 
 
 
 ; *** "Setup Completed" wizard page
-FinishedHeadingLabel=Finalizarea Instalãrii [name]
+FinishedHeadingLabel=Finalizarea instalãrii aplicaþiei [name]
 FinishedLabelNoIcons=Instalarea aplicaþiei [name] s-a terminat cu succes.
-FinishedLabel=Instalarea aplicaþiei [name] pe calculator s-a terminat cu succes. Aplicaþia poate fi lansatã prin actionarea scurtãturilor adãugate.
-ClickFinish=Apasaþi butonul [Finalizeaza] pentru a parasi Aplicaþia de Instalare.
+FinishedLabel=Instalarea aplicaþiei [name] pe calculator s-a terminat cu succes. Aplicaþia poate fi lansatã în execuþie prin acþionarea scurtãturilor adãugate.
+ClickFinish=Apasaþi butonul [Finalizare] pentru a închide aplicaþia de instalare.
 FinishedRestartLabel=Pentru a termina instalarea aplicaþiei [name], trebuie repornit calculatorul. Doriþi sã efectuaþi aceastã operaþie chiar acum?
 FinishedRestartMessage=Pentru a termina instalarea aplicaþiei [name], trebuie repornit calculatorul.%n%nDoriþi sã efectuaþi aceastã operaþie chiar acum?
 ShowReadmeCheck=Da, doresc afiºarea paginii informative ("README")
