@@ -16,42 +16,73 @@ public class Logger {
     public static final int    TRACE           = 60;
 
     public static int          maxConsoleLevel = INFO;
-    public static int          maxFileLevel    = NONE;
+    public static int          maxFileLevel    = TRACE;
 
     private static final File  logFile         = new File(Globals.getFolderLog(), buildLogFileName());
     private static PrintStream logFileOut;
 
     public static void critical(Object... obj) {
-        log(CRITICAL, obj);
+        log(CRITICAL, null, obj);
+    }
+
+    public static void critical(Throwable t, Object... obj) {
+        log(CRITICAL, t, obj);
     }
 
     public static void debug(Object... obj) {
-        log(DEBUG, obj);
+        log(DEBUG, null, obj);
+    }
+
+    public static void debug(Throwable t, Object... obj) {
+        log(DEBUG, t, obj);
     }
 
     public static void error(Object... obj) {
-        log(ERROR, obj);
+        log(ERROR, null, obj);
+    }
+
+    public static void error(Throwable t, Object... obj) {
+        log(ERROR, t, obj);
     }
 
     public static void info(Object... obj) {
-        log(INFO, obj);
+        log(INFO, null, obj);
+    }
+
+    public static void info(Throwable t, Object... obj) {
+        log(INFO, t, obj);
     }
 
     public static void trace(Object... obj) {
-        log(TRACE, obj);
+        log(TRACE, null, obj);
+    }
+
+    public static void trace(Throwable t, Object... obj) {
+        log(TRACE, t, obj);
     }
 
     public static void warning(Object... obj) {
-        log(WARNING, obj);
+        log(WARNING, null, obj);
+    }
+
+    public static void warning(Throwable t, Object... obj) {
+        log(WARNING, t, obj);
     }
 
     private static String buildLogFileName() {
         long timestamp = System.currentTimeMillis();
-        return "pondero-" + DateUtil.toIsoDate(timestamp) + "-" + DateUtil.toDotTime(timestamp) + ".log";
+        return DateUtil.toIsoDate(timestamp) + "@" + DateUtil.toCompactTime(timestamp) + ".log";
     }
 
     private static int getMaxLoggableLevel() {
         return Math.max(maxConsoleLevel, maxFileLevel);
+    }
+
+    private static void justPrintTheDamnThing(PrintStream out, String message, Throwable t) {
+        out.println(message);
+        if (t != null) {
+            t.printStackTrace(out);
+        }
     }
 
     private static PrintStream log() {
@@ -65,25 +96,48 @@ public class Logger {
         return logFileOut;
     }
 
-    private static void log(int level, Object... obj) {
+    private static void log(int level, Throwable t, Object... obj) {
         if (level <= getMaxLoggableLevel()) {
             if (obj == null) {
-                println(level, "null");
+                println(level, "null", t);
             } else if (obj instanceof Object[]) {
                 StringBuilder msg = new StringBuilder();
                 for (Object item : obj) {
                     msg.append(item == null ? "null" : String.valueOf(item));
                 }
-                println(level, msg.toString());
+                println(level, msg.toString(), t);
             } else {
-                println(level, String.valueOf(obj));
+                println(level, String.valueOf(obj), t);
             }
         }
     }
 
-    private static void println(int level, String msg) {
+    private static void println(int level, String msg, Throwable t) {
         StackTraceElement element = Thread.currentThread().getStackTrace()[4];
         StringBuilder logEntry = new StringBuilder();
+        switch (level) {
+            case CRITICAL:
+                logEntry.append("CRITIC ");
+                break;
+            case ERROR:
+                logEntry.append("ERROR  ");
+                break;
+            case WARNING:
+                logEntry.append("WARN   ");
+                break;
+            case INFO:
+                logEntry.append("INFO   ");
+                break;
+            case DEBUG:
+                logEntry.append("DEBUG  ");
+                break;
+            case TRACE:
+                logEntry.append("TRACE  ");
+                break;
+            default:
+                logEntry.append("       ");
+                break;
+        }
         logEntry.append(DateUtil.toIsoTime(System.currentTimeMillis()));
         logEntry.append(" (");
         logEntry.append(element.getFileName());
@@ -96,15 +150,16 @@ public class Logger {
             switch (level) {
                 case ERROR:
                 case CRITICAL:
-                    System.err.println(logEntry.toString());
+                    justPrintTheDamnThing(System.err, logEntry.toString(), t);
                     break;
                 default:
-                    System.out.println(logEntry.toString());
+                    justPrintTheDamnThing(System.out, logEntry.toString(), t);
             }
         }
         if (maxFileLevel > NONE) {
-            log().println(logEntry.toString());
-            log().flush();
+            PrintStream out = log();
+            justPrintTheDamnThing(out, logEntry.toString(), t);
+            out.flush();
         }
     }
 

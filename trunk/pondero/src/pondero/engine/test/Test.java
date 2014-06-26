@@ -1,5 +1,6 @@
 package pondero.engine.test;
 
+import static pondero.Logger.error;
 import java.util.List;
 import java.util.Stack;
 import pondero.Globals;
@@ -42,7 +43,7 @@ public abstract class Test extends TestRenderer implements IsController {
             try {
                 workbook.save();
             } catch (final Exception e) {
-                e.printStackTrace();
+                error(e);
             }
         }
         getLauncher().onTaskEnded(this, report);
@@ -64,7 +65,7 @@ public abstract class Test extends TestRenderer implements IsController {
                 try {
                     workbook.add(record);
                 } catch (final Exception e) {
-                    e.printStackTrace();
+                    error(e);
                 }
             }
             record = null;
@@ -142,7 +143,7 @@ public abstract class Test extends TestRenderer implements IsController {
             _doBegin();
             _doStep(null);
         } catch (final Exception e) {
-            e.printStackTrace();
+            error(e);
         }
     }
 

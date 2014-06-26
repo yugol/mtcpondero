@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -19,14 +20,14 @@ public class OpenDocumentAction extends AbstractAction {
     }
 
     @Override
-    public void actionPerformed(final ActionEvent e) {
+    public void actionPerformed(final ActionEvent evt) {
         final JFileChooser dialog = new JFileChooser("."); //$NON-NLS-1$
         if (JFileChooser.APPROVE_OPTION == dialog.showOpenDialog(app.getFrame())) {
             try {
                 app.openWorkbook(dialog.getSelectedFile());
                 // TODO create backup copy
-            } catch (final Exception e1) {
-                e1.printStackTrace();
+            } catch (final Exception e) {
+                error(e);
             }
         }
     }
