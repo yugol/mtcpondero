@@ -1,5 +1,6 @@
 package pondero.ui;
 
+import static pondero.Logger.error;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -80,7 +81,7 @@ public class Pondero implements TaskLauncher {
                     window.openWorkbook(Globals.getLastWorkbookFile());
                     window.frmMain.setVisible(true);
                 } catch (final Exception e) {
-                    e.printStackTrace();
+                    error(e);
                 }
             }
 

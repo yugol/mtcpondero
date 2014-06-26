@@ -1,5 +1,6 @@
 package pondero.model.participants;
 
+import static pondero.Logger.error;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -65,20 +66,6 @@ public class Participants implements Iterable<Participant> {
         return all.iterator();
     }
 
-    @SuppressWarnings("unchecked")
-    private void loadAll() {
-        if (wb != null) {
-            try {
-                all = (List<Participant>) wb.getAll(Participant.class);
-                sort(new SurnameNameIdComparator());
-            } catch (final Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            all = new ArrayList<Participant>();
-        }
-    }
-
     public List<Participant> select(String pattern) {
         pattern = StringUtil.normalizeForSearch(pattern);
         final List<Participant> selection = new ArrayList<Participant>();
@@ -88,10 +75,6 @@ public class Participants implements Iterable<Participant> {
             }
         }
         return selection;
-    }
-
-    private void sort(final Comparator<Participant> c) {
-        Collections.sort(all, c);
     }
 
     public Participant[] toArray() {
@@ -104,6 +87,24 @@ public class Participants implements Iterable<Participant> {
             wb.add(p);
         }
         wb.save();
+    }
+
+    @SuppressWarnings("unchecked")
+    private void loadAll() {
+        if (wb != null) {
+            try {
+                all = (List<Participant>) wb.getAll(Participant.class);
+                sort(new SurnameNameIdComparator());
+            } catch (final Exception e) {
+                error(e);
+            }
+        } else {
+            all = new ArrayList<Participant>();
+        }
+    }
+
+    private void sort(final Comparator<Participant> c) {
+        Collections.sort(all, c);
     }
 
 }

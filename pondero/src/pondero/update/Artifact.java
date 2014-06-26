@@ -1,5 +1,6 @@
 package pondero.update;
 
+import static pondero.Logger.error;
 import static pondero.Logger.trace;
 import java.io.File;
 import java.io.FileInputStream;
@@ -176,7 +177,7 @@ public class Artifact implements Comparable<Artifact> {
             if (password == null) { return false; }
             return PasswordHash.validatePassword(password, passwordHash);
         } catch (Exception e) {
-            e.printStackTrace();
+            error(e);
             return false;
         }
     }

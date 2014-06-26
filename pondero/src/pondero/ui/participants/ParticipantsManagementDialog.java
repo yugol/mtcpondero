@@ -1,5 +1,6 @@
 package pondero.ui.participants;
 
+import static pondero.Logger.error;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -530,7 +531,7 @@ public class ParticipantsManagementDialog extends JDialog {
             setWorkbook(participants.getWorkbook());
             clearDirtyFlag();
         } catch (Exception e) {
-            e.printStackTrace();
+            error(e);
         }
     }
 

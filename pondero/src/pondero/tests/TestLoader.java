@@ -1,5 +1,6 @@
 package pondero.tests;
 
+import static pondero.Logger.error;
 import static pondero.Logger.info;
 import java.io.File;
 import java.net.URL;
@@ -45,11 +46,11 @@ public class TestLoader {
                     info("registered test: ", testClass.getCanonicalName());
                     Globals.registerArtifact(candidate);
                 } catch (final ClassCastException e) {
-                    e.printStackTrace();
+                    error(e);
                 }
             }
         } catch (final Exception e) {
-            e.printStackTrace();
+            error(e);
         }
     }
 

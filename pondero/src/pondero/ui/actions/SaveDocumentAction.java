@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.swing.AbstractAction;
@@ -20,13 +21,13 @@ public class SaveDocumentAction extends AbstractAction {
     }
 
     @Override
-    public void actionPerformed(final ActionEvent e) {
+    public void actionPerformed(final ActionEvent evt) {
         final Workbook workbook = app.getCurrentWorkbook();
         if (workbook != null) {
             try {
                 workbook.save();
-            } catch (final IOException e1) {
-                e1.printStackTrace();
+            } catch (final IOException e) {
+                error(e);
             }
         }
     }

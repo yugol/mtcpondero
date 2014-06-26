@@ -2,6 +2,7 @@ package pondero;
 
 import static pondero.Logger.debug;
 import static pondero.Logger.info;
+import static pondero.Logger.trace;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -154,6 +155,12 @@ public final class Globals {
         }
         info("home folder: ", homeFolder.getCanonicalPath());
         debug("properties file: ", propertiesFile.getCanonicalPath());
+        trace("property: ", CONSOLE_LOG_LEVEL_KEY, "=", Logger.maxConsoleLevel);
+        trace("property: ", FILE_LOG_LEVEL_KEY, "=", Logger.maxFileLevel);
+        trace("property: ", LOCALE_STRING_KEY, "=", localeString);
+        trace("property: ", UI_LAF_KEY, "=", uiLaf);
+        trace("property: ", UI_SCALE_FACTOR_KEY, "=", uiScaleFactor);
+        trace("property: ", UPDATE_ON_STARTUP_KEY, "=", updateOnStartup);
         registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero.jar")));
         registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero-libs.jar")));
         registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero-install.jar")));

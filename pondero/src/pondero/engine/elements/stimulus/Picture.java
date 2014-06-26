@@ -1,5 +1,6 @@
 package pondero.engine.elements.stimulus;
 
+import static pondero.Logger.error;
 import java.awt.Color;
 import java.io.IOException;
 import pondero.engine.elements.Element;
@@ -51,7 +52,7 @@ public class Picture extends Element implements HasErase, HasItems, IsVisualStim
             stimulus.setSize(_getSize());
             stimulus.setPath(_nextItem());
         } catch (final IOException e) {
-            e.printStackTrace();
+            error(e);
         }
         return stimulus;
     }

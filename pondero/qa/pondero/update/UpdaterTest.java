@@ -1,5 +1,7 @@
 package pondero.update;
 
+import static pondero.Logger.error;
+
 public class UpdaterTest {
 
     class UpdateLogger implements UpdateListener {
@@ -13,7 +15,7 @@ public class UpdaterTest {
         @Override
         public void readRegistryFailed(Exception e) {
             System.out.println("readRegistryFailed");
-            e.printStackTrace();
+            error(e);
         }
 
         @Override
@@ -29,7 +31,7 @@ public class UpdaterTest {
         @Override
         public void updateArtifactFailed(Artifact update, Exception e) {
             System.out.println("updateArtifactFailed");
-            e.printStackTrace();
+            error(e);
         }
 
         @Override

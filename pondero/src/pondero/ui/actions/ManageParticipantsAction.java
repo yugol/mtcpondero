@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -19,13 +20,13 @@ public class ManageParticipantsAction extends AbstractAction {
     }
 
     @Override
-    public void actionPerformed(final ActionEvent e) {
+    public void actionPerformed(final ActionEvent evt) {
         try {
             final ParticipantsManagementDialog dlg = new ParticipantsManagementDialog(app.getCurrentWorkbook());
             dlg.setModal(true);
             dlg.setVisible(true);
-        } catch (final Exception e1) {
-            e1.printStackTrace();
+        } catch (final Exception e) {
+            error(e);
         }
     }
 

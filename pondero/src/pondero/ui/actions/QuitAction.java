@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.swing.AbstractAction;
@@ -20,7 +21,7 @@ public class QuitAction extends AbstractAction {
     }
 
     @Override
-    public void actionPerformed(final ActionEvent e) {
+    public void actionPerformed(final ActionEvent evt) {
         if (app.getCurrentWorkbook() != null) {
             if (app.getCurrentWorkbook().isDirty()) {
                 if (JOptionPane.showConfirmDialog(
@@ -30,8 +31,8 @@ public class QuitAction extends AbstractAction {
                         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     try {
                         app.getCurrentWorkbook().save();
-                    } catch (final IOException e1) {
-                        e1.printStackTrace();
+                    } catch (final IOException e) {
+                        error(e);
                     }
                 }
             }

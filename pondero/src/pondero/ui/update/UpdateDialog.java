@@ -1,6 +1,7 @@
 package pondero.ui.update;
 
 import static pondero.Logger.debug;
+import static pondero.Logger.error;
 import static pondero.Logger.info;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -49,7 +50,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
             dialog.setVisible(true);
             dialog.beginUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            error(e);
         }
     }
 
@@ -213,7 +214,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         downloading = false;
         setTopStatusMessage(Messages.getString("msg.update-failed"));
         lblTopStatus.setForeground(Color.red);
-        e.printStackTrace();
+        error(e);
     }
 
     @Override
@@ -239,7 +240,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
     public void updateArtifactFailed(Artifact update, Exception e) {
         setTopStatusMessage(update.getCodeName() + " - " + Messages.getString("msg.update-failed"));
         lblTopStatus.setForeground(Color.red);
-        e.printStackTrace();
+        error(e);
     }
 
     @Override

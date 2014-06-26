@@ -1,5 +1,6 @@
 package pondero;
 
+import static pondero.Logger.error;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GraphicsDevice;
@@ -29,7 +30,7 @@ public class OsUtil {
                 method.invoke(null, window, true);
             } catch (final Throwable t) {
                 System.err.println("Full screen mode is not supported");
-                t.printStackTrace();
+                error(t);
             }
         }
     }
@@ -86,7 +87,7 @@ public class OsUtil {
             }
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (final Exception e) {
-            e.printStackTrace();
+            error(e);
         }
     }
 
