@@ -9,7 +9,7 @@
 				<attribute name="Pondero-Artifact-Type" value="APPLICATION" />
 				<attribute name="Pondero-Artifact-Id" value="PONDERO" />
 				<attribute name="Pondero-Artifact-Major" value="0" />
-				<attribute name="Pondero-Artifact-Minor" value="1" />
+				<attribute name="Pondero-Artifact-Minor" value="2" />
 				<attribute name="Pondero-Artifact-Maturity" value="alpha" />
 			</manifest>
 			<fileset dir="${soldir}/pondero/target/classes" />
