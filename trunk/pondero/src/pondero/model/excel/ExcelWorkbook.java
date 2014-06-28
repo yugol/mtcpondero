@@ -25,7 +25,7 @@ import pondero.model.participants.DefaultParticipants;
 
 public class ExcelWorkbook implements Workbook {
 
-    private final File         workbookFile;
+    private File               workbookFile;
     private final XSSFWorkbook workbook;
     private boolean            dirty = false;
 
@@ -38,7 +38,6 @@ public class ExcelWorkbook implements Workbook {
     }
 
     public ExcelWorkbook(final File workbookFile) throws Exception {
-        this.workbookFile = workbookFile;
         workbook = open(workbookFile);
 
         headerStyle = workbook.createCellStyle();
@@ -168,15 +167,23 @@ public class ExcelWorkbook implements Workbook {
         return sheet;
     }
 
-    private XSSFWorkbook open(final File workbookFile) throws IOException {
+    private XSSFWorkbook open(File workbookFile) throws IOException {
         dirty = false;
         if (workbookFile.exists()) {
             info("open existing workbook: ", workbookFile.getCanonicalPath());
+            this.workbookFile = workbookFile;
             return new XSSFWorkbook(new FileInputStream(workbookFile));
         } else {
+            String filePath = workbookFile.getCanonicalPath();
+            if (!filePath.endsWith(ExcelWorkbookFilter.EXT)) {
+                filePath += ExcelWorkbookFilter.EXT;
+                workbookFile = new File(filePath);
+            }
             info("open new workbook: ", workbookFile.getCanonicalPath());
+            this.workbookFile = workbookFile;
             return new XSSFWorkbook();
         }
+
     }
 
 }

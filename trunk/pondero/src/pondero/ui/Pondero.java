@@ -54,6 +54,11 @@ public class Pondero implements TaskLauncher {
     private static final int   ERROR                    = 2;
     private static final int   SUCCESS                  = 3;
 
+    private static final Color ERROR_COLOR              = Color.RED;
+    private static final Color WARNING_COLOR            = Color.BLUE;
+    private static final Color SUCCESS_COLOR            = new Color(0, 128, 0);
+    private static final Color DEFAULT_COLOR            = Color.BLACK;
+
     /**
      * Launch the application.
      * 
@@ -78,8 +83,13 @@ public class Pondero implements TaskLauncher {
                     if (Globals.isUpdateOnStartup()) {
                         new UpdateDialog(window.frmMain).beginUpdate();
                     }
-                    window.openWorkbook(Globals.getLastWorkbookFile());
+                    try {
+                        window.openWorkbook(Globals.getLastWorkbookFile());
+                    } catch (final Exception e) {
+                        error(e);
+                    }
                     window.frmMain.setVisible(true);
+                    window.updateStatus(null);
                 } catch (final Exception e) {
                     error(e);
                 }
@@ -94,14 +104,15 @@ public class Pondero implements TaskLauncher {
     private final Action openDocumentAction       = new OpenDocumentAction(this);
     private final Action quitAction               = new QuitAction(this);
     private final Action updateAction             = new UpdateAction(this);
-
     private final Action startTaskAction          = new StartTaskAction(this);
+
+    private Workbook     currentWorkbook          = null;
     private Participant  currentParticipant       = null;
     private Test         currentTask              = null;
 
-    private Workbook     currentWorkbook          = null;
     private JButton      btnStartTask;
     private JFrame       frmMain;
+    private JLabel       lblDocument;
     private JLabel       lblDocumentName;
     private JLabel       lblParticipant;
     private JLabel       lblParticipantName;
@@ -140,16 +151,16 @@ public class Pondero implements TaskLauncher {
     public void onTaskEnded(final Test task, final TestReport report) {
         switch (report.getEndCode()) {
             case TestReport.END_KILL:
-                setStatus(Messages.getString("msg.test-interrupted", report.getEndCode()), ERROR); //$NON-NLS-1$
+                setStatusMessage(ERROR, Messages.getString("msg.test-interrupted", report.getEndCode())); //$NON-NLS-1$
                 break;
             default:
-                setStatus(Messages.getString("msg.test-completed", report.getRunningTimeInSeconds()), SUCCESS); //$NON-NLS-1$
+                setStatusMessage(SUCCESS, Messages.getString("msg.test-completed", report.getRunningTimeInSeconds())); //$NON-NLS-1$
         }
     }
 
     @Override
     public void onTaskStarted(final Test task) {
-        setStatus(Messages.getString("msg.test-in-progress"), INFO); //$NON-NLS-1$
+        setStatusMessage(INFO, Messages.getString("msg.test-in-progress")); //$NON-NLS-1$
     }
 
     public void openWorkbook(final File workbookFile) throws Exception {
@@ -158,6 +169,7 @@ public class Pondero implements TaskLauncher {
         mntmDocumentSave.setEnabled(true);
         // mntmDocumentSaveAs.setEnabled(true);
         lblDocumentName.setText(workbookFile.getName());
+        updateStatus(null);
     }
 
     public void registerTask(final Test task) {
@@ -174,22 +186,23 @@ public class Pondero implements TaskLauncher {
         } else {
             lblParticipantName.setText(currentParticipant.getName() + " " + currentParticipant.getSurname()); //$NON-NLS-1$
         }
+        updateStatus(null);
     }
 
     public void setCurrentTask(final Test task) {
         currentTask = task;
         if (task != null) {
-            lblTask.setForeground(Color.BLACK);
             lblTaskName.setText(task.getCodeName());
             btnStartTask.setEnabled(true);
-            setStatus(Messages.getString("msg.press-start-to-start", Messages.getString("lbl.start")), INFO); //$NON-NLS-1$ //$NON-NLS-2$
+
         } else {
             lblTask.setForeground(Color.RED);
             lblTaskName.setText(Messages.getString("lbl.n-a")); //$NON-NLS-1$
             lblTaskName.setToolTipText(null);
             btnStartTask.setEnabled(false);
-            setStatus(Messages.getString("msg.please-choose-test"), ERROR); //$NON-NLS-1$
+
         }
+        updateStatus(null);
     }
 
     /**
@@ -277,7 +290,7 @@ public class Pondero implements TaskLauncher {
         gbl_pnlComposition.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
         pnlComposition.setLayout(gbl_pnlComposition);
 
-        final JLabel lblDocument = new JLabel(Messages.getString("lbl.data-register") + ":"); //$NON-NLS-1$  //$NON-NLS-2$
+        lblDocument = new JLabel(Messages.getString("lbl.data-register") + ":"); //$NON-NLS-1$  //$NON-NLS-2$
         lblDocument.setFont(lblDocument.getFont().deriveFont(Font.BOLD));
         final GridBagConstraints gbc_lblDocument = new GridBagConstraints();
         gbc_lblDocument.anchor = GridBagConstraints.EAST;
@@ -371,24 +384,56 @@ public class Pondero implements TaskLauncher {
         pnlAction.add(btnStartTask, gbc_btnStartTask);
     }
 
-    private void setStatus(String message, final int level) {
+    private void setStatusMessage(final int level, String message) {
         if (message == null) {
             message = ""; //$NON-NLS-1$
         }
         lblTaskStatus.setText(message + " "); //$NON-NLS-1$
         switch (level) {
             case WARNING:
-                lblTaskStatus.setForeground(Color.BLUE);
+                lblTaskStatus.setForeground(WARNING_COLOR);
                 break;
             case ERROR:
-                lblTaskStatus.setForeground(Color.RED);
+                lblTaskStatus.setForeground(ERROR_COLOR);
                 break;
             case SUCCESS:
-                lblTaskStatus.setForeground(new Color(0, 128, 0));
+                lblTaskStatus.setForeground(SUCCESS_COLOR);
                 break;
             default:
-                lblTaskStatus.setForeground(Color.BLACK);
+                lblTaskStatus.setForeground(DEFAULT_COLOR);
                 break;
         }
     }
+
+    private void updateStatus(Object hint) {
+        if (currentWorkbook == null) {
+            lblDocument.setForeground(ERROR_COLOR);
+        } else {
+            lblDocument.setForeground(DEFAULT_COLOR);
+        }
+        if (currentParticipant == null) {
+            lblParticipant.setForeground(Color.BLUE);
+        } else {
+            lblParticipant.setForeground(DEFAULT_COLOR);
+        }
+        if (currentTask == null) {
+            lblTask.setForeground(ERROR_COLOR);
+            btnStartTask.setEnabled(false);
+        } else {
+            lblTask.setForeground(DEFAULT_COLOR);
+        }
+
+        if (currentWorkbook == null) {
+            setStatusMessage(ERROR, Messages.getString("msg.please-choose-workbook")); //$NON-NLS-1$
+        } else if (currentTask == null) {
+            setStatusMessage(ERROR, Messages.getString("msg.please-choose-test")); //$NON-NLS-1$
+        } else if (currentParticipant == null) {
+            setStatusMessage(WARNING, Messages.getString("msg.please-choose-participant")); //$NON-NLS-1$
+        } else {
+            setStatusMessage(INFO, Messages.getString("msg.press-start-to-start", Messages.getString("lbl.start"))); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+
+        btnStartTask.setEnabled(currentWorkbook != null && currentTask != null);
+    }
+
 }
