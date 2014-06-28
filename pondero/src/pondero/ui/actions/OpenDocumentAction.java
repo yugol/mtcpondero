@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import pondero.Globals;
+import pondero.model.excel.ExcelWorkbookFilter;
 import pondero.ui.Messages;
 import pondero.ui.Pondero;
 
@@ -22,6 +24,8 @@ public class OpenDocumentAction extends AbstractAction {
     @Override
     public void actionPerformed(final ActionEvent evt) {
         final JFileChooser dialog = new JFileChooser("."); //$NON-NLS-1$
+        dialog.setCurrentDirectory(Globals.getFolderResults());
+        dialog.setFileFilter(new ExcelWorkbookFilter());
         if (JFileChooser.APPROVE_OPTION == dialog.showOpenDialog(app.getFrame())) {
             try {
                 app.openWorkbook(dialog.getSelectedFile());

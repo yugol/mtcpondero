@@ -114,31 +114,35 @@ public class Logger {
 
     private static void println(int level, String msg, Throwable t) {
         StackTraceElement element = Thread.currentThread().getStackTrace()[4];
-        StringBuilder logEntry = new StringBuilder();
+        String levelHint;
         switch (level) {
             case CRITICAL:
-                logEntry.append("CRITIC ");
+                levelHint = "CRITIC";
                 break;
             case ERROR:
-                logEntry.append("ERROR  ");
+                levelHint = "ERROR ";
                 break;
             case WARNING:
-                logEntry.append("WARN   ");
+                levelHint = "WARN  ";
                 break;
             case INFO:
-                logEntry.append("INFO   ");
+                levelHint = "INFO  ";
                 break;
             case DEBUG:
-                logEntry.append("DEBUG  ");
+                levelHint = "DEBUG ";
                 break;
             case TRACE:
-                logEntry.append("TRACE  ");
+                levelHint = "TRACE ";
                 break;
             default:
-                logEntry.append("       ");
+                levelHint = "      ";
                 break;
         }
+        StringBuilder logEntry = new StringBuilder();
+        logEntry.append("[");
         logEntry.append(DateUtil.toIsoTime(System.currentTimeMillis()));
+        logEntry.append("] ");
+        logEntry.append(levelHint);
         logEntry.append(" (");
         logEntry.append(element.getFileName());
         logEntry.append(":");
