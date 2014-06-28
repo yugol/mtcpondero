@@ -231,7 +231,7 @@ public class Pondero implements TaskLauncher {
 
         });
         frmMain.setTitle(Messages.getString("lbl.pondero")); //$NON-NLS-1$
-        frmMain.setBounds(100, 100, 700, 350);
+        frmMain.setBounds(100, 100, 700, 320);
         frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         final JMenuBar menuBar = new JMenuBar();

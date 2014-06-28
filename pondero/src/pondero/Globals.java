@@ -67,8 +67,8 @@ public final class Globals {
         return getFolder("bin");
     }
 
-    public static File getFolderLog() {
-        return getFolder("log");
+    public static File getFolderLogs() {
+        return getFolder("logs");
     }
 
     public static File getFolderRes() {
@@ -109,7 +109,7 @@ public final class Globals {
     }
 
     public static boolean isAutoSaveExperimentData() {
-        return false;
+        return true;
     }
 
     public static boolean isIde() {
