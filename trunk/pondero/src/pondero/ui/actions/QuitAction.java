@@ -2,10 +2,12 @@ package pondero.ui.actions;
 
 import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import pondero.Globals;
 import pondero.ui.Messages;
 import pondero.ui.Pondero;
 
@@ -39,6 +41,13 @@ public class QuitAction extends AbstractAction {
             try {
                 app.getCurrentWorkbook().close();
             } catch (IOException e) {
+                error(e);
+            }
+        }
+        for (File file : Globals.getFolderResultsTemp().listFiles()) {
+            try {
+                file.deleteOnExit();
+            } catch (Exception e) {
                 error(e);
             }
         }

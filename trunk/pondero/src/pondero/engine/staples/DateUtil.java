@@ -11,6 +11,7 @@ public class DateUtil {
 
     public static final SimpleDateFormat  ISO_DATE_FORMATTER     = new SimpleDateFormat("yyyy-MM-dd");
     public static final SimpleDateFormat  ISO_TIME_FORMATTER     = new SimpleDateFormat("HH:mm:ss");
+    private static final SimpleDateFormat COMPACT_DATE_FORMATTER = new SimpleDateFormat("yyyyMMdd");
     private static final SimpleDateFormat COMPACT_TIME_FORMATTER = new SimpleDateFormat("HHmmss");
     private static final DateFormat       DATE_UI_FORMATTER      = DateFormat.getDateInstance(DateFormat.LONG, Globals.getLocale());
 
@@ -25,6 +26,10 @@ public class DateUtil {
             error(e);
             return null;
         }
+    }
+
+    public static String toCompactDate(long time) {
+        return COMPACT_DATE_FORMATTER.format(new Date(time));
     }
 
     public static String toCompactTime(long time) {
