@@ -1,6 +1,7 @@
 package pondero;
 
 import static pondero.Logger.debug;
+import static pondero.Logger.error;
 import static pondero.Logger.info;
 import static pondero.Logger.trace;
 import java.io.File;
@@ -26,6 +27,7 @@ public final class Globals {
 
     private static final String        CONSOLE_LOG_LEVEL_KEY   = "consoleLogLevel";
     private static final String        FILE_LOG_LEVEL_KEY      = "fileLogLevel";
+    private static final String        LAST_WORKBOOK_FILE_KEY  = "lastWorkbookFile";
     private static final String        LOCALE_STRING_KEY       = "localeString";
     private static final String        UI_LAF_KEY              = "uiLaf";
     private static final String        UI_SCALE_FACTOR_KEY     = "uiScaleFactor";
@@ -39,6 +41,7 @@ public final class Globals {
     private static File                propertiesFile;
     private static final Set<Artifact> artifacts               = new HashSet<Artifact>();
 
+    private static File                lastWorkbookFile;
     private static String              localeString            = "ro";
     private static String              uiLaf                   = "metal";
     private static boolean             updateOnStartup         = false;
@@ -93,6 +96,7 @@ public final class Globals {
     }
 
     public static File getLastWorkbookFile() {
+        if (lastWorkbookFile != null) { return lastWorkbookFile; }
         return getDefaultWorkbookFile();
     }
 
@@ -158,6 +162,13 @@ public final class Globals {
             if (!StringUtil.isNullOrBlank(foo)) {
                 updateOnStartup = Boolean.parseBoolean(foo.trim().toLowerCase());
             }
+            foo = properties.getProperty(LAST_WORKBOOK_FILE_KEY);
+            if (!StringUtil.isNullOrBlank(foo)) {
+                lastWorkbookFile = new File(foo);
+                if (!lastWorkbookFile.exists()) {
+                    lastWorkbookFile = null;
+                }
+            }
         } else {
             savePreferences();
         }
@@ -188,9 +199,21 @@ public final class Globals {
         properties.setProperty(UI_LAF_KEY, String.valueOf(uiLaf));
         properties.setProperty(UI_SCALE_FACTOR_KEY, String.valueOf(uiScaleFactor));
         properties.setProperty(UPDATE_ON_STARTUP_KEY, String.valueOf(updateOnStartup));
+        if (lastWorkbookFile != null) {
+            properties.setProperty(LAST_WORKBOOK_FILE_KEY, lastWorkbookFile.getCanonicalPath());
+        }
         final Writer propertiesWriter = new FileWriter(propertiesFile);
         properties.store(propertiesWriter, null);
         propertiesWriter.close();
+    }
+
+    public static void setLastWorkbookFile(File file) {
+        lastWorkbookFile = file;
+        try {
+            savePreferences();
+        } catch (Exception e) {
+            error(e);
+        }
     }
 
     private static File getFolder(String name) {

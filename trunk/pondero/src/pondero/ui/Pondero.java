@@ -35,6 +35,7 @@ import pondero.model.WorkbookFactory;
 import pondero.model.entities.Participant;
 import pondero.tests.TestLoader;
 import pondero.ui.actions.ChooseParticipantAction;
+import pondero.ui.actions.HomePageAction;
 import pondero.ui.actions.ManageParticipantsAction;
 import pondero.ui.actions.OpenDocumentAction;
 import pondero.ui.actions.QuitAction;
@@ -49,15 +50,15 @@ import pondero.ui.update.UpdateDialog;
 public class Pondero implements TaskLauncher {
 
     private static final float START_BUTTON_SIZE_FACTOR = 1.2f;
-
     private static final int   DEFAULT                  = 0;
     private static final int   ERROR                    = 3;
     private static final int   SUCCESS                  = 1;
-    private static final int   WARNING                  = 2;
 
+    private static final int   WARNING                  = 2;
     private static final Color DEFAULT_COLOR            = Color.BLACK;
     private static final Color ERROR_COLOR              = Color.RED;
     private static final Color SUCCESS_COLOR            = new Color(0, 128, 0);
+
     private static final Color WARNING_COLOR            = Color.BLUE;
 
     /**
@@ -100,20 +101,24 @@ public class Pondero implements TaskLauncher {
         });
     }
 
-    private final Action startDocument            = new StartDocumentAction(this);
-    private final Action saveAsDocument           = new SaveAsDocumentAction(this);
-    private final Action chooseParticipantAction  = new ChooseParticipantAction(this);
-    private final Action manageParticipantsAction = new ManageParticipantsAction(this);
-    private final Action saveDocument             = new SaveDocumentAction(this);
-    private final Action openDocumentAction       = new OpenDocumentAction(this);
-    private final Action quitAction               = new QuitAction(this);
-    private final Action startTaskAction          = new StartTaskAction(this);
-    private final Action updateAction             = new UpdateAction(this);
-
+    // Essentials
     private Workbook     currentWorkbook          = null;
     private Participant  currentParticipant       = null;
     private Test         currentTask              = null;
 
+    // Actions
+    private final Action chooseParticipantAction  = new ChooseParticipantAction(this);
+    private final Action homePageAction           = new HomePageAction(this);
+    private final Action manageParticipantsAction = new ManageParticipantsAction(this);
+    private final Action openDocumentAction       = new OpenDocumentAction(this);
+    private final Action quitAction               = new QuitAction(this);
+    private final Action saveAsDocument           = new SaveAsDocumentAction(this);
+    private final Action saveDocument             = new SaveDocumentAction(this);
+    private final Action startDocument            = new StartDocumentAction(this);
+    private final Action startTaskAction          = new StartTaskAction(this);
+    private final Action updateAction             = new UpdateAction(this);
+
+    // Components
     private JButton      btnStartTask;
     private JFrame       frmMain;
     private JLabel       lblDocument;
@@ -123,11 +128,13 @@ public class Pondero implements TaskLauncher {
     private JLabel       lblTask;
     private JLabel       lblTaskName;
     private JLabel       lblTaskStatus;
+    private JMenu        mnHelp;
     private JMenu        mnParticipants;
     private JMenu        mnTasks;
     private JMenuItem    mntmDocumentSave;
     private JMenuItem    mntmDocumentSaveAs;
     private JMenuItem    mntmDocumentStart;
+    private JMenuItem    mntmHomepage;
     private JMenuItem    mntmParticipantSelect;
 
     public Pondero() {
@@ -287,6 +294,13 @@ public class Pondero implements TaskLauncher {
 
         mnTasks = new JMenu(" " + Messages.getString("lbl.tests") + " "); //$NON-NLS-1$
         menuBar.add(mnTasks);
+
+        mnHelp = new JMenu(Messages.getString("lbl.help")); //$NON-NLS-1$
+        menuBar.add(mnHelp);
+
+        mntmHomepage = new JMenuItem(); //$NON-NLS-1$
+        mntmHomepage.setAction(homePageAction);
+        mnHelp.add(mntmHomepage);
 
         final JPanel pnlComposition = new JPanel();
         pnlComposition.setBorder(new CompoundBorder(new EmptyBorder(10, 10, 0, 10), new EtchedBorder(EtchedBorder.LOWERED, null, null)));
@@ -449,5 +463,4 @@ public class Pondero implements TaskLauncher {
 
         btnStartTask.setEnabled(currentWorkbook != null && currentTask != null);
     }
-
 }

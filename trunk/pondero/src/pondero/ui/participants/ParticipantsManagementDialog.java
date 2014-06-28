@@ -562,8 +562,8 @@ public class ParticipantsManagementDialog extends JDialog {
     }
 
     private void setParticipant(Participant participant) {
-        trace("set participant: ", participant.getId());
         boolean enable = participant != null;
+        trace("set participant: ", enable ? participant.getId() : "null");
         valId.setText(enable ? participant.getId() : "");
         valSurname.setText(enable ? participant.getSurname() : "");
         valSurname.setEnabled(enable);
