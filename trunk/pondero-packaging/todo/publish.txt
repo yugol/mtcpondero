@@ -1,3 +1,5 @@
+- test app
+- documentatie gestiune participanti
 - creat fisier(e) de setup
 - creat fisier(e) de test
 - upload fisiere OneDrive + Dropbox

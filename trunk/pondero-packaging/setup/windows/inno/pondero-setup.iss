@@ -2,11 +2,11 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Pondero"
-#define MyAppVersion "0.1"
+#define MyAppVersion "0.2"
 #define MyAppPublisher "Mindtrips Communications"
 #define MyAppURL "http://www.purl.org/net/pondero/home"
 #define MyAppExeName "pondero.bat"
-#define PonderoRoot "F:\Workspace\Pondero"
+#define PonderoRoot "."
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -41,18 +41,20 @@ Source:   "{#PonderoRoot}\bin\pondero-libs.jar";       DestDir: "{app}\bin";   F
 Source:   "{#PonderoRoot}\bin\pondero-install.jar";    DestDir: "{app}\bin";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\res\pondero-48x48.ico";      DestDir: "{app}\res";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\res\pondero-license.txt";    DestDir: "{app}\res";   Flags: ignoreversion
-; Source:   "{#PonderoRoot}\tests\pondero-test-ic.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
-; Source:   "{#PonderoRoot}\jre\*";                      DestDir: "{app}\jre";   Flags: ignoreversion recursesubdirs createallsubdirs
+Source:   "{#PonderoRoot}\tests\pondero-test-ic.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\jre\*";                      DestDir: "{app}\jre";   Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Dirs]
 Name: "{app}\results"
+Name: "{app}\logs"
 
 [Icons]
-Name: "{group}\{#MyAppName}";         Filename: "{app}\{#MyAppExeName}";         IconFilename: "{app}\res\pondero-48x48.ico"
-Name: "{group}\Licenta";              Filename: "{app}\res\pondero-license.txt"
-Name: "{group}\Test Results";      Filename: "{app}\results"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\res\pondero-48x48.ico"; Tasks: desktopicon
+Name: "{group}\{#MyAppName}";         Filename: "{app}\{#MyAppExeName}";         IconFilename: "{app}\res\pondero-48x48.ico"
+; Name: "{group}\Logs";                 Filename: "{app}\logs"
+; Name: "{group}\licenta";              Filename: "{app}\res\pondero-license.txt"
+; Name: "{group}\Test Results";         Filename: "{app}\results"
 ; Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 
 [Run]
