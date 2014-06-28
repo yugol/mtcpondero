@@ -120,18 +120,6 @@ public class DefaultParticipants {
             foo.setDrivingAge(7);
             foo.setMileage(59000);
             DEFAULT.add(foo);
-
-            foo = new Participant();
-            foo.setId("#10");
-            foo.setName("Norbert");
-            foo.setSurname("Ghelmez");
-            foo.setSex(Sex.MASCULINE);
-            foo.setDob("");
-            foo.setAge(25);
-            foo.setEducation(Education.SEC);
-            foo.setDrivingAge(5);
-            foo.setMileage(7000);
-            DEFAULT.add(foo);
         }
         return DEFAULT;
     }

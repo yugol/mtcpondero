@@ -1,6 +1,8 @@
 package pondero.model.excel;
 
+import static pondero.Logger.error;
 import static pondero.Logger.info;
+import static pondero.Logger.trace;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -8,6 +10,8 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -15,6 +19,8 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import pondero.Globals;
+import pondero.engine.staples.DateUtil;
 import pondero.engine.staples.StringUtil;
 import pondero.model.Workbook;
 import pondero.model.entities.Participant;
@@ -131,6 +137,11 @@ public class ExcelWorkbook implements Workbook {
     }
 
     @Override
+    public String getName() {
+        return workbookFile.getName();
+    }
+
+    @Override
     public boolean isDirty() {
         return dirty;
     }
@@ -147,6 +158,23 @@ public class ExcelWorkbook implements Workbook {
     @Override
     public String toString() {
         return workbookFile.getName();
+    }
+
+    @Override
+    public void view() throws Exception {
+        try {
+            File tempFolder = Globals.getFolderResultsTemp();
+            String tempFileName = UUID.randomUUID().toString() + ExcelWorkbookFilter.EXT;
+            File tempFile = new File(tempFolder, tempFileName);
+            final FileOutputStream tempOut = new FileOutputStream(tempFile);
+            workbook.write(tempOut);
+            tempOut.close();
+            Runtime rt = Runtime.getRuntime();
+            rt.exec("cmd.exe /c \"" + tempFile.getCanonicalPath() + "\"");
+        } catch (Exception e) {
+            error(e);
+            throw e;
+        }
     }
 
     private Sheet getSheet(final Record record) {
@@ -171,6 +199,18 @@ public class ExcelWorkbook implements Workbook {
         dirty = false;
         if (workbookFile.exists()) {
             info("open existing workbook: ", workbookFile.getCanonicalPath());
+            long now = System.currentTimeMillis();
+            String timestamp = DateUtil.toCompactDate(now) + DateUtil.toCompactTime(now);
+            String backupFileName = workbookFile.getName();
+            int dotIndex = backupFileName.lastIndexOf(".");
+            if (dotIndex >= 0) {
+                backupFileName = backupFileName.substring(0, dotIndex) + "-" + timestamp + backupFileName.substring(dotIndex);
+            } else {
+                backupFileName += "-" + timestamp;
+            }
+            File backupFile = new File(Globals.getFolderResultsBackup(), backupFileName);
+            FileUtils.copyFile(workbookFile, backupFile, true);
+            trace("open existing workbook: backup saved in", backupFile.getCanonicalPath());
             this.workbookFile = workbookFile;
             return new XSSFWorkbook(new FileInputStream(workbookFile));
         } else {
@@ -185,5 +225,4 @@ public class ExcelWorkbook implements Workbook {
         }
 
     }
-
 }

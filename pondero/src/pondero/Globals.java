@@ -42,7 +42,7 @@ public final class Globals {
     private static String              localeString            = "ro";
     private static String              uiLaf                   = "metal";
     private static boolean             updateOnStartup         = false;
-    private static double              uiScaleFactor           = 1;
+    private static double              uiScaleFactor           = 1.2;
 
     public static boolean backupWorkbookOnOpen() {
         return true;
@@ -74,6 +74,14 @@ public final class Globals {
 
     public static File getFolderResults() {
         return getFolder("results");
+    }
+
+    public static File getFolderResultsBackup() {
+        return getFolder("results/backup");
+    }
+
+    public static File getFolderResultsTemp() {
+        return getFolder("results/temp");
     }
 
     public static File getFolderTests() {

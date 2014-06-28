@@ -40,6 +40,7 @@ import pondero.ui.actions.ManageParticipantsAction;
 import pondero.ui.actions.OpenDocumentAction;
 import pondero.ui.actions.QuitAction;
 import pondero.ui.actions.SaveDocumentAction;
+import pondero.ui.actions.StartDocumentAction;
 import pondero.ui.actions.StartTaskAction;
 import pondero.ui.actions.TaskAction;
 import pondero.ui.actions.UpdateAction;
@@ -49,15 +50,15 @@ public class Pondero implements TaskLauncher {
 
     private static final float START_BUTTON_SIZE_FACTOR = 1.2f;
 
-    private static final int   INFO                     = 0;
-    private static final int   WARNING                  = 1;
-    private static final int   ERROR                    = 2;
-    private static final int   SUCCESS                  = 3;
+    private static final int   DEFAULT                  = 0;
+    private static final int   ERROR                    = 3;
+    private static final int   SUCCESS                  = 1;
+    private static final int   WARNING                  = 2;
 
-    private static final Color ERROR_COLOR              = Color.RED;
-    private static final Color WARNING_COLOR            = Color.BLUE;
-    private static final Color SUCCESS_COLOR            = new Color(0, 128, 0);
     private static final Color DEFAULT_COLOR            = Color.BLACK;
+    private static final Color ERROR_COLOR              = Color.RED;
+    private static final Color SUCCESS_COLOR            = new Color(0, 128, 0);
+    private static final Color WARNING_COLOR            = Color.BLUE;
 
     /**
      * Launch the application.
@@ -98,13 +99,14 @@ public class Pondero implements TaskLauncher {
         });
     }
 
+    private final Action action                   = new StartDocumentAction(this);
     private final Action chooseParticipantAction  = new ChooseParticipantAction(this);
     private final Action manageParticipantsAction = new ManageParticipantsAction(this);
     private final Action mnApplication            = new SaveDocumentAction(this);
     private final Action openDocumentAction       = new OpenDocumentAction(this);
     private final Action quitAction               = new QuitAction(this);
-    private final Action updateAction             = new UpdateAction(this);
     private final Action startTaskAction          = new StartTaskAction(this);
+    private final Action updateAction             = new UpdateAction(this);
 
     private Workbook     currentWorkbook          = null;
     private Participant  currentParticipant       = null;
@@ -119,9 +121,11 @@ public class Pondero implements TaskLauncher {
     private JLabel       lblTask;
     private JLabel       lblTaskName;
     private JLabel       lblTaskStatus;
+    private JMenu        mnParticipants;
     private JMenu        mnTasks;
     private JMenuItem    mntmDocumentSave;
     private JMenuItem    mntmDocumentSaveAs;
+    private JMenuItem    mntmDocumentStart;
     private JMenuItem    mntmParticipantSelect;
 
     public Pondero() {
@@ -160,15 +164,12 @@ public class Pondero implements TaskLauncher {
 
     @Override
     public void onTaskStarted(final Test task) {
-        setStatusMessage(INFO, Messages.getString("msg.test-in-progress")); //$NON-NLS-1$
+        setStatusMessage(DEFAULT, Messages.getString("msg.test-in-progress")); //$NON-NLS-1$
     }
 
     public void openWorkbook(final File workbookFile) throws Exception {
         currentWorkbook = WorkbookFactory.openWorkbook(workbookFile);
-        mntmParticipantSelect.setEnabled(true);
-        mntmDocumentSave.setEnabled(true);
-        // mntmDocumentSaveAs.setEnabled(true);
-        lblDocumentName.setText(workbookFile.getName());
+        lblDocumentName.setText(currentWorkbook.getName());
         updateStatus(null);
     }
 
@@ -253,6 +254,10 @@ public class Pondero implements TaskLauncher {
         mntmDocumentOpen.setAction(openDocumentAction);
         mnDocuments.add(mntmDocumentOpen);
 
+        mntmDocumentStart = new JMenuItem(Messages.getString("Pondero.mntmStartdocument.text")); //$NON-NLS-1$
+        mntmDocumentStart.setAction(action);
+        mnDocuments.add(mntmDocumentStart);
+
         mnDocuments.addSeparator();
 
         mntmDocumentSave = new JMenuItem();
@@ -264,7 +269,7 @@ public class Pondero implements TaskLauncher {
         mntmDocumentSaveAs.setEnabled(false);
         mnDocuments.add(mntmDocumentSaveAs);
 
-        final JMenu mnParticipants = new JMenu(" " + Messages.getString("lbl.participants") + " "); //$NON-NLS-1$
+        mnParticipants = new JMenu(" " + Messages.getString("lbl.participants") + " "); //$NON-NLS-1$
         menuBar.add(mnParticipants);
 
         mntmParticipantSelect = new JMenuItem();
@@ -430,8 +435,14 @@ public class Pondero implements TaskLauncher {
         } else if (currentParticipant == null) {
             setStatusMessage(WARNING, Messages.getString("msg.please-choose-participant")); //$NON-NLS-1$
         } else {
-            setStatusMessage(INFO, Messages.getString("msg.press-start-to-start", Messages.getString("lbl.start"))); //$NON-NLS-1$ //$NON-NLS-2$
+            setStatusMessage(DEFAULT, Messages.getString("msg.press-start-to-start", Messages.getString("lbl.start"))); //$NON-NLS-1$ //$NON-NLS-2$
         }
+
+        mnParticipants.setEnabled(currentWorkbook != null);
+        mnTasks.setEnabled(currentWorkbook != null);
+        mntmDocumentSave.setEnabled(currentWorkbook != null);
+        mntmDocumentSaveAs.setEnabled(currentWorkbook != null);
+        mntmDocumentStart.setEnabled(currentWorkbook != null);
 
         btnStartTask.setEnabled(currentWorkbook != null && currentTask != null);
     }

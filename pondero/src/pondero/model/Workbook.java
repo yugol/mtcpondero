@@ -14,8 +14,12 @@ public interface Workbook {
 
     public abstract List<? extends Record> getAll(Class<? extends Record> prototype) throws Exception;
 
+    public abstract String getName();
+
     public abstract boolean isDirty();
 
     public abstract void save() throws IOException;
+
+    public abstract void view() throws Exception;
 
 }
