@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
 encoding//license/lgpl-brief.ro.txt=UTF-16LE
-encoding//setup/windows/inno/Romanian.unicode.isl=UTF-8
+encoding//setup/windows/inno/Romanian.utf8.isl=UTF-8
 encoding//tools/pondero/UnicodeToAscii.java=UTF-8
+encoding//tools/pondero/unicode-sample.txt=UTF-8
