@@ -1,5 +1,6 @@
 package pondero.model;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import pondero.model.entities.base.Record;
@@ -19,6 +20,8 @@ public interface Workbook {
     public abstract boolean isDirty();
 
     public abstract void save() throws IOException;
+
+    public abstract void saveAs(File selectedFile) throws IOException;
 
     public abstract void view() throws Exception;
 

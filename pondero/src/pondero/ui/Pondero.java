@@ -12,7 +12,6 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -39,6 +38,7 @@ import pondero.ui.actions.ChooseParticipantAction;
 import pondero.ui.actions.ManageParticipantsAction;
 import pondero.ui.actions.OpenDocumentAction;
 import pondero.ui.actions.QuitAction;
+import pondero.ui.actions.SaveAsDocumentAction;
 import pondero.ui.actions.SaveDocumentAction;
 import pondero.ui.actions.StartDocumentAction;
 import pondero.ui.actions.StartTaskAction;
@@ -78,31 +78,33 @@ public class Pondero implements TaskLauncher {
 
             @Override
             public void run() {
+
+                final Pondero window = new Pondero();
                 try {
-                    final Pondero window = new Pondero();
                     TestLoader.registerTests(window);
-                    if (Globals.isUpdateOnStartup()) {
-                        new UpdateDialog(window.frmMain).beginUpdate();
-                    }
-                    try {
-                        window.openWorkbook(Globals.getLastWorkbookFile());
-                    } catch (final Exception e) {
-                        error(e);
-                    }
-                    window.frmMain.setVisible(true);
-                    window.updateStatus(null);
                 } catch (final Exception e) {
                     error(e);
+                }
+                try {
+                    window.openWorkbook(WorkbookFactory.openWorkbook(Globals.getLastWorkbookFile()));
+                } catch (final Exception e) {
+                    error(e);
+                }
+                window.frmMain.setVisible(true);
+                window.updateStatus(null);
+                if (Globals.isUpdateOnStartup()) {
+                    new UpdateDialog(window.frmMain).beginUpdate();
                 }
             }
 
         });
     }
 
-    private final Action action                   = new StartDocumentAction(this);
+    private final Action startDocument            = new StartDocumentAction(this);
+    private final Action saveAsDocument           = new SaveAsDocumentAction(this);
     private final Action chooseParticipantAction  = new ChooseParticipantAction(this);
     private final Action manageParticipantsAction = new ManageParticipantsAction(this);
-    private final Action mnApplication            = new SaveDocumentAction(this);
+    private final Action saveDocument             = new SaveDocumentAction(this);
     private final Action openDocumentAction       = new OpenDocumentAction(this);
     private final Action quitAction               = new QuitAction(this);
     private final Action startTaskAction          = new StartTaskAction(this);
@@ -167,8 +169,8 @@ public class Pondero implements TaskLauncher {
         setStatusMessage(DEFAULT, Messages.getString("msg.test-in-progress")); //$NON-NLS-1$
     }
 
-    public void openWorkbook(final File workbookFile) throws Exception {
-        currentWorkbook = WorkbookFactory.openWorkbook(workbookFile);
+    public void openWorkbook(final Workbook workbook) throws Exception {
+        currentWorkbook = workbook;
         lblDocumentName.setText(currentWorkbook.getName());
         updateStatus(null);
     }
@@ -255,17 +257,18 @@ public class Pondero implements TaskLauncher {
         mnDocuments.add(mntmDocumentOpen);
 
         mntmDocumentStart = new JMenuItem(Messages.getString("Pondero.mntmStartdocument.text")); //$NON-NLS-1$
-        mntmDocumentStart.setAction(action);
+        mntmDocumentStart.setAction(startDocument);
         mnDocuments.add(mntmDocumentStart);
 
         mnDocuments.addSeparator();
 
         mntmDocumentSave = new JMenuItem();
-        mntmDocumentSave.setAction(mnApplication);
+        mntmDocumentSave.setAction(saveDocument);
         mntmDocumentSave.setEnabled(false);
         mnDocuments.add(mntmDocumentSave);
 
-        mntmDocumentSaveAs = new JMenuItem(Messages.getString("lbl.save-as...")); //$NON-NLS-1$
+        mntmDocumentSaveAs = new JMenuItem();
+        mntmDocumentSaveAs.setAction(saveAsDocument);
         mntmDocumentSaveAs.setEnabled(false);
         mnDocuments.add(mntmDocumentSaveAs);
 

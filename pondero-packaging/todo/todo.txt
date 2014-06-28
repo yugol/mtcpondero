@@ -1,6 +1,6 @@
-- fix: save file + intense logging
-- testing: use a new UUID every time a new test is launched
 - properties: save last workbook path
+- core: overwrite confirmation dialog
+- translate Open/Save dialogs
 
 - menu: Help -> Home Page
 - core: open web pages in external browser
