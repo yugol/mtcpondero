@@ -45,6 +45,7 @@ public class ExcelWorkbook implements Workbook {
 
     public ExcelWorkbook(final File wbFile) throws Exception {
         workbook = openWorkbook(wbFile);
+        Globals.setLastWorkbookFile(workbookFile);
 
         headerStyle = workbook.createCellStyle();
         headerStyle.setWrapText(false);
@@ -157,6 +158,7 @@ public class ExcelWorkbook implements Workbook {
         info("save workbook as: ", selectedFile.getCanonicalPath());
         workbookFile = normalizeWorkbookFile(selectedFile);
         saveWorkbook(workbookFile);
+        Globals.setLastWorkbookFile(workbookFile);
     }
 
     @Override

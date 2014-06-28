@@ -23,6 +23,8 @@ import pondero.ui.Messages;
 @SuppressWarnings("serial")
 public class ParticipantSelector extends JComponent {
 
+    private static final int                  ID_COL_WIDTH       = 60;
+
     private Participants                      participants;
     private final JTextField                  textPattern;
     private final JTable                      tblParticipants;
@@ -115,6 +117,11 @@ public class ParticipantSelector extends JComponent {
         return selectedParticipant;
     }
 
+    public void setWorkbook(final Workbook wb) {
+        participants = new Participants(wb);
+        updateParticipants();
+    }
+
     private void setSelectedValue(final Participant foo) {
         selectedParticipant = foo;
         final ListSelectionEvent evt = new ListSelectionEvent(this, 0, 0, false);
@@ -123,17 +130,12 @@ public class ParticipantSelector extends JComponent {
         }
     }
 
-    public void setWorkbook(final Workbook wb) {
-        participants = new Participants(wb);
-        updateParticipants();
-    }
-
     private void updateParticipants() {
         final List<Participant> data = participants.select(textPattern.getText());
         final ParticipantsTableModel dataModel = new ParticipantsTableModel(data);
         tblParticipants.setModel(dataModel);
         final TableColumnModel columnModel = tblParticipants.getColumnModel();
-        final int idColSize = 80;
+        final int idColSize = ID_COL_WIDTH;
         columnModel.getColumn(0).setMinWidth(idColSize);
         columnModel.getColumn(0).setMaxWidth(idColSize);
         setSelectedValue(null);
