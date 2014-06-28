@@ -14,12 +14,13 @@ public class UpdateInstaller {
         }
         File homeFolder = new File(home);
         System.out.println("Installing updates for " + homeFolder.getCanonicalPath() + " ...");
-        installUpdates(new File(homeFolder, "bin"));
-        installUpdates(new File(homeFolder, "tests"));
+        installUpdates(new File(homeFolder.getCanonicalPath(), "bin"));
+        installUpdates(new File(homeFolder.getCanonicalPath(), "tests"));
         System.out.println("Done installing updates");
     }
 
     private static void installUpdates(File folder) throws IOException {
+        System.out.print("In " + folder.getCanonicalPath() + " ... ");
         for (File updatedFile : folder.listFiles()) {
             if (updatedFile.isFile() && updatedFile.getName().endsWith(UPDATE_EXTENSION)) {
                 String updatedFilePath = updatedFile.getCanonicalPath();
@@ -38,6 +39,7 @@ public class UpdateInstaller {
                 }
             }
         }
+        System.out.println("done");
     }
 
 }
