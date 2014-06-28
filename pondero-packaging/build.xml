@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="pack" name="Create Runnable Jar for Project pondero-libs">
+<project default="quick" name="Create Runnable Jar for Project pondero-libs">
 
 	<property name="jredir" location="/Java/jre7" />
 	<property name="soldir" location="/Workspace/pondero-dev" />
@@ -27,8 +27,8 @@
 		<mkdir dir="${pkgdir}/results" />
 		<mkdir dir="${pkgdir}/tests" />
 
-		<delete file="${pkgdir}/Romanian.isl" />
-		<delete file="${pkgdir}/pondero-setup.exe" />
+		<delete file="${pkgdir}/Romanian.isl" failonerror="false" />
+		<delete file="${pkgdir}/pondero-setup.exe" failonerror="false" />
 		<!-- delete file="${pkgdir}/res/pondero.properties" / -->
 
 		<copy file="${soldir}/pondero/src/pondero/res/pondero-license.txt" todir="${pkgdir}/res" overwrite="true" />
