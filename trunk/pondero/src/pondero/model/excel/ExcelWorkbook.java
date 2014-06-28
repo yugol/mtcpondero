@@ -1,12 +1,12 @@
 package pondero.model.excel;
 
-import static pondero.Logger.error;
 import static pondero.Logger.info;
-import static pondero.Logger.trace;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +43,8 @@ public class ExcelWorkbook implements Workbook {
         this("implicit.xlsx");
     }
 
-    public ExcelWorkbook(final File workbookFile) throws Exception {
-        workbook = open(workbookFile);
+    public ExcelWorkbook(final File wbFile) throws Exception {
+        workbook = openWorkbook(wbFile);
 
         headerStyle = workbook.createCellStyle();
         headerStyle.setWrapText(false);
@@ -149,10 +149,14 @@ public class ExcelWorkbook implements Workbook {
     @Override
     public void save() throws IOException {
         info("save workbook: ", workbookFile.getCanonicalPath());
-        final FileOutputStream fileOut = new FileOutputStream(workbookFile);
-        workbook.write(fileOut);
-        fileOut.close();
-        dirty = false;
+        saveWorkbook(workbookFile);
+    }
+
+    @Override
+    public void saveAs(File selectedFile) throws IOException {
+        info("save workbook as: ", selectedFile.getCanonicalPath());
+        workbookFile = normalizeWorkbookFile(selectedFile);
+        saveWorkbook(workbookFile);
     }
 
     @Override
@@ -162,19 +166,30 @@ public class ExcelWorkbook implements Workbook {
 
     @Override
     public void view() throws Exception {
-        try {
-            File tempFolder = Globals.getFolderResultsTemp();
-            String tempFileName = UUID.randomUUID().toString() + ExcelWorkbookFilter.EXT;
-            File tempFile = new File(tempFolder, tempFileName);
-            final FileOutputStream tempOut = new FileOutputStream(tempFile);
-            workbook.write(tempOut);
-            tempOut.close();
-            Runtime rt = Runtime.getRuntime();
-            rt.exec("cmd.exe /c \"" + tempFile.getCanonicalPath() + "\"");
-        } catch (Exception e) {
-            error(e);
-            throw e;
+        File tempFolder = Globals.getFolderResultsTemp();
+        String tempFileName = UUID.randomUUID().toString() + ExcelWorkbookFilter.EXT;
+        File tempFile = new File(tempFolder, tempFileName);
+        info("view workbook: ", tempFile.getCanonicalPath());
+        final FileOutputStream tempOut = new FileOutputStream(tempFile);
+        workbook.write(tempOut);
+        tempOut.close();
+        Runtime rt = Runtime.getRuntime();
+        rt.exec("cmd.exe /c \"" + tempFile.getCanonicalPath() + "\"");
+    }
+
+    private void backupWorkbook(File wbFile) throws IOException {
+        long now = System.currentTimeMillis();
+        String timestamp = DateUtil.toCompactDate(now) + DateUtil.toCompactTime(now);
+        String backupFileName = wbFile.getName();
+        int dotIndex = backupFileName.lastIndexOf(".");
+        if (dotIndex >= 0) {
+            backupFileName = backupFileName.substring(0, dotIndex) + "-" + timestamp + backupFileName.substring(dotIndex);
+        } else {
+            backupFileName += "-" + timestamp;
         }
+        File backupFile = new File(Globals.getFolderResultsBackup(), backupFileName);
+        FileUtils.copyFile(wbFile, backupFile, true);
+        info("workbook backup: ", backupFile.getCanonicalPath());
     }
 
     private Sheet getSheet(final Record record) {
@@ -195,34 +210,37 @@ public class ExcelWorkbook implements Workbook {
         return sheet;
     }
 
-    private XSSFWorkbook open(File workbookFile) throws IOException {
+    private File normalizeWorkbookFile(File wbFile) throws IOException {
+        String filePath = wbFile.getCanonicalPath();
+        if (!filePath.endsWith(ExcelWorkbookFilter.EXT)) {
+            filePath += ExcelWorkbookFilter.EXT;
+            wbFile = new File(filePath);
+        }
+        return wbFile;
+    }
+
+    private XSSFWorkbook openWorkbook(File wbFile) throws IOException {
         dirty = false;
-        if (workbookFile.exists()) {
-            info("open existing workbook: ", workbookFile.getCanonicalPath());
-            long now = System.currentTimeMillis();
-            String timestamp = DateUtil.toCompactDate(now) + DateUtil.toCompactTime(now);
-            String backupFileName = workbookFile.getName();
-            int dotIndex = backupFileName.lastIndexOf(".");
-            if (dotIndex >= 0) {
-                backupFileName = backupFileName.substring(0, dotIndex) + "-" + timestamp + backupFileName.substring(dotIndex);
-            } else {
-                backupFileName += "-" + timestamp;
+        if (wbFile.exists()) {
+            info("open existing workbook: ", wbFile.getCanonicalPath());
+            backupWorkbook(wbFile);
+            workbookFile = wbFile;
+            try (InputStream wbIn = new FileInputStream(wbFile)) {
+                return new XSSFWorkbook(wbIn);
             }
-            File backupFile = new File(Globals.getFolderResultsBackup(), backupFileName);
-            FileUtils.copyFile(workbookFile, backupFile, true);
-            trace("open existing workbook: backup saved in", backupFile.getCanonicalPath());
-            this.workbookFile = workbookFile;
-            return new XSSFWorkbook(new FileInputStream(workbookFile));
         } else {
-            String filePath = workbookFile.getCanonicalPath();
-            if (!filePath.endsWith(ExcelWorkbookFilter.EXT)) {
-                filePath += ExcelWorkbookFilter.EXT;
-                workbookFile = new File(filePath);
-            }
-            info("open new workbook: ", workbookFile.getCanonicalPath());
-            this.workbookFile = workbookFile;
+            wbFile = normalizeWorkbookFile(wbFile);
+            info("open new workbook: ", wbFile.getCanonicalPath());
+            workbookFile = wbFile;
             return new XSSFWorkbook();
         }
-
     }
+
+    private void saveWorkbook(File wbFile) throws FileNotFoundException, IOException {
+        final FileOutputStream fileOut = new FileOutputStream(wbFile);
+        workbook.write(fileOut);
+        fileOut.close();
+        dirty = false;
+    }
+
 }

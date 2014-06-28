@@ -1,29 +1,30 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-import pondero.model.Workbook;
 import pondero.ui.Messages;
 import pondero.ui.Pondero;
 
 @SuppressWarnings("serial")
-public class StartDocumentAction extends AbstractAction {
-
-    private final Pondero app;
+public class StartDocumentAction extends PonderoAction {
 
     public StartDocumentAction(final Pondero app) {
-        this.app = app;
-        putValue(NAME, Messages.getString("lbl.open-externally")); //$NON-NLS-1$
+        super(app);
+        putValue(NAME, Messages.getString("lbl.open-externally"));
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        Workbook wb = app.getCurrentWorkbook();
+    public void actionPerformed(ActionEvent evt) {
         try {
-            wb.view();
-        } catch (Exception e1) {
-            JOptionPane.showInternalMessageDialog(app.getFrame(), "View error");
+            getApp().getCurrentWorkbook().view();
+        } catch (Exception e) {
+            error(e);
+            JOptionPane.showInternalMessageDialog(
+                    getApp().getFrame(),
+                    e.getMessage(),
+                    Messages.getString("lbl.open-externally"),
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
