@@ -7,6 +7,7 @@ import static pondero.Logger.trace;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.HashSet;
@@ -217,11 +218,16 @@ public final class Globals {
     }
 
     private static File getFolder(String name) {
-        File folder = new File(homeFolder, name);
-        if (!folder.exists()) {
-            folder.mkdirs();
+        try {
+            File folder = new File(homeFolder.getCanonicalPath(), name);
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+            return folder;
+        } catch (IOException e) {
+            error(e);
+            return null;
         }
-        return folder;
     }
 
     private Globals() {
