@@ -1,6 +1,7 @@
 package pondero.ui.participants;
 
 import static pondero.Logger.error;
+import static pondero.Logger.trace;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -126,6 +127,7 @@ public class ParticipantsManagementDialog extends JDialog {
 
             @Override
             public void valueChanged(ListSelectionEvent evt) {
+                trace("user event: select participant");
                 if (checkDirtyAndContinue()) {
                     setParticipant(participantSelector.getSelectedValue());
                 }
@@ -447,7 +449,10 @@ public class ParticipantsManagementDialog extends JDialog {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                addParticipant();
+                trace("user event: add participant");
+                if (checkDirtyAndContinue()) {
+                    addParticipant();
+                }
             }
 
         });
@@ -457,6 +462,7 @@ public class ParticipantsManagementDialog extends JDialog {
 
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                trace("user event: save participant");
                 saveParticipant();
             }
 
@@ -471,6 +477,7 @@ public class ParticipantsManagementDialog extends JDialog {
 
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                trace("user event: close dialog");
                 if (checkDirtyAndContinue()) {
                     ParticipantsManagementDialog.this.dispose();
                 }
@@ -483,8 +490,10 @@ public class ParticipantsManagementDialog extends JDialog {
     }
 
     private void addParticipant() {
+        String newId = participants.generateNewId();
+        trace("set participant: ", newId);
         Participant participant = new Participant();
-        participant.setId(participants.generateNewId());
+        participant.setId(newId);
         setParticipant(participant);
         setDirtyFlag();
     }
@@ -493,16 +502,24 @@ public class ParticipantsManagementDialog extends JDialog {
         if (dirty) {
             int option = JOptionPane.showConfirmDialog(
                     ParticipantsManagementDialog.this,
-                    Messages.getString("msg.participant-was-changed"),
+                    Messages.getString("msg.participant-was-changed", valId.getText()),
                     Messages.getString("lbl.pondero"),
                     JOptionPane.YES_NO_CANCEL_OPTION,
                     JOptionPane.WARNING_MESSAGE);
             switch (option) {
                 case JOptionPane.CANCEL_OPTION:
+                    trace("check dirty and continue: ", "CANCEL");
                     return false;
                 case JOptionPane.YES_OPTION:
+                    trace("check dirty and continue: ", "YES");
                     saveParticipant();
+                    break;
+                case JOptionPane.NO_OPTION:
+                    trace("check dirty and continue: ", "NO");
+                    clearDirtyFlag();
+                    break;
                 default:
+                    trace("check dirty and continue: ", "?????");
                     break;
             }
         }
@@ -510,12 +527,14 @@ public class ParticipantsManagementDialog extends JDialog {
     }
 
     private void clearDirtyFlag() {
+        trace("clear dirty flag");
         setTitle(Messages.getString("lbl.manage-participants")); //$NON-NLS-1$
         btnSave.setEnabled(false);
         dirty = false;
     }
 
     private void saveParticipant() {
+        trace("set participant: ", valId.getText());
         try {
             Participant participant = new Participant();
             participant.setId(valId.getText());
@@ -536,12 +555,14 @@ public class ParticipantsManagementDialog extends JDialog {
     }
 
     private void setDirtyFlag() {
+        trace("set dirty flag");
         dirty = true;
         btnSave.setEnabled(true);
         setTitle(Messages.getString("lbl.manage-participants") + "*"); //$NON-NLS-1$
     }
 
     private void setParticipant(Participant participant) {
+        trace("set participant: ", participant.getId());
         boolean enable = participant != null;
         valId.setText(enable ? participant.getId() : "");
         valSurname.setText(enable ? participant.getSurname() : "");
@@ -562,6 +583,7 @@ public class ParticipantsManagementDialog extends JDialog {
     }
 
     private void setWorkbook(final Workbook wb) {
+        trace("set workbook: ", wb.toString());
         clearDirtyFlag();
         participantSelector.setWorkbook(wb);
         participants = new Participants(wb);

@@ -120,7 +120,7 @@ public abstract class TestBase implements Runnable {
         return experiment;
     }
 
-    public String getId() {
+    public String getTestId() {
         return getArtifactDescriptor().getId();
     }
 

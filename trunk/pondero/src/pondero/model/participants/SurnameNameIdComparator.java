@@ -1,4 +1,4 @@
-package pondero.model.excel;
+package pondero.model.participants;
 
 import java.util.Comparator;
 import pondero.model.entities.Participant;

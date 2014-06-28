@@ -16,9 +16,9 @@ public class Participant extends Record {
     @Column
     private String    id         = UUID.randomUUID().toString();
     @Column
-    private String    name;
+    private String    surname    = "";
     @Column
-    private String    surname;
+    private String    name       = "";
     @Column
     private Calendar  dob;
     @Column
@@ -171,6 +171,21 @@ public class Participant extends Record {
 
     public void setSurname(final String surname) {
         this.surname = surname;
+    }
+
+    @Override
+    public String toCsv() {
+        StringBuilder csv = new StringBuilder();
+        csv.append(getIdString()).append(", ");
+        csv.append(getSurnameString()).append(", ");
+        csv.append(getNameString()).append(", ");
+        csv.append(getDobString()).append(", ");
+        csv.append(getAgeString()).append(", ");
+        csv.append(getSexString()).append(", ");
+        csv.append(getEducationString()).append(", ");
+        csv.append(getDrivingAgeString()).append(", ");
+        csv.append(getMileageString());
+        return csv.toString();
     }
 
     @Override

@@ -53,4 +53,6 @@ public abstract class Record {
         return sheet.name();
     }
 
+    public abstract String toCsv();
+
 }
