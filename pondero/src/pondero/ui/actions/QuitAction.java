@@ -36,6 +36,11 @@ public class QuitAction extends AbstractAction {
                     }
                 }
             }
+            try {
+                app.getCurrentWorkbook().close();
+            } catch (IOException e) {
+                error(e);
+            }
         }
         System.exit(0);
     }

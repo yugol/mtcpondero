@@ -11,7 +11,7 @@ public class DefaultLauncher implements TaskLauncher {
 
     @Override
     public void onTaskStarted(final Test task) {
-        System.out.println("Started test " + task.getId());
+        System.out.println("Started test " + task.getTestId());
     }
 
 }

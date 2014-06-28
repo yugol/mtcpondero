@@ -8,6 +8,8 @@ public interface Workbook {
 
     public abstract void add(Record record) throws Exception;
 
+    public abstract void close() throws IOException;
+
     public abstract void deleteParticipants();
 
     public abstract List<? extends Record> getAll(Class<? extends Record> prototype) throws Exception;

@@ -3,6 +3,7 @@ package pondero.engine.test;
 import static pondero.Logger.error;
 import java.util.List;
 import java.util.Stack;
+import java.util.UUID;
 import pondero.Globals;
 import pondero.engine.elements.interfaces.HasFeedback.FeedbackStimulus;
 import pondero.engine.elements.interfaces.HasScreencolor;
@@ -17,9 +18,11 @@ public abstract class Test extends TestRenderer implements IsController {
 
     private final Stack<IsController> controllerStack = new Stack<IsController>();
     private Block                     currentBlock;
+    private UUID                      runUuid;
 
     @Override
     public void _doBegin() {
+        runUuid = UUID.randomUUID();
         startTimer();
         getLauncher().onTaskStarted(this);
         if (getExperiment() != null) {
@@ -94,7 +97,7 @@ public abstract class Test extends TestRenderer implements IsController {
     }
 
     public void openRecord(final Trial trial) {
-        record = new TrialRecord(getId());
+        record = new TrialRecord(getTestId(), runUuid.toString());
         if (participant != null) {
             record.setParticipant(participant);
         }

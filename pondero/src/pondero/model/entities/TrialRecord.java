@@ -6,17 +6,21 @@ import pondero.model.entities.base.Record;
 
 public class TrialRecord extends Record {
 
-    private final long   startTime       = System.currentTimeMillis();
+    private final long   startTime          = System.currentTimeMillis();
     private final String experimentName;
 
     @Column
-    private String       participantId   = "";
+    private final String experimentId;
     @Column
-    private String       participantName = "";
+    private String       participantId      = "";
     @Column
-    private String       blockName       = "";
+    private String       participantSurname = "";
     @Column
-    private String       trialName       = "";
+    private String       participantName    = "";
+    @Column
+    private String       blockName          = "";
+    @Column
+    private String       trialName          = "";
     @Column
     private String       trialDate;
     @Column
@@ -28,9 +32,9 @@ public class TrialRecord extends Record {
     @Column
     private boolean      responseCorrect;
 
-    public TrialRecord(final String experimentName) {
-        super();
+    public TrialRecord(final String experimentName, final String experimentId) {
         this.experimentName = experimentName;
+        this.experimentId = experimentId;
     }
 
     public String getBlockName() {
@@ -41,20 +45,20 @@ public class TrialRecord extends Record {
         return blockName;
     }
 
-    public String getParticipantId() {
-        return participantId;
+    public String getExperimentIdString() {
+        return experimentId;
     }
 
     public String getParticipantIdString() {
         return participantId;
     }
 
-    public String getParticipantName() {
+    public String getParticipantNameString() {
         return participantName;
     }
 
-    public String getParticipantNameString() {
-        return participantName;
+    public String getParticipantSurnameString() {
+        return participantSurname;
     }
 
     public String getResponse() {
@@ -102,7 +106,8 @@ public class TrialRecord extends Record {
 
     public void setParticipant(final Participant participant) {
         participantId = participant.getId();
-        participantName = participant.getSurname() + ", " + participant.getName();
+        participantSurname = participant.getSurname();
+        participantName = participant.getName();
     }
 
     public void setResponse(final String response) {
@@ -119,6 +124,23 @@ public class TrialRecord extends Record {
 
     public void setTrialName(final String trialName) {
         this.trialName = trialName;
+    }
+
+    @Override
+    public String toCsv() {
+        StringBuilder csv = new StringBuilder();
+        csv.append(getExperimentIdString()).append(", ");
+        csv.append(getParticipantIdString()).append(", ");
+        csv.append(getParticipantSurnameString()).append(", ");
+        csv.append(getParticipantNameString()).append(", ");
+        csv.append(getBlockNameString()).append(", ");
+        csv.append(getTrialTimeString()).append(", ");
+        csv.append(getTrialDateString()).append(", ");
+        csv.append(getTrialTimeString()).append(", ");
+        csv.append(getResponseString()).append(", ");
+        csv.append(getResponseTimeString()).append(", ");
+        csv.append(getResponseCorrectString());
+        return csv.toString();
     }
 
 }

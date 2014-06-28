@@ -9,7 +9,6 @@ import java.util.List;
 import pondero.engine.staples.StringUtil;
 import pondero.model.Workbook;
 import pondero.model.entities.Participant;
-import pondero.model.excel.SurnameNameIdComparator;
 
 public class Participants implements Iterable<Participant> {
 

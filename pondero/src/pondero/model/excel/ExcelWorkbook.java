@@ -1,5 +1,6 @@
 package pondero.model.excel;
 
+import static pondero.Logger.info;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -24,14 +25,6 @@ import pondero.model.participants.DefaultParticipants;
 
 public class ExcelWorkbook implements Workbook {
 
-    public static Participant getAnonymousParticipant() {
-        final Participant anonymous = new Participant();
-        anonymous.setId("#0");
-        anonymous.setName("George");
-        anonymous.setSurname("Nemo");
-        return anonymous;
-    }
-
     private final File         workbookFile;
     private final XSSFWorkbook workbook;
     private boolean            dirty = false;
@@ -46,7 +39,7 @@ public class ExcelWorkbook implements Workbook {
 
     public ExcelWorkbook(final File workbookFile) throws Exception {
         this.workbookFile = workbookFile;
-        workbook = workbookFile.exists() ? new XSSFWorkbook(new FileInputStream(workbookFile)) : new XSSFWorkbook();
+        workbook = open(workbookFile);
 
         headerStyle = workbook.createCellStyle();
         headerStyle.setWrapText(false);
@@ -78,6 +71,8 @@ public class ExcelWorkbook implements Workbook {
 
     @Override
     public void add(final Record record) throws Exception {
+        info("add record ", record.getClass().getSimpleName(), " : ", record.toCsv());
+        dirty = true;
         final Sheet sheet = getSheet(record);
         final Row firstRow = sheet.getRow(0);
         final int rowIdx = sheet.getLastRowNum() + 1;
@@ -92,14 +87,20 @@ public class ExcelWorkbook implements Workbook {
             cell.setCellStyle(rowIdx % 2 == 0 ? evenStyle : oddStyle);
             sheet.autoSizeColumn(colIdx);
         }
-        dirty = true;
+    }
+
+    @Override
+    public void close() throws IOException {
+        info("close workbook: ", workbookFile.getCanonicalPath());
     }
 
     @Override
     public void deleteParticipants() {
+        info("delete participants: ");
         Sheet sheet = getSheet(new Participant());
-        for (int rowIdx = sheet.getLastRowNum(); rowIdx >= 0; --rowIdx) {
+        for (int rowIdx = sheet.getLastRowNum(); rowIdx >= 1; --rowIdx) {
             sheet.removeRow(sheet.getRow(rowIdx));
+            dirty = true;
         }
     }
 
@@ -137,10 +138,16 @@ public class ExcelWorkbook implements Workbook {
 
     @Override
     public void save() throws IOException {
+        info("save workbook: ", workbookFile.getCanonicalPath());
         final FileOutputStream fileOut = new FileOutputStream(workbookFile);
         workbook.write(fileOut);
         fileOut.close();
         dirty = false;
+    }
+
+    @Override
+    public String toString() {
+        return workbookFile.getName();
     }
 
     private Sheet getSheet(final Record record) {
@@ -159,6 +166,17 @@ public class ExcelWorkbook implements Workbook {
             }
         }
         return sheet;
+    }
+
+    private XSSFWorkbook open(final File workbookFile) throws IOException {
+        dirty = false;
+        if (workbookFile.exists()) {
+            info("open existing workbook: ", workbookFile.getCanonicalPath());
+            return new XSSFWorkbook(new FileInputStream(workbookFile));
+        } else {
+            info("open new workbook: ", workbookFile.getCanonicalPath());
+            return new XSSFWorkbook();
+        }
     }
 
 }
