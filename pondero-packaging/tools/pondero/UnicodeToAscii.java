@@ -30,7 +30,7 @@ public class UnicodeToAscii {
         }
         byte[] ascii = convertToAscii(source);
         try (OutputStream out = new FileOutputStream(destination)) {
-            System.out.println(ascii.length);
+            System.out.println("Converting unicode file to ASCII");
             out.write(ascii);
         }
     }
