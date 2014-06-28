@@ -18,11 +18,11 @@ public abstract class Test extends TestRenderer implements IsController {
 
     private final Stack<IsController> controllerStack = new Stack<IsController>();
     private Block                     currentBlock;
-    private UUID                      runUuid;
+    private String                    runUuid;
 
     @Override
     public void _doBegin() {
-        runUuid = UUID.randomUUID();
+        runUuid = UUID.randomUUID().toString().replace("-", "");
         startTimer();
         getLauncher().onTaskStarted(this);
         if (getExperiment() != null) {
@@ -97,7 +97,7 @@ public abstract class Test extends TestRenderer implements IsController {
     }
 
     public void openRecord(final Trial trial) {
-        record = new TrialRecord(getTestId(), runUuid.toString());
+        record = new TrialRecord(getTestId(), runUuid);
         if (participant != null) {
             record.setParticipant(participant);
         }

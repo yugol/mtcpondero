@@ -3,6 +3,7 @@ package pondero.ui.participants;
 import static pondero.Logger.error;
 import static pondero.Logger.trace;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -14,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -106,6 +109,15 @@ public class ParticipantsManagementDialog extends JDialog {
                                                       };
 
     public ParticipantsManagementDialog(final Workbook wb) throws Exception {
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent arg0) {
+                onClosing();
+            }
+
+        });
         setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantsManagementDialog.class.getResource("/com/famfamfam/silk/group.png")));
         participants = new Participants(wb);
 
@@ -196,6 +208,7 @@ public class ParticipantsManagementDialog extends JDialog {
         pnlParticipant.add(lblLblsurname, gbc_lblLblsurname);
 
         final JLabel lblColumn_02 = new JLabel(":");
+        lblColumn_02.setForeground(Color.RED);
         final GridBagConstraints gbc_lblColumn_02 = new GridBagConstraints();
         gbc_lblColumn_02.insets = new Insets(0, 0, 5, 5);
         gbc_lblColumn_02.gridx = 1;
@@ -224,6 +237,7 @@ public class ParticipantsManagementDialog extends JDialog {
         pnlParticipant.add(lblLblname, gbc_lblLblname);
 
         final JLabel lblColumn_03 = new JLabel(":"); //$NON-NLS-1$
+        lblColumn_03.setForeground(Color.RED);
         final GridBagConstraints gbc_lblColumn_03 = new GridBagConstraints();
         gbc_lblColumn_03.insets = new Insets(0, 0, 5, 5);
         gbc_lblColumn_03.gridx = 1;
@@ -477,10 +491,7 @@ public class ParticipantsManagementDialog extends JDialog {
 
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                trace("user event: close dialog");
-                if (checkDirtyAndContinue()) {
-                    ParticipantsManagementDialog.this.dispose();
-                }
+                onClosing();
             }
 
         });
@@ -531,6 +542,13 @@ public class ParticipantsManagementDialog extends JDialog {
         setTitle(Messages.getString("lbl.manage-participants")); //$NON-NLS-1$
         btnSave.setEnabled(false);
         dirty = false;
+    }
+
+    private void onClosing() {
+        trace("user event: close dialog");
+        if (checkDirtyAndContinue()) {
+            ParticipantsManagementDialog.this.dispose();
+        }
     }
 
     private void saveParticipant() {

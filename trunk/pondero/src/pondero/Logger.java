@@ -18,7 +18,7 @@ public class Logger {
     public static int          maxConsoleLevel = INFO;
     public static int          maxFileLevel    = TRACE;
 
-    private static final File  logFile         = new File(Globals.getFolderLog(), buildLogFileName());
+    private static final File  logFile         = new File(Globals.getFolderLogs(), buildLogFileName());
     private static PrintStream logFileOut;
 
     public static void critical(Object... obj) {

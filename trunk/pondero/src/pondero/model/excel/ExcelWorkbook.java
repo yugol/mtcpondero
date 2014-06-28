@@ -168,9 +168,7 @@ public class ExcelWorkbook implements Workbook {
 
     @Override
     public void view() throws Exception {
-        File tempFolder = Globals.getFolderResultsTemp();
-        String tempFileName = UUID.randomUUID().toString() + ExcelWorkbookFilter.EXT;
-        File tempFile = new File(tempFolder, tempFileName);
+        File tempFile = viewWorkbookFile();
         info("view workbook: ", tempFile.getCanonicalPath());
         final FileOutputStream tempOut = new FileOutputStream(tempFile);
         workbook.write(tempOut);
@@ -243,6 +241,18 @@ public class ExcelWorkbook implements Workbook {
         workbook.write(fileOut);
         fileOut.close();
         dirty = false;
+    }
+
+    private File viewWorkbookFile() {
+        File tempFolder = Globals.getFolderResultsTemp();
+        String fileName = workbookFile.getName();
+        int dotIndex = fileName.indexOf(".");
+        if (dotIndex >= 0) {
+            fileName = fileName.substring(0, dotIndex);
+        }
+        String tempFileName = fileName + "-" + UUID.randomUUID().toString().replace("-", "") + ExcelWorkbookFilter.EXT;
+        File tempFile = new File(tempFolder, tempFileName);
+        return tempFile;
     }
 
 }
