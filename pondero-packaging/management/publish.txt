@@ -1,0 +1,9 @@
+- scris mesaj
+
+adrese:
+
+http://www.purl.org/net/pondero/home
+http://www.purl.org/net/pondero/update/registry.xml
+http://purl.oclc.org/net/pondero/download/primary/setup
+http://purl.oclc.org/net/pondero/download/secondary/setup
+
