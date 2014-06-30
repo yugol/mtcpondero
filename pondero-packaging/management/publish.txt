@@ -1,5 +1,3 @@
-- scris mesaj
-
 adrese:
 
 http://www.purl.org/net/pondero/home
