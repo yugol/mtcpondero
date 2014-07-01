@@ -1,7 +1,13 @@
+2014-07-27
+==========
+- separate project for pondero-qa
+- change name sex -> gender
+
+
 2014-06-28
 ==========
 
-- crearea unei pagini web a aplicatiei
+- developed application site
 - simplificat modalitatea de instalare a aplicatiei si de integrare a acesteia in sistemul de operare
 - adaugat optiune de vizualizare a registrului de date in Excel direct din meniul aplicatiei
 - adaugat posibilitatea salvarii fisierului cu alt nume

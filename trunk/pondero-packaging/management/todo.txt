@@ -1,7 +1,7 @@
+- translate Open/Save dialogs
 - preferences dialog
 - about dialog
 - sign tests
-- translate Open/Save dialogs
 - core: overwrite confirmation dialog
 - primul caracter din textul licentei in programul de instalare este []
 - sistem de raportare a erorilor/exceptiilor prin e-mail
