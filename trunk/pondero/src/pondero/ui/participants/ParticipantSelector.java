@@ -15,10 +15,10 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumnModel;
+import pondero.L10n;
 import pondero.model.Workbook;
 import pondero.model.entities.Participant;
 import pondero.model.participants.Participants;
-import pondero.ui.Messages;
 
 @SuppressWarnings("serial")
 public class ParticipantSelector extends JComponent {
@@ -40,7 +40,7 @@ public class ParticipantSelector extends JComponent {
         gridBagLayout.rowWeights = new double[] { 0.0, 1.0 };
         setLayout(gridBagLayout);
 
-        final JLabel lblParticipant = new JLabel(Messages.getString("lbl.participant"));
+        final JLabel lblParticipant = new JLabel(L10n.getString("lbl.participant"));
         final GridBagConstraints gbc_lblParticipant = new GridBagConstraints();
         gbc_lblParticipant.insets = new Insets(0, 0, 5, 5);
         gbc_lblParticipant.anchor = GridBagConstraints.EAST;

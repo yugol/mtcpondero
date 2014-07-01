@@ -18,8 +18,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import pondero.L10n;
 import pondero.engine.staples.DateUtil;
-import pondero.ui.Messages;
 import pondero.update.Artifact;
 
 @SuppressWarnings("serial")
@@ -97,8 +97,8 @@ public class UpdateCellRenderer extends JPanel implements ListCellRenderer<Artif
             lblId.setForeground(SystemColor.textText);
             lblReleaseDate.setForeground(SystemColor.textText);
         }
-        lblId.setText(value.getCodeName() + " (" + Messages.getString("lbl." + value.getType()) + ")");
-        lblReleaseDate.setText(Messages.getString("lbl.release-date") + ":" + DateUtil.toUiDate(value.getReleaseDate()));
+        lblId.setText(value.getCodeName() + " (" + L10n.getString("lbl." + value.getType()) + ")");
+        lblReleaseDate.setText(L10n.getString("lbl.release-date") + ":" + DateUtil.toUiDate(value.getReleaseDate()));
         if (value.isMandatory()) {
             lblIcon.setIcon(new ImageIcon(UpdateCellRenderer.class.getResource("/com/famfamfam/silk/exclamation.png")));
         } else {

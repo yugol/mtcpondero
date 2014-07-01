@@ -38,12 +38,12 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import pondero.Globals;
+import pondero.L10n;
 import pondero.model.Workbook;
 import pondero.model.entities.Participant;
 import pondero.model.entities.domains.Education;
 import pondero.model.entities.domains.Gender;
 import pondero.model.participants.Participants;
-import pondero.ui.Messages;
 import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")
@@ -68,8 +68,8 @@ public class ParticipantsManagementDialog extends JDialog {
     private final JSpinner             valMileage;
 
     private boolean                    dirty          = false;
-    private final JButton              btnAdd         = new JButton(Messages.getString("lbl.add")); //$NON-NLS-1$ ;
-    private final JButton              btnSave        = new JButton(Messages.getString("lbl.save")); //$NON-NLS-1$;
+    private final JButton              btnAdd         = new JButton(L10n.getString("lbl.add")); //$NON-NLS-1$ ;
+    private final JButton              btnSave        = new JButton(L10n.getString("lbl.save")); //$NON-NLS-1$;
 
     private final DocumentListener     txtDocListener = new DocumentListener() {
 
@@ -121,7 +121,7 @@ public class ParticipantsManagementDialog extends JDialog {
         setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantsManagementDialog.class.getResource("/com/famfamfam/silk/group.png")));
         participants = new Participants(wb);
 
-        setTitle(Messages.getString("lbl.manage-participants")); //$NON-NLS-1$
+        setTitle(L10n.getString("lbl.manage-participants")); //$NON-NLS-1$
         setBounds(100, 100, 800, 500);
 
         final JPanel background = new JPanel();
@@ -172,7 +172,7 @@ public class ParticipantsManagementDialog extends JDialog {
         gbl_pnlParticipant.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0 };
         pnlParticipant.setLayout(gbl_pnlParticipant);
 
-        final JLabel lblLblid = new JLabel(Messages.getString("lbl.participant.id")); //$NON-NLS-1$
+        final JLabel lblLblid = new JLabel(L10n.getString("lbl.participant.id")); //$NON-NLS-1$
         final GridBagConstraints gbc_lblLblid = new GridBagConstraints();
         gbc_lblLblid.anchor = GridBagConstraints.WEST;
         gbc_lblLblid.insets = new Insets(0, 0, 5, 5);
@@ -199,7 +199,7 @@ public class ParticipantsManagementDialog extends JDialog {
         pnlParticipant.add(valId, gbc_valId);
         valId.setColumns(10);
 
-        final JLabel lblLblsurname = new JLabel(Messages.getString("lbl.participant.surname")); //$NON-NLS-1$
+        final JLabel lblLblsurname = new JLabel(L10n.getString("lbl.participant.surname")); //$NON-NLS-1$
         final GridBagConstraints gbc_lblLblsurname = new GridBagConstraints();
         gbc_lblLblsurname.anchor = GridBagConstraints.WEST;
         gbc_lblLblsurname.insets = new Insets(0, 0, 5, 5);
@@ -228,7 +228,7 @@ public class ParticipantsManagementDialog extends JDialog {
         pnlParticipant.add(valSurname, gbc_valSurname);
         valSurname.setColumns(20);
 
-        final JLabel lblLblname = new JLabel(Messages.getString("lbl.participant.name")); //$NON-NLS-1$
+        final JLabel lblLblname = new JLabel(L10n.getString("lbl.participant.name")); //$NON-NLS-1$
         final GridBagConstraints gbc_lblLblname = new GridBagConstraints();
         gbc_lblLblname.anchor = GridBagConstraints.WEST;
         gbc_lblLblname.insets = new Insets(0, 0, 5, 5);
@@ -268,7 +268,7 @@ public class ParticipantsManagementDialog extends JDialog {
 
         final JPanel tabPersonal = new JPanel();
         tabPersonal.setBorder(new EmptyBorder(10, 10, 10, 10));
-        tabbedPane.addTab(Messages.getString("lbl.personal-data"), null, tabPersonal, null);
+        tabbedPane.addTab(L10n.getString("lbl.personal-data"), null, tabPersonal, null);
         final GridBagLayout gbl_tabPersonal = new GridBagLayout();
         gbl_tabPersonal.columnWidths = new int[] { 0, 0, 0, 0 };
         gbl_tabPersonal.rowHeights = new int[] { 0, 0, 0, 0, 0 };
@@ -276,7 +276,7 @@ public class ParticipantsManagementDialog extends JDialog {
         gbl_tabPersonal.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
         tabPersonal.setLayout(gbl_tabPersonal);
 
-        final JLabel lblDob = new JLabel(Messages.getString("lbl.participant.dob")); //$NON-NLS-1$
+        final JLabel lblDob = new JLabel(L10n.getString("lbl.participant.dob")); //$NON-NLS-1$
         lblDob.setVisible(false);
         final GridBagConstraints gbc_lblDob = new GridBagConstraints();
         gbc_lblDob.anchor = GridBagConstraints.WEST;
@@ -304,7 +304,7 @@ public class ParticipantsManagementDialog extends JDialog {
         gbc_valDob.gridy = 0;
         tabPersonal.add(valDob, gbc_valDob);
 
-        final JLabel lblAge = new JLabel(Messages.getString("lbl.participant.age")); //$NON-NLS-1$
+        final JLabel lblAge = new JLabel(L10n.getString("lbl.participant.age")); //$NON-NLS-1$
         final GridBagConstraints gbc_lblAge = new GridBagConstraints();
         gbc_lblAge.anchor = GridBagConstraints.WEST;
         gbc_lblAge.insets = new Insets(0, 0, 5, 5);
@@ -330,7 +330,7 @@ public class ParticipantsManagementDialog extends JDialog {
         gbc_valAge.gridy = 1;
         tabPersonal.add(valAge, gbc_valAge);
 
-        final JLabel lblGender = new JLabel(Messages.getString("lbl.participant.gender")); //$NON-NLS-1$
+        final JLabel lblGender = new JLabel(L10n.getString("lbl.participant.gender")); //$NON-NLS-1$
         final GridBagConstraints gbc_lblGender = new GridBagConstraints();
         gbc_lblGender.anchor = GridBagConstraints.WEST;
         gbc_lblGender.insets = new Insets(0, 0, 5, 5);
@@ -358,7 +358,7 @@ public class ParticipantsManagementDialog extends JDialog {
         gbc_valGender.gridy = 2;
         tabPersonal.add(valGender, gbc_valGender);
 
-        final JLabel lblEducation = new JLabel(Messages.getString("lbl.participant.education")); //$NON-NLS-1$
+        final JLabel lblEducation = new JLabel(L10n.getString("lbl.participant.education")); //$NON-NLS-1$
         final GridBagConstraints gbc_lblEducation = new GridBagConstraints();
         gbc_lblEducation.anchor = GridBagConstraints.WEST;
         gbc_lblEducation.insets = new Insets(0, 0, 0, 5);
@@ -387,7 +387,7 @@ public class ParticipantsManagementDialog extends JDialog {
 
         final JPanel tabAuto = new JPanel();
         tabAuto.setBorder(new EmptyBorder(10, 10, 10, 10));
-        tabbedPane.addTab(Messages.getString("lbl.driving-history"), null, tabAuto, null);
+        tabbedPane.addTab(L10n.getString("lbl.driving-history"), null, tabAuto, null);
         final GridBagLayout gbl_tabAuto = new GridBagLayout();
         gbl_tabAuto.columnWidths = new int[] { 0, 0, 0, 0 };
         gbl_tabAuto.rowHeights = new int[] { 0, 0, 0 };
@@ -395,7 +395,7 @@ public class ParticipantsManagementDialog extends JDialog {
         gbl_tabAuto.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
         tabAuto.setLayout(gbl_tabAuto);
 
-        final JLabel lblDrivinglicenceage = new JLabel(Messages.getString("lbl.participant.driving-age")); //$NON-NLS-1$
+        final JLabel lblDrivinglicenceage = new JLabel(L10n.getString("lbl.participant.driving-age")); //$NON-NLS-1$
         final GridBagConstraints gbc_lblDrivinglicenceage = new GridBagConstraints();
         gbc_lblDrivinglicenceage.anchor = GridBagConstraints.WEST;
         gbc_lblDrivinglicenceage.insets = new Insets(0, 0, 5, 5);
@@ -421,7 +421,7 @@ public class ParticipantsManagementDialog extends JDialog {
         gbc_valDrivingAge.gridy = 0;
         tabAuto.add(valDrivingAge, gbc_valDrivingAge);
 
-        final JLabel lblMileage = new JLabel(Messages.getString("lbl.paricipant.mileage")); //$NON-NLS-1$
+        final JLabel lblMileage = new JLabel(L10n.getString("lbl.paricipant.mileage")); //$NON-NLS-1$
         final GridBagConstraints gbc_lblMileage = new GridBagConstraints();
         gbc_lblMileage.anchor = GridBagConstraints.WEST;
         gbc_lblMileage.insets = new Insets(0, 0, 0, 5);
@@ -486,7 +486,7 @@ public class ParticipantsManagementDialog extends JDialog {
         final Component horizontalStrut = Box.createHorizontalStrut(20);
         pnlControls.add(horizontalStrut);
 
-        final JButton btnClose = new JButton(Messages.getString("lbl.close")); //$NON-NLS-1$
+        final JButton btnClose = new JButton(L10n.getString("lbl.close")); //$NON-NLS-1$
         btnClose.addActionListener(new ActionListener() {
 
             @Override
@@ -513,8 +513,8 @@ public class ParticipantsManagementDialog extends JDialog {
         if (dirty) {
             int option = JOptionPane.showConfirmDialog(
                     ParticipantsManagementDialog.this,
-                    Messages.getString("msg.participant-was-changed", valId.getText()),
-                    Messages.getString("lbl.pondero"),
+                    L10n.getString("msg.participant-was-changed", valId.getText()),
+                    L10n.getString("lbl.pondero"),
                     JOptionPane.YES_NO_CANCEL_OPTION,
                     JOptionPane.WARNING_MESSAGE);
             switch (option) {
@@ -539,7 +539,7 @@ public class ParticipantsManagementDialog extends JDialog {
 
     private void clearDirtyFlag() {
         trace("clear dirty flag");
-        setTitle(Messages.getString("lbl.manage-participants")); //$NON-NLS-1$
+        setTitle(L10n.getString("lbl.manage-participants")); //$NON-NLS-1$
         btnSave.setEnabled(false);
         dirty = false;
     }
@@ -576,7 +576,7 @@ public class ParticipantsManagementDialog extends JDialog {
         trace("set dirty flag");
         dirty = true;
         btnSave.setEnabled(true);
-        setTitle(Messages.getString("lbl.manage-participants") + "*"); //$NON-NLS-1$
+        setTitle(L10n.getString("lbl.manage-participants") + "*"); //$NON-NLS-1$
     }
 
     private void setParticipant(Participant participant) {

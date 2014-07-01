@@ -26,7 +26,9 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import pondero.Globals;
+import pondero.L10n;
 import pondero.OsUtil;
+import pondero.UiUtil;
 import pondero.engine.test.Test;
 import pondero.engine.test.launch.TaskLauncher;
 import pondero.engine.test.launch.TestReport;
@@ -70,10 +72,9 @@ public class Pondero implements TaskLauncher {
         String home = args.length >= 1 ? args[0] : null;
         Globals.loadPreferences(home);
 
-        OsUtil.setupMainWindow(Messages.getString("lbl.pondero"));//$NON-NLS-1$
-        OsUtil.setLaf();
-        OsUtil.factorFontSize(Globals.getUiScaleFactor());
-        OsUtil.localizeJOptionPaneButtons();
+        OsUtil.setupMainWindow(L10n.getString("lbl.pondero"));//$NON-NLS-1$
+        UiUtil.setLaf();
+        UiUtil.factorFontSize(Globals.getUiScaleFactor());
 
         EventQueue.invokeLater(new Runnable() {
 
@@ -164,16 +165,16 @@ public class Pondero implements TaskLauncher {
     public void onTaskEnded(final Test task, final TestReport report) {
         switch (report.getEndCode()) {
             case TestReport.END_KILL:
-                setStatusMessage(ERROR, Messages.getString("msg.test-interrupted", report.getEndCode())); //$NON-NLS-1$
+                setStatusMessage(ERROR, L10n.getString("msg.test-interrupted", report.getEndCode())); //$NON-NLS-1$
                 break;
             default:
-                setStatusMessage(SUCCESS, Messages.getString("msg.test-completed", report.getRunningTimeInSeconds())); //$NON-NLS-1$
+                setStatusMessage(SUCCESS, L10n.getString("msg.test-completed", report.getRunningTimeInSeconds())); //$NON-NLS-1$
         }
     }
 
     @Override
     public void onTaskStarted(final Test task) {
-        setStatusMessage(DEFAULT, Messages.getString("msg.test-in-progress")); //$NON-NLS-1$
+        setStatusMessage(DEFAULT, L10n.getString("msg.test-in-progress")); //$NON-NLS-1$
     }
 
     public void openWorkbook(final Workbook workbook) throws Exception {
@@ -192,7 +193,7 @@ public class Pondero implements TaskLauncher {
     public void setCurrentParticipant(final Participant currentParticipant) {
         this.currentParticipant = currentParticipant;
         if (currentParticipant == null) {
-            lblParticipantName.setText(Messages.getString("lbl.n-a")); //$NON-NLS-1$
+            lblParticipantName.setText(L10n.getString("lbl.n-a")); //$NON-NLS-1$
         } else {
             lblParticipantName.setText(currentParticipant.getName() + " " + currentParticipant.getSurname()); //$NON-NLS-1$
         }
@@ -207,7 +208,7 @@ public class Pondero implements TaskLauncher {
 
         } else {
             lblTask.setForeground(Color.RED);
-            lblTaskName.setText(Messages.getString("lbl.n-a")); //$NON-NLS-1$
+            lblTaskName.setText(L10n.getString("lbl.n-a")); //$NON-NLS-1$
             lblTaskName.setToolTipText(null);
             btnStartTask.setEnabled(false);
 
@@ -230,23 +231,23 @@ public class Pondero implements TaskLauncher {
             }
 
         });
-        frmMain.setTitle(Messages.getString("lbl.pondero")); //$NON-NLS-1$
+        frmMain.setTitle(L10n.getString("lbl.pondero")); //$NON-NLS-1$
         frmMain.setBounds(100, 100, 700, 320);
         frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         final JMenuBar menuBar = new JMenuBar();
         frmMain.setJMenuBar(menuBar);
 
-        final JMenu mnApp = new JMenu(" " + Messages.getString("lbl.application") + " "); //$NON-NLS-1$
+        final JMenu mnApp = new JMenu(" " + L10n.getString("lbl.application") + " "); //$NON-NLS-1$
         menuBar.add(mnApp);
 
-        final JMenuItem mntmPreferences = new JMenuItem(Messages.getString("lbl.preferences")); //$NON-NLS-1$
+        final JMenuItem mntmPreferences = new JMenuItem(L10n.getString("lbl.preferences")); //$NON-NLS-1$
         mntmPreferences.setEnabled(false);
         mnApp.add(mntmPreferences);
 
         mnApp.addSeparator();
 
-        final JMenuItem mntmUpdate = new JMenuItem(Messages.getString("Pondero.mntmUpdate.text")); //$NON-NLS-1$
+        final JMenuItem mntmUpdate = new JMenuItem(L10n.getString("Pondero.mntmUpdate.text")); //$NON-NLS-1$
         mntmUpdate.setAction(updateAction);
         mnApp.add(mntmUpdate);
 
@@ -256,14 +257,14 @@ public class Pondero implements TaskLauncher {
         mntmQuit.setAction(quitAction);
         mnApp.add(mntmQuit);
 
-        final JMenu mnDocuments = new JMenu(" " + Messages.getString("lbl.registers") + " "); //$NON-NLS-1$
+        final JMenu mnDocuments = new JMenu(" " + L10n.getString("lbl.registers") + " "); //$NON-NLS-1$
         menuBar.add(mnDocuments);
 
         final JMenuItem mntmDocumentOpen = new JMenuItem();
         mntmDocumentOpen.setAction(openDocumentAction);
         mnDocuments.add(mntmDocumentOpen);
 
-        mntmDocumentStart = new JMenuItem(Messages.getString("Pondero.mntmStartdocument.text")); //$NON-NLS-1$
+        mntmDocumentStart = new JMenuItem(L10n.getString("Pondero.mntmStartdocument.text")); //$NON-NLS-1$
         mntmDocumentStart.setAction(startDocument);
         mnDocuments.add(mntmDocumentStart);
 
@@ -279,7 +280,7 @@ public class Pondero implements TaskLauncher {
         mntmDocumentSaveAs.setEnabled(false);
         mnDocuments.add(mntmDocumentSaveAs);
 
-        mnParticipants = new JMenu(" " + Messages.getString("lbl.participants") + " "); //$NON-NLS-1$
+        mnParticipants = new JMenu(" " + L10n.getString("lbl.participants") + " "); //$NON-NLS-1$
         menuBar.add(mnParticipants);
 
         mntmParticipantSelect = new JMenuItem();
@@ -292,10 +293,10 @@ public class Pondero implements TaskLauncher {
         mntmParticipantUpdate.setAction(manageParticipantsAction);
         mnParticipants.add(mntmParticipantUpdate);
 
-        mnTasks = new JMenu(" " + Messages.getString("lbl.tests") + " "); //$NON-NLS-1$
+        mnTasks = new JMenu(" " + L10n.getString("lbl.tests") + " "); //$NON-NLS-1$
         menuBar.add(mnTasks);
 
-        mnHelp = new JMenu(Messages.getString("lbl.help")); //$NON-NLS-1$
+        mnHelp = new JMenu(L10n.getString("lbl.help")); //$NON-NLS-1$
         menuBar.add(mnHelp);
 
         mntmHomepage = new JMenuItem(); //$NON-NLS-1$
@@ -312,7 +313,7 @@ public class Pondero implements TaskLauncher {
         gbl_pnlComposition.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
         pnlComposition.setLayout(gbl_pnlComposition);
 
-        lblDocument = new JLabel(Messages.getString("lbl.data-register") + ":"); //$NON-NLS-1$  //$NON-NLS-2$
+        lblDocument = new JLabel(L10n.getString("lbl.data-register") + ":"); //$NON-NLS-1$  //$NON-NLS-2$
         lblDocument.setFont(lblDocument.getFont().deriveFont(Font.BOLD));
         final GridBagConstraints gbc_lblDocument = new GridBagConstraints();
         gbc_lblDocument.anchor = GridBagConstraints.EAST;
@@ -321,7 +322,7 @@ public class Pondero implements TaskLauncher {
         gbc_lblDocument.gridy = 0;
         pnlComposition.add(lblDocument, gbc_lblDocument);
 
-        lblDocumentName = new JLabel(Messages.getString("lbl.n-a")); //$NON-NLS-1$
+        lblDocumentName = new JLabel(L10n.getString("lbl.n-a")); //$NON-NLS-1$
         lblDocumentName.setFont(lblDocumentName.getFont().deriveFont(Font.ITALIC));
         lblDocumentName.setHorizontalAlignment(SwingConstants.LEFT);
         final GridBagConstraints gbc_lblDocumentName = new GridBagConstraints();
@@ -332,7 +333,7 @@ public class Pondero implements TaskLauncher {
         gbc_lblDocumentName.gridy = 0;
         pnlComposition.add(lblDocumentName, gbc_lblDocumentName);
 
-        lblParticipant = new JLabel(Messages.getString("lbl.participant") + ":"); //$NON-NLS-1$  //$NON-NLS-2$
+        lblParticipant = new JLabel(L10n.getString("lbl.participant") + ":"); //$NON-NLS-1$  //$NON-NLS-2$
         lblParticipant.setFont(lblParticipant.getFont().deriveFont(Font.BOLD));
         final GridBagConstraints gbc_lblParticipant = new GridBagConstraints();
         gbc_lblParticipant.insets = new Insets(5, 0, 10, 5);
@@ -341,7 +342,7 @@ public class Pondero implements TaskLauncher {
         gbc_lblParticipant.gridy = 1;
         pnlComposition.add(lblParticipant, gbc_lblParticipant);
 
-        lblParticipantName = new JLabel(Messages.getString("lbl.n-a")); //$NON-NLS-1$
+        lblParticipantName = new JLabel(L10n.getString("lbl.n-a")); //$NON-NLS-1$
         lblParticipantName.setFont(lblParticipantName.getFont().deriveFont(Font.ITALIC));
         final GridBagConstraints gbc_lblParticipantName = new GridBagConstraints();
         gbc_lblParticipantName.fill = GridBagConstraints.HORIZONTAL;
@@ -351,7 +352,7 @@ public class Pondero implements TaskLauncher {
         gbc_lblParticipantName.gridy = 1;
         pnlComposition.add(lblParticipantName, gbc_lblParticipantName);
 
-        lblTask = new JLabel(Messages.getString("lbl.test") + ":"); //$NON-NLS-1$  //$NON-NLS-2$
+        lblTask = new JLabel(L10n.getString("lbl.test") + ":"); //$NON-NLS-1$  //$NON-NLS-2$
         lblTask.setFont(lblTask.getFont().deriveFont(Font.BOLD));
         final GridBagConstraints gbc_lblTask = new GridBagConstraints();
         gbc_lblTask.insets = new Insets(5, 0, 10, 5);
@@ -360,7 +361,7 @@ public class Pondero implements TaskLauncher {
         gbc_lblTask.gridy = 2;
         pnlComposition.add(lblTask, gbc_lblTask);
 
-        lblTaskName = new JLabel(Messages.getString("lbl.n-a")); //$NON-NLS-1$
+        lblTaskName = new JLabel(L10n.getString("lbl.n-a")); //$NON-NLS-1$
         lblTaskName.setFont(lblTaskName.getFont().deriveFont(Font.ITALIC));
         final GridBagConstraints gbc_lblTaskName = new GridBagConstraints();
         gbc_lblTaskName.anchor = GridBagConstraints.NORTH;
@@ -371,7 +372,7 @@ public class Pondero implements TaskLauncher {
         gbc_lblTaskName.gridy = 2;
         pnlComposition.add(lblTaskName, gbc_lblTaskName);
 
-        lblTaskStatus = new JLabel(Messages.getString("lbl.n-a"));//$NON-NLS-1$
+        lblTaskStatus = new JLabel(L10n.getString("lbl.n-a"));//$NON-NLS-1$
         lblTaskStatus.setFont(lblTaskStatus.getFont().deriveFont(Font.ITALIC));
         lblTaskStatus.setHorizontalAlignment(SwingConstants.TRAILING);
         final GridBagConstraints gbc_lblTaskEndingStatus = new GridBagConstraints();
@@ -392,7 +393,7 @@ public class Pondero implements TaskLauncher {
         gbl_pnlAction.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
         pnlAction.setLayout(gbl_pnlAction);
 
-        btnStartTask = new JButton(Messages.getString("lbl.start")); //$NON-NLS-1$
+        btnStartTask = new JButton(L10n.getString("lbl.start")); //$NON-NLS-1$
         btnStartTask.setFont(btnStartTask.getFont().deriveFont(Font.BOLD, btnStartTask.getFont().getSize() * START_BUTTON_SIZE_FACTOR));
         btnStartTask.setEnabled(false);
         btnStartTask.setAction(startTaskAction);
@@ -446,13 +447,13 @@ public class Pondero implements TaskLauncher {
         }
 
         if (currentWorkbook == null) {
-            setStatusMessage(ERROR, Messages.getString("msg.please-choose-workbook")); //$NON-NLS-1$
+            setStatusMessage(ERROR, L10n.getString("msg.please-choose-workbook")); //$NON-NLS-1$
         } else if (currentTask == null) {
-            setStatusMessage(ERROR, Messages.getString("msg.please-choose-test")); //$NON-NLS-1$
+            setStatusMessage(ERROR, L10n.getString("msg.please-choose-test")); //$NON-NLS-1$
         } else if (currentParticipant == null) {
-            setStatusMessage(WARNING, Messages.getString("msg.please-choose-participant")); //$NON-NLS-1$
+            setStatusMessage(WARNING, L10n.getString("msg.please-choose-participant")); //$NON-NLS-1$
         } else {
-            setStatusMessage(DEFAULT, Messages.getString("msg.press-start-to-start", Messages.getString("lbl.start"))); //$NON-NLS-1$ //$NON-NLS-2$
+            setStatusMessage(DEFAULT, L10n.getString("msg.press-start-to-start", L10n.getString("lbl.start"))); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         mnParticipants.setEnabled(currentWorkbook != null);

@@ -2,7 +2,7 @@ package pondero.model.excel;
 
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
-import pondero.ui.Messages;
+import pondero.L10n;
 
 public class ExcelWorkbookFilter extends FileFilter {
 
@@ -16,7 +16,7 @@ public class ExcelWorkbookFilter extends FileFilter {
 
     @Override
     public String getDescription() {
-        return Messages.getString("lbl.pondero-data-file") + " (*" + EXT + ")";
+        return L10n.getString("lbl.pondero-data-file") + " (*" + EXT + ")";
     }
 
 }

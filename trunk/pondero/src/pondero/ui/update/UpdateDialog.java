@@ -29,8 +29,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import pondero.Globals;
+import pondero.L10n;
 import pondero.engine.staples.StringUtil;
-import pondero.ui.Messages;
 import pondero.update.Artifact;
 import pondero.update.UpdateEngine;
 import pondero.update.UpdateListener;
@@ -73,7 +73,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         super(owner);
         engine.addListener(this);
 
-        setTitle(Messages.getString("lbl.pondero-update"));
+        setTitle(L10n.getString("lbl.pondero-update"));
         setResizable(false);
 
         setBounds(100, 100, 450, 450);
@@ -148,7 +148,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
-                btnStart = new JButton(Messages.getString("lbl.start-update"));
+                btnStart = new JButton(L10n.getString("lbl.start-update"));
                 btnStart.addActionListener(new ActionListener() {
 
                     @Override
@@ -165,7 +165,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
                 buttonPane.add(horizontalStrut);
             }
             {
-                JButton btnClose = new JButton(Messages.getString("lbl.close"));
+                JButton btnClose = new JButton(L10n.getString("lbl.close"));
                 btnClose.addActionListener(new ActionListener() {
 
                     @Override
@@ -212,7 +212,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
     @Override
     public void readRegistryFailed(Exception e) {
         downloading = false;
-        setTopStatusMessage(Messages.getString("msg.update-failed"));
+        setTopStatusMessage(L10n.getString("msg.update-failed"));
         lblTopStatus.setForeground(Color.red);
         error(e);
     }
@@ -221,7 +221,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
     public void readRegistryStarted() {
         debug("reading update registry: started");
         downloading = true;
-        setTopStatusMessage(Messages.getString("msg.downloading-update-list"));
+        setTopStatusMessage(L10n.getString("msg.downloading-update-list"));
         setHeight(150);
         progressBar.setVisible(true);
         scrollPane.setVisible(false);
@@ -238,23 +238,23 @@ public class UpdateDialog extends JDialog implements UpdateListener {
 
     @Override
     public void updateArtifactFailed(Artifact update, Exception e) {
-        setTopStatusMessage(update.getCodeName() + " - " + Messages.getString("msg.update-failed"));
+        setTopStatusMessage(update.getCodeName() + " - " + L10n.getString("msg.update-failed"));
         lblTopStatus.setForeground(Color.red);
         error(e);
     }
 
     @Override
     public void updateArtifactStarted(Artifact update) {
-        setTopStatusMessage(Messages.getString("msg.downloading-update") + ": " + update.getCodeName());
+        setTopStatusMessage(L10n.getString("msg.downloading-update") + ": " + update.getCodeName());
     }
 
     @Override
     public void updateProcessEnded() {
         downloading = false;
-        setTopStatusMessage(Messages.getString("msg.downloading-updates-finished"));
+        setTopStatusMessage(L10n.getString("msg.downloading-updates-finished"));
         progressBar.setVisible(false);
         btnStart.setVisible(false);
-        JOptionPane.showMessageDialog(this, Messages.getString("msg.update-process-finished"), getTitle(), JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, L10n.getString("msg.update-process-finished"), getTitle(), JOptionPane.INFORMATION_MESSAGE);
         dispose();
     }
 
@@ -301,10 +301,10 @@ public class UpdateDialog extends JDialog implements UpdateListener {
 
     private void setUpdatesStatus() {
         if (cellRenderer.getUpdateCount() > 0) {
-            setTopStatusMessage(Messages.getString("msg.selected-updates") + ": "
+            setTopStatusMessage(L10n.getString("msg.selected-updates") + ": "
                     + cellRenderer.getSelectedCount() + "/" + cellRenderer.getUpdateCount());
         } else {
-            setTopStatusMessage(Messages.getString("msg.application-is-up-to-date"));
+            setTopStatusMessage(L10n.getString("msg.application-is-up-to-date"));
         }
         btnStart.setEnabled(cellRenderer.getSelectedCount() > 0);
     }

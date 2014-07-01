@@ -10,17 +10,17 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+import pondero.L10n;
 import pondero.engine.elements.other.Page;
 import pondero.engine.test.Test;
 import pondero.engine.test.responses.PrevNextResponse;
-import pondero.ui.Messages;
 
 @SuppressWarnings("serial")
 public class TestInstructions extends JPanel {
 
     private static String getCharUiString(final Character ch) {
         if (ch == null) { return ""; }
-        if (ch == ' ') { return Messages.getString("space-key-name"); }
+        if (ch == ' ') { return L10n.getString("space-key-name"); }
         return String.valueOf(ch);
     }
 
@@ -130,13 +130,13 @@ public class TestInstructions extends JPanel {
         pnlNavigation.setBackground(test.getInstructions()._getScreencolor());
         if (!last && test.getInstructions()._getNextkey() != null) {
             btnRight.setVisible(true);
-            btnRight.setText(Messages.getString("msg.press-key-for-next", getCharUiString(test.getInstructions()._getNextkey()))); //$NON-NLS-1$
+            btnRight.setText(L10n.getString("msg.press-key-for-next", getCharUiString(test.getInstructions()._getNextkey()))); //$NON-NLS-1$
         } else {
             btnRight.setVisible(false);
         }
         if (!first && test.getInstructions()._getPrevkey() != null) {
             btnLeft.setVisible(true);
-            btnLeft.setText(Messages.getString("msg.press-key-for-previous", getCharUiString(test.getInstructions()._getPrevkey()))); //$NON-NLS-1$
+            btnLeft.setText(L10n.getString("msg.press-key-for-previous", getCharUiString(test.getInstructions()._getPrevkey()))); //$NON-NLS-1$
         } else {
             btnLeft.setVisible(false);
         }

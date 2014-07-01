@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import pondero.FileUtil;
+import pondero.L10n;
 import pondero.model.Workbook;
-import pondero.ui.Messages;
 import pondero.ui.Pondero;
 
 @SuppressWarnings("serial")
@@ -14,7 +14,7 @@ public class QuitAction extends PonderoAction {
 
     public QuitAction(final Pondero app) {
         super(app);
-        putValue(NAME, Messages.getString("lbl.quit"));
+        putValue(NAME, L10n.getString("lbl.quit"));
         putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/cancel.png")));
     }
 
@@ -26,8 +26,8 @@ public class QuitAction extends PonderoAction {
                 if (wb.isDirty()) {
                     if (JOptionPane.showConfirmDialog(
                             getApp().getFrame(),
-                            Messages.getString("msg.save-workbook", wb.getName()),
-                            Messages.getString("lbl.pondero"),
+                            L10n.getString("msg.save-workbook", wb.getName()),
+                            L10n.getString("lbl.pondero"),
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         wb.save();
                     }
@@ -41,7 +41,7 @@ public class QuitAction extends PonderoAction {
             JOptionPane.showInternalMessageDialog(
                     getApp().getFrame(),
                     e.getMessage(),
-                    Messages.getString("lbl.quit"),
+                    L10n.getString("lbl.quit"),
                     JOptionPane.ERROR_MESSAGE);
         }
     }
