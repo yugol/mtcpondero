@@ -8,7 +8,7 @@ import pondero.model.entities.base.Column;
 import pondero.model.entities.base.Record;
 import pondero.model.entities.base.Sheet;
 import pondero.model.entities.domains.Education;
-import pondero.model.entities.domains.Sex;
+import pondero.model.entities.domains.Gender;
 
 @Sheet(name = "PARTICIPANTS")
 public class Participant extends Record {
@@ -24,7 +24,7 @@ public class Participant extends Record {
     @Column
     private int       age        = 0;
     @Column
-    private Sex       sex        = Sex.UNSPECIFIED;
+    private Gender    gender     = Gender.UNSPECIFIED;
     @Column
     private Education education  = Education.UNKNOWN;
     @Column
@@ -73,6 +73,14 @@ public class Participant extends Record {
         return StringUtil.normalizeForSearch(fp.toString());
     }
 
+    public Gender getGender() {
+        return gender;
+    }
+
+    public String getGenderString() {
+        return gender.code;
+    }
+
     public String getId() {
         return id;
     }
@@ -95,14 +103,6 @@ public class Participant extends Record {
 
     public String getNameString() {
         return name;
-    }
-
-    public Sex getSex() {
-        return sex;
-    }
-
-    public String getSexString() {
-        return sex.code;
     }
 
     public String getSurname() {
@@ -161,12 +161,12 @@ public class Participant extends Record {
         this.name = name;
     }
 
-    public void setSex(Sex sex) {
-        this.sex = sex;
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
-    public void setSex(String sex) {
-        this.sex = Sex.parse(sex);
+    public void setGender(String gender) {
+        this.gender = Gender.parse(gender);
     }
 
     public void setSurname(final String surname) {
@@ -181,7 +181,7 @@ public class Participant extends Record {
         csv.append(getNameString()).append(", ");
         csv.append(getDobString()).append(", ");
         csv.append(getAgeString()).append(", ");
-        csv.append(getSexString()).append(", ");
+        csv.append(getGenderString()).append(", ");
         csv.append(getEducationString()).append(", ");
         csv.append(getDrivingAgeString()).append(", ");
         csv.append(getMileageString());
