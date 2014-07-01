@@ -41,7 +41,7 @@ import pondero.Globals;
 import pondero.model.Workbook;
 import pondero.model.entities.Participant;
 import pondero.model.entities.domains.Education;
-import pondero.model.entities.domains.Sex;
+import pondero.model.entities.domains.Gender;
 import pondero.model.participants.Participants;
 import pondero.ui.Messages;
 import com.toedter.calendar.JDateChooser;
@@ -62,7 +62,7 @@ public class ParticipantsManagementDialog extends JDialog {
     private final JTextField           valName;
     private final JDateChooser         valDob;
     private final JSpinner             valAge;
-    private final JComboBox<Sex>       valSex;
+    private final JComboBox<Gender>    valGender;
     private final JComboBox<Education> valEducation;
     private final JSpinner             valDrivingAge;
     private final JSpinner             valMileage;
@@ -330,13 +330,13 @@ public class ParticipantsManagementDialog extends JDialog {
         gbc_valAge.gridy = 1;
         tabPersonal.add(valAge, gbc_valAge);
 
-        final JLabel lblSex = new JLabel(Messages.getString("lbl.participant.sex")); //$NON-NLS-1$
-        final GridBagConstraints gbc_lblSex = new GridBagConstraints();
-        gbc_lblSex.anchor = GridBagConstraints.WEST;
-        gbc_lblSex.insets = new Insets(0, 0, 5, 5);
-        gbc_lblSex.gridx = 0;
-        gbc_lblSex.gridy = 2;
-        tabPersonal.add(lblSex, gbc_lblSex);
+        final JLabel lblGender = new JLabel(Messages.getString("lbl.participant.gender")); //$NON-NLS-1$
+        final GridBagConstraints gbc_lblGender = new GridBagConstraints();
+        gbc_lblGender.anchor = GridBagConstraints.WEST;
+        gbc_lblGender.insets = new Insets(0, 0, 5, 5);
+        gbc_lblGender.gridx = 0;
+        gbc_lblGender.gridy = 2;
+        tabPersonal.add(lblGender, gbc_lblGender);
 
         final JLabel lblColumn_06 = new JLabel(":"); //$NON-NLS-1$
         final GridBagConstraints gbc_lblColumn_06 = new GridBagConstraints();
@@ -345,18 +345,18 @@ public class ParticipantsManagementDialog extends JDialog {
         gbc_lblColumn_06.gridy = 2;
         tabPersonal.add(lblColumn_06, gbc_lblColumn_06);
 
-        valSex = new JComboBox<Sex>();
-        valSex.setEnabled(false);
-        valSex.addItemListener(itemListener);
-        for (Sex item : Sex.values()) {
-            valSex.addItem(item);
+        valGender = new JComboBox<Gender>();
+        valGender.setEnabled(false);
+        valGender.addItemListener(itemListener);
+        for (Gender item : Gender.values()) {
+            valGender.addItem(item);
         }
-        final GridBagConstraints gbc_valSex = new GridBagConstraints();
-        gbc_valSex.anchor = GridBagConstraints.WEST;
-        gbc_valSex.insets = new Insets(0, 0, 5, 0);
-        gbc_valSex.gridx = 2;
-        gbc_valSex.gridy = 2;
-        tabPersonal.add(valSex, gbc_valSex);
+        final GridBagConstraints gbc_valGender = new GridBagConstraints();
+        gbc_valGender.anchor = GridBagConstraints.WEST;
+        gbc_valGender.insets = new Insets(0, 0, 5, 0);
+        gbc_valGender.gridx = 2;
+        gbc_valGender.gridy = 2;
+        tabPersonal.add(valGender, gbc_valGender);
 
         final JLabel lblEducation = new JLabel(Messages.getString("lbl.participant.education")); //$NON-NLS-1$
         final GridBagConstraints gbc_lblEducation = new GridBagConstraints();
@@ -559,7 +559,7 @@ public class ParticipantsManagementDialog extends JDialog {
             participant.setSurname(valSurname.getText());
             participant.setName(valName.getText());
             participant.setAge((int) valAge.getValue());
-            participant.setSex((Sex) valSex.getSelectedItem());
+            participant.setGender((Gender) valGender.getSelectedItem());
             participant.setEducation((Education) valEducation.getSelectedItem());
             participant.setDrivingAge((int) valDrivingAge.getValue());
             participant.setMileage((int) valMileage.getValue());
@@ -589,8 +589,8 @@ public class ParticipantsManagementDialog extends JDialog {
         valName.setEnabled(enable);
         valAge.setValue(enable ? participant.getAge() : 0);
         valAge.setEnabled(enable);
-        valSex.setSelectedItem(enable ? participant.getSex() : "");
-        valSex.setEnabled(enable);
+        valGender.setSelectedItem(enable ? participant.getGender() : "");
+        valGender.setEnabled(enable);
         valEducation.setSelectedItem(enable ? participant.getEducation() : "");
         valEducation.setEnabled(enable);
         valDrivingAge.setValue(enable ? participant.getDrivingAge() : 0);

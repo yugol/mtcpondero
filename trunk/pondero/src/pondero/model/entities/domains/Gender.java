@@ -2,7 +2,7 @@ package pondero.model.entities.domains;
 
 import pondero.ui.Messages;
 
-public enum Sex {
+public enum Gender {
 
     UNSPECIFIED (""),
     FEMININE ("F"),
@@ -10,7 +10,7 @@ public enum Sex {
 
     ;
 
-    public static Sex parse(String str) {
+    public static Gender parse(String str) {
         if (str == null) {
             str = "";
         }
@@ -22,7 +22,7 @@ public enum Sex {
 
     public final String code;
 
-    private Sex(String code) {
+    private Gender(String code) {
         this.code = code;
     }
 
@@ -30,9 +30,9 @@ public enum Sex {
     public String toString() {
         switch (this) {
             case FEMININE:
-                return Messages.getString("lbl.sex.feminine");
+                return Messages.getString("lbl.gender.feminine");
             case MASCULINE:
-                return Messages.getString("lbl.sex.masculine");
+                return Messages.getString("lbl.gender.masculine");
             default:
                 return "";
         }

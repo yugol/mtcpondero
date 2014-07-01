@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import pondero.model.entities.Participant;
 import pondero.model.entities.domains.Education;
-import pondero.model.entities.domains.Sex;
+import pondero.model.entities.domains.Gender;
 
 public class DefaultParticipants {
 
@@ -17,7 +17,7 @@ public class DefaultParticipants {
             foo.setId("#1");
             foo.setName("Svetlana");
             foo.setSurname("Bularca");
-            foo.setSex(Sex.FEMININE);
+            foo.setGender(Gender.FEMININE);
             foo.setDob("");
             foo.setAge(46);
             foo.setEducation(Education.BSC);
@@ -29,7 +29,7 @@ public class DefaultParticipants {
             foo.setId("#2");
             foo.setName("Blanduzia");
             foo.setSurname("Dinu");
-            foo.setSex(Sex.FEMININE);
+            foo.setGender(Gender.FEMININE);
             foo.setDob("");
             foo.setAge(34);
             foo.setEducation(Education.MSC);
@@ -41,7 +41,7 @@ public class DefaultParticipants {
             foo.setId("#3");
             foo.setName("Visarion");
             foo.setSurname("Ionescu");
-            foo.setSex(Sex.MASCULINE);
+            foo.setGender(Gender.MASCULINE);
             foo.setDob("");
             foo.setAge(52);
             foo.setEducation(Education.SEC);
@@ -53,7 +53,7 @@ public class DefaultParticipants {
             foo.setId("#4");
             foo.setName("Dochia");
             foo.setSurname("Nagy");
-            foo.setSex(Sex.FEMININE);
+            foo.setGender(Gender.FEMININE);
             foo.setDob("");
             foo.setAge(24);
             foo.setEducation(Education.SEC);
@@ -65,7 +65,7 @@ public class DefaultParticipants {
             foo.setId("#5");
             foo.setName("Rafael");
             foo.setSurname("Popescu");
-            foo.setSex(Sex.MASCULINE);
+            foo.setGender(Gender.MASCULINE);
             foo.setDob("");
             foo.setAge(40);
             foo.setEducation(Education.BSC);
@@ -77,7 +77,7 @@ public class DefaultParticipants {
             foo.setId("#6");
             foo.setName("Eufrosina");
             foo.setSurname("Radu");
-            foo.setSex(Sex.FEMININE);
+            foo.setGender(Gender.FEMININE);
             foo.setDob("");
             foo.setAge(45);
             foo.setEducation(Education.BSC);
@@ -89,7 +89,7 @@ public class DefaultParticipants {
             foo.setId("#7");
             foo.setName("Iolanda");
             foo.setSurname("Hacichian");
-            foo.setSex(Sex.FEMININE);
+            foo.setGender(Gender.FEMININE);
             foo.setDob("");
             foo.setAge(20);
             foo.setEducation(Education.PRI);
@@ -101,7 +101,7 @@ public class DefaultParticipants {
             foo.setId("#8");
             foo.setName("Alistar");
             foo.setSurname("Zbucea");
-            foo.setSex(Sex.MASCULINE);
+            foo.setGender(Gender.MASCULINE);
             foo.setDob("");
             foo.setAge(52);
             foo.setEducation(Education.BSC);
@@ -113,7 +113,7 @@ public class DefaultParticipants {
             foo.setId("#9");
             foo.setName("Ghenadie");
             foo.setSurname("Schirliu");
-            foo.setSex(Sex.MASCULINE);
+            foo.setGender(Gender.MASCULINE);
             foo.setDob("");
             foo.setAge(38);
             foo.setEducation(Education.SEC);
