@@ -1,4 +1,3 @@
-- translate Open/Save dialogs
 - preferences dialog
 - about dialog
 - sign tests

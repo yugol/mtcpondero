@@ -1,5 +1,6 @@
 2014-07-27
 ==========
+- translated JFileChooser dialogs
 - separate project for pondero-qa
 - change name sex -> gender
 
@@ -14,3 +15,4 @@
 - adaugat un meniu de Ajutor care permite deschidera paginii web a aplicatiei
 - implementat un sistem de logging pentru a usura raportarea si corectarea erorilor
 - implementat o strategie de backup a fisierelor de date la deschiderea acestora
+
