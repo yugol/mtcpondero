@@ -3,8 +3,8 @@ package pondero.ui.actions;
 import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import pondero.L10n;
 import pondero.model.entities.Participant;
-import pondero.ui.Messages;
 import pondero.ui.Pondero;
 import pondero.ui.participants.ParticipantSelectionDialog;
 
@@ -13,7 +13,7 @@ public class ChooseParticipantAction extends PonderoAction {
 
     public ChooseParticipantAction(final Pondero app) {
         super(app);
-        putValue(NAME, Messages.getString("lbl.choose...")); //$NON-NLS-1$
+        putValue(NAME, L10n.getString("lbl.choose...")); //$NON-NLS-1$
         putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/find.png"))); //$NON-NLS-1$
     }
 

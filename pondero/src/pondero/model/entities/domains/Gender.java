@@ -1,6 +1,6 @@
 package pondero.model.entities.domains;
 
-import pondero.ui.Messages;
+import pondero.L10n;
 
 public enum Gender {
 
@@ -30,9 +30,9 @@ public enum Gender {
     public String toString() {
         switch (this) {
             case FEMININE:
-                return Messages.getString("lbl.gender.feminine");
+                return L10n.getString("lbl.gender.feminine");
             case MASCULINE:
-                return Messages.getString("lbl.gender.masculine");
+                return L10n.getString("lbl.gender.masculine");
             default:
                 return "";
         }

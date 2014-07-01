@@ -3,7 +3,7 @@ package pondero.ui.actions;
 import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
-import pondero.ui.Messages;
+import pondero.L10n;
 import pondero.ui.Pondero;
 
 @SuppressWarnings("serial")
@@ -11,7 +11,7 @@ public class StartDocumentAction extends PonderoAction {
 
     public StartDocumentAction(final Pondero app) {
         super(app);
-        putValue(NAME, Messages.getString("lbl.open-externally"));
+        putValue(NAME, L10n.getString("lbl.open-externally"));
     }
 
     @Override
@@ -23,7 +23,7 @@ public class StartDocumentAction extends PonderoAction {
             JOptionPane.showInternalMessageDialog(
                     getApp().getFrame(),
                     e.getMessage(),
-                    Messages.getString("lbl.open-externally"),
+                    L10n.getString("lbl.open-externally"),
                     JOptionPane.ERROR_MESSAGE);
         }
     }

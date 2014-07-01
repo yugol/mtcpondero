@@ -1,12 +1,12 @@
-package pondero.ui;
+package pondero;
 
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import pondero.Globals;
+import javax.swing.UIManager;
 
-public class Messages {
+public class L10n {
 
     private static final String         BUNDLE_NAME     = "pondero.ui.messages";                        //$NON-NLS-1$
     private static final Locale         LOCALE          = Globals.getLocale();
@@ -14,6 +14,7 @@ public class Messages {
     private static final MessageFormat  FORMATTER       = new MessageFormat("");
     static {
         FORMATTER.setLocale(LOCALE);
+        localizeJOptionPaneButtons();
     }
 
     public static String getString(final String key) {
@@ -33,7 +34,13 @@ public class Messages {
         }
     }
 
-    private Messages() {
+    private static void localizeJOptionPaneButtons() {
+        UIManager.put("OptionPane.yesButtonText", getString("lbl.yes"));
+        UIManager.put("OptionPane.noButtonText", getString("lbl.no"));
+        UIManager.put("OptionPane.cancelButtonText", getString("lbl.cancel"));
+    }
+
+    private L10n() {
     }
 
 }

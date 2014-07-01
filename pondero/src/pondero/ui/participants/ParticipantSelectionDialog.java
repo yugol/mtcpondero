@@ -14,9 +14,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import pondero.Globals;
+import pondero.L10n;
 import pondero.model.Workbook;
 import pondero.model.entities.Participant;
-import pondero.ui.Messages;
 
 @SuppressWarnings("serial")
 public class ParticipantSelectionDialog extends JDialog {
@@ -36,7 +36,7 @@ public class ParticipantSelectionDialog extends JDialog {
 
     public ParticipantSelectionDialog(final Workbook wb) throws Exception {
         setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantSelectionDialog.class.getResource("/com/famfamfam/silk/user_go.png")));
-        setTitle(Messages.getString("lbl.participants")); //$NON-NLS-1$
+        setTitle(L10n.getString("lbl.participants")); //$NON-NLS-1$
         setBounds(100, 100, 400, 450);
         getContentPane().setLayout(new BorderLayout());
 
@@ -62,7 +62,7 @@ public class ParticipantSelectionDialog extends JDialog {
             buttonPane.setBorder(new EmptyBorder(6, 0, 5, 0));
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             {
-                okButton = new JButton(Messages.getString("lbl.choose")); //$NON-NLS-1$
+                okButton = new JButton(L10n.getString("lbl.choose")); //$NON-NLS-1$
                 okButton.setEnabled(false);
                 okButton.addActionListener(new ActionListener() {
 
@@ -78,7 +78,7 @@ public class ParticipantSelectionDialog extends JDialog {
                 getRootPane().setDefaultButton(okButton);
             }
             {
-                cancelButton = new JButton(Messages.getString("lbl.cancel")); //$NON-NLS-1$
+                cancelButton = new JButton(L10n.getString("lbl.cancel")); //$NON-NLS-1$
                 cancelButton.addActionListener(new ActionListener() {
 
                     @Override

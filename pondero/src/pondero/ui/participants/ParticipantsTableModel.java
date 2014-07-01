@@ -2,8 +2,8 @@ package pondero.ui.participants;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+import pondero.L10n;
 import pondero.model.entities.Participant;
-import pondero.ui.Messages;
 
 @SuppressWarnings("serial")
 public class ParticipantsTableModel extends AbstractTableModel {
@@ -23,11 +23,11 @@ public class ParticipantsTableModel extends AbstractTableModel {
     public String getColumnName(final int column) {
         switch (column) {
             case 0:
-                return Messages.getString("lbl.participant.id");
+                return L10n.getString("lbl.participant.id");
             case 1:
-                return Messages.getString("lbl.participant.surname");
+                return L10n.getString("lbl.participant.surname");
             case 2:
-                return Messages.getString("lbl.participant.name");
+                return L10n.getString("lbl.participant.name");
         }
         return null;
     }

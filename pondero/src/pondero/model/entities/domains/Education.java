@@ -1,6 +1,6 @@
 package pondero.model.entities.domains;
 
-import pondero.ui.Messages;
+import pondero.L10n;
 
 public enum Education {
 
@@ -38,17 +38,17 @@ public enum Education {
     public String toString() {
         switch (this) {
             case BSC:
-                return Messages.getString("lbl.education.bsc");
+                return L10n.getString("lbl.education.bsc");
             case MSC:
-                return Messages.getString("lbl.education.msc");
+                return L10n.getString("lbl.education.msc");
             case NONE:
-                return Messages.getString("lbl.education.none");
+                return L10n.getString("lbl.education.none");
             case PHD:
-                return Messages.getString("lbl.education.phd");
+                return L10n.getString("lbl.education.phd");
             case PRI:
-                return Messages.getString("lbl.education.pri");
+                return L10n.getString("lbl.education.pri");
             case SEC:
-                return Messages.getString("lbl.education.sec");
+                return L10n.getString("lbl.education.sec");
             default:
                 return "";
         }
