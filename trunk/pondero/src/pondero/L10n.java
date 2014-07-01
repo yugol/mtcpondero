@@ -15,6 +15,7 @@ public class L10n {
     static {
         FORMATTER.setLocale(LOCALE);
         localizeJOptionPaneButtons();
+        localizeJFileChoose();
     }
 
     public static String getString(final String key) {
@@ -32,6 +33,29 @@ public class L10n {
         } catch (final MissingResourceException e) {
             return '!' + key + '!';
         }
+    }
+
+    private static void localizeJFileChoose() {
+        UIManager.put("FileChooser.cancelButtonText", getString("FileChooser.cancelButtonText"));
+        UIManager.put("FileChooser.cancelButtonToolTipText", getString("FileChooser.cancelButtonToolTipText"));
+        UIManager.put("FileChooser.detailsViewButtonToolTipText", getString("FileChooser.detailsViewButtonToolTipText"));
+        UIManager.put("FileChooser.fileNameLabelText", getString("FileChooser.fileNameLabelText"));
+        UIManager.put("FileChooser.filesOfTypeLabelText", getString("FileChooser.filesOfTypeLabelText"));
+        UIManager.put("FileChooser.helpButtonText", getString("FileChooser.helpButtonText"));
+        UIManager.put("FileChooser.helpButtonToolTipText", getString("FileChooser.helpButtonToolTipText"));
+        UIManager.put("FileChooser.homeFolderToolTipText", getString("FileChooser.homeFolderToolTipText"));
+        UIManager.put("FileChooser.listViewButtonToolTipText", getString("FileChooser.listViewButtonToolTipText"));
+        UIManager.put("FileChooser.lookInLabelText", getString("FileChooser.lookInLabelText"));
+        UIManager.put("FileChooser.newFolderToolTipText", getString("FileChooser.newFolderToolTipText"));
+        UIManager.put("FileChooser.openButtonText", getString("FileChooser.openButtonText"));
+        UIManager.put("FileChooser.openButtonToolTipText", getString("FileChooser.openButtonToolTipText"));
+        UIManager.put("FileChooser.saveButtonText", getString("FileChooser.saveButtonText"));
+        UIManager.put("FileChooser.saveButtonToolTipText", getString("FileChooser.saveButtonToolTipText"));
+        UIManager.put("FileChooser.saveInLabelText", getString("FileChooser.saveInLabelText"));
+        UIManager.put("FileChooser.upFolderToolTipText", getString("FileChooser.upFolderToolTipText"));
+        UIManager.put("FileChooser.updateButtonText", getString("FileChooser.updateButtonText"));
+        UIManager.put("FileChooser.updateButtonToolTipText", getString("FileChooser.updateButtonToolTipText"));
+        UIManager.put("FileChooser.acceptAllFileFilterText", getString("FileChooser.acceptAllFileFilterText"));
     }
 
     private static void localizeJOptionPaneButtons() {

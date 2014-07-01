@@ -36,7 +36,7 @@ public class ParticipantSelectionDialog extends JDialog {
 
     public ParticipantSelectionDialog(final Workbook wb) throws Exception {
         setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantSelectionDialog.class.getResource("/com/famfamfam/silk/user_go.png")));
-        setTitle(L10n.getString("lbl.participants")); //$NON-NLS-1$
+        setTitle(L10n.getString("lbl.select-participant")); //$NON-NLS-1$
         setBounds(100, 100, 400, 450);
         getContentPane().setLayout(new BorderLayout());
 

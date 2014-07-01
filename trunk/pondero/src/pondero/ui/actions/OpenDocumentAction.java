@@ -38,6 +38,7 @@ public class OpenDocumentAction extends PonderoAction {
                 wb.close();
             }
             final JFileChooser dialog = new JFileChooser(".");
+            dialog.setDialogTitle(L10n.getString("lbl.open-workbook"));
             dialog.setCurrentDirectory(Globals.getFolderResults());
             dialog.setFileFilter(new ExcelWorkbookFilter());
             if (JFileChooser.APPROVE_OPTION == dialog.showOpenDialog(getApp().getFrame())) {
