@@ -5,16 +5,17 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.L10n;
 import pondero.model.entities.Participant;
+import pondero.ui.Main;
 import pondero.ui.Pondero;
 import pondero.ui.participants.ParticipantSelectionDialog;
 
 @SuppressWarnings("serial")
 public class ChooseParticipantAction extends PonderoAction {
 
-    public ChooseParticipantAction(final Pondero app) {
+    public ChooseParticipantAction(final Main app) {
         super(app);
-        putValue(NAME, L10n.getString("lbl.choose...")); //$NON-NLS-1$
-        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/find.png"))); //$NON-NLS-1$
+        putValue(NAME, L10n.getString("html.choose-participant"));
+        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/find.png")));
     }
 
     @Override

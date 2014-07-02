@@ -10,12 +10,13 @@ import pondero.L10n;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.model.excel.ExcelWorkbookFilter;
+import pondero.ui.Main;
 import pondero.ui.Pondero;
 
 @SuppressWarnings("serial")
 public class OpenDocumentAction extends PonderoAction {
 
-    public OpenDocumentAction(final Pondero app) {
+    public OpenDocumentAction(final Main app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.open..."));
         putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/folder_page.png")));
@@ -42,7 +43,7 @@ public class OpenDocumentAction extends PonderoAction {
             dialog.setCurrentDirectory(Globals.getFolderResults());
             dialog.setFileFilter(new ExcelWorkbookFilter());
             if (JFileChooser.APPROVE_OPTION == dialog.showOpenDialog(getApp().getFrame())) {
-                getApp().openWorkbook(WorkbookFactory.openWorkbook(dialog.getSelectedFile()));
+                getApp().setWorkbook(WorkbookFactory.openWorkbook(dialog.getSelectedFile()));
 
             }
         } catch (final Exception e) {

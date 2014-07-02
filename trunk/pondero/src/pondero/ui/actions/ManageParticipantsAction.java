@@ -4,16 +4,17 @@ import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.L10n;
+import pondero.ui.Main;
 import pondero.ui.Pondero;
 import pondero.ui.participants.ParticipantsManagementDialog;
 
 @SuppressWarnings("serial")
 public class ManageParticipantsAction extends PonderoAction {
 
-    public ManageParticipantsAction(final Pondero app) {
+    public ManageParticipantsAction(final Main app) {
         super(app);
-        putValue(NAME, L10n.getString("lbl.add-modify")); //$NON-NLS-1$
-        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/page_edit.png"))); //$NON-NLS-1$
+        putValue(NAME, L10n.getString("lbl.add-modify"));
+        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/page_edit.png")));
     }
 
     @Override

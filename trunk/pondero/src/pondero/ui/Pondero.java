@@ -36,31 +36,21 @@ import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.model.entities.Participant;
 import pondero.tests.TestLoader;
-import pondero.ui.actions.ChooseParticipantAction;
-import pondero.ui.actions.HomePageAction;
-import pondero.ui.actions.ManageParticipantsAction;
-import pondero.ui.actions.OpenDocumentAction;
-import pondero.ui.actions.QuitAction;
-import pondero.ui.actions.SaveAsDocumentAction;
-import pondero.ui.actions.SaveDocumentAction;
-import pondero.ui.actions.StartDocumentAction;
-import pondero.ui.actions.StartTaskAction;
 import pondero.ui.actions.TaskAction;
-import pondero.ui.actions.UpdateAction;
 import pondero.ui.update.UpdateDialog;
 
 public class Pondero implements TaskLauncher {
 
     private static final float START_BUTTON_SIZE_FACTOR = 1.2f;
+
     private static final int   DEFAULT                  = 0;
     private static final int   ERROR                    = 3;
     private static final int   SUCCESS                  = 1;
-
     private static final int   WARNING                  = 2;
+
     private static final Color DEFAULT_COLOR            = Color.BLACK;
     private static final Color ERROR_COLOR              = Color.RED;
     private static final Color SUCCESS_COLOR            = new Color(0, 128, 0);
-
     private static final Color WARNING_COLOR            = Color.BLUE;
 
     /**
@@ -108,16 +98,16 @@ public class Pondero implements TaskLauncher {
     private Test         currentTask              = null;
 
     // Actions
-    private final Action chooseParticipantAction  = new ChooseParticipantAction(this);
-    private final Action homePageAction           = new HomePageAction(this);
-    private final Action manageParticipantsAction = new ManageParticipantsAction(this);
-    private final Action openDocumentAction       = new OpenDocumentAction(this);
-    private final Action quitAction               = new QuitAction(this);
-    private final Action saveAsDocument           = new SaveAsDocumentAction(this);
-    private final Action saveDocument             = new SaveDocumentAction(this);
-    private final Action startDocument            = new StartDocumentAction(this);
-    private final Action startTaskAction          = new StartTaskAction(this);
-    private final Action updateAction             = new UpdateAction(this);
+    private final Action chooseParticipantAction  = null; // new ChooseParticipantAction(this);
+    private final Action homePageAction           = null; // new HomePageAction(this);
+    private final Action manageParticipantsAction = null; // new ManageParticipantsAction(this);
+    private final Action openDocumentAction       = null; // new OpenDocumentAction(this);
+    private final Action quitAction               = null; // new QuitAction(this);
+    private final Action saveAsDocument           = null; // new SaveAsDocumentAction(this);
+    private final Action saveDocument             = null; // new SaveDocumentAction(this);
+    private final Action startDocument            = null; // new StartDocumentAction(this);
+    private final Action startTaskAction          = null; // new StartTaskAction(this);
+    private final Action updateAction             = null; // new UpdateAction(this);
 
     // Components
     private JButton      btnStartTask;
@@ -186,7 +176,7 @@ public class Pondero implements TaskLauncher {
     public void registerTask(final Test task) {
         task.setLauncher(this);
         final JMenuItem mntmTask = new JMenuItem();
-        mntmTask.setAction(new TaskAction(this, task));
+        mntmTask.setAction(new TaskAction(null, task));
         mnTasks.add(mntmTask);
     }
 
@@ -247,7 +237,7 @@ public class Pondero implements TaskLauncher {
 
         mnApp.addSeparator();
 
-        final JMenuItem mntmUpdate = new JMenuItem(L10n.getString("Pondero.mntmUpdate.text")); //$NON-NLS-1$
+        final JMenuItem mntmUpdate = new JMenuItem(L10n.getString("lbl.update...")); //$NON-NLS-1$
         mntmUpdate.setAction(updateAction);
         mnApp.add(mntmUpdate);
 
