@@ -7,16 +7,16 @@ import javax.swing.JOptionPane;
 import pondero.Globals;
 import pondero.L10n;
 import pondero.WebUtil;
-import pondero.ui.Main;
 import pondero.ui.Pondero;
+import pondero.ui.PonderoOld;
 
 @SuppressWarnings("serial")
 public class HomePageAction extends PonderoAction {
 
-    public HomePageAction(Main app) {
+    public HomePageAction(Pondero app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.home-page"));
-        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/world_link.png")));
+        putValue(SMALL_ICON, new ImageIcon(PonderoOld.class.getResource("/com/famfamfam/silk/world_link.png")));
     }
 
     @Override

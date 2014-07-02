@@ -7,16 +7,16 @@ import javax.swing.JOptionPane;
 import pondero.FileUtil;
 import pondero.L10n;
 import pondero.model.Workbook;
-import pondero.ui.Main;
 import pondero.ui.Pondero;
+import pondero.ui.PonderoOld;
 
 @SuppressWarnings("serial")
 public class QuitAction extends PonderoAction {
 
-    public QuitAction(final Main app) {
+    public QuitAction(final Pondero app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.quit"));
-        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/cancel.png")));
+        putValue(SMALL_ICON, new ImageIcon(PonderoOld.class.getResource("/com/famfamfam/silk/cancel.png")));
     }
 
     @Override
