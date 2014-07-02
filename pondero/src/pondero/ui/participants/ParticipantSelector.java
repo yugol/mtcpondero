@@ -3,6 +3,8 @@ package pondero.ui.participants;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
@@ -23,13 +25,13 @@ import pondero.model.participants.Participants;
 @SuppressWarnings("serial")
 public class ParticipantSelector extends JComponent {
 
-    private static final int                  ID_COL_WIDTH       = 60;
+    private static final int                         ID_COL_WIDTH       = 60;
 
-    private Participants                      participants;
-    private final JTextField                  textPattern;
-    private final JTable                      tblParticipants;
-    private final List<ListSelectionListener> selectionListeners = new ArrayList<ListSelectionListener>();
-    private Participant                       selectedParticipant;
+    private Participants                             participants;
+    private final JTextField                         textPattern;
+    private final JTable                             tblParticipants;
+    private final List<ParticipantSelectionListener> selectionListeners = new ArrayList<ParticipantSelectionListener>();
+    private Participant                              selectedParticipant;
 
     public ParticipantSelector(final Workbook wb) throws Exception {
 
@@ -40,7 +42,7 @@ public class ParticipantSelector extends JComponent {
         gridBagLayout.rowWeights = new double[] { 0.0, 1.0 };
         setLayout(gridBagLayout);
 
-        final JLabel lblParticipant = new JLabel(L10n.getString("lbl.participant"));
+        final JLabel lblParticipant = new JLabel(L10n.getString("lbl.search"));
         final GridBagConstraints gbc_lblParticipant = new GridBagConstraints();
         gbc_lblParticipant.insets = new Insets(0, 0, 5, 5);
         gbc_lblParticipant.anchor = GridBagConstraints.EAST;
@@ -94,13 +96,26 @@ public class ParticipantSelector extends JComponent {
         add(scrollPane, gbc_scrollPane);
 
         tblParticipants = new JTable();
+        tblParticipants.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
+                    int index = tblParticipants.getSelectedRow();
+                    setSelectedIndex(index);
+                    final ListSelectionEvent listEvet = new ListSelectionEvent(ParticipantSelector.this, index, index, false);
+                    for (final ParticipantSelectionListener listener : selectionListeners) {
+                        listener.valueChosen(listEvet);
+                    }
+                }
+            }
+
+        });
         tblParticipants.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
             @Override
             public void valueChanged(final ListSelectionEvent e) {
-                final int selectedRowIdx = tblParticipants.getSelectedRow();
-                final Participant selectedParticipant = ((ParticipantsTableModel) tblParticipants.getModel()).getParticipant(selectedRowIdx);
-                setSelectedValue(selectedParticipant);
+                setSelectedIndex(tblParticipants.getSelectedRow());
             }
 
         });
@@ -109,7 +124,7 @@ public class ParticipantSelector extends JComponent {
         setWorkbook(wb);
     }
 
-    public void addListSelectionListener(final ListSelectionListener listSelectionListener) {
+    public void addListSelectionListener(final ParticipantSelectionListener listSelectionListener) {
         selectionListeners.add(listSelectionListener);
     }
 
@@ -122,9 +137,14 @@ public class ParticipantSelector extends JComponent {
         updateParticipants();
     }
 
-    private void setSelectedValue(final Participant foo) {
-        selectedParticipant = foo;
-        final ListSelectionEvent evt = new ListSelectionEvent(this, 0, 0, false);
+    private void setSelectedIndex(int index) {
+        if (index >= 0) {
+            selectedParticipant = ((ParticipantsTableModel) tblParticipants.getModel()).getParticipant(index);
+        } else {
+            selectedParticipant = null;
+        }
+
+        final ListSelectionEvent evt = new ListSelectionEvent(this, index, index, false);
         for (final ListSelectionListener listener : selectionListeners) {
             listener.valueChanged(evt);
         }
@@ -138,7 +158,7 @@ public class ParticipantSelector extends JComponent {
         final int idColSize = ID_COL_WIDTH;
         columnModel.getColumn(0).setMinWidth(idColSize);
         columnModel.getColumn(0).setMaxWidth(idColSize);
-        setSelectedValue(null);
+        setSelectedIndex(-1);
     }
 
 }

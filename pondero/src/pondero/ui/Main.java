@@ -189,7 +189,8 @@ public class Main {
      */
     private void initialize() {
         frame = new JFrame(L10n.getString("lbl.pondero"));
-        frame.setBounds(100, 100, 800, 600);
+        frame.setLocationByPlatform(true);
+        frame.setSize(800, 600);
         frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Pondero.class.getResource("/pondero/res/pondero-48x48.png")));
         frame.addWindowListener(new WindowAdapter() {
 
