@@ -36,7 +36,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import pondero.Globals;
 import pondero.L10n;
 import pondero.model.Workbook;
@@ -135,7 +134,7 @@ public class ParticipantsManagementDialog extends JDialog {
         background.setLayout(gbl_background);
 
         participantSelector = new ParticipantSelector(wb);
-        participantSelector.addListSelectionListener(new ListSelectionListener() {
+        participantSelector.addListSelectionListener(new ParticipantSelectionListener() {
 
             @Override
             public void valueChanged(ListSelectionEvent evt) {
@@ -143,6 +142,10 @@ public class ParticipantsManagementDialog extends JDialog {
                 if (checkDirtyAndContinue()) {
                     setParticipant(participantSelector.getSelectedValue());
                 }
+            }
+
+            @Override
+            public void valueChosen(ListSelectionEvent evt) {
             }
 
         });
