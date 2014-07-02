@@ -2,10 +2,10 @@ package pondero.ui;
 
 import static pondero.Logger.error;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -13,126 +13,110 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.Action;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.JScrollPane;
+import javax.swing.UIManager;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import pondero.Globals;
 import pondero.L10n;
-import pondero.OsUtil;
-import pondero.UiUtil;
 import pondero.engine.test.Test;
-import pondero.engine.test.launch.TaskLauncher;
-import pondero.engine.test.launch.TestReport;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.model.entities.Participant;
-import pondero.tests.TestLoader;
-import pondero.ui.actions.TaskAction;
-import pondero.ui.update.UpdateDialog;
+import pondero.ui.actions.ChooseParticipantAction;
+import pondero.ui.actions.HomePageAction;
+import pondero.ui.actions.ManageParticipantsAction;
+import pondero.ui.actions.OpenDocumentAction;
+import pondero.ui.actions.QuitAction;
+import pondero.ui.actions.SaveAsDocumentAction;
+import pondero.ui.actions.SaveDocumentAction;
+import pondero.ui.actions.SetPreferencesAction;
+import pondero.ui.actions.StartDocumentAction;
+import pondero.ui.actions.StartTaskAction;
+import pondero.ui.actions.UpdateAction;
+import pondero.ui.participants.ParticipantReport;
 
-public class Pondero implements TaskLauncher {
-
-    private static final float START_BUTTON_SIZE_FACTOR = 1.2f;
-
-    private static final int   DEFAULT                  = 0;
-    private static final int   ERROR                    = 3;
-    private static final int   SUCCESS                  = 1;
-    private static final int   WARNING                  = 2;
-
-    private static final Color DEFAULT_COLOR            = Color.BLACK;
-    private static final Color ERROR_COLOR              = Color.RED;
-    private static final Color SUCCESS_COLOR            = new Color(0, 128, 0);
-    private static final Color WARNING_COLOR            = Color.BLUE;
+public class Pondero {
 
     /**
      * Launch the application.
      * 
      * @throws Exception
      */
-    public static void main(final String... args) throws Exception {
+    public static void main(String[] args) throws Exception {
         String home = args.length >= 1 ? args[0] : null;
         Globals.loadPreferences(home);
-
-        OsUtil.setupMainWindow(L10n.getString("lbl.pondero"));//$NON-NLS-1$
-        UiUtil.setLaf();
-        UiUtil.factorFontSize(Globals.getUiScaleFactor());
 
         EventQueue.invokeLater(new Runnable() {
 
             @Override
             public void run() {
-
-                final Pondero window = new Pondero();
                 try {
-                    TestLoader.registerTests(window);
-                } catch (final Exception e) {
-                    error(e);
-                }
-                try {
-                    window.openWorkbook(WorkbookFactory.openWorkbook(Globals.getLastWorkbookFile()));
-                } catch (final Exception e) {
-                    error(e);
-                }
-                window.frmMain.setVisible(true);
-                window.updateStatus(null);
-                if (Globals.isUpdateOnStartup()) {
-                    new UpdateDialog(window.frmMain).beginUpdate();
+                    Pondero window = new Pondero();
+                    window.frame.setVisible(true);
+                    try {
+                        window.setWorkbook(WorkbookFactory.openWorkbook(Globals.getLastWorkbookFile()));
+                    } catch (final Exception e) {
+                        error(e);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-
         });
     }
 
     // Essentials
-    private Workbook     currentWorkbook          = null;
-    private Participant  currentParticipant       = null;
-    private Test         currentTask              = null;
+    private PonderoState currentState;
+    private Workbook     currentWorkbook;
+    private Participant  currentParticipant;
+    private Test         currentTask;
 
     // Actions
-    private final Action chooseParticipantAction  = null; // new ChooseParticipantAction(this);
-    private final Action homePageAction           = null; // new HomePageAction(this);
-    private final Action manageParticipantsAction = null; // new ManageParticipantsAction(this);
-    private final Action openDocumentAction       = null; // new OpenDocumentAction(this);
-    private final Action quitAction               = null; // new QuitAction(this);
-    private final Action saveAsDocument           = null; // new SaveAsDocumentAction(this);
-    private final Action saveDocument             = null; // new SaveDocumentAction(this);
-    private final Action startDocument            = null; // new StartDocumentAction(this);
-    private final Action startTaskAction          = null; // new StartTaskAction(this);
-    private final Action updateAction             = null; // new UpdateAction(this);
+    private final Action chooseParticipantAction  = new ChooseParticipantAction(this);
+    private final Action homePageAction           = new HomePageAction(this);
+    private final Action manageParticipantsAction = new ManageParticipantsAction(this);
+    private final Action openDocumentAction       = new OpenDocumentAction(this);
+    private final Action quitAction               = new QuitAction(this);
+    private final Action saveAsDocument           = new SaveAsDocumentAction(this);
+    private final Action saveDocument             = new SaveDocumentAction(this);
+    private final Action setPreferencesAction     = new SetPreferencesAction(this);
+    private final Action startDocument            = new StartDocumentAction(this);
+    private final Action startTaskAction          = new StartTaskAction(this);
+    private final Action updateAction             = new UpdateAction(this);
 
-    // Components
-    private JButton      btnStartTask;
-    private JFrame       frmMain;
-    private JLabel       lblDocument;
-    private JLabel       lblDocumentName;
-    private JLabel       lblParticipant;
-    private JLabel       lblParticipantName;
-    private JLabel       lblTask;
-    private JLabel       lblTaskName;
-    private JLabel       lblTaskStatus;
-    private JMenu        mnHelp;
-    private JMenu        mnParticipants;
-    private JMenu        mnTasks;
-    private JMenuItem    mntmDocumentSave;
-    private JMenuItem    mntmDocumentSaveAs;
-    private JMenuItem    mntmDocumentStart;
-    private JMenuItem    mntmHomepage;
-    private JMenuItem    mntmParticipantSelect;
+    // Widgets
+    private JFrame       frame;
+    private JPanel       pnlStage;
+    private JButton      btnSelectParticipant;
+    private JButton      btnAddParticipant;
+    private JButton      btnModifyParticipant;
+    private JButton      btnNext;
+    private JEditorPane  dtrpnEpparticipantdescription;
+    private JMenuItem    mntmPreferences;
+    private StatusBar    statusBar;
+    private JMenu        mnAnalisys;
+    private JMenuItem    mntmView;
+    private JMenuItem    mntmSave;
+    private JMenuItem    mntmSaveas;
 
+    /**
+     * Create the application.
+     */
     public Pondero() {
         initialize();
-        setCurrentParticipant(null);
-        setCurrentTask(null);
-        btnStartTask.setMargin(new Insets(5, 10, 6, 14));
+        setCurrentState(PonderoState.PARTICIPANT_SELECTION);
+        configureNavigationButton(btnNext);
+        frame.setMinimumSize(new Dimension(640, 480));
     }
 
     public Participant getCurrentParticipant() {
@@ -147,73 +131,71 @@ public class Pondero implements TaskLauncher {
         return currentWorkbook;
     }
 
-    public Frame getFrame() {
-        return frmMain;
+    public JFrame getFrame() {
+        return frame;
     }
 
-    @Override
-    public void onTaskEnded(final Test task, final TestReport report) {
-        switch (report.getEndCode()) {
-            case TestReport.END_KILL:
-                setStatusMessage(ERROR, L10n.getString("msg.test-interrupted", report.getEndCode())); //$NON-NLS-1$
-                break;
-            default:
-                setStatusMessage(SUCCESS, L10n.getString("msg.test-completed", report.getRunningTimeInSeconds())); //$NON-NLS-1$
-        }
+    public void setCurrentParticipant(Participant participant) {
+        currentParticipant = participant;
+        updateCurrentState();
     }
 
-    @Override
-    public void onTaskStarted(final Test task) {
-        setStatusMessage(DEFAULT, L10n.getString("msg.test-in-progress")); //$NON-NLS-1$
-    }
-
-    public void openWorkbook(final Workbook workbook) throws Exception {
-        currentWorkbook = workbook;
-        lblDocumentName.setText(currentWorkbook.getName());
-        updateStatus(null);
-    }
-
-    public void registerTask(final Test task) {
-        task.setLauncher(this);
-        final JMenuItem mntmTask = new JMenuItem();
-        mntmTask.setAction(new TaskAction(null, task));
-        mnTasks.add(mntmTask);
-    }
-
-    public void setCurrentParticipant(final Participant currentParticipant) {
-        this.currentParticipant = currentParticipant;
-        if (currentParticipant == null) {
-            lblParticipantName.setText(L10n.getString("lbl.n-a")); //$NON-NLS-1$
+    public void setCurrentState(PonderoState state) {
+        mntmPreferences.setEnabled(false);
+        mntmView.setEnabled(currentWorkbook != null);
+        mntmSave.setEnabled(currentWorkbook != null);
+        mntmSaveas.setEnabled(currentWorkbook != null);
+        mnAnalisys.setEnabled(currentWorkbook != null);
+        if (currentWorkbook == null) {
+            pnlStage.setVisible(false);
+            statusBar.setMessage(StatusBar.ERROR, L10n.getString("msg.please-choose-workbook"));
         } else {
-            lblParticipantName.setText(currentParticipant.getName() + " " + currentParticipant.getSurname()); //$NON-NLS-1$
+            pnlStage.setVisible(true);
+            if (PonderoState.PARTICIPANT_SELECTION == state) {
+                CardLayout cl = (CardLayout) pnlStage.getLayout();
+                cl.show(pnlStage, "pnlParticipant");
+                dtrpnEpparticipantdescription.setEnabled(true);
+                dtrpnEpparticipantdescription.setText(ParticipantReport.getHtml(currentParticipant));
+                btnSelectParticipant.setEnabled(currentWorkbook != null);
+                btnAddParticipant.setEnabled(currentWorkbook != null);
+                btnModifyParticipant.setEnabled(currentWorkbook != null && currentParticipant != null);
+                btnNext.setEnabled(currentWorkbook != null && currentParticipant != null);
+            } else if (PonderoState.TEST_SELECTION == state) {
+                CardLayout cl = (CardLayout) pnlStage.getLayout();
+                cl.show(pnlStage, "pnlTestSelection");
+            }
+            statusBar.setMessage(StatusBar.DEFAULT, L10n.getString("lbl.data-register") + ": " + currentWorkbook.getName());
         }
-        updateStatus(null);
+        currentState = state;
     }
 
-    public void setCurrentTask(final Test task) {
+    public void setCurrentTask(Test task) {
         currentTask = task;
-        if (task != null) {
-            lblTaskName.setText(task.getCodeName());
-            btnStartTask.setEnabled(true);
+        updateCurrentState();
+    }
 
-        } else {
-            lblTask.setForeground(Color.RED);
-            lblTaskName.setText(L10n.getString("lbl.n-a")); //$NON-NLS-1$
-            lblTaskName.setToolTipText(null);
-            btnStartTask.setEnabled(false);
+    public void setWorkbook(Workbook workbook) {
+        currentWorkbook = workbook;
+        updateCurrentState();
+    }
 
-        }
-        updateStatus(null);
+    public void updateCurrentState() {
+        setCurrentState(currentState);
+    }
+
+    private void configureNavigationButton(JButton btn) {
+        btn.setPreferredSize(new Dimension(150, 40));
     }
 
     /**
-     * Initialise the contents of the frame.
+     * Initialize the contents of the frame.
      */
     private void initialize() {
-
-        frmMain = new JFrame();
-        frmMain.setIconImage(Toolkit.getDefaultToolkit().getImage(Pondero.class.getResource("/pondero/res/pondero-48x48.png")));
-        frmMain.addWindowListener(new WindowAdapter() {
+        frame = new JFrame(L10n.getString("lbl.pondero"));
+        frame.setLocationByPlatform(true);
+        frame.setSize(800, 600);
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(PonderoOld.class.getResource("/pondero/res/pondero-48x48.png")));
+        frame.addWindowListener(new WindowAdapter() {
 
             @Override
             public void windowClosing(final WindowEvent e) {
@@ -221,237 +203,154 @@ public class Pondero implements TaskLauncher {
             }
 
         });
-        frmMain.setTitle(L10n.getString("lbl.pondero")); //$NON-NLS-1$
-        frmMain.setBounds(100, 100, 700, 320);
-        frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        final JMenuBar menuBar = new JMenuBar();
-        frmMain.setJMenuBar(menuBar);
+        JMenuBar menuBar = new JMenuBar();
+        frame.setJMenuBar(menuBar);
 
-        final JMenu mnApp = new JMenu(" " + L10n.getString("lbl.application") + " "); //$NON-NLS-1$
-        menuBar.add(mnApp);
+        JMenu mnApplication = new JMenu(" " + L10n.getString("lbl.application") + " ");
+        menuBar.add(mnApplication);
 
-        final JMenuItem mntmPreferences = new JMenuItem(L10n.getString("lbl.preferences")); //$NON-NLS-1$
-        mntmPreferences.setEnabled(false);
-        mnApp.add(mntmPreferences);
+        mntmPreferences = new JMenuItem("preferences");
+        mntmPreferences.setAction(setPreferencesAction);
+        mnApplication.add(mntmPreferences);
 
-        mnApp.addSeparator();
+        mnApplication.addSeparator();
 
-        final JMenuItem mntmUpdate = new JMenuItem(L10n.getString("lbl.update...")); //$NON-NLS-1$
+        JMenuItem mntmUpdate = new JMenuItem("update");
         mntmUpdate.setAction(updateAction);
-        mnApp.add(mntmUpdate);
+        mnApplication.add(mntmUpdate);
 
-        mnApp.addSeparator();
+        mnApplication.addSeparator();
 
-        final JMenuItem mntmQuit = new JMenuItem();
+        JMenuItem mntmQuit = new JMenuItem("quit");
         mntmQuit.setAction(quitAction);
-        mnApp.add(mntmQuit);
+        mnApplication.add(mntmQuit);
 
-        final JMenu mnDocuments = new JMenu(" " + L10n.getString("lbl.registers") + " "); //$NON-NLS-1$
-        menuBar.add(mnDocuments);
+        JMenu mnData = new JMenu(" " + L10n.getString("lbl.registers") + " ");
+        menuBar.add(mnData);
 
-        final JMenuItem mntmDocumentOpen = new JMenuItem();
-        mntmDocumentOpen.setAction(openDocumentAction);
-        mnDocuments.add(mntmDocumentOpen);
+        JMenuItem mntmOpen = new JMenuItem("open");
+        mntmOpen.setAction(openDocumentAction);
+        mnData.add(mntmOpen);
 
-        mntmDocumentStart = new JMenuItem(L10n.getString("Pondero.mntmStartdocument.text")); //$NON-NLS-1$
-        mntmDocumentStart.setAction(startDocument);
-        mnDocuments.add(mntmDocumentStart);
+        mntmView = new JMenuItem("view");
+        mntmView.setAction(startDocument);
+        mnData.add(mntmView);
 
-        mnDocuments.addSeparator();
+        mnData.addSeparator();
 
-        mntmDocumentSave = new JMenuItem();
-        mntmDocumentSave.setAction(saveDocument);
-        mntmDocumentSave.setEnabled(false);
-        mnDocuments.add(mntmDocumentSave);
+        mntmSave = new JMenuItem("save");
+        mntmSave.setAction(saveDocument);
+        mnData.add(mntmSave);
 
-        mntmDocumentSaveAs = new JMenuItem();
-        mntmDocumentSaveAs.setAction(saveAsDocument);
-        mntmDocumentSaveAs.setEnabled(false);
-        mnDocuments.add(mntmDocumentSaveAs);
+        mntmSaveas = new JMenuItem("saveAs");
+        mntmSaveas.setAction(saveAsDocument);
+        mnData.add(mntmSaveas);
 
-        mnParticipants = new JMenu(" " + L10n.getString("lbl.participants") + " "); //$NON-NLS-1$
-        menuBar.add(mnParticipants);
+        mnAnalisys = new JMenu(" " + L10n.getString("lbl.analisys") + " ");
+        menuBar.add(mnAnalisys);
 
-        mntmParticipantSelect = new JMenuItem();
-        mntmParticipantSelect.setAction(chooseParticipantAction);
-        mnParticipants.add(mntmParticipantSelect);
-
-        mnParticipants.addSeparator();
-
-        final JMenuItem mntmParticipantUpdate = new JMenuItem();
-        mntmParticipantUpdate.setAction(manageParticipantsAction);
-        mnParticipants.add(mntmParticipantUpdate);
-
-        mnTasks = new JMenu(" " + L10n.getString("lbl.tests") + " "); //$NON-NLS-1$
-        menuBar.add(mnTasks);
-
-        mnHelp = new JMenu(L10n.getString("lbl.help")); //$NON-NLS-1$
+        JMenu mnHelp = new JMenu(" " + L10n.getString("lbl.help") + " ");
         menuBar.add(mnHelp);
 
-        mntmHomepage = new JMenuItem(); //$NON-NLS-1$
+        JMenuItem mntmHomepage = new JMenuItem("homePage");
         mntmHomepage.setAction(homePageAction);
         mnHelp.add(mntmHomepage);
 
-        final JPanel pnlComposition = new JPanel();
-        pnlComposition.setBorder(new CompoundBorder(new EmptyBorder(10, 10, 0, 10), new EtchedBorder(EtchedBorder.LOWERED, null, null)));
-        frmMain.getContentPane().add(pnlComposition, BorderLayout.NORTH);
-        final GridBagLayout gbl_pnlComposition = new GridBagLayout();
-        gbl_pnlComposition.columnWidths = new int[] { 0, 0, 0 };
-        gbl_pnlComposition.rowHeights = new int[] { 0, 0, 0, 0, 0 };
-        gbl_pnlComposition.columnWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
-        gbl_pnlComposition.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-        pnlComposition.setLayout(gbl_pnlComposition);
+        pnlStage = new JPanel();
+        frame.getContentPane().add(pnlStage, BorderLayout.CENTER);
+        pnlStage.setLayout(new CardLayout(0, 0));
 
-        lblDocument = new JLabel(L10n.getString("lbl.data-register") + ":"); //$NON-NLS-1$  //$NON-NLS-2$
-        lblDocument.setFont(lblDocument.getFont().deriveFont(Font.BOLD));
-        final GridBagConstraints gbc_lblDocument = new GridBagConstraints();
-        gbc_lblDocument.anchor = GridBagConstraints.EAST;
-        gbc_lblDocument.insets = new Insets(10, 10, 10, 5);
-        gbc_lblDocument.gridx = 0;
-        gbc_lblDocument.gridy = 0;
-        pnlComposition.add(lblDocument, gbc_lblDocument);
+        JPanel pnlParticipant = new JPanel();
+        pnlStage.add(pnlParticipant, "pnlParticipantSelection");
+        pnlParticipant.setLayout(new BorderLayout(0, 0));
 
-        lblDocumentName = new JLabel(L10n.getString("lbl.n-a")); //$NON-NLS-1$
-        lblDocumentName.setFont(lblDocumentName.getFont().deriveFont(Font.ITALIC));
-        lblDocumentName.setHorizontalAlignment(SwingConstants.LEFT);
-        final GridBagConstraints gbc_lblDocumentName = new GridBagConstraints();
-        gbc_lblDocumentName.fill = GridBagConstraints.HORIZONTAL;
-        gbc_lblDocumentName.weightx = 1.0;
-        gbc_lblDocumentName.insets = new Insets(10, 5, 10, 0);
-        gbc_lblDocumentName.gridx = 1;
-        gbc_lblDocumentName.gridy = 0;
-        pnlComposition.add(lblDocumentName, gbc_lblDocumentName);
+        JPanel pnlParticipantContent = new JPanel();
+        pnlParticipantContent.setBorder(new EmptyBorder(20, 20, 25, 20));
+        pnlParticipant.add(pnlParticipantContent, BorderLayout.CENTER);
+        GridBagLayout gbl_pnlParticipantContent = new GridBagLayout();
+        gbl_pnlParticipantContent.columnWidths = new int[] { 0, 0 };
+        gbl_pnlParticipantContent.rowHeights = new int[] { 0, 0, 0, 0 };
+        gbl_pnlParticipantContent.columnWeights = new double[] { 1.0, 0.0 };
+        gbl_pnlParticipantContent.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0 };
+        pnlParticipantContent.setLayout(gbl_pnlParticipantContent);
 
-        lblParticipant = new JLabel(L10n.getString("lbl.participant") + ":"); //$NON-NLS-1$  //$NON-NLS-2$
-        lblParticipant.setFont(lblParticipant.getFont().deriveFont(Font.BOLD));
-        final GridBagConstraints gbc_lblParticipant = new GridBagConstraints();
-        gbc_lblParticipant.insets = new Insets(5, 0, 10, 5);
-        gbc_lblParticipant.anchor = GridBagConstraints.EAST;
-        gbc_lblParticipant.gridx = 0;
-        gbc_lblParticipant.gridy = 1;
-        pnlComposition.add(lblParticipant, gbc_lblParticipant);
+        JScrollPane pnlParticipantDescription = new JScrollPane();
+        pnlParticipantDescription.setViewportBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), L10n.getString("lbl.participant") + ":", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        GridBagConstraints gbc_pnlParticipantDescription = new GridBagConstraints();
+        gbc_pnlParticipantDescription.insets = new Insets(0, 0, 0, 10);
+        gbc_pnlParticipantDescription.weightx = 1.0;
+        gbc_pnlParticipantDescription.gridheight = 4;
+        gbc_pnlParticipantDescription.fill = GridBagConstraints.BOTH;
+        gbc_pnlParticipantDescription.gridx = 0;
+        gbc_pnlParticipantDescription.gridy = 0;
+        pnlParticipantContent.add(pnlParticipantDescription, gbc_pnlParticipantDescription);
 
-        lblParticipantName = new JLabel(L10n.getString("lbl.n-a")); //$NON-NLS-1$
-        lblParticipantName.setFont(lblParticipantName.getFont().deriveFont(Font.ITALIC));
-        final GridBagConstraints gbc_lblParticipantName = new GridBagConstraints();
-        gbc_lblParticipantName.fill = GridBagConstraints.HORIZONTAL;
-        gbc_lblParticipantName.weightx = 1.0;
-        gbc_lblParticipantName.insets = new Insets(5, 5, 10, 0);
-        gbc_lblParticipantName.gridx = 1;
-        gbc_lblParticipantName.gridy = 1;
-        pnlComposition.add(lblParticipantName, gbc_lblParticipantName);
+        dtrpnEpparticipantdescription = new JEditorPane();
+        dtrpnEpparticipantdescription.setEditable(false);
+        dtrpnEpparticipantdescription.setContentType("text/html");
+        pnlParticipantDescription.setViewportView(dtrpnEpparticipantdescription);
 
-        lblTask = new JLabel(L10n.getString("lbl.test") + ":"); //$NON-NLS-1$  //$NON-NLS-2$
-        lblTask.setFont(lblTask.getFont().deriveFont(Font.BOLD));
-        final GridBagConstraints gbc_lblTask = new GridBagConstraints();
-        gbc_lblTask.insets = new Insets(5, 0, 10, 5);
-        gbc_lblTask.anchor = GridBagConstraints.EAST;
-        gbc_lblTask.gridx = 0;
-        gbc_lblTask.gridy = 2;
-        pnlComposition.add(lblTask, gbc_lblTask);
+        btnSelectParticipant = new JButton("<html>\r\n<center>\r\nChoose<br/>\r\nparticipant<br/>\r\nfrom list\r\n</center>\r\n</html>");
+        btnSelectParticipant.setAction(chooseParticipantAction);
+        GridBagConstraints gbc_btnSelectParticipant = new GridBagConstraints();
+        gbc_btnSelectParticipant.insets = new Insets(0, 0, 20, 0);
+        gbc_btnSelectParticipant.fill = GridBagConstraints.HORIZONTAL;
+        gbc_btnSelectParticipant.anchor = GridBagConstraints.NORTH;
+        gbc_btnSelectParticipant.gridx = 1;
+        gbc_btnSelectParticipant.gridy = 0;
+        pnlParticipantContent.add(btnSelectParticipant, gbc_btnSelectParticipant);
 
-        lblTaskName = new JLabel(L10n.getString("lbl.n-a")); //$NON-NLS-1$
-        lblTaskName.setFont(lblTaskName.getFont().deriveFont(Font.ITALIC));
-        final GridBagConstraints gbc_lblTaskName = new GridBagConstraints();
-        gbc_lblTaskName.anchor = GridBagConstraints.NORTH;
-        gbc_lblTaskName.insets = new Insets(5, 5, 10, 0);
-        gbc_lblTaskName.fill = GridBagConstraints.HORIZONTAL;
-        gbc_lblTaskName.weightx = 1.0;
-        gbc_lblTaskName.gridx = 1;
-        gbc_lblTaskName.gridy = 2;
-        pnlComposition.add(lblTaskName, gbc_lblTaskName);
+        btnAddParticipant = new JButton("Add...");
+        GridBagConstraints gbc_btnAddParticipant = new GridBagConstraints();
+        gbc_btnAddParticipant.fill = GridBagConstraints.HORIZONTAL;
+        gbc_btnAddParticipant.insets = new Insets(0, 0, 5, 0);
+        gbc_btnAddParticipant.gridx = 1;
+        gbc_btnAddParticipant.gridy = 2;
+        pnlParticipantContent.add(btnAddParticipant, gbc_btnAddParticipant);
 
-        lblTaskStatus = new JLabel(L10n.getString("lbl.n-a"));//$NON-NLS-1$
-        lblTaskStatus.setFont(lblTaskStatus.getFont().deriveFont(Font.ITALIC));
-        lblTaskStatus.setHorizontalAlignment(SwingConstants.TRAILING);
-        final GridBagConstraints gbc_lblTaskEndingStatus = new GridBagConstraints();
-        gbc_lblTaskEndingStatus.insets = new Insets(20, 0, 10, 10);
-        gbc_lblTaskEndingStatus.weightx = 1.0;
-        gbc_lblTaskEndingStatus.gridwidth = 2;
-        gbc_lblTaskEndingStatus.fill = GridBagConstraints.HORIZONTAL;
-        gbc_lblTaskEndingStatus.gridx = 0;
-        gbc_lblTaskEndingStatus.gridy = 3;
-        pnlComposition.add(lblTaskStatus, gbc_lblTaskEndingStatus);
+        btnModifyParticipant = new JButton("Modify...");
+        GridBagConstraints gbc_btnModifyParticipant = new GridBagConstraints();
+        gbc_btnModifyParticipant.fill = GridBagConstraints.HORIZONTAL;
+        gbc_btnModifyParticipant.gridx = 1;
+        gbc_btnModifyParticipant.gridy = 3;
+        pnlParticipantContent.add(btnModifyParticipant, gbc_btnModifyParticipant);
 
-        final JPanel pnlAction = new JPanel();
-        frmMain.getContentPane().add(pnlAction, BorderLayout.CENTER);
-        final GridBagLayout gbl_pnlAction = new GridBagLayout();
-        gbl_pnlAction.columnWidths = new int[] { 0, 0, 0 };
-        gbl_pnlAction.rowHeights = new int[] { 0, 0 };
-        gbl_pnlAction.columnWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
-        gbl_pnlAction.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
-        pnlAction.setLayout(gbl_pnlAction);
+        JPanel pnlParticipantNavigation = new JPanel();
+        pnlParticipantNavigation.setBackground(Color.LIGHT_GRAY);
+        pnlParticipantNavigation.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null), new EmptyBorder(10, 20, 10, 20)));
+        pnlParticipant.add(pnlParticipantNavigation, BorderLayout.SOUTH);
+        pnlParticipantNavigation.setLayout(new BorderLayout(0, 0));
 
-        btnStartTask = new JButton(L10n.getString("lbl.start")); //$NON-NLS-1$
-        btnStartTask.setFont(btnStartTask.getFont().deriveFont(Font.BOLD, btnStartTask.getFont().getSize() * START_BUTTON_SIZE_FACTOR));
-        btnStartTask.setEnabled(false);
-        btnStartTask.setAction(startTaskAction);
-        btnStartTask.setIcon(new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/bullet_go.png"))); //$NON-NLS-1$
-        final GridBagConstraints gbc_btnStartTask = new GridBagConstraints();
-        gbc_btnStartTask.weightx = 1.0;
-        gbc_btnStartTask.weighty = 1.0;
-        gbc_btnStartTask.insets = new Insets(0, 15, 0, 15);
-        gbc_btnStartTask.gridx = 0;
-        gbc_btnStartTask.gridy = 0;
-        pnlAction.add(btnStartTask, gbc_btnStartTask);
+        btnNext = new JButton("CONTINUARE");
+        pnlParticipantNavigation.add(btnNext, BorderLayout.EAST);
+
+        JPanel pnlTest = new JPanel();
+        pnlStage.add(pnlTest, "pnlTestSelection");
+        pnlTest.setLayout(new BorderLayout(0, 0));
+
+        JPanel pnlTestContent = new JPanel();
+        pnlTest.add(pnlTestContent);
+        GridBagLayout gbl_pnlTestContent = new GridBagLayout();
+        gbl_pnlTestContent.columnWidths = new int[] { 0 };
+        gbl_pnlTestContent.rowHeights = new int[] { 0 };
+        gbl_pnlTestContent.columnWeights = new double[] { Double.MIN_VALUE };
+        gbl_pnlTestContent.rowWeights = new double[] { Double.MIN_VALUE };
+        pnlTestContent.setLayout(gbl_pnlTestContent);
+
+        JPanel pnlTestNavigation = new JPanel();
+        pnlTestNavigation.setBorder(new EmptyBorder(10, 10, 10, 10));
+        pnlTest.add(pnlTestNavigation, BorderLayout.SOUTH);
+        pnlTestNavigation.setLayout(new BorderLayout(0, 0));
+
+        JButton btnStart = new JButton("Start");
+        pnlTestNavigation.add(btnStart, BorderLayout.EAST);
+
+        JButton btnPrevious = new JButton("Back");
+        pnlTestNavigation.add(btnPrevious, BorderLayout.WEST);
+
+        statusBar = new StatusBar();
+        frame.getContentPane().add(statusBar, BorderLayout.SOUTH);
     }
 
-    private void setStatusMessage(final int level, String message) {
-        if (message == null) {
-            message = ""; //$NON-NLS-1$
-        }
-        lblTaskStatus.setText(message + " "); //$NON-NLS-1$
-        switch (level) {
-            case WARNING:
-                lblTaskStatus.setForeground(WARNING_COLOR);
-                break;
-            case ERROR:
-                lblTaskStatus.setForeground(ERROR_COLOR);
-                break;
-            case SUCCESS:
-                lblTaskStatus.setForeground(SUCCESS_COLOR);
-                break;
-            default:
-                lblTaskStatus.setForeground(DEFAULT_COLOR);
-                break;
-        }
-    }
-
-    private void updateStatus(Object hint) {
-        if (currentWorkbook == null) {
-            lblDocument.setForeground(ERROR_COLOR);
-        } else {
-            lblDocument.setForeground(DEFAULT_COLOR);
-        }
-        if (currentParticipant == null) {
-            lblParticipant.setForeground(Color.BLUE);
-        } else {
-            lblParticipant.setForeground(DEFAULT_COLOR);
-        }
-        if (currentTask == null) {
-            lblTask.setForeground(ERROR_COLOR);
-            btnStartTask.setEnabled(false);
-        } else {
-            lblTask.setForeground(DEFAULT_COLOR);
-        }
-
-        if (currentWorkbook == null) {
-            setStatusMessage(ERROR, L10n.getString("msg.please-choose-workbook")); //$NON-NLS-1$
-        } else if (currentTask == null) {
-            setStatusMessage(ERROR, L10n.getString("msg.please-choose-test")); //$NON-NLS-1$
-        } else if (currentParticipant == null) {
-            setStatusMessage(WARNING, L10n.getString("msg.please-choose-participant")); //$NON-NLS-1$
-        } else {
-            setStatusMessage(DEFAULT, L10n.getString("msg.press-start-to-start", L10n.getString("lbl.start"))); //$NON-NLS-1$ //$NON-NLS-2$
-        }
-
-        mnParticipants.setEnabled(currentWorkbook != null);
-        mnTasks.setEnabled(currentWorkbook != null);
-        mntmDocumentSave.setEnabled(currentWorkbook != null);
-        mntmDocumentSaveAs.setEnabled(currentWorkbook != null);
-        mntmDocumentStart.setEnabled(currentWorkbook != null);
-
-        btnStartTask.setEnabled(currentWorkbook != null && currentTask != null);
-    }
 }

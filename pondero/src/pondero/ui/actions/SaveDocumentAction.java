@@ -6,16 +6,16 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import pondero.L10n;
-import pondero.ui.Main;
 import pondero.ui.Pondero;
+import pondero.ui.PonderoOld;
 
 @SuppressWarnings("serial")
 public class SaveDocumentAction extends PonderoAction {
 
-    public SaveDocumentAction(final Main app) {
+    public SaveDocumentAction(final Pondero app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.save"));
-        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/disk.png")));
+        putValue(SMALL_ICON, new ImageIcon(PonderoOld.class.getResource("/com/famfamfam/silk/disk.png")));
     }
 
     @Override

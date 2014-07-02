@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import pondero.Globals;
 import pondero.engine.test.Test;
-import pondero.ui.Pondero;
+import pondero.ui.PonderoOld;
 import pondero.update.Artifact;
 
 public class TestLoader {
 
     public static ClassLoader testClassLoader;
 
-    public static void registerTests(final Pondero pondero) {
+    public static void registerTests(final PonderoOld pondero) {
         try {
             final File pluginFolder = Globals.getFolderTests();
 

@@ -1,18 +1,18 @@
 package pondero.ui.actions;
 
 import javax.swing.AbstractAction;
-import pondero.ui.Main;
+import pondero.ui.Pondero;
 
 @SuppressWarnings("serial")
 public abstract class PonderoAction extends AbstractAction {
 
-    private final Main app;
+    private final Pondero app;
 
-    public PonderoAction(Main app) {
+    public PonderoAction(Pondero app) {
         this.app = app;
     }
 
-    Main getApp() {
+    Pondero getApp() {
         return app;
     }
 
