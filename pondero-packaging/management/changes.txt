@@ -1,5 +1,7 @@
 2014-07-27
 ==========
+- added Analisys menu
+- building new interface...
 - translated JFileChooser dialogs
 - separate project for pondero-qa
 - change name sex -> gender

@@ -2,18 +2,21 @@ package pondero.ui.actions;
 
 import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import pondero.Globals;
 import pondero.L10n;
 import pondero.WebUtil;
-import pondero.Globals;
+import pondero.ui.Main;
 import pondero.ui.Pondero;
 
 @SuppressWarnings("serial")
 public class HomePageAction extends PonderoAction {
 
-    public HomePageAction(Pondero app) {
+    public HomePageAction(Main app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.home-page"));
+        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/world_link.png")));
     }
 
     @Override
