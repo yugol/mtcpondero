@@ -9,7 +9,7 @@
 	<target name="full" depends="pondero-libs, pondero, pondero-test-ic" />
 	<target name="quick" depends="pondero, pondero-test-ic" />
 
-	<target name="publish" depends="full, pack">
+	<target name="publish" depends="pondero-libs, pondero, pack">
 		<copy file="${pkgdir}/pondero-setup.exe" todir="F:\Dropbox\Public\Pondero\releases\2014-07-27" overwrite="true" />
         <copy file="${pkgdir}/pondero-setup.exe" todir="F:\OneDrive\Pondero\release\2014-07-27" overwrite="true" />
 	</target>
