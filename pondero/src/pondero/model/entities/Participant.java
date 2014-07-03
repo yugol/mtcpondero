@@ -21,7 +21,7 @@ public class Participant extends Record {
     @Column
     private String    name       = "";
     @Column
-    private Calendar  dob;
+    private Calendar  dob        = Calendar.getInstance();
     @Column
     private Gender    gender     = Gender.UNSPECIFIED;
     @Column
@@ -32,7 +32,7 @@ public class Participant extends Record {
     private int       mileage    = 0;
 
     public int getAge() {
-        int dobYear = dob.get(Calendar.YEAR);
+        final int dobYear = dob.get(Calendar.YEAR);
         return DateUtil.getCurrentYear() - dobYear;
     }
 
@@ -113,39 +113,39 @@ public class Participant extends Record {
         return surname;
     }
 
-    public void setAge(int age) {
+    public void setAge(final int age) {
         dob = new GregorianCalendar(DateUtil.getCurrentYear() - age, Calendar.JANUARY, 1);
     }
 
-    public void setDob(Calendar dob) {
+    public void setDob(final Calendar dob) {
         this.dob = dob;
     }
 
-    public void setDob(String dob) {
+    public void setDob(final String dob) {
         this.dob = DateUtil.parseIsoDate(dob);
     }
 
-    public void setDrivingAge(int drivingAge) {
+    public void setDrivingAge(final int drivingAge) {
         this.drivingAge = drivingAge;
     }
 
-    public void setDrivingAge(String drivingAge) {
+    public void setDrivingAge(final String drivingAge) {
         this.drivingAge = Integer.parseInt(drivingAge);
     }
 
-    public void setEducation(Education education) {
+    public void setEducation(final Education education) {
         this.education = education;
     }
 
-    public void setEducation(String education) {
+    public void setEducation(final String education) {
         this.education = Education.parse(education);
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(final Gender gender) {
         this.gender = gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(final String gender) {
         this.gender = Gender.parse(gender);
     }
 
@@ -153,11 +153,11 @@ public class Participant extends Record {
         this.id = id;
     }
 
-    public void setMileage(int mileage) {
+    public void setMileage(final int mileage) {
         this.mileage = mileage;
     }
 
-    public void setMileage(String mileage) {
+    public void setMileage(final String mileage) {
         this.mileage = Integer.parseInt(mileage);
     }
 
@@ -171,7 +171,7 @@ public class Participant extends Record {
 
     @Override
     public String toCsv() {
-        StringBuilder csv = new StringBuilder();
+        final StringBuilder csv = new StringBuilder();
         csv.append(getIdString()).append(", ");
         csv.append(getSurnameString()).append(", ");
         csv.append(getNameString()).append(", ");
