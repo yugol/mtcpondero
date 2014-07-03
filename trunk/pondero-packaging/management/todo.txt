@@ -1,8 +1,6 @@
-
 - add participant action
 - modify participant action
 - update participant update dialog
-
 - experience: wizard based interface
 - add location key in registry
 - l10n for all strings
@@ -11,6 +9,8 @@
 - about dialog
 - sign tests
 - core: overwrite confirmation dialog
+- setup: provide application with no test
+- update: provide only tests in Catalog
 - primul caracter din textul licentei in programul de instalare este []
 - sistem de raportare a erorilor/exceptiilor prin e-mail
 - culegerea de informatii despre utilizator

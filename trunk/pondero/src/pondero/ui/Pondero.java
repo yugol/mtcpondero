@@ -22,7 +22,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -32,9 +31,10 @@ import pondero.engine.test.Test;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.model.entities.Participant;
+import pondero.ui.actions.AddParticipantAction;
 import pondero.ui.actions.ChooseParticipantAction;
 import pondero.ui.actions.HomePageAction;
-import pondero.ui.actions.ManageParticipantsAction;
+import pondero.ui.actions.ModifyParticipantAction;
 import pondero.ui.actions.OpenDocumentAction;
 import pondero.ui.actions.QuitAction;
 import pondero.ui.actions.SaveAsDocumentAction;
@@ -82,17 +82,18 @@ public class Pondero {
     private Test         currentTask;
 
     // Actions
-    private final Action chooseParticipantAction  = new ChooseParticipantAction(this);
-    private final Action homePageAction           = new HomePageAction(this);
-    private final Action manageParticipantsAction = new ManageParticipantsAction(this);
-    private final Action openDocumentAction       = new OpenDocumentAction(this);
-    private final Action quitAction               = new QuitAction(this);
-    private final Action saveAsDocument           = new SaveAsDocumentAction(this);
-    private final Action saveDocument             = new SaveDocumentAction(this);
-    private final Action setPreferencesAction     = new SetPreferencesAction(this);
-    private final Action startDocument            = new StartDocumentAction(this);
-    private final Action startTaskAction          = new StartTaskAction(this);
-    private final Action updateAction             = new UpdateAction(this);
+    private final Action addParticipantAction    = new AddParticipantAction(this);
+    private final Action chooseParticipantAction = new ChooseParticipantAction(this);
+    private final Action homePageAction          = new HomePageAction(this);
+    private final Action modifyParticipantAction = new ModifyParticipantAction(this);
+    private final Action openDocumentAction      = new OpenDocumentAction(this);
+    private final Action quitAction              = new QuitAction(this);
+    private final Action saveAsDocument          = new SaveAsDocumentAction(this);
+    private final Action saveDocument            = new SaveDocumentAction(this);
+    private final Action setPreferencesAction    = new SetPreferencesAction(this);
+    private final Action startDocument           = new StartDocumentAction(this);
+    private final Action startTaskAction         = new StartTaskAction(this);
+    private final Action updateAction            = new UpdateAction(this);
 
     // Widgets
     private JFrame       frame;
@@ -302,6 +303,7 @@ public class Pondero {
         pnlParticipantContent.add(btnSelectParticipant, gbc_btnSelectParticipant);
 
         btnAddParticipant = new JButton("Add...");
+        btnAddParticipant.setAction(addParticipantAction);
         GridBagConstraints gbc_btnAddParticipant = new GridBagConstraints();
         gbc_btnAddParticipant.fill = GridBagConstraints.HORIZONTAL;
         gbc_btnAddParticipant.insets = new Insets(0, 0, 5, 0);
@@ -310,6 +312,7 @@ public class Pondero {
         pnlParticipantContent.add(btnAddParticipant, gbc_btnAddParticipant);
 
         btnModifyParticipant = new JButton("Modify...");
+        btnModifyParticipant.setAction(modifyParticipantAction);
         GridBagConstraints gbc_btnModifyParticipant = new GridBagConstraints();
         gbc_btnModifyParticipant.fill = GridBagConstraints.HORIZONTAL;
         gbc_btnModifyParticipant.gridx = 1;
@@ -318,7 +321,7 @@ public class Pondero {
 
         JPanel pnlParticipantNavigation = new JPanel();
         pnlParticipantNavigation.setBackground(Color.LIGHT_GRAY);
-        pnlParticipantNavigation.setBorder(new CompoundBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null), new EmptyBorder(10, 20, 10, 20)));
+        pnlParticipantNavigation.setBorder(new CompoundBorder(null, new EmptyBorder(10, 20, 10, 20)));
         pnlParticipant.add(pnlParticipantNavigation, BorderLayout.SOUTH);
         pnlParticipantNavigation.setLayout(new BorderLayout(0, 0));
 
