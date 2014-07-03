@@ -45,7 +45,7 @@ import pondero.ui.actions.StartTaskAction;
 import pondero.ui.actions.UpdateAction;
 import pondero.ui.participants.ParticipantReport;
 
-public class Pondero {
+public class Pondero implements Ponderable {
 
     /**
      * Launch the application.
@@ -120,27 +120,33 @@ public class Pondero {
         frame.setMinimumSize(new Dimension(640, 480));
     }
 
+    @Override
     public Participant getCurrentParticipant() {
         return currentParticipant;
     }
 
+    @Override
     public Test getCurrentTask() {
         return currentTask;
     }
 
+    @Override
     public Workbook getCurrentWorkbook() {
         return currentWorkbook;
     }
 
+    @Override
     public JFrame getFrame() {
         return frame;
     }
 
+    @Override
     public void setCurrentParticipant(Participant participant) {
         currentParticipant = participant;
         updateCurrentState();
     }
 
+    @Override
     public void setCurrentState(PonderoState state) {
         mntmPreferences.setEnabled(false);
         mntmView.setEnabled(currentWorkbook != null);
@@ -170,16 +176,19 @@ public class Pondero {
         currentState = state;
     }
 
+    @Override
     public void setCurrentTask(Test task) {
         currentTask = task;
         updateCurrentState();
     }
 
+    @Override
     public void setWorkbook(Workbook workbook) {
         currentWorkbook = workbook;
         updateCurrentState();
     }
 
+    @Override
     public void updateCurrentState() {
         setCurrentState(currentState);
     }

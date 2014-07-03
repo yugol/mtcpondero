@@ -8,12 +8,12 @@ import pondero.Globals;
 import pondero.L10n;
 import pondero.model.Workbook;
 import pondero.model.excel.ExcelWorkbookFilter;
-import pondero.ui.Pondero;
+import pondero.ui.Ponderable;
 
 @SuppressWarnings("serial")
 public class SaveAsDocumentAction extends PonderoAction {
 
-    public SaveAsDocumentAction(final Pondero app) {
+    public SaveAsDocumentAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.save-as..."));
     }

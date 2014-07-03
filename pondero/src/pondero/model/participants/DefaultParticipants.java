@@ -14,7 +14,7 @@ public class DefaultParticipants {
         Participant foo;
         if (DEFAULT.size() == 0) {
             foo = new Participant();
-            foo.setId("#1");
+            foo.setId("1");
             foo.setName("Svetlana");
             foo.setSurname("Bularca");
             foo.setGender(Gender.FEMININE);
@@ -26,7 +26,7 @@ public class DefaultParticipants {
             DEFAULT.add(foo);
 
             foo = new Participant();
-            foo.setId("#2");
+            foo.setId("2");
             foo.setName("Blanduzia");
             foo.setSurname("Dinu");
             foo.setGender(Gender.FEMININE);
@@ -38,7 +38,7 @@ public class DefaultParticipants {
             DEFAULT.add(foo);
 
             foo = new Participant();
-            foo.setId("#3");
+            foo.setId("3");
             foo.setName("Visarion");
             foo.setSurname("Ionescu");
             foo.setGender(Gender.MASCULINE);
@@ -50,7 +50,7 @@ public class DefaultParticipants {
             DEFAULT.add(foo);
 
             foo = new Participant();
-            foo.setId("#4");
+            foo.setId("4");
             foo.setName("Dochia");
             foo.setSurname("Nagy");
             foo.setGender(Gender.FEMININE);
@@ -62,7 +62,7 @@ public class DefaultParticipants {
             DEFAULT.add(foo);
 
             foo = new Participant();
-            foo.setId("#5");
+            foo.setId("5");
             foo.setName("Rafael");
             foo.setSurname("Popescu");
             foo.setGender(Gender.MASCULINE);
@@ -74,7 +74,7 @@ public class DefaultParticipants {
             DEFAULT.add(foo);
 
             foo = new Participant();
-            foo.setId("#6");
+            foo.setId("6");
             foo.setName("Eufrosina");
             foo.setSurname("Radu");
             foo.setGender(Gender.FEMININE);
@@ -86,7 +86,7 @@ public class DefaultParticipants {
             DEFAULT.add(foo);
 
             foo = new Participant();
-            foo.setId("#7");
+            foo.setId("7");
             foo.setName("Iolanda");
             foo.setSurname("Hacichian");
             foo.setGender(Gender.FEMININE);
@@ -98,7 +98,7 @@ public class DefaultParticipants {
             DEFAULT.add(foo);
 
             foo = new Participant();
-            foo.setId("#8");
+            foo.setId("8");
             foo.setName("Alistar");
             foo.setSurname("Zbucea");
             foo.setGender(Gender.MASCULINE);
@@ -110,7 +110,7 @@ public class DefaultParticipants {
             DEFAULT.add(foo);
 
             foo = new Participant();
-            foo.setId("#9");
+            foo.setId("9");
             foo.setName("Ghenadie");
             foo.setSurname("Schirliu");
             foo.setGender(Gender.MASCULINE);
