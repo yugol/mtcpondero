@@ -1,5 +1,7 @@
 2014-07-27
 ==========
+- build full Participant report
+- DOB only support in database for participants
 - double click on participant selection dialog selects participant
 - open utility windows centred on parent
 - added Analisys menu
@@ -11,7 +13,6 @@
 
 2014-06-28
 ==========
-
 - developed application site
 - simplificat modalitatea de instalare a aplicatiei si de integrare a acesteia in sistemul de operare
 - adaugat optiune de vizualizare a registrului de date in Excel direct din meniul aplicatiei

@@ -15,6 +15,10 @@ public class DateUtil {
     private static final SimpleDateFormat COMPACT_TIME_FORMATTER = new SimpleDateFormat("HHmmss");
     private static final DateFormat       DATE_UI_FORMATTER      = DateFormat.getDateInstance(DateFormat.LONG, Globals.getLocale());
 
+    public static int getCurrentYear() {
+        return Calendar.getInstance().get(Calendar.YEAR);
+    }
+
     public static Calendar parseIsoDate(String dob) {
         try {
             if (StringUtil.isNullOrBlank(dob)) { return null; }
