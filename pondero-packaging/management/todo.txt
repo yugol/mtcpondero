@@ -1,10 +1,11 @@
-- build full Participant report
+
 - add participant action
 - modify participant action
 - update participant update dialog
-- DOB only support in database
+
 - experience: wizard based interface
 - add location key in registry
+- l10n for all strings
 
 - preferences dialog
 - about dialog

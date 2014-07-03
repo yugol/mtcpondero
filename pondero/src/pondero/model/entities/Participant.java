@@ -1,6 +1,7 @@
 package pondero.model.entities;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.UUID;
 import pondero.engine.staples.DateUtil;
 import pondero.engine.staples.StringUtil;
@@ -22,8 +23,6 @@ public class Participant extends Record {
     @Column
     private Calendar  dob;
     @Column
-    private int       age        = 0;
-    @Column
     private Gender    gender     = Gender.UNSPECIFIED;
     @Column
     private Education education  = Education.UNKNOWN;
@@ -33,11 +32,12 @@ public class Participant extends Record {
     private int       mileage    = 0;
 
     public int getAge() {
-        return age;
+        int dobYear = dob.get(Calendar.YEAR);
+        return DateUtil.getCurrentYear() - dobYear;
     }
 
     public String getAgeString() {
-        return String.valueOf(age);
+        return String.valueOf(getAge());
     }
 
     public Calendar getDob() {
@@ -114,11 +114,7 @@ public class Participant extends Record {
     }
 
     public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setAge(String age) {
-        this.age = Integer.parseInt(age);
+        dob = new GregorianCalendar(DateUtil.getCurrentYear() - age, Calendar.JANUARY, 1);
     }
 
     public void setDob(Calendar dob) {
@@ -145,6 +141,14 @@ public class Participant extends Record {
         this.education = Education.parse(education);
     }
 
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = Gender.parse(gender);
+    }
+
     public void setId(final String id) {
         this.id = id;
     }
@@ -159,14 +163,6 @@ public class Participant extends Record {
 
     public void setName(final String name) {
         this.name = name;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = Gender.parse(gender);
     }
 
     public void setSurname(final String surname) {
