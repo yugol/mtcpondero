@@ -9,11 +9,11 @@ import pondero.ui.PonderoOld;
 import pondero.ui.participants.ParticipantsManagementDialog;
 
 @SuppressWarnings("serial")
-public class ManageParticipantsAction extends PonderoAction {
+public class ModifyParticipantAction extends PonderoAction {
 
-    public ManageParticipantsAction(final Pondero app) {
+    public ModifyParticipantAction(final Pondero app) {
         super(app);
-        putValue(NAME, L10n.getString("lbl.add-modify"));
+        putValue(NAME, L10n.getString("html.modify-participant"));
         putValue(SMALL_ICON, new ImageIcon(PonderoOld.class.getResource("/com/famfamfam/silk/page_edit.png")));
     }
 
