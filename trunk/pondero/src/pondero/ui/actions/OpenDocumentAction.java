@@ -10,13 +10,13 @@ import pondero.L10n;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.model.excel.ExcelWorkbookFilter;
-import pondero.ui.Pondero;
+import pondero.ui.Ponderable;
 import pondero.ui.PonderoOld;
 
 @SuppressWarnings("serial")
 public class OpenDocumentAction extends PonderoAction {
 
-    public OpenDocumentAction(final Pondero app) {
+    public OpenDocumentAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.open..."));
         putValue(SMALL_ICON, new ImageIcon(PonderoOld.class.getResource("/com/famfamfam/silk/folder_page.png")));

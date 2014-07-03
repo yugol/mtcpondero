@@ -2,14 +2,14 @@ package pondero.ui.actions;
 
 import java.awt.event.ActionEvent;
 import pondero.engine.test.Test;
-import pondero.ui.Pondero;
+import pondero.ui.Ponderable;
 
 @SuppressWarnings("serial")
 public class TaskAction extends PonderoAction {
 
     private final Test task;
 
-    public TaskAction(final Pondero app, final Test task) {
+    public TaskAction(final Ponderable app, final Test task) {
         super(app);
         this.task = task;
         putValue(NAME, task.getCodeName());

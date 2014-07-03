@@ -5,7 +5,6 @@ import static pondero.Logger.trace;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -35,27 +34,22 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.event.ListSelectionEvent;
 import pondero.Globals;
 import pondero.L10n;
-import pondero.model.Workbook;
 import pondero.model.entities.Participant;
 import pondero.model.entities.domains.Education;
 import pondero.model.entities.domains.Gender;
-import pondero.model.participants.Participants;
 import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")
 public class ParticipantsManagementDialog extends JDialog {
 
     public static void main(final String[] args) throws Exception {
-        final ParticipantsManagementDialog dialog = new ParticipantsManagementDialog(Globals.getDefaultWorkbook());
+        final ParticipantsManagementDialog dialog = new ParticipantsManagementDialog();
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         dialog.setVisible(true);
     }
 
-    private Participants               participants;
-    private final ParticipantSelector  participantSelector;
     private final JTextField           valId;
     private final JTextField           valSurname;
     private final JTextField           valName;
@@ -67,7 +61,6 @@ public class ParticipantsManagementDialog extends JDialog {
     private final JSpinner             valMileage;
 
     private boolean                    dirty          = false;
-    private final JButton              btnAdd         = new JButton(L10n.getString("lbl.add")); //$NON-NLS-1$ ;
     private final JButton              btnSave        = new JButton(L10n.getString("lbl.save")); //$NON-NLS-1$;
 
     private final DocumentListener     txtDocListener = new DocumentListener() {
@@ -107,7 +100,8 @@ public class ParticipantsManagementDialog extends JDialog {
 
                                                       };
 
-    public ParticipantsManagementDialog(final Workbook wb) throws Exception {
+    public ParticipantsManagementDialog() throws Exception {
+        setResizable(false);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
 
@@ -118,56 +112,17 @@ public class ParticipantsManagementDialog extends JDialog {
 
         });
         setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantsManagementDialog.class.getResource("/com/famfamfam/silk/group.png")));
-        participants = new Participants(wb);
 
         setTitle(L10n.getString("lbl.manage-participants")); //$NON-NLS-1$
-        setBounds(100, 100, 800, 500);
+        setBounds(100, 100, 400, 400);
 
         final JPanel background = new JPanel();
-        background.setBorder(new EmptyBorder(20, 20, 15, 20));
+        background.setBorder(new EmptyBorder(15, 15, 15, 15));
         getContentPane().add(background, BorderLayout.CENTER);
-        final GridBagLayout gbl_background = new GridBagLayout();
-        gbl_background.columnWidths = new int[] { 0, 0 };
-        gbl_background.rowHeights = new int[] { 0, 0 };
-        gbl_background.columnWeights = new double[] { 0.0, 1.0 };
-        gbl_background.rowWeights = new double[] { 1.0, 0.0 };
-        background.setLayout(gbl_background);
-
-        participantSelector = new ParticipantSelector(wb);
-        participantSelector.addListSelectionListener(new ParticipantSelectionListener() {
-
-            @Override
-            public void valueChanged(ListSelectionEvent evt) {
-                trace("user event: select participant");
-                if (checkDirtyAndContinue()) {
-                    setParticipant(participantSelector.getSelectedValue());
-                }
-            }
-
-            @Override
-            public void valueChosen(ListSelectionEvent evt) {
-            }
-
-        });
-        participantSelector.setPreferredSize(new Dimension(200, -1));
-        final GridBagConstraints gbc_participantSelector = new GridBagConstraints();
-        gbc_participantSelector.weighty = 1.0;
-        gbc_participantSelector.weightx = 3.0;
-        gbc_participantSelector.insets = new Insets(0, 0, 5, 5);
-        gbc_participantSelector.fill = GridBagConstraints.BOTH;
-        gbc_participantSelector.gridx = 0;
-        gbc_participantSelector.gridy = 0;
-        background.add(participantSelector, gbc_participantSelector);
+        background.setLayout(new BorderLayout(0, 0));
 
         final JPanel pnlParticipant = new JPanel();
-        final GridBagConstraints gbc_pnlParticipant = new GridBagConstraints();
-        gbc_pnlParticipant.weighty = 1.0;
-        gbc_pnlParticipant.weightx = 4.0;
-        gbc_pnlParticipant.insets = new Insets(0, 10, 6, 0);
-        gbc_pnlParticipant.fill = GridBagConstraints.BOTH;
-        gbc_pnlParticipant.gridx = 1;
-        gbc_pnlParticipant.gridy = 0;
-        background.add(pnlParticipant, gbc_pnlParticipant);
+        background.add(pnlParticipant, BorderLayout.CENTER);
         final GridBagLayout gbl_pnlParticipant = new GridBagLayout();
         gbl_pnlParticipant.columnWidths = new int[] { 0, 0, 0 };
         gbl_pnlParticipant.rowHeights = new int[] { 0, 0, 0 };
@@ -454,26 +409,7 @@ public class ParticipantsManagementDialog extends JDialog {
         pnlControls.setBorder(null);
         final FlowLayout flowLayout = (FlowLayout) pnlControls.getLayout();
         flowLayout.setAlignment(FlowLayout.RIGHT);
-        final GridBagConstraints gbc_pnlControls = new GridBagConstraints();
-        gbc_pnlControls.anchor = GridBagConstraints.SOUTH;
-        gbc_pnlControls.gridwidth = 2;
-        gbc_pnlControls.fill = GridBagConstraints.HORIZONTAL;
-        gbc_pnlControls.gridx = 0;
-        gbc_pnlControls.gridy = 1;
-        background.add(pnlControls, gbc_pnlControls);
-
-        btnAdd.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                trace("user event: add participant");
-                if (checkDirtyAndContinue()) {
-                    addParticipant();
-                }
-            }
-
-        });
-        pnlControls.add(btnAdd);
+        background.add(pnlControls, BorderLayout.SOUTH);
 
         btnSave.addActionListener(new ActionListener() {
 
@@ -499,17 +435,19 @@ public class ParticipantsManagementDialog extends JDialog {
 
         });
         pnlControls.add(btnClose);
-
-        setWorkbook(wb);
     }
 
-    private void addParticipant() {
-        String newId = participants.generateNewId();
-        trace("set participant: ", newId);
-        Participant participant = new Participant();
-        participant.setId(newId);
-        setParticipant(participant);
-        setDirtyFlag();
+    public void setParticipant(Participant participant) {
+        trace("set participant: ", participant.getId());
+        valId.setText(participant.getId());
+        valSurname.setText(participant.getSurname());
+        valName.setText(participant.getName());
+        valAge.setValue(participant.getAge());
+        valGender.setSelectedItem(participant.getGender());
+        valEducation.setSelectedItem(participant.getEducation());
+        valDrivingAge.setValue(participant.getDrivingAge());
+        valMileage.setValue(participant.getMileage());
+        clearDirtyFlag();
     }
 
     private boolean checkDirtyAndContinue() {
@@ -566,9 +504,6 @@ public class ParticipantsManagementDialog extends JDialog {
             participant.setEducation((Education) valEducation.getSelectedItem());
             participant.setDrivingAge((int) valDrivingAge.getValue());
             participant.setMileage((int) valMileage.getValue());
-            participants.add(participant);
-            participants.update();
-            setWorkbook(participants.getWorkbook());
             clearDirtyFlag();
         } catch (Exception e) {
             error(e);
@@ -580,34 +515,6 @@ public class ParticipantsManagementDialog extends JDialog {
         dirty = true;
         btnSave.setEnabled(true);
         setTitle(L10n.getString("lbl.manage-participants") + "*"); //$NON-NLS-1$
-    }
-
-    private void setParticipant(Participant participant) {
-        boolean enable = participant != null;
-        trace("set participant: ", enable ? participant.getId() : "null");
-        valId.setText(enable ? participant.getId() : "");
-        valSurname.setText(enable ? participant.getSurname() : "");
-        valSurname.setEnabled(enable);
-        valName.setText(enable ? participant.getName() : "");
-        valName.setEnabled(enable);
-        valAge.setValue(enable ? participant.getAge() : 0);
-        valAge.setEnabled(enable);
-        valGender.setSelectedItem(enable ? participant.getGender() : "");
-        valGender.setEnabled(enable);
-        valEducation.setSelectedItem(enable ? participant.getEducation() : "");
-        valEducation.setEnabled(enable);
-        valDrivingAge.setValue(enable ? participant.getDrivingAge() : 0);
-        valDrivingAge.setEnabled(enable);
-        valMileage.setValue(enable ? participant.getMileage() : 0);
-        valMileage.setEnabled(enable);
-        clearDirtyFlag();
-    }
-
-    private void setWorkbook(final Workbook wb) {
-        trace("set workbook: ", wb.toString());
-        clearDirtyFlag();
-        participantSelector.setWorkbook(wb);
-        participants = new Participants(wb);
     }
 
 }
