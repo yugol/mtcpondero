@@ -45,7 +45,7 @@ public class Participants implements Iterable<Participant> {
             }
         }
         maxIdx++;
-        return "#" + maxIdx;
+        return String.valueOf(maxIdx);
     }
 
     public List<Participant> getAll() {

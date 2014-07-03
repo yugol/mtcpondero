@@ -4,6 +4,7 @@
 - experience: wizard based interface
 - add location key in registry
 - l10n for all strings
+- l10n for valMileage = new JSpinner();
 
 - preferences dialog
 - about dialog

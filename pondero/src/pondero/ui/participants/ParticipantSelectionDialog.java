@@ -34,6 +34,8 @@ public class ParticipantSelectionDialog extends JDialog implements ParticipantSe
     private final JButton             cancelButton;
 
     public ParticipantSelectionDialog(final Workbook wb) throws Exception {
+        setType(Type.UTILITY);
+        setResizable(false);
         setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantSelectionDialog.class.getResource("/com/famfamfam/silk/user_go.png")));
         setTitle(L10n.getString("lbl.select-participant")); //$NON-NLS-1$
         setBounds(100, 100, 400, 450);

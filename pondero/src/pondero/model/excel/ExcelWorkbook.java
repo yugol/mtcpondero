@@ -174,13 +174,13 @@ public class ExcelWorkbook implements Workbook {
         final FileOutputStream tempOut = new FileOutputStream(tempFile);
         workbook.write(tempOut);
         tempOut.close();
-        final Runtime rt = Runtime.getRuntime();
+        String[] cmd = null;
         if (OsUtil.isWindows()) {
-            rt.exec("cmd.exe /c \"" + tempFile.getCanonicalPath() + "\"");
+            cmd = new String[] { "cmd.exe", "/c", tempFile.getCanonicalPath() };
         } else if (OsUtil.isMacOSX()) {
-            final String[] cmd = { "open", tempFile.getCanonicalPath() };
-            rt.exec(cmd);
+            cmd = new String[] { "open", tempFile.getCanonicalPath() };
         }
+        Runtime.getRuntime().exec(cmd);
     }
 
     private void backupWorkbook(final File wbFile) throws IOException {
