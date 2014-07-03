@@ -20,6 +20,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import pondero.Globals;
+import pondero.OsUtil;
 import pondero.engine.staples.DateUtil;
 import pondero.engine.staples.StringUtil;
 import pondero.model.Workbook;
@@ -65,7 +66,7 @@ public class ExcelWorkbook implements Workbook {
         evenStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
 
         if (!workbookFile.exists()) {
-            for (Participant p : DefaultParticipants.getParticipants()) {
+            for (final Participant p : DefaultParticipants.getParticipants()) {
                 add(p);
             }
         }
@@ -103,7 +104,7 @@ public class ExcelWorkbook implements Workbook {
     @Override
     public void deleteParticipants() {
         info("delete participants: ");
-        Sheet sheet = getSheet(new Participant());
+        final Sheet sheet = getSheet(new Participant());
         for (int rowIdx = sheet.getLastRowNum(); rowIdx >= 1; --rowIdx) {
             sheet.removeRow(sheet.getRow(rowIdx));
             dirty = true;
@@ -154,7 +155,7 @@ public class ExcelWorkbook implements Workbook {
     }
 
     @Override
-    public void saveAs(File selectedFile) throws IOException {
+    public void saveAs(final File selectedFile) throws IOException {
         info("save workbook as: ", selectedFile.getCanonicalPath());
         workbookFile = normalizeWorkbookFile(selectedFile);
         saveWorkbook(workbookFile);
@@ -168,26 +169,31 @@ public class ExcelWorkbook implements Workbook {
 
     @Override
     public void view() throws Exception {
-        File tempFile = viewWorkbookFile();
+        final File tempFile = viewWorkbookFile();
         info("view workbook: ", tempFile.getCanonicalPath());
         final FileOutputStream tempOut = new FileOutputStream(tempFile);
         workbook.write(tempOut);
         tempOut.close();
-        Runtime rt = Runtime.getRuntime();
-        rt.exec("cmd.exe /c \"" + tempFile.getCanonicalPath() + "\"");
+        final Runtime rt = Runtime.getRuntime();
+        if (OsUtil.isWindows()) {
+            rt.exec("cmd.exe /c \"" + tempFile.getCanonicalPath() + "\"");
+        } else if (OsUtil.isMacOSX()) {
+            final String[] cmd = { "open", tempFile.getCanonicalPath() };
+            rt.exec(cmd);
+        }
     }
 
-    private void backupWorkbook(File wbFile) throws IOException {
-        long now = System.currentTimeMillis();
-        String timestamp = DateUtil.toCompactDate(now) + DateUtil.toCompactTime(now);
+    private void backupWorkbook(final File wbFile) throws IOException {
+        final long now = System.currentTimeMillis();
+        final String timestamp = DateUtil.toCompactDate(now) + DateUtil.toCompactTime(now);
         String backupFileName = wbFile.getName();
-        int dotIndex = backupFileName.lastIndexOf(".");
+        final int dotIndex = backupFileName.lastIndexOf(".");
         if (dotIndex >= 0) {
             backupFileName = backupFileName.substring(0, dotIndex) + "-" + timestamp + backupFileName.substring(dotIndex);
         } else {
             backupFileName += "-" + timestamp;
         }
-        File backupFile = new File(Globals.getFolderResultsBackup(), backupFileName);
+        final File backupFile = new File(Globals.getFolderResultsBackup(), backupFileName);
         FileUtils.copyFile(wbFile, backupFile, true);
         info("workbook backup: ", backupFile.getCanonicalPath());
     }
@@ -236,7 +242,7 @@ public class ExcelWorkbook implements Workbook {
         }
     }
 
-    private void saveWorkbook(File wbFile) throws FileNotFoundException, IOException {
+    private void saveWorkbook(final File wbFile) throws FileNotFoundException, IOException {
         final FileOutputStream fileOut = new FileOutputStream(wbFile);
         workbook.write(fileOut);
         fileOut.close();
@@ -244,14 +250,14 @@ public class ExcelWorkbook implements Workbook {
     }
 
     private File viewWorkbookFile() {
-        File tempFolder = Globals.getFolderResultsTemp();
+        final File tempFolder = Globals.getFolderResultsTemp();
         String fileName = workbookFile.getName();
-        int dotIndex = fileName.indexOf(".");
+        final int dotIndex = fileName.indexOf(".");
         if (dotIndex >= 0) {
             fileName = fileName.substring(0, dotIndex);
         }
-        String tempFileName = fileName + "-" + UUID.randomUUID().toString().replace("-", "") + ExcelWorkbookFilter.EXT;
-        File tempFile = new File(tempFolder, tempFileName);
+        final String tempFileName = fileName + "-" + UUID.randomUUID().toString().replace("-", "") + ExcelWorkbookFilter.EXT;
+        final File tempFile = new File(tempFolder, tempFileName);
         return tempFile;
     }
 
