@@ -2,7 +2,6 @@ package pondero.ui.participants;
 
 import static pondero.Logger.trace;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -15,6 +14,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -35,65 +36,68 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import pondero.Globals;
 import pondero.L10n;
+import pondero.MessageUtil;
+import pondero.engine.staples.StringUtil;
 import pondero.model.entities.Participant;
 import pondero.model.entities.domains.Education;
 import pondero.model.entities.domains.Gender;
 import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")
-public class ParticipantsManagementDialog extends JDialog {
+public class ParticipantManagementDialog extends JDialog {
 
-    private final JTextField           valId;
-    private final JTextField           valSurname;
-    private final JTextField           valName;
-    private final JDateChooser         valDob;
-    private final JSpinner             valAge;
-    private final JComboBox<Gender>    valGender;
-    private final JComboBox<Education> valEducation;
-    private final JSpinner             valDrivingAge;
-    private final JSpinner             valMileage;
+    private final DocumentListener                    txtDocListener      = new DocumentListener() {
 
-    private boolean                    dirty          = false;
-    private final JButton              btnSave        = new JButton(L10n.getString("lbl.save"));
+                                                                              @Override
+                                                                              public void changedUpdate(final DocumentEvent e) {
+                                                                                  setDirtyFlag();
+                                                                              }
 
-    private final DocumentListener     txtDocListener = new DocumentListener() {
+                                                                              @Override
+                                                                              public void insertUpdate(final DocumentEvent e) {
+                                                                                  setDirtyFlag();
+                                                                              }
 
-                                                          @Override
-                                                          public void changedUpdate(final DocumentEvent e) {
-                                                              setDirtyFlag();
-                                                          }
+                                                                              @Override
+                                                                              public void removeUpdate(final DocumentEvent e) {
+                                                                                  setDirtyFlag();
+                                                                              }
 
-                                                          @Override
-                                                          public void insertUpdate(final DocumentEvent e) {
-                                                              setDirtyFlag();
-                                                          }
+                                                                          };
 
-                                                          @Override
-                                                          public void removeUpdate(final DocumentEvent e) {
-                                                              setDirtyFlag();
-                                                          }
+    private final ItemListener                        itemListener        = new ItemListener() {
 
-                                                      };
+                                                                              @Override
+                                                                              public void itemStateChanged(ItemEvent arg0) {
+                                                                                  setDirtyFlag();
+                                                                              }
 
-    private final ItemListener         itemListener   = new ItemListener() {
+                                                                          };
 
-                                                          @Override
-                                                          public void itemStateChanged(ItemEvent arg0) {
-                                                              setDirtyFlag();
-                                                          }
+    private final ChangeListener                      changeListener      = new ChangeListener() {
 
-                                                      };
+                                                                              @Override
+                                                                              public void stateChanged(ChangeEvent arg0) {
+                                                                                  setDirtyFlag();
+                                                                              }
 
-    private final ChangeListener       changeListener = new ChangeListener() {
+                                                                          };
 
-                                                          @Override
-                                                          public void stateChanged(ChangeEvent arg0) {
-                                                              setDirtyFlag();
-                                                          }
+    private final List<ParticipantManagementListener> managementListeners = new ArrayList<ParticipantManagementListener>();
+    private boolean                                   dirty               = false;
 
-                                                      };
+    private final JButton                             btnSave             = new JButton(L10n.getString("lbl.save"));        ;
+    private final JComboBox<Education>                valEducation;
+    private final JComboBox<Gender>                   valGender;
+    private final JDateChooser                        valDob;
+    private final JSpinner                            valAge;
+    private final JSpinner                            valDrivingAge;
+    private final JSpinner                            valMileage;
+    private final JTextField                          valId;
+    private final JTextField                          valName;
+    private final JTextField                          valSurname;
 
-    public ParticipantsManagementDialog() throws Exception {
+    public ParticipantManagementDialog() throws Exception {
         setType(Type.UTILITY);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -105,7 +109,7 @@ public class ParticipantsManagementDialog extends JDialog {
             }
 
         });
-        setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantsManagementDialog.class.getResource("/com/famfamfam/silk/group.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantManagementDialog.class.getResource("/com/famfamfam/silk/group.png")));
 
         setTitle(L10n.getString("lbl.manage-participants"));
         setBounds(100, 100, 400, 400);
@@ -160,7 +164,6 @@ public class ParticipantsManagementDialog extends JDialog {
         pnlParticipant.add(lblLblsurname, gbc_lblLblsurname);
 
         final JLabel lblColumn_02 = new JLabel(":");
-        lblColumn_02.setForeground(Color.RED);
         final GridBagConstraints gbc_lblColumn_02 = new GridBagConstraints();
         gbc_lblColumn_02.insets = new Insets(0, 0, 5, 5);
         gbc_lblColumn_02.gridx = 1;
@@ -188,7 +191,6 @@ public class ParticipantsManagementDialog extends JDialog {
         pnlParticipant.add(lblLblname, gbc_lblLblname);
 
         final JLabel lblColumn_03 = new JLabel(":");
-        lblColumn_03.setForeground(Color.RED);
         final GridBagConstraints gbc_lblColumn_03 = new GridBagConstraints();
         gbc_lblColumn_03.insets = new Insets(0, 0, 5, 5);
         gbc_lblColumn_03.gridx = 1;
@@ -401,8 +403,9 @@ public class ParticipantsManagementDialog extends JDialog {
 
             @Override
             public void actionPerformed(ActionEvent arg0) {
-
-                saveParticipant();
+                if (saveParticipant()) {
+                    dispose();
+                }
             }
 
         });
@@ -421,6 +424,12 @@ public class ParticipantsManagementDialog extends JDialog {
 
         });
         pnlControls.add(btnClose);
+    }
+
+    public void addManagementListener(ParticipantManagementListener listener) {
+        if (listener != null) {
+            managementListeners.add(listener);
+        }
     }
 
     public Participant getParticipant() {
@@ -453,7 +462,7 @@ public class ParticipantsManagementDialog extends JDialog {
     private boolean checkDirtyAndContinue() {
         if (dirty) {
             int option = JOptionPane.showConfirmDialog(
-                    ParticipantsManagementDialog.this,
+                    ParticipantManagementDialog.this,
                     L10n.getString("msg.participant-was-changed", valId.getText()),
                     L10n.getString("lbl.pondero"),
                     JOptionPane.YES_NO_CANCEL_OPTION,
@@ -464,15 +473,13 @@ public class ParticipantsManagementDialog extends JDialog {
                     return false;
                 case JOptionPane.YES_OPTION:
                     trace("check dirty and continue: ", "YES");
-                    saveParticipant();
-                    break;
+                    return saveParticipant();
                 case JOptionPane.NO_OPTION:
                     trace("check dirty and continue: ", "NO");
                     clearDirtyFlag();
                     break;
                 default:
                     trace("check dirty and continue: ", "?????");
-                    break;
             }
         }
         return true;
@@ -488,13 +495,20 @@ public class ParticipantsManagementDialog extends JDialog {
     private void onClosing() {
         trace("user event: close dialog");
         if (checkDirtyAndContinue()) {
-            ParticipantsManagementDialog.this.dispose();
+            ParticipantManagementDialog.this.dispose();
         }
     }
 
-    private void saveParticipant() {
+    private boolean saveParticipant() {
         trace("user event: save participant");
-        clearDirtyFlag();
+        if (validateParticipant()) {
+            for (ParticipantManagementListener listener : managementListeners) {
+                listener.onParticipantSave(getParticipant());
+            }
+            clearDirtyFlag();
+            return true;
+        }
+        return false;
     }
 
     private void setDirtyFlag() {
@@ -502,6 +516,18 @@ public class ParticipantsManagementDialog extends JDialog {
         dirty = true;
         btnSave.setEnabled(true);
         setTitle(L10n.getString("lbl.manage-participants") + "*");
+    }
+
+    private boolean validateParticipant() {
+        if (StringUtil.isNullOrBlank(valSurname.getText())) {
+            MessageUtil.showValidationMessage(null, L10n.getString("msg.surname-cannot-be-empty"));
+            return false;
+        }
+        if (StringUtil.isNullOrBlank(valName.getText())) {
+            MessageUtil.showValidationMessage(null, L10n.getString("msg.name-cannot-be-empty"));
+            return false;
+        }
+        return true;
     }
 
 }

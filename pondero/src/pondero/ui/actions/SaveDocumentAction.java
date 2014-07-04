@@ -4,8 +4,8 @@ import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import pondero.L10n;
+import pondero.MessageUtil;
 import pondero.ui.Ponderable;
 import pondero.ui.PonderoOld;
 
@@ -24,11 +24,7 @@ public class SaveDocumentAction extends PonderoAction {
             getApp().getCurrentWorkbook().save();
         } catch (final IOException e) {
             error(e);
-            JOptionPane.showInternalMessageDialog(
-                    getApp().getFrame(),
-                    e.getMessage(),
-                    L10n.getString("lbl.open-externally"),
-                    JOptionPane.ERROR_MESSAGE);
+            MessageUtil.showExceptionMessage(getFrame(), e);
         }
     }
 

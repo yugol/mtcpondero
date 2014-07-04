@@ -13,26 +13,14 @@ import pondero.model.entities.Participant;
 public class Participants implements Iterable<Participant> {
 
     private final Workbook    wb;
-    private List<Participant> all;
-    private boolean           dirty;
+    private List<Participant> buffer;
 
     public Participants(final Workbook workbook) {
         wb = workbook;
         loadAll();
     }
 
-    public void add(Participant participant) {
-        for (int i = 0; i < all.size(); ++i) {
-            Participant foo = all.get(i);
-            if (foo.getId().equals(participant.getId())) {
-                all.set(i, participant);
-                return;
-            }
-        }
-        all.add(participant);
-    }
-
-    public String generateNewId() {
+    public String generateNewParticipantId() {
         int maxIdx = 100;
         for (Participant p : this) {
             String id = p.getId();
@@ -49,20 +37,34 @@ public class Participants implements Iterable<Participant> {
     }
 
     public List<Participant> getAll() {
-        return all;
+        return buffer;
     }
 
     public Workbook getWorkbook() {
         return wb;
     }
 
-    public boolean isDirty() {
-        return dirty;
-    }
-
     @Override
     public Iterator<Participant> iterator() {
-        return all.iterator();
+        return buffer.iterator();
+    }
+
+    public void put(Participant participant) {
+        for (int i = 0; i < buffer.size(); ++i) {
+            Participant foo = buffer.get(i);
+            if (foo.getId().equals(participant.getId())) {
+                buffer.set(i, participant);
+                return;
+            }
+        }
+        buffer.add(participant);
+    }
+
+    public void save() throws Exception {
+        wb.deleteParticipants();
+        for (Participant p : this) {
+            wb.add(p);
+        }
     }
 
     public List<Participant> select(String pattern) {
@@ -77,33 +79,25 @@ public class Participants implements Iterable<Participant> {
     }
 
     public Participant[] toArray() {
-        return all.toArray(new Participant[] {});
-    }
-
-    public void update() throws Exception {
-        wb.deleteParticipants();
-        for (Participant p : this) {
-            wb.add(p);
-        }
-        wb.save();
+        return buffer.toArray(new Participant[] {});
     }
 
     @SuppressWarnings("unchecked")
     private void loadAll() {
         if (wb != null) {
             try {
-                all = (List<Participant>) wb.getAll(Participant.class);
+                buffer = (List<Participant>) wb.getAll(Participant.class);
                 sort(new SurnameNameIdComparator());
             } catch (final Exception e) {
                 error(e);
             }
         } else {
-            all = new ArrayList<Participant>();
+            buffer = new ArrayList<Participant>();
         }
     }
 
     private void sort(final Comparator<Participant> c) {
-        Collections.sort(all, c);
+        Collections.sort(buffer, c);
     }
 
 }
