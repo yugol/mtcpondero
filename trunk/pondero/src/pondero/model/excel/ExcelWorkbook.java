@@ -25,6 +25,7 @@ import pondero.OsUtil;
 import pondero.engine.staples.DateUtil;
 import pondero.engine.staples.StringUtil;
 import pondero.model.Workbook;
+import pondero.model.WorkbookListener;
 import pondero.model.entities.Participant;
 import pondero.model.entities.base.Record;
 import pondero.model.participants.DefaultParticipants;
@@ -38,11 +39,13 @@ public class ExcelWorkbook implements Workbook {
 
     private File                                 workbookFile;
     private final XSSFWorkbook                   workbook;
-    private boolean                              dirty                  = false;
+    private boolean                              dirty;
 
     private final CellStyle                      headerStyle;
     private final CellStyle                      oddStyle;
     private final CellStyle                      evenStyle;
+
+    private final List<WorkbookListener>         workbookListeners      = new ArrayList<WorkbookListener>();
 
     public ExcelWorkbook() throws Exception {
         this("implicit.xlsx");
@@ -74,6 +77,8 @@ public class ExcelWorkbook implements Workbook {
                 add(p);
             }
         }
+
+        setDirty(false);
     }
 
     public ExcelWorkbook(final String workbookPath) throws Exception {
@@ -83,7 +88,7 @@ public class ExcelWorkbook implements Workbook {
     @Override
     public void add(final Record record) throws Exception {
         info("add record ", record.getClass().getSimpleName(), " : ", record.toCsv());
-        dirty = true;
+        setDirty(true);
         int recordRowIdx = 0;
         Row recordRow = null;
         final Sheet sheet = getSheet(record);
@@ -117,6 +122,11 @@ public class ExcelWorkbook implements Workbook {
     }
 
     @Override
+    public void addWorkbookListener(WorkbookListener listener) {
+        workbookListeners.add(listener);
+    }
+
+    @Override
     public void close() throws IOException {
         info("close workbook: ", workbookFile.getCanonicalPath());
     }
@@ -127,7 +137,7 @@ public class ExcelWorkbook implements Workbook {
         final Sheet sheet = getSheet(new Participant());
         for (int rowIdx = sheet.getLastRowNum(); rowIdx >= 1; --rowIdx) {
             sheet.removeRow(sheet.getRow(rowIdx));
-            dirty = true;
+            setDirty(true);
         }
     }
 
@@ -281,7 +291,7 @@ public class ExcelWorkbook implements Workbook {
     }
 
     private XSSFWorkbook openWorkbook(File wbFile) throws IOException {
-        dirty = false;
+        setDirty(false);
         if (wbFile.exists()) {
             info("open existing workbook: ", wbFile.getCanonicalPath());
             backupWorkbook(wbFile);
@@ -301,7 +311,16 @@ public class ExcelWorkbook implements Workbook {
         final FileOutputStream fileOut = new FileOutputStream(wbFile);
         workbook.write(fileOut);
         fileOut.close();
-        dirty = false;
+        setDirty(false);
+    }
+
+    private void setDirty(boolean dirty) {
+        if (this.dirty != dirty) {
+            this.dirty = dirty;
+            for (WorkbookListener listener : workbookListeners) {
+                listener.onDirtyFlagChanged(dirty);
+            }
+        }
     }
 
     private File viewWorkbookFile() {

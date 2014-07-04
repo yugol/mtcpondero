@@ -30,6 +30,7 @@ import pondero.L10n;
 import pondero.engine.test.Test;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
+import pondero.model.WorkbookListener;
 import pondero.model.entities.Participant;
 import pondero.ui.actions.AddParticipantAction;
 import pondero.ui.actions.ChooseParticipantAction;
@@ -45,7 +46,7 @@ import pondero.ui.actions.StartTaskAction;
 import pondero.ui.actions.UpdateAction;
 import pondero.ui.participants.ParticipantReport;
 
-public class Pondero implements Ponderable {
+public class Pondero implements Ponderable, WorkbookListener {
 
     /**
      * Launch the application.
@@ -141,6 +142,11 @@ public class Pondero implements Ponderable {
     }
 
     @Override
+    public void onDirtyFlagChanged(boolean dirty) {
+        updateCurrentState();
+    }
+
+    @Override
     public void setCurrentParticipant(Participant participant) {
         currentParticipant = participant;
         updateCurrentState();
@@ -171,7 +177,10 @@ public class Pondero implements Ponderable {
                 CardLayout cl = (CardLayout) pnlStage.getLayout();
                 cl.show(pnlStage, "pnlTestSelection");
             }
-            statusBar.setMessage(StatusBar.DEFAULT, L10n.getString("lbl.data-register") + ": " + currentWorkbook.getWorkbookName());
+            statusBar.setMessage(StatusBar.DEFAULT,
+                    L10n.getString("lbl.data-register")
+                            + ": " + currentWorkbook.getWorkbookName()
+                            + (currentWorkbook.isDirty() ? "*" : ""));
         }
         currentState = state;
     }
@@ -185,6 +194,7 @@ public class Pondero implements Ponderable {
     @Override
     public void setWorkbook(Workbook workbook) {
         currentWorkbook = workbook;
+        currentWorkbook.addWorkbookListener(this);
         updateCurrentState();
     }
 
