@@ -68,7 +68,7 @@ public class ParticipantManagementDialog extends JDialog {
     private final ItemListener                        itemListener        = new ItemListener() {
 
                                                                               @Override
-                                                                              public void itemStateChanged(ItemEvent arg0) {
+                                                                              public void itemStateChanged(final ItemEvent arg0) {
                                                                                   setDirtyFlag();
                                                                               }
 
@@ -77,7 +77,7 @@ public class ParticipantManagementDialog extends JDialog {
     private final ChangeListener                      changeListener      = new ChangeListener() {
 
                                                                               @Override
-                                                                              public void stateChanged(ChangeEvent arg0) {
+                                                                              public void stateChanged(final ChangeEvent arg0) {
                                                                                   setDirtyFlag();
                                                                               }
 
@@ -104,7 +104,7 @@ public class ParticipantManagementDialog extends JDialog {
         addWindowListener(new WindowAdapter() {
 
             @Override
-            public void windowClosing(WindowEvent arg0) {
+            public void windowClosing(final WindowEvent arg0) {
                 onClosing();
             }
 
@@ -297,7 +297,7 @@ public class ParticipantManagementDialog extends JDialog {
 
         valGender = new JComboBox<Gender>();
         valGender.addItemListener(itemListener);
-        for (Gender item : Gender.values()) {
+        for (final Gender item : Gender.values()) {
             valGender.addItem(item);
         }
         final GridBagConstraints gbc_valGender = new GridBagConstraints();
@@ -324,7 +324,7 @@ public class ParticipantManagementDialog extends JDialog {
 
         valEducation = new JComboBox<Education>();
         valEducation.addItemListener(itemListener);
-        for (Education item : Education.values()) {
+        for (final Education item : Education.values()) {
             valEducation.addItem(item);
         }
         final GridBagConstraints gbc_valEducation = new GridBagConstraints();
@@ -387,7 +387,7 @@ public class ParticipantManagementDialog extends JDialog {
         valMileage = new JSpinner();
         valMileage.addChangeListener(changeListener);
         valMileage.setModel(new SpinnerNumberModel(0, 0, 10000000, 1));
-        GridBagConstraints gbc_valMileage = new GridBagConstraints();
+        final GridBagConstraints gbc_valMileage = new GridBagConstraints();
         gbc_valMileage.anchor = GridBagConstraints.WEST;
         gbc_valMileage.gridx = 2;
         gbc_valMileage.gridy = 1;
@@ -402,7 +402,7 @@ public class ParticipantManagementDialog extends JDialog {
         btnSave.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent arg0) {
+            public void actionPerformed(final ActionEvent arg0) {
                 if (saveParticipant()) {
                     dispose();
                 }
@@ -418,7 +418,7 @@ public class ParticipantManagementDialog extends JDialog {
         btnClose.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent arg0) {
+            public void actionPerformed(final ActionEvent arg0) {
                 onClosing();
             }
 
@@ -426,14 +426,14 @@ public class ParticipantManagementDialog extends JDialog {
         pnlControls.add(btnClose);
     }
 
-    public void addManagementListener(ParticipantManagementListener listener) {
+    public void addManagementListener(final ParticipantManagementListener listener) {
         if (listener != null) {
             managementListeners.add(listener);
         }
     }
 
     public Participant getParticipant() {
-        Participant participant = new Participant();
+        final Participant participant = new Participant();
         participant.setId(valId.getText());
         participant.setSurname(valSurname.getText());
         participant.setName(valName.getText());
@@ -445,7 +445,7 @@ public class ParticipantManagementDialog extends JDialog {
         return participant;
     }
 
-    public void setParticipant(Participant participant) {
+    public void setParticipant(final Participant participant) {
         trace("set participant: ", participant.getId());
         valId.setText(participant.getId());
         valSurname.setText(participant.getSurname());
@@ -461,7 +461,7 @@ public class ParticipantManagementDialog extends JDialog {
 
     private boolean checkDirtyAndContinue() {
         if (dirty) {
-            int option = JOptionPane.showConfirmDialog(
+            final int option = JOptionPane.showConfirmDialog(
                     ParticipantManagementDialog.this,
                     L10n.getString("msg.participant-was-changed", valId.getText()),
                     L10n.getString("lbl.pondero"),
@@ -502,7 +502,7 @@ public class ParticipantManagementDialog extends JDialog {
     private boolean saveParticipant() {
         trace("user event: save participant");
         if (validateParticipant()) {
-            for (ParticipantManagementListener listener : managementListeners) {
+            for (final ParticipantManagementListener listener : managementListeners) {
                 listener.onParticipantSave(getParticipant());
             }
             clearDirtyFlag();
@@ -512,7 +512,6 @@ public class ParticipantManagementDialog extends JDialog {
     }
 
     private void setDirtyFlag() {
-        trace("set dirty flag");
         dirty = true;
         btnSave.setEnabled(true);
         setTitle(L10n.getString("lbl.manage-participants") + "*");

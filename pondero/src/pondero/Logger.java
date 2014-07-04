@@ -21,56 +21,56 @@ public class Logger {
     private static final File  logFile         = new File(Globals.getFolderLogs(), buildLogFileName());
     private static PrintStream logFileOut;
 
-    public static void critical(Object... obj) {
+    public static void critical(final Object... obj) {
         log(CRITICAL, null, obj);
     }
 
-    public static void critical(Throwable t, Object... obj) {
+    public static void critical(final Throwable t, final Object... obj) {
         log(CRITICAL, t, obj);
     }
 
-    public static void debug(Object... obj) {
+    public static void debug(final Object... obj) {
         log(DEBUG, null, obj);
     }
 
-    public static void debug(Throwable t, Object... obj) {
+    public static void debug(final Throwable t, final Object... obj) {
         log(DEBUG, t, obj);
     }
 
-    public static void error(Object... obj) {
+    public static void error(final Object... obj) {
         log(ERROR, null, obj);
     }
 
-    public static void error(Throwable t, Object... obj) {
+    public static void error(final Throwable t, final Object... obj) {
         log(ERROR, t, obj);
     }
 
-    public static void info(Object... obj) {
+    public static void info(final Object... obj) {
         log(INFO, null, obj);
     }
 
-    public static void info(Throwable t, Object... obj) {
+    public static void info(final Throwable t, final Object... obj) {
         log(INFO, t, obj);
     }
 
-    public static void trace(Object... obj) {
+    public static void trace(final Object... obj) {
         log(TRACE, null, obj);
     }
 
-    public static void trace(Throwable t, Object... obj) {
+    public static void trace(final Throwable t, final Object... obj) {
         log(TRACE, t, obj);
     }
 
-    public static void warning(Object... obj) {
+    public static void warning(final Object... obj) {
         log(WARNING, null, obj);
     }
 
-    public static void warning(Throwable t, Object... obj) {
+    public static void warning(final Throwable t, final Object... obj) {
         log(WARNING, t, obj);
     }
 
     private static String buildLogFileName() {
-        long timestamp = System.currentTimeMillis();
+        final long timestamp = System.currentTimeMillis();
         return DateUtil.toIsoDate(timestamp) + "@" + DateUtil.toCompactTime(timestamp) + ".log";
     }
 
@@ -78,9 +78,11 @@ public class Logger {
         return Math.max(maxConsoleLevel, maxFileLevel);
     }
 
-    private static void justPrintTheDamnThing(PrintStream out, String message, Throwable t) {
-        out.println(message);
-        if (t != null) {
+    private static void justPrintTheDamnThing(final PrintStream out, final String message, final Throwable t) {
+        if (t == null) {
+            out.println(message);
+        } else {
+            out.print(message);
             t.printStackTrace(out);
         }
     }
@@ -89,20 +91,20 @@ public class Logger {
         if (logFileOut == null) {
             try {
                 logFileOut = new PrintStream(logFile);
-            } catch (FileNotFoundException e) {
+            } catch (final FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
         return logFileOut;
     }
 
-    private static void log(int level, Throwable t, Object... obj) {
+    private static void log(final int level, final Throwable t, final Object... obj) {
         if (level <= getMaxLoggableLevel()) {
             if (obj == null) {
                 println(level, "null", t);
             } else if (obj instanceof Object[]) {
-                StringBuilder msg = new StringBuilder();
-                for (Object item : obj) {
+                final StringBuilder msg = new StringBuilder();
+                for (final Object item : obj) {
                     msg.append(item == null ? "null" : String.valueOf(item));
                 }
                 println(level, msg.toString(), t);
@@ -112,8 +114,8 @@ public class Logger {
         }
     }
 
-    private static void println(int level, String msg, Throwable t) {
-        StackTraceElement element = Thread.currentThread().getStackTrace()[4];
+    private static void println(final int level, final String msg, final Throwable t) {
+        final StackTraceElement element = Thread.currentThread().getStackTrace()[4];
         String levelHint;
         switch (level) {
             case CRITICAL:
@@ -138,7 +140,7 @@ public class Logger {
                 levelHint = "      ";
                 break;
         }
-        StringBuilder logEntry = new StringBuilder();
+        final StringBuilder logEntry = new StringBuilder();
         logEntry.append("[");
         logEntry.append(DateUtil.toIsoTime(System.currentTimeMillis()));
         logEntry.append("] ");
@@ -161,7 +163,7 @@ public class Logger {
             }
         }
         if (maxFileLevel > NONE) {
-            PrintStream out = log();
+            final PrintStream out = log();
             justPrintTheDamnThing(out, logEntry.toString(), t);
             out.flush();
         }
