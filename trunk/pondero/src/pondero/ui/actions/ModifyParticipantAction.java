@@ -7,7 +7,6 @@ import javax.swing.ImageIcon;
 import pondero.L10n;
 import pondero.MessageUtil;
 import pondero.model.entities.Participant;
-import pondero.model.participants.Participants;
 import pondero.ui.Ponderable;
 import pondero.ui.PonderoOld;
 import pondero.ui.participants.ParticipantManagementDialog;
@@ -30,12 +29,10 @@ public class ModifyParticipantAction extends PonderoAction implements Participan
     }
 
     @Override
-    public void onParticipantSave(Participant participant) {
+    public void onParticipantSave(final Participant participant) {
         info("saving participant:", participant.getId());
         try {
-            Participants participants = new Participants(getApp().getCurrentWorkbook());
-            participants.put(participant);
-            participants.save();
+            getApp().getCurrentWorkbook().add(participant);
             getApp().setCurrentParticipant(participant);
         } catch (final Exception e) {
             error(e);
@@ -43,7 +40,7 @@ public class ModifyParticipantAction extends PonderoAction implements Participan
         }
     }
 
-    protected void showParticipantDialog(Participant participant) {
+    protected void showParticipantDialog(final Participant participant) {
         try {
             dlg = new ParticipantManagementDialog();
             dlg.addManagementListener(this);

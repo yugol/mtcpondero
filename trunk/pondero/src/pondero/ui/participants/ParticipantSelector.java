@@ -71,8 +71,8 @@ public class ParticipantSelector extends JComponent {
 
         });
 
-        JLabel lblColumn = new JLabel(":");
-        GridBagConstraints gbc_lblColumn = new GridBagConstraints();
+        final JLabel lblColumn = new JLabel(":");
+        final GridBagConstraints gbc_lblColumn = new GridBagConstraints();
         gbc_lblColumn.insets = new Insets(0, 0, 5, 5);
         gbc_lblColumn.gridx = 1;
         gbc_lblColumn.gridy = 0;
@@ -100,9 +100,9 @@ public class ParticipantSelector extends JComponent {
         tblParticipants.addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mouseClicked(MouseEvent evt) {
+            public void mouseClicked(final MouseEvent evt) {
                 if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
-                    int index = tblParticipants.getSelectedRow();
+                    final int index = tblParticipants.getSelectedRow();
                     setSelectedIndex(index);
                     final ListSelectionEvent listEvet = new ListSelectionEvent(ParticipantSelector.this, index, index, false);
                     for (final ParticipantSelectionListener listener : selectionListeners) {
@@ -137,16 +137,16 @@ public class ParticipantSelector extends JComponent {
         try {
             participants = wb.getAllParticipants();
             updateParticipants();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             error(e);
         }
     }
 
-    private String getFootprint(Participant participant) {
+    private String getFootprint(final Participant participant) {
         final StringBuilder fp = new StringBuilder();
-        fp.append(participant.getSurname().toLowerCase());
         fp.append(participant.getId().toLowerCase());
-        fp.append(getName().toLowerCase());
+        fp.append(participant.getName().toLowerCase());
+        fp.append(participant.getSurname().toLowerCase());
         return StringUtil.normalizeForSearch(fp.toString());
     }
 
@@ -161,7 +161,7 @@ public class ParticipantSelector extends JComponent {
         return selection;
     }
 
-    private void setSelectedIndex(int index) {
+    private void setSelectedIndex(final int index) {
         if (index >= 0) {
             selectedParticipant = ((ParticipantsTableModel) tblParticipants.getModel()).getParticipant(index);
         } else {
