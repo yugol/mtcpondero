@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import pondero.engine.staples.StringUtil;
 import pondero.model.Workbook;
 import pondero.model.entities.Participant;
 
@@ -18,22 +17,6 @@ public class Participants implements Iterable<Participant> {
     public Participants(final Workbook workbook) {
         wb = workbook;
         loadAll();
-    }
-
-    public String generateNewParticipantId() {
-        int maxIdx = 100;
-        for (Participant p : this) {
-            String id = p.getId();
-            try {
-                int idx = Integer.parseInt(id.substring(1));
-                if (idx > maxIdx) {
-                    maxIdx = idx;
-                }
-            } catch (NumberFormatException nfe) {
-            }
-        }
-        maxIdx++;
-        return String.valueOf(maxIdx);
     }
 
     public List<Participant> getAll() {
@@ -65,21 +48,6 @@ public class Participants implements Iterable<Participant> {
         for (Participant p : this) {
             wb.add(p);
         }
-    }
-
-    public List<Participant> select(String pattern) {
-        pattern = StringUtil.normalizeForSearch(pattern);
-        final List<Participant> selection = new ArrayList<Participant>();
-        for (final Participant participant : this) {
-            if (participant.getFootprint().indexOf(pattern) >= 0) {
-                selection.add(participant);
-            }
-        }
-        return selection;
-    }
-
-    public Participant[] toArray() {
-        return buffer.toArray(new Participant[] {});
     }
 
     @SuppressWarnings("unchecked")

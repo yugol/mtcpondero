@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import org.apache.commons.io.FileUtils;
@@ -27,18 +28,21 @@ import pondero.model.Workbook;
 import pondero.model.entities.Participant;
 import pondero.model.entities.base.Record;
 import pondero.model.participants.DefaultParticipants;
+import pondero.model.participants.SurnameNameIdComparator;
 
 // http://poi.apache.org/spreadsheet/quick-guide.html
 
 public class ExcelWorkbook implements Workbook {
 
-    private File               workbookFile;
-    private final XSSFWorkbook workbook;
-    private boolean            dirty = false;
+    private static final SurnameNameIdComparator PARTICIPANT_COMPARATOR = new SurnameNameIdComparator();
 
-    private final CellStyle    headerStyle;
-    private final CellStyle    oddStyle;
-    private final CellStyle    evenStyle;
+    private File                                 workbookFile;
+    private final XSSFWorkbook                   workbook;
+    private boolean                              dirty                  = false;
+
+    private final CellStyle                      headerStyle;
+    private final CellStyle                      oddStyle;
+    private final CellStyle                      evenStyle;
 
     public ExcelWorkbook() throws Exception {
         this("implicit.xlsx");
@@ -112,6 +116,28 @@ public class ExcelWorkbook implements Workbook {
     }
 
     @Override
+    public String getNewUniqueParticipantId() {
+        final Sheet sheet = getSheet(new Participant());
+        final Row firstRow = sheet.getRow(0);
+        int inColIdx = 0;
+        for (; inColIdx < firstRow.getLastCellNum(); ++inColIdx) {
+            final String cellName = firstRow.getCell(inColIdx).getStringCellValue();
+            if ("ID".equals(cellName)) {
+                break;
+            }
+        }
+        int maxIdx = 100;
+        for (int rowIdx = 1; rowIdx <= sheet.getLastRowNum(); ++rowIdx) {
+            final Row row = sheet.getRow(rowIdx);
+            int id = Integer.parseInt(row.getCell(inColIdx).getStringCellValue());
+            if (id > maxIdx) {
+                maxIdx = id;
+            }
+        }
+        return String.valueOf(maxIdx + 1);
+    }
+
+    @Override
     public List<? extends Record> getAll(final Class<? extends Record> prototype) throws Exception {
         final List<Record> records = new ArrayList<Record>();
         final Sheet sheet = getSheet(prototype.newInstance());
@@ -139,7 +165,15 @@ public class ExcelWorkbook implements Workbook {
     }
 
     @Override
-    public String getName() {
+    public List<Participant> getAllParticipants() throws Exception {
+        @SuppressWarnings("unchecked")
+        List<Participant> buffer = (List<Participant>) getAll(Participant.class);
+        Collections.sort(buffer, PARTICIPANT_COMPARATOR);
+        return buffer;
+    }
+
+    @Override
+    public String getWorkbookName() {
         return workbookFile.getName();
     }
 

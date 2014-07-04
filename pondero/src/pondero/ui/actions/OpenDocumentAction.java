@@ -31,7 +31,7 @@ public class OpenDocumentAction extends PonderoAction {
                 if (wb.isDirty()) {
                     if (JOptionPane.showConfirmDialog(
                             getApp().getFrame(),
-                            L10n.getString("msg.save-workbook", wb.getName()),
+                            L10n.getString("msg.save-workbook", wb.getWorkbookName()),
                             L10n.getString("lbl.pondero"),
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         wb.save();

@@ -1,5 +1,6 @@
 package pondero.ui.participants;
 
+import static pondero.Logger.error;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -18,16 +19,16 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumnModel;
 import pondero.L10n;
+import pondero.engine.staples.StringUtil;
 import pondero.model.Workbook;
 import pondero.model.entities.Participant;
-import pondero.model.participants.Participants;
 
 @SuppressWarnings("serial")
 public class ParticipantSelector extends JComponent {
 
     private static final int                         ID_COL_WIDTH       = 60;
 
-    private Participants                             participants;
+    private List<Participant>                        participants;
     private final JTextField                         textPattern;
     private final JTable                             tblParticipants;
     private final List<ParticipantSelectionListener> selectionListeners = new ArrayList<ParticipantSelectionListener>();
@@ -133,8 +134,31 @@ public class ParticipantSelector extends JComponent {
     }
 
     public void setWorkbook(final Workbook wb) {
-        participants = new Participants(wb);
-        updateParticipants();
+        try {
+            participants = wb.getAllParticipants();
+            updateParticipants();
+        } catch (Exception e) {
+            error(e);
+        }
+    }
+
+    private String getFootprint(Participant participant) {
+        final StringBuilder fp = new StringBuilder();
+        fp.append(participant.getSurname().toLowerCase());
+        fp.append(participant.getId().toLowerCase());
+        fp.append(getName().toLowerCase());
+        return StringUtil.normalizeForSearch(fp.toString());
+    }
+
+    private List<Participant> select(String pattern) {
+        pattern = StringUtil.normalizeForSearch(pattern);
+        final List<Participant> selection = new ArrayList<Participant>();
+        for (final Participant participant : participants) {
+            if (getFootprint(participant).indexOf(pattern) >= 0) {
+                selection.add(participant);
+            }
+        }
+        return selection;
     }
 
     private void setSelectedIndex(int index) {
@@ -151,7 +175,7 @@ public class ParticipantSelector extends JComponent {
     }
 
     private void updateParticipants() {
-        final List<Participant> data = participants.select(textPattern.getText());
+        final List<Participant> data = select(textPattern.getText());
         final ParticipantsTableModel dataModel = new ParticipantsTableModel(data);
         tblParticipants.setModel(dataModel);
         final TableColumnModel columnModel = tblParticipants.getColumnModel();
