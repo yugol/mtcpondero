@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.UUID;
 import pondero.engine.staples.DateUtil;
-import pondero.engine.staples.StringUtil;
 import pondero.model.entities.base.Column;
 import pondero.model.entities.base.Record;
 import pondero.model.entities.base.Sheet;
@@ -63,14 +62,6 @@ public class Participant extends Record {
 
     public String getEducationString() {
         return education.code;
-    }
-
-    public String getFootprint() {
-        final StringBuilder fp = new StringBuilder();
-        fp.append(getSurname().toLowerCase());
-        fp.append(getId().toLowerCase());
-        fp.append(getName().toLowerCase());
-        return StringUtil.normalizeForSearch(fp.toString());
     }
 
     public Gender getGender() {

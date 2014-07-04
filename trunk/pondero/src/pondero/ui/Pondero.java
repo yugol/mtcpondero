@@ -171,7 +171,7 @@ public class Pondero implements Ponderable {
                 CardLayout cl = (CardLayout) pnlStage.getLayout();
                 cl.show(pnlStage, "pnlTestSelection");
             }
-            statusBar.setMessage(StatusBar.DEFAULT, L10n.getString("lbl.data-register") + ": " + currentWorkbook.getName());
+            statusBar.setMessage(StatusBar.DEFAULT, L10n.getString("lbl.data-register") + ": " + currentWorkbook.getWorkbookName());
         }
         currentState = state;
     }

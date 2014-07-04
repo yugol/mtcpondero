@@ -33,7 +33,7 @@ public class ModifyParticipantAction extends PonderoAction implements Participan
     public void onParticipantSave(Participant participant) {
         info("saving participant:", participant.getId());
         try {
-            Participants participants = getParticipants();
+            Participants participants = new Participants(getApp().getCurrentWorkbook());
             participants.put(participant);
             participants.save();
             getApp().setCurrentParticipant(participant);
@@ -41,10 +41,6 @@ public class ModifyParticipantAction extends PonderoAction implements Participan
             error(e);
             MessageUtil.showExceptionMessage(getFrame(), e);
         }
-    }
-
-    protected Participants getParticipants() {
-        return new Participants(getApp().getCurrentWorkbook());
     }
 
     protected void showParticipantDialog(Participant participant) {

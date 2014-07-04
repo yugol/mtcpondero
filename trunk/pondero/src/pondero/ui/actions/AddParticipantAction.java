@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.L10n;
 import pondero.model.entities.Participant;
-import pondero.model.participants.Participants;
 import pondero.ui.Ponderable;
 import pondero.ui.PonderoOld;
 
@@ -19,9 +18,8 @@ public class AddParticipantAction extends ModifyParticipantAction {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        Participants participants = new Participants(getApp().getCurrentWorkbook());
         Participant participant = new Participant();
-        participant.setId(participants.generateNewParticipantId());
+        participant.setId(getApp().getCurrentWorkbook().getNewUniqueParticipantId());
         showParticipantDialog(participant);
     }
 

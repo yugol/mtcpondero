@@ -169,7 +169,7 @@ public class PonderoOld implements TaskLauncher {
 
     public void openWorkbook(final Workbook workbook) throws Exception {
         currentWorkbook = workbook;
-        lblDocumentName.setText(currentWorkbook.getName());
+        lblDocumentName.setText(currentWorkbook.getWorkbookName());
         updateStatus(null);
     }
 
