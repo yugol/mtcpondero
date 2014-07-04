@@ -1,6 +1,5 @@
 package pondero;
 
-
 public class OsUtil {
 
     public static int getFrameRate() {
@@ -22,9 +21,9 @@ public class OsUtil {
     public static void setupMainWindow(final String applicationName) {
         if (isMacOSX()) {
             try {
-                // System.setProperty("com.apple.mrj.application.apple.menu.about.name", applicationName);
-                // System.setProperty("com.apple.macos.useScreenMenuBar", "true");
-                // System.setProperty("apple.laf.useScreenMenuBar", "true"); // for older versions of Java
+                System.setProperty("com.apple.mrj.application.apple.menu.about.name", applicationName);
+                System.setProperty("com.apple.macos.useScreenMenuBar", "true");
+                System.setProperty("apple.laf.useScreenMenuBar", "true"); // for older versions of Java
             } catch (final SecurityException e) {
                 /* probably running via webstart, do nothing */
             }
