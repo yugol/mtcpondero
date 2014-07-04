@@ -84,18 +84,34 @@ public class ExcelWorkbook implements Workbook {
     public void add(final Record record) throws Exception {
         info("add record ", record.getClass().getSimpleName(), " : ", record.toCsv());
         dirty = true;
+        int recordRowIdx = 0;
+        Row recordRow = null;
         final Sheet sheet = getSheet(record);
+        if (record instanceof Participant) {
+            int inColIdx = getIdColumnIndex(sheet);
+            for (int rowIdx = 1; rowIdx <= sheet.getLastRowNum(); ++rowIdx) {
+                final Row row = sheet.getRow(rowIdx);
+                String id = row.getCell(inColIdx).getStringCellValue();
+                if (id.equals(((Participant) record).getId())) {
+                    recordRowIdx = rowIdx;
+                    recordRow = row;
+                    break;
+                }
+            }
+        }
+        if (recordRowIdx == 0) {
+            recordRowIdx = sheet.getLastRowNum() + 1;
+            recordRow = sheet.createRow(recordRowIdx);
+        }
         final Row firstRow = sheet.getRow(0);
-        final int rowIdx = sheet.getLastRowNum() + 1;
-        final Row newRow = sheet.createRow(rowIdx);
         for (int colIdx = 0; colIdx < firstRow.getLastCellNum(); ++colIdx) {
             final String cellName = firstRow.getCell(colIdx).getStringCellValue();
             final String getterName = Record.getGetterName(cellName);
             final Method getter = record.getClass().getMethod(getterName, (Class<?>[]) null);
             final String val = (String) getter.invoke(record, (Object[]) null);
-            final Cell cell = newRow.createCell(colIdx);
+            final Cell cell = recordRow.createCell(colIdx);
             cell.setCellValue(val);
-            cell.setCellStyle(rowIdx % 2 == 0 ? evenStyle : oddStyle);
+            cell.setCellStyle(recordRowIdx % 2 == 0 ? evenStyle : oddStyle);
             sheet.autoSizeColumn(colIdx);
         }
     }
@@ -113,28 +129,6 @@ public class ExcelWorkbook implements Workbook {
             sheet.removeRow(sheet.getRow(rowIdx));
             dirty = true;
         }
-    }
-
-    @Override
-    public String getNewUniqueParticipantId() {
-        final Sheet sheet = getSheet(new Participant());
-        final Row firstRow = sheet.getRow(0);
-        int inColIdx = 0;
-        for (; inColIdx < firstRow.getLastCellNum(); ++inColIdx) {
-            final String cellName = firstRow.getCell(inColIdx).getStringCellValue();
-            if ("ID".equals(cellName)) {
-                break;
-            }
-        }
-        int maxIdx = 100;
-        for (int rowIdx = 1; rowIdx <= sheet.getLastRowNum(); ++rowIdx) {
-            final Row row = sheet.getRow(rowIdx);
-            int id = Integer.parseInt(row.getCell(inColIdx).getStringCellValue());
-            if (id > maxIdx) {
-                maxIdx = id;
-            }
-        }
-        return String.valueOf(maxIdx + 1);
     }
 
     @Override
@@ -170,6 +164,21 @@ public class ExcelWorkbook implements Workbook {
         List<Participant> buffer = (List<Participant>) getAll(Participant.class);
         Collections.sort(buffer, PARTICIPANT_COMPARATOR);
         return buffer;
+    }
+
+    @Override
+    public String getNewUniqueParticipantId() {
+        int maxIdx = 100;
+        final Sheet sheet = getSheet(new Participant());
+        int idColIdx = getIdColumnIndex(sheet);
+        for (int rowIdx = 1; rowIdx <= sheet.getLastRowNum(); ++rowIdx) {
+            final Row row = sheet.getRow(rowIdx);
+            int id = Integer.parseInt(row.getCell(idColIdx).getStringCellValue());
+            if (id > maxIdx) {
+                maxIdx = id;
+            }
+        }
+        return String.valueOf(maxIdx + 1);
     }
 
     @Override
@@ -230,6 +239,18 @@ public class ExcelWorkbook implements Workbook {
         final File backupFile = new File(Globals.getFolderResultsBackup(), backupFileName);
         FileUtils.copyFile(wbFile, backupFile, true);
         info("workbook backup: ", backupFile.getCanonicalPath());
+    }
+
+    private int getIdColumnIndex(Sheet sheet) {
+        final Row firstRow = sheet.getRow(0);
+        int inColIdx = 0;
+        for (; inColIdx < firstRow.getLastCellNum(); ++inColIdx) {
+            final String cellName = firstRow.getCell(inColIdx).getStringCellValue();
+            if ("ID".equals(cellName)) {
+                break;
+            }
+        }
+        return inColIdx;
     }
 
     private Sheet getSheet(final Record record) {
