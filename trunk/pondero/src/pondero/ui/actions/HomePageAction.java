@@ -3,9 +3,9 @@ package pondero.ui.actions;
 import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import pondero.Globals;
 import pondero.L10n;
+import pondero.MessageUtil;
 import pondero.WebUtil;
 import pondero.ui.Ponderable;
 import pondero.ui.PonderoOld;
@@ -25,11 +25,7 @@ public class HomePageAction extends PonderoAction {
             WebUtil.browse(Globals.HOME_PAGE_ADDRESS);
         } catch (Exception e) {
             error(e);
-            JOptionPane.showInternalMessageDialog(
-                    getApp().getFrame(),
-                    e.getMessage(),
-                    L10n.getString("lbl.home-page"),
-                    JOptionPane.ERROR_MESSAGE);
+            MessageUtil.showExceptionMessage(getFrame(), e);
         }
     }
 

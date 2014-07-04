@@ -1,6 +1,3 @@
-- add participant action
-- modify participant action
-- update participant update dialog
 - experience: wizard based interface
 - add location key in registry
 - l10n for all strings

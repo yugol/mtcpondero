@@ -7,6 +7,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import pondero.Globals;
 import pondero.L10n;
+import pondero.MessageUtil;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.model.excel.ExcelWorkbookFilter;
@@ -48,11 +49,7 @@ public class OpenDocumentAction extends PonderoAction {
             }
         } catch (final Exception e) {
             error(e);
-            JOptionPane.showInternalMessageDialog(
-                    getApp().getFrame(),
-                    e.getMessage(),
-                    L10n.getString("lbl.open..."),
-                    JOptionPane.ERROR_MESSAGE);
+            MessageUtil.showExceptionMessage(getFrame(), e);
         }
     }
 

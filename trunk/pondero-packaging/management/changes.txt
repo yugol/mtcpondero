@@ -1,5 +1,6 @@
 2014-07-27
 ==========
+- new add/modify participant actions
 - build full Participant report
 - DOB only support in database for participants
 - double click on participant selection dialog selects participant
