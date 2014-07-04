@@ -10,15 +10,17 @@ public interface Workbook {
 
     void add(Record record) throws Exception;
 
+    void addWorkbookListener(WorkbookListener listener);
+
     void close() throws IOException;
 
     void deleteParticipants();
 
-    String getNewUniqueParticipantId();
-
     List<? extends Record> getAll(Class<? extends Record> prototype) throws Exception;
 
     List<Participant> getAllParticipants() throws Exception;
+
+    String getNewUniqueParticipantId();
 
     String getWorkbookName();
 
