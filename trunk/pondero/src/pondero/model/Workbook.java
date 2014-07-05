@@ -3,8 +3,8 @@ package pondero.model;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import pondero.model.entities.Participant;
 import pondero.model.entities.base.Record;
+import pondero.model.participants.Participant;
 
 public interface Workbook {
 

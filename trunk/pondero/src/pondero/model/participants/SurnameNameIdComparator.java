@@ -1,7 +1,6 @@
 package pondero.model.participants;
 
 import java.util.Comparator;
-import pondero.model.entities.Participant;
 
 public class SurnameNameIdComparator implements Comparator<Participant> {
 

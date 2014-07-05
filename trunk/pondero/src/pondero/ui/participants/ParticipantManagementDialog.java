@@ -38,9 +38,9 @@ import pondero.Globals;
 import pondero.L10n;
 import pondero.MsgUtil;
 import pondero.engine.staples.StringUtil;
-import pondero.model.entities.Participant;
 import pondero.model.entities.domains.Education;
 import pondero.model.entities.domains.Gender;
+import pondero.model.participants.Participant;
 import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")

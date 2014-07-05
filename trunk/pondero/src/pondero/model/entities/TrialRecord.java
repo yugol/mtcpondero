@@ -3,6 +3,7 @@ package pondero.model.entities;
 import pondero.engine.staples.DateUtil;
 import pondero.model.entities.base.Column;
 import pondero.model.entities.base.Record;
+import pondero.model.participants.Participant;
 
 public class TrialRecord extends Record {
 

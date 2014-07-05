@@ -14,7 +14,7 @@ public class SysUtil {
         }
         if (isWindows()) {
             // System.setProperty("awt.useSystemAAFontSettings", "on");
-            // System.setProperty("swing.aatext", "true");
+            System.setProperty("swing.aatext", "true");
         }
     }
 

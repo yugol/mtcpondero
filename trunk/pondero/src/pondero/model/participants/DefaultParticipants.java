@@ -2,7 +2,6 @@ package pondero.model.participants;
 
 import java.util.ArrayList;
 import java.util.List;
-import pondero.model.entities.Participant;
 import pondero.model.entities.domains.Education;
 import pondero.model.entities.domains.Gender;
 

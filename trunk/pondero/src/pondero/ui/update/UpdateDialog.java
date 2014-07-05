@@ -30,6 +30,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import pondero.Globals;
 import pondero.L10n;
+import pondero.UiUtil;
 import pondero.engine.staples.StringUtil;
 import pondero.update.Artifact;
 import pondero.update.UpdateEngine;
@@ -120,6 +121,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
             contentPanel.add(scrollPane, gbc_scrollPane);
             {
                 listUpdates = new JList<Artifact>();
+                listUpdates.setBackground(UiUtil.getListBackgroundColor());
                 listUpdates.addMouseListener(new MouseAdapter() {
 
                     @Override

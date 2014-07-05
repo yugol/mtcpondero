@@ -3,7 +3,7 @@ package pondero.ui;
 import javax.swing.JFrame;
 import pondero.engine.test.Test;
 import pondero.model.Workbook;
-import pondero.model.entities.Participant;
+import pondero.model.participants.Participant;
 
 public interface Ponderable {
 

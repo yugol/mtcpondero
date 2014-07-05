@@ -19,9 +19,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumnModel;
 import pondero.L10n;
+import pondero.UiUtil;
 import pondero.engine.staples.StringUtil;
 import pondero.model.Workbook;
-import pondero.model.entities.Participant;
+import pondero.model.participants.Participant;
 
 @SuppressWarnings("serial")
 public class ParticipantSelector extends JComponent {
@@ -89,6 +90,7 @@ public class ParticipantSelector extends JComponent {
         textPattern.setColumns(10);
 
         final JScrollPane scrollPane = new JScrollPane();
+        scrollPane.getViewport().setBackground(UiUtil.getListBackgroundColor());
         final GridBagConstraints gbc_scrollPane = new GridBagConstraints();
         gbc_scrollPane.weighty = 1.0;
         gbc_scrollPane.gridwidth = 3;
