@@ -14,13 +14,13 @@ public class UpdateInstaller {
         }
         File homeFolder = new File(home);
         System.out.println("Installing updates for " + homeFolder.getCanonicalPath() + " ...");
-        installUpdates(new File(homeFolder.getCanonicalPath(), "bin"));
+        // installUpdates(new File(homeFolder.getCanonicalPath(), "bin"));
         installUpdates(new File(homeFolder.getCanonicalPath(), "tests"));
-        System.out.println("Done installing updates");
+        System.out.println("done installing updates");
     }
 
     private static void installUpdates(File folder) throws IOException {
-        System.out.print("In " + folder.getCanonicalPath() + " ... ");
+        System.out.println("In " + folder.getCanonicalPath() + " ... ");
         for (File updatedFile : folder.listFiles()) {
             if (updatedFile.isFile() && updatedFile.getName().endsWith(UPDATE_EXTENSION)) {
                 String updatedFilePath = updatedFile.getCanonicalPath();
@@ -35,11 +35,12 @@ public class UpdateInstaller {
                         System.out.println("could not delete previous file");
                     }
                 } else {
-                    System.out.println("could not find previous file");
+                    updatedFile.renameTo(previousFile);
+                    System.out.println("done");
                 }
             }
         }
-        System.out.println("done");
+        System.out.println("done folder");
     }
 
 }

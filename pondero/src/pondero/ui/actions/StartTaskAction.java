@@ -38,6 +38,8 @@ public class StartTaskAction extends PonderoAction implements TaskLauncher {
         } else {
             html.append(L10n.getString("msg.test-interrupted", report.getEndCode()));
         }
+        html.append("<br/>");
+        html.append(L10n.getString("msg.save-responses-?"));
         html.append("</html>");
         if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(getFrame(),
                 html, L10n.getString("lbl.pondero"),
