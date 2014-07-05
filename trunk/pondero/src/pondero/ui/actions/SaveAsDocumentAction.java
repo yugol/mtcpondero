@@ -21,6 +21,7 @@ public class SaveAsDocumentAction extends PonderoAction {
     @Override
     public void actionPerformed(ActionEvent evt) {
         final JFileChooser dialog = new JFileChooser(".");
+        dialog.setDialogTitle(L10n.getString("lbl.save-as-workbook"));
         dialog.setCurrentDirectory(Globals.getFolderResults());
         dialog.setFileFilter(new ExcelWorkbookFilter());
         if (JFileChooser.APPROVE_OPTION == dialog.showSaveDialog(getApp().getFrame())) {

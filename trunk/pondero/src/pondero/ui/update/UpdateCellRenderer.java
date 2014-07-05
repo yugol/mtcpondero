@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.SystemColor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -19,6 +18,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import pondero.L10n;
+import pondero.UiUtil;
 import pondero.engine.staples.DateUtil;
 import pondero.update.Artifact;
 
@@ -80,7 +80,7 @@ public class UpdateCellRenderer extends JPanel implements ListCellRenderer<Artif
 
     @Override
     public Component getListCellRendererComponent(
-            JList<? extends Artifact> arg0,
+            JList<? extends Artifact> parent,
             Artifact value,
             int index,
             boolean isSelected,
@@ -88,14 +88,14 @@ public class UpdateCellRenderer extends JPanel implements ListCellRenderer<Artif
 
         if (selection.get(index)) {
             chckbxSelected.setSelected(true);
-            setBackground(SystemColor.textHighlight);
-            lblId.setForeground(SystemColor.textHighlightText);
-            lblReleaseDate.setForeground(SystemColor.textHighlightText);
+            setBackground(UiUtil.getListSelectedBackgroundColor());
+            lblId.setForeground(UiUtil.getListSelectedForegroundColor());
+            lblReleaseDate.setForeground(UiUtil.getListSelectedForegroundColor());
         } else {
             chckbxSelected.setSelected(false);
-            setBackground(SystemColor.text);
-            lblId.setForeground(SystemColor.textText);
-            lblReleaseDate.setForeground(SystemColor.textText);
+            setBackground(UiUtil.getListBackgroundColor());
+            lblId.setForeground(UiUtil.getListForegroundColor());
+            lblReleaseDate.setForeground(UiUtil.getListForegroundColor());
         }
         lblId.setText(value.getCodeName() + " (" + L10n.getString("lbl." + value.getType()) + ")");
         lblReleaseDate.setText(L10n.getString("lbl.release-date") + ":" + DateUtil.toUiDate(value.getReleaseDate()));

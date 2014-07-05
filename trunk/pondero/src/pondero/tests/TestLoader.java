@@ -17,10 +17,9 @@ public class TestLoader {
 
     public static ClassLoader testClassLoader;
 
-    public static void loadTests() {
+    public static List<Test> loadTests() {
         try {
             final File pluginFolder = Globals.getFolderTests();
-
             final List<Artifact> artifacts = new ArrayList<Artifact>();
             final List<URL> jarUrls = new ArrayList<URL>();
             for (final File jarFile : pluginFolder.listFiles()) {
@@ -39,18 +38,22 @@ public class TestLoader {
                 testClassLoader = TestLoader.class.getClassLoader();
             }
 
+            List<Test> tests = new ArrayList<Test>();
             for (final Artifact candidate : artifacts) {
                 try {
                     final Class<? extends Test> testClass = testClassLoader.loadClass(candidate.getTestClassName()).asSubclass(Test.class);
+                    tests.add(testClass.newInstance());
                     info("registered test: ", testClass.getCanonicalName());
                     Globals.registerArtifact(candidate);
                 } catch (final ClassCastException e) {
                     warning(candidate.getFileName(), " is not a test");
                 }
             }
+            return tests;
         } catch (final Exception e) {
             error(e);
         }
+        return null;
     }
 
     public static void registerTests(final PonderoOld pondero) {
