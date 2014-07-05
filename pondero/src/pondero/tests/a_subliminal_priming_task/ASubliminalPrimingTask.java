@@ -18,7 +18,7 @@ public class ASubliminalPrimingTask extends Test {
     private static final Artifact DESCRIPTOR = new Artifact(ArtifactType.TEST, "ASPT", 0, 1, "dev");
 
     public static void main(final String... args) {
-        new ASubliminalPrimingTask().start();
+        new ASubliminalPrimingTask().start(null);
     }
 
     @Override

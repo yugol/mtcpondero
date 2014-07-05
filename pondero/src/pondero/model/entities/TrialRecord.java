@@ -135,7 +135,6 @@ public class TrialRecord extends Record {
         csv.append(getParticipantSurnameString()).append(", ");
         csv.append(getParticipantNameString()).append(", ");
         csv.append(getBlockNameString()).append(", ");
-        csv.append(getTrialTimeString()).append(", ");
         csv.append(getTrialDateString()).append(", ");
         csv.append(getTrialTimeString()).append(", ");
         csv.append(getResponseString()).append(", ");
