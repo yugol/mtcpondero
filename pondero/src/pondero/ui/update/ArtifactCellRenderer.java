@@ -1,6 +1,5 @@
 package pondero.ui.update;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,16 +13,14 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import pondero.L10n;
 import pondero.UiUtil;
 import pondero.engine.staples.DateUtil;
 import pondero.update.Artifact;
 
 @SuppressWarnings("serial")
-public class UpdateCellRenderer extends JPanel implements ListCellRenderer<Artifact> {
+public class ArtifactCellRenderer extends JPanel implements ListCellRenderer<Artifact> {
 
     private final List<Boolean> selection = new ArrayList<Boolean>();
     private final JLabel        lblId;
@@ -31,8 +28,8 @@ public class UpdateCellRenderer extends JPanel implements ListCellRenderer<Artif
     private final JCheckBox     chckbxSelected;
     private final JLabel        lblIcon;
 
-    public UpdateCellRenderer() {
-        setBorder(new CompoundBorder(new LineBorder(new Color(0, 0, 0), 1, true), new EmptyBorder(5, 10, 10, 10)));
+    public ArtifactCellRenderer() {
+        setBorder(new EmptyBorder(5, 10, 10, 10));
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] { 0, 0, 0 };
         gridBagLayout.rowHeights = new int[] { 0, 0 };
@@ -93,17 +90,21 @@ public class UpdateCellRenderer extends JPanel implements ListCellRenderer<Artif
             lblReleaseDate.setForeground(UiUtil.getListSelectedForegroundColor());
         } else {
             chckbxSelected.setSelected(false);
-            setBackground(UiUtil.getListBackgroundColor());
+            if (index % 2 == 0) {
+                setBackground(UiUtil.getListBackgroundEvenColor());
+            } else {
+                setBackground(UiUtil.getListBackgroundOddColor());
+            }
             lblId.setForeground(UiUtil.getListForegroundColor());
             lblReleaseDate.setForeground(UiUtil.getListForegroundColor());
         }
         lblId.setText(value.getCodeName() + " (" + L10n.getString("lbl." + value.getType()) + ")");
         lblReleaseDate.setText(L10n.getString("lbl.release-date") + ":" + DateUtil.toUiDate(value.getReleaseDate()));
         if (value.isMandatory()) {
-            lblIcon.setIcon(new ImageIcon(UpdateCellRenderer.class.getResource("/com/famfamfam/silk/exclamation.png")));
+            lblIcon.setIcon(new ImageIcon(ArtifactCellRenderer.class.getResource("/com/famfamfam/silk/exclamation.png")));
         } else {
             if (value.isProtected()) {
-                lblIcon.setIcon(new ImageIcon(UpdateCellRenderer.class.getResource("/com/famfamfam/silk/key.png")));
+                lblIcon.setIcon(new ImageIcon(ArtifactCellRenderer.class.getResource("/com/famfamfam/silk/key.png")));
             } else {
                 lblIcon.setIcon(null);
             }

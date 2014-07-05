@@ -62,8 +62,16 @@ public class UiUtil {
         return names;
     }
 
-    public static Color getListBackgroundColor() {
+    public static Color getListBackgroundOddColor() {
         Color color = SystemColor.text;
+        return color;
+    }
+
+    public static Color getListBackgroundEvenColor() {
+        Color color = UIManager.getColor("controlLHighlight");
+        if (color == null) {
+            color = SystemColor.info;
+        }
         return color;
     }
 

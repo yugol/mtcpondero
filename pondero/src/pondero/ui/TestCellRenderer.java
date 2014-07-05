@@ -38,7 +38,11 @@ public class TestCellRenderer extends JPanel implements ListCellRenderer<Test> {
             setBackground(UiUtil.getListSelectedBackgroundColor());
             lblName.setForeground(UiUtil.getListSelectedForegroundColor());
         } else {
-            setBackground(UiUtil.getListBackgroundColor());
+            if (index % 2 == 0) {
+                setBackground(UiUtil.getListBackgroundEvenColor());
+            } else {
+                setBackground(UiUtil.getListBackgroundOddColor());
+            }
             lblName.setForeground(UiUtil.getListForegroundColor());
         }
         return this;

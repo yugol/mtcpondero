@@ -23,7 +23,7 @@ public class ChooseParticipantAction extends PonderoAction {
     public void actionPerformed(final ActionEvent evt) {
         try {
             final ParticipantSelectionDialog dlg = new ParticipantSelectionDialog(getApp().getCurrentWorkbook());
-            dlg.setLocationRelativeTo(getApp().getFrame());
+            dlg.setLocationRelativeTo(getFrame());
             dlg.setModal(true);
             dlg.setVisible(true);
             final Participant selection = dlg.getSelection();
