@@ -2,7 +2,7 @@ package pondero.engine.elements.trial;
 
 import java.util.HashSet;
 import java.util.Set;
-import pondero.OsUtil;
+import pondero.SysUtil;
 import pondero.engine.elements.Element;
 import pondero.engine.elements.interfaces.HasFeedback;
 import pondero.engine.elements.interfaces.IsController;
@@ -185,7 +185,7 @@ public class Trial extends Element implements HasFeedback, IsController {
     public void stimulusframes(final String expr) {
         stimulustimes = new FrameSequence(expr);
         for (final Frame frame : stimulustimes) {
-            frame.setIndex(frame.getIndex() * OsUtil.getFrameRate());
+            frame.setIndex(frame.getIndex() * SysUtil.getFrameRate());
         }
     }
 

@@ -5,7 +5,7 @@ import static pondero.Logger.info;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.L10n;
-import pondero.MessageUtil;
+import pondero.MsgUtil;
 import pondero.model.entities.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.PonderoOld;
@@ -36,7 +36,7 @@ public class ModifyParticipantAction extends PonderoAction implements Participan
             getApp().setCurrentParticipant(participant);
         } catch (final Exception e) {
             error(e);
-            MessageUtil.showExceptionMessage(getFrame(), e);
+            MsgUtil.showExceptionMessage(getFrame(), e);
         }
     }
 
@@ -50,7 +50,7 @@ public class ModifyParticipantAction extends PonderoAction implements Participan
             dlg.setVisible(true);
         } catch (final Exception e) {
             error(e);
-            MessageUtil.showExceptionMessage(getFrame(), e);
+            MsgUtil.showExceptionMessage(getFrame(), e);
         }
     }
 

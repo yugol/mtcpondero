@@ -7,7 +7,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import pondero.Globals;
 import pondero.L10n;
-import pondero.MessageUtil;
+import pondero.MsgUtil;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.model.excel.ExcelWorkbookFilter;
@@ -49,7 +49,7 @@ public class OpenDocumentAction extends PonderoAction {
             }
         } catch (final Exception e) {
             error(e);
-            MessageUtil.showExceptionMessage(getFrame(), e);
+            MsgUtil.showExceptionMessage(getFrame(), e);
         }
     }
 

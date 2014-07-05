@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.Globals;
 import pondero.L10n;
-import pondero.MessageUtil;
+import pondero.MsgUtil;
 import pondero.WebUtil;
 import pondero.ui.Ponderable;
 import pondero.ui.PonderoOld;
@@ -25,7 +25,7 @@ public class HomePageAction extends PonderoAction {
             WebUtil.browse(Globals.HOME_PAGE_ADDRESS);
         } catch (Exception e) {
             error(e);
-            MessageUtil.showExceptionMessage(getFrame(), e);
+            MsgUtil.showExceptionMessage(getFrame(), e);
         }
     }
 

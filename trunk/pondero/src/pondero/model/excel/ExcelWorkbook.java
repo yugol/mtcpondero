@@ -21,7 +21,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import pondero.Globals;
-import pondero.OsUtil;
+import pondero.SysUtil;
 import pondero.engine.staples.DateUtil;
 import pondero.engine.staples.StringUtil;
 import pondero.model.Workbook;
@@ -230,9 +230,9 @@ public class ExcelWorkbook implements Workbook {
         workbook.write(tempOut);
         tempOut.close();
         String[] cmd = null;
-        if (OsUtil.isWindows()) {
+        if (SysUtil.isWindows()) {
             cmd = new String[] { "cmd.exe", "/c", tempFile.getCanonicalPath() };
-        } else if (OsUtil.isMacOSX()) {
+        } else if (SysUtil.isMacOSX()) {
             cmd = new String[] { "open", tempFile.getCanonicalPath() };
         }
         Runtime.getRuntime().exec(cmd);

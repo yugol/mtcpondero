@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import pondero.FileUtil;
 import pondero.L10n;
-import pondero.MessageUtil;
+import pondero.MsgUtil;
 import pondero.model.Workbook;
 import pondero.ui.Ponderable;
 import pondero.ui.PonderoOld;
@@ -40,7 +40,7 @@ public class QuitAction extends PonderoAction {
             System.exit(0);
         } catch (final Exception e) {
             error(e);
-            MessageUtil.showExceptionMessage(getFrame(), e);
+            MsgUtil.showExceptionMessage(getFrame(), e);
         }
     }
 

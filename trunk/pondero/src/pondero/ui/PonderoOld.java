@@ -27,7 +27,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import pondero.Globals;
 import pondero.L10n;
-import pondero.OsUtil;
+import pondero.SysUtil;
 import pondero.UiUtil;
 import pondero.engine.test.Test;
 import pondero.engine.test.launch.TaskLauncher;
@@ -62,9 +62,9 @@ public class PonderoOld implements TaskLauncher {
         String home = args.length >= 1 ? args[0] : null;
         Globals.loadPreferences(home);
 
-        OsUtil.setupMainWindow(L10n.getString("lbl.pondero"));//$NON-NLS-1$
+        SysUtil.configure();
         UiUtil.setLaf();
-        UiUtil.factorFontSize(Globals.getUiScaleFactor());
+        UiUtil.scaleUi(Globals.getUiScaleFactor());
 
         EventQueue.invokeLater(new Runnable() {
 

@@ -4,7 +4,7 @@ import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.L10n;
-import pondero.MessageUtil;
+import pondero.MsgUtil;
 import pondero.model.entities.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.PonderoOld;
@@ -32,7 +32,7 @@ public class ChooseParticipantAction extends PonderoAction {
             }
         } catch (final Exception e) {
             error(e);
-            MessageUtil.showExceptionMessage(getFrame(), e);
+            MsgUtil.showExceptionMessage(getFrame(), e);
         }
     }
 

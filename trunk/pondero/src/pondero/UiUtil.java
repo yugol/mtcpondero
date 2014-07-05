@@ -1,6 +1,8 @@
 package pondero;
 
 import static pondero.Logger.error;
+import static pondero.Logger.trace;
+import static pondero.Logger.warning;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GraphicsDevice;
@@ -10,7 +12,10 @@ import java.awt.Window;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
@@ -19,8 +24,19 @@ import javax.swing.plaf.FontUIResource;
 
 public class UiUtil {
 
+    static {
+        String seaglassLafClass = "com.seaglasslookandfeel.SeaGlassLookAndFeel";
+        try {
+            // Class.forName(seaglassLafClass);
+            // UIManager.installLookAndFeel("Seaglass", seaglassLafClass);
+        } catch (Exception e) {
+            warning("could not install: ", seaglassLafClass);
+            error(e);
+        }
+    }
+
     public static void enableFullScreenMode(final JFrame window) {
-        if (OsUtil.isMacOSX()) {
+        if (SysUtil.isMacOSX()) {
             final String className = "com.apple.eawt.FullScreenUtilities";
             final String methodName = "setWindowCanFullScreen";
             try {
@@ -34,9 +50,19 @@ public class UiUtil {
         }
     }
 
-    public static void factorFontSize(final double factor) {
+    public static List<String> getAvailableLafs() {
+        List<String> names = new ArrayList<String>();
+        for (final LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+            names.add(info.getName());
+        }
+        Collections.sort(names);
+        trace(names);
+        return names;
+    }
+
+    public static void scaleUi(final double factor) {
         final float multiplier = (float) factor;
-        final UIDefaults defaults = UIManager.getDefaults();
+        final UIDefaults defaults = UIManager.getLookAndFeelDefaults();
         for (@SuppressWarnings("rawtypes")
         final Enumeration e = defaults.keys(); e.hasMoreElements();) {
             final Object key = e.nextElement();
