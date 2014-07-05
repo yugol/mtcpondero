@@ -118,7 +118,7 @@ public class Pondero implements Ponderable, WorkbookListener {
     private JEditorPane  epParticipantDescription;
     private JMenuItem    mntmPreferences;
     private StatusBar    statusBar;
-    private JMenu        mnAnalisys;
+    private JMenu        mnAnalysis;
     private JMenuItem    mntmView;
     private JMenuItem    mntmSave;
     private JMenuItem    mntmSaveas;
@@ -178,7 +178,7 @@ public class Pondero implements Ponderable, WorkbookListener {
         mntmView.setEnabled(currentWorkbook != null);
         mntmSave.setEnabled(currentWorkbook != null);
         mntmSaveas.setEnabled(currentWorkbook != null);
-        mnAnalisys.setEnabled(currentWorkbook != null);
+        mnAnalysis.setEnabled(currentWorkbook != null);
         if (currentWorkbook == null) {
             stage.setVisible(false);
             statusBar.setMessage(StatusBar.ERROR, L10n.getString("msg.please-choose-workbook"));
@@ -294,8 +294,8 @@ public class Pondero implements Ponderable, WorkbookListener {
         mntmSaveas.setAction(saveAsDocument);
         mnData.add(mntmSaveas);
 
-        mnAnalisys = new JMenu(" " + L10n.getString("lbl.analisys") + " ");
-        menuBar.add(mnAnalisys);
+        mnAnalysis = new JMenu(" " + L10n.getString("lbl.analysis") + " ");
+        menuBar.add(mnAnalysis);
 
         JMenu mnHelp = new JMenu(" " + L10n.getString("lbl.help") + " ");
         menuBar.add(mnHelp);

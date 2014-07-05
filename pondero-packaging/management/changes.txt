@@ -5,7 +5,7 @@
 - DOB only support in database for participants
 - double click on participant selection dialog selects participant
 - open utility windows centred on parent
-- added Analisys menu
+- added Analysis menu
 - building new interface...
 - translated JFileChooser dialogs
 - separate project for pondero-qa
