@@ -6,23 +6,28 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.Action;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.UIManager;
-import javax.swing.border.CompoundBorder;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import pondero.Globals;
@@ -65,7 +70,7 @@ public class Pondero implements Ponderable, WorkbookListener {
                     Pondero window = new Pondero();
                     window.frame.setVisible(true);
                     try {
-                        window.setWorkbook(WorkbookFactory.openWorkbook(Globals.getLastWorkbookFile()));
+                        window.setCurrentWorkbook(WorkbookFactory.openWorkbook(Globals.getLastWorkbookFile()));
                     } catch (final Exception e) {
                         error(e);
                     }
@@ -98,27 +103,35 @@ public class Pondero implements Ponderable, WorkbookListener {
 
     // Widgets
     private JFrame       frame;
-    private JPanel       pnlStage;
+    private JPanel       stage;
     private JButton      btnSelectParticipant;
     private JButton      btnAddParticipant;
     private JButton      btnModifyParticipant;
     private JButton      btnNext;
-    private JEditorPane  dtrpnEpparticipantdescription;
+    private JEditorPane  epParticipantDescription;
     private JMenuItem    mntmPreferences;
     private StatusBar    statusBar;
     private JMenu        mnAnalisys;
     private JMenuItem    mntmView;
     private JMenuItem    mntmSave;
     private JMenuItem    mntmSaveas;
+    private JButton      btnBack;
+    private JButton      btnStart;
+    private JList        lstTests;
+    private JLabel       lblPageTitle;
+    private JLabel       lblPageHint;
 
     /**
      * Create the application.
      */
     public Pondero() {
         initialize();
-        setCurrentState(PonderoState.PARTICIPANT_SELECTION);
-        configureNavigationButton(btnNext);
         frame.setMinimumSize(new Dimension(640, 480));
+        configureNavigationButton(btnNext);
+        configureNavigationButton(btnBack);
+        configureNavigationButton(btnStart);
+        lblPageTitle.setFont(lblPageTitle.getFont().deriveFont(Font.BOLD, 2 * lblPageTitle.getFont().getSize()));
+        setCurrentState(PonderoState.PARTICIPANT_SELECTION);
     }
 
     @Override
@@ -160,27 +173,32 @@ public class Pondero implements Ponderable, WorkbookListener {
         mntmSaveas.setEnabled(currentWorkbook != null);
         mnAnalisys.setEnabled(currentWorkbook != null);
         if (currentWorkbook == null) {
-            pnlStage.setVisible(false);
+            stage.setVisible(false);
             statusBar.setMessage(StatusBar.ERROR, L10n.getString("msg.please-choose-workbook"));
         } else {
-            pnlStage.setVisible(true);
+            stage.setVisible(true);
             if (PonderoState.PARTICIPANT_SELECTION == state) {
-                CardLayout cl = (CardLayout) pnlStage.getLayout();
-                cl.show(pnlStage, "pnlParticipant");
-                dtrpnEpparticipantdescription.setEnabled(true);
-                dtrpnEpparticipantdescription.setText(ParticipantReport.getHtml(currentParticipant));
+                CardLayout cl = (CardLayout) stage.getLayout();
+                cl.show(stage, "pnlParticipantSelection");
+                lblPageTitle.setText(L10n.getString("lbl.CHOOSE-PARTICIPANT"));
+                lblPageHint.setText(L10n.getString("msg.CHOOSE-PARTICIPANT"));
+                epParticipantDescription.setEnabled(true);
+                epParticipantDescription.setText(ParticipantReport.getHtml(currentParticipant));
                 btnSelectParticipant.setEnabled(currentWorkbook != null);
                 btnAddParticipant.setEnabled(currentWorkbook != null);
                 btnModifyParticipant.setEnabled(currentWorkbook != null && currentParticipant != null);
                 btnNext.setEnabled(currentWorkbook != null && currentParticipant != null);
             } else if (PonderoState.TEST_SELECTION == state) {
-                CardLayout cl = (CardLayout) pnlStage.getLayout();
-                cl.show(pnlStage, "pnlTestSelection");
+                CardLayout cl = (CardLayout) stage.getLayout();
+                cl.show(stage, "pnlTestSelection");
+                lblPageTitle.setText(L10n.getString("lbl.CHOOSE-TEST"));
+                lblPageHint.setText(L10n.getString("msg.CHOOSE-TEST"));
+                btnStart.setEnabled(currentWorkbook != null && currentParticipant != null && currentTask != null);
             }
             statusBar.setMessage(StatusBar.DEFAULT,
                     L10n.getString("lbl.data-register")
                             + ": " + currentWorkbook.getWorkbookName()
-                            + (currentWorkbook.isDirty() ? "*" : ""));
+                            + (currentWorkbook.isDirty() ? " *" : ""));
         }
         currentState = state;
     }
@@ -192,10 +210,12 @@ public class Pondero implements Ponderable, WorkbookListener {
     }
 
     @Override
-    public void setWorkbook(Workbook workbook) {
+    public void setCurrentWorkbook(Workbook workbook) {
         currentWorkbook = workbook;
         currentWorkbook.addWorkbookListener(this);
-        updateCurrentState();
+        currentParticipant = null;
+        currentTask = null;
+        setCurrentState(PonderoState.PARTICIPANT_SELECTION);
     }
 
     @Override
@@ -277,12 +297,23 @@ public class Pondero implements Ponderable, WorkbookListener {
         mntmHomepage.setAction(homePageAction);
         mnHelp.add(mntmHomepage);
 
-        pnlStage = new JPanel();
-        frame.getContentPane().add(pnlStage, BorderLayout.CENTER);
-        pnlStage.setLayout(new CardLayout(0, 0));
+        JPanel instructions = new JPanel();
+        instructions.setBorder(new EmptyBorder(20, 20, 0, 100));
+        frame.getContentPane().add(instructions, BorderLayout.NORTH);
+        instructions.setLayout(new BoxLayout(instructions, BoxLayout.Y_AXIS));
+
+        lblPageTitle = new JLabel(L10n.getString("Pondero.lblPageTitle.text")); //$NON-NLS-1$
+        instructions.add(lblPageTitle);
+
+        lblPageHint = new JLabel("Lorem ipsum dolor sit amet...");
+        instructions.add(lblPageHint);
+
+        stage = new JPanel();
+        frame.getContentPane().add(stage, BorderLayout.CENTER);
+        stage.setLayout(new CardLayout(0, 0));
 
         JPanel pnlParticipant = new JPanel();
-        pnlStage.add(pnlParticipant, "pnlParticipantSelection");
+        stage.add(pnlParticipant, "pnlParticipantSelection");
         pnlParticipant.setLayout(new BorderLayout(0, 0));
 
         JPanel pnlParticipantContent = new JPanel();
@@ -296,7 +327,7 @@ public class Pondero implements Ponderable, WorkbookListener {
         pnlParticipantContent.setLayout(gbl_pnlParticipantContent);
 
         JScrollPane pnlParticipantDescription = new JScrollPane();
-        pnlParticipantDescription.setViewportBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), L10n.getString("lbl.participant") + ":", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        pnlParticipantDescription.setViewportBorder(new TitledBorder(null, L10n.getString("lbl.participant") + ":", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         GridBagConstraints gbc_pnlParticipantDescription = new GridBagConstraints();
         gbc_pnlParticipantDescription.insets = new Insets(0, 0, 0, 10);
         gbc_pnlParticipantDescription.weightx = 1.0;
@@ -306,10 +337,10 @@ public class Pondero implements Ponderable, WorkbookListener {
         gbc_pnlParticipantDescription.gridy = 0;
         pnlParticipantContent.add(pnlParticipantDescription, gbc_pnlParticipantDescription);
 
-        dtrpnEpparticipantdescription = new JEditorPane();
-        dtrpnEpparticipantdescription.setEditable(false);
-        dtrpnEpparticipantdescription.setContentType("text/html");
-        pnlParticipantDescription.setViewportView(dtrpnEpparticipantdescription);
+        epParticipantDescription = new JEditorPane();
+        epParticipantDescription.setEditable(false);
+        epParticipantDescription.setContentType("text/html");
+        pnlParticipantDescription.setViewportView(epParticipantDescription);
 
         btnSelectParticipant = new JButton("<html>\r\n<center>\r\nChoose<br/>\r\nparticipant<br/>\r\nfrom list\r\n</center>\r\n</html>");
         btnSelectParticipant.setAction(chooseParticipantAction);
@@ -340,36 +371,66 @@ public class Pondero implements Ponderable, WorkbookListener {
 
         JPanel pnlParticipantNavigation = new JPanel();
         pnlParticipantNavigation.setBackground(Color.LIGHT_GRAY);
-        pnlParticipantNavigation.setBorder(new CompoundBorder(null, new EmptyBorder(10, 20, 10, 20)));
+        pnlParticipantNavigation.setBorder(new EmptyBorder(10, 50, 10, 50));
         pnlParticipant.add(pnlParticipantNavigation, BorderLayout.SOUTH);
         pnlParticipantNavigation.setLayout(new BorderLayout(0, 0));
 
-        btnNext = new JButton("CONTINUARE");
+        btnNext = new JButton(L10n.getString("lbl.next"));
+        btnNext.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                setCurrentState(PonderoState.TEST_SELECTION);
+            }
+
+        });
         pnlParticipantNavigation.add(btnNext, BorderLayout.EAST);
 
         JPanel pnlTest = new JPanel();
-        pnlStage.add(pnlTest, "pnlTestSelection");
+        stage.add(pnlTest, "pnlTestSelection");
         pnlTest.setLayout(new BorderLayout(0, 0));
 
         JPanel pnlTestContent = new JPanel();
+        pnlTestContent.setBorder(new EmptyBorder(20, 20, 25, 20));
         pnlTest.add(pnlTestContent);
         GridBagLayout gbl_pnlTestContent = new GridBagLayout();
         gbl_pnlTestContent.columnWidths = new int[] { 0 };
         gbl_pnlTestContent.rowHeights = new int[] { 0 };
-        gbl_pnlTestContent.columnWeights = new double[] { Double.MIN_VALUE };
-        gbl_pnlTestContent.rowWeights = new double[] { Double.MIN_VALUE };
+        gbl_pnlTestContent.columnWeights = new double[] { 1.0 };
+        gbl_pnlTestContent.rowWeights = new double[] { 1.0 };
         pnlTestContent.setLayout(gbl_pnlTestContent);
 
+        JScrollPane pnlTestList = new JScrollPane();
+        pnlTestList.setViewportBorder(new TitledBorder(null, L10n.getString("lbl.choose-test") + ":", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        GridBagConstraints gbc_pnlTestList = new GridBagConstraints();
+        gbc_pnlTestList.fill = GridBagConstraints.BOTH;
+        gbc_pnlTestList.gridx = 0;
+        gbc_pnlTestList.gridy = 0;
+        pnlTestContent.add(pnlTestList, gbc_pnlTestList);
+
+        lstTests = new JList();
+        lstTests.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        pnlTestList.setViewportView(lstTests);
+
         JPanel pnlTestNavigation = new JPanel();
-        pnlTestNavigation.setBorder(new EmptyBorder(10, 10, 10, 10));
+        pnlTestNavigation.setBackground(Color.LIGHT_GRAY);
+        pnlTestNavigation.setBorder(new EmptyBorder(10, 50, 10, 50));
         pnlTest.add(pnlTestNavigation, BorderLayout.SOUTH);
         pnlTestNavigation.setLayout(new BorderLayout(0, 0));
 
-        JButton btnStart = new JButton("Start");
-        pnlTestNavigation.add(btnStart, BorderLayout.EAST);
+        btnBack = new JButton(L10n.getString("lbl.back"));
+        btnBack.addActionListener(new ActionListener() {
 
-        JButton btnPrevious = new JButton("Back");
-        pnlTestNavigation.add(btnPrevious, BorderLayout.WEST);
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setCurrentState(PonderoState.PARTICIPANT_SELECTION);
+            }
+
+        });
+        pnlTestNavigation.add(btnBack, BorderLayout.WEST);
+
+        btnStart = new JButton(L10n.getString("lbl.start"));
+        pnlTestNavigation.add(btnStart, BorderLayout.EAST);
 
         statusBar = new StatusBar();
         frame.getContentPane().add(statusBar, BorderLayout.SOUTH);
