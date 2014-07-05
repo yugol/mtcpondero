@@ -1,7 +1,6 @@
-package pondero.ui.participants;
+package pondero.model.participants;
 
 import pondero.L10n;
-import pondero.model.entities.Participant;
 
 public class ParticipantReport {
 
@@ -16,16 +15,16 @@ public class ParticipantReport {
 
             html.append("<table cellborder='0'>");
             html.append("<tr>");
-            html.append("<td align='right'><h2>").append(L10n.getString("lbl.participant.age")).append(": ").append("</h2></td>");
-            html.append("<td><h2 color='blue'><i>").append(participant.getAge()).append(" ").append(years(participant.getAge())).append("</i></h2></td>");
+            html.append("<td align='right'><h3 color='gray'>").append(L10n.getString("lbl.participant.age")).append(": ").append("</h3></td>");
+            html.append("<td><h3><i>").append(participant.getAge()).append(" ").append(years(participant.getAge())).append("</i></h3></td>");
             html.append("</tr>");
             html.append("<tr>");
-            html.append("<td align='right'><h2>").append(L10n.getString("lbl.participant.gender")).append(": ").append("</h2></td>");
-            html.append("<td><h2 color='blue'><i>").append(participant.getGender()).append("</i></h2></td>");
+            html.append("<td align='right'><h3 color='gray'>").append(L10n.getString("lbl.participant.gender")).append(": ").append("</h3></td>");
+            html.append("<td><h3><i>").append(participant.getGender()).append("</i></h3></td>");
             html.append("</tr>");
             html.append("<tr>");
-            html.append("<td align='right'><h2>").append(L10n.getString("lbl.participant.driving-age")).append(": ").append("</h2></td>");
-            html.append("<td><h2 color='blue'><i>").append(participant.getDrivingAge()).append(" ").append(years(participant.getDrivingAge())).append("</i></h2></td>");
+            html.append("<td align='right'><h3 color='gray'>").append(L10n.getString("lbl.participant.driving-age")).append(": ").append("</h3></td>");
+            html.append("<td><h3><i>").append(participant.getDrivingAge()).append(" ").append(years(participant.getDrivingAge())).append("</i></h3></td>");
             html.append("</tr>");
             html.append("</table>");
         }

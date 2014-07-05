@@ -46,7 +46,8 @@ import pondero.engine.test.launch.TestReport;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.model.WorkbookListener;
-import pondero.model.entities.Participant;
+import pondero.model.participants.Participant;
+import pondero.model.participants.ParticipantReport;
 import pondero.tests.TestLoader;
 import pondero.ui.actions.AddParticipantAction;
 import pondero.ui.actions.ChooseParticipantAction;
@@ -60,7 +61,6 @@ import pondero.ui.actions.SetPreferencesAction;
 import pondero.ui.actions.StartDocumentAction;
 import pondero.ui.actions.StartTaskAction;
 import pondero.ui.actions.UpdateAction;
-import pondero.ui.participants.ParticipantReport;
 
 public class Pondero implements Ponderable, WorkbookListener, TaskLauncher {
 
@@ -141,7 +141,7 @@ public class Pondero implements Ponderable, WorkbookListener, TaskLauncher {
      */
     public Pondero() {
         initialize();
-        frame.setMinimumSize(new Dimension(640, 480));
+        frame.setMinimumSize(new Dimension(700, 525));
         configureNavigationButton(btnNext);
         configureNavigationButton(btnBack);
         configureNavigationButton(btnStart);
@@ -405,7 +405,7 @@ public class Pondero implements Ponderable, WorkbookListener, TaskLauncher {
 
         JPanel pnlParticipantNavigation = new JPanel();
         pnlParticipantNavigation.setBackground(SystemColor.controlShadow);
-        pnlParticipantNavigation.setBorder(new EmptyBorder(10, 50, 10, 50));
+        pnlParticipantNavigation.setBorder(new EmptyBorder(12, 50, 10, 50));
         pnlParticipant.add(pnlParticipantNavigation, BorderLayout.SOUTH);
         pnlParticipantNavigation.setLayout(new BorderLayout(0, 0));
 
@@ -443,6 +443,7 @@ public class Pondero implements Ponderable, WorkbookListener, TaskLauncher {
         pnlTestContent.add(pnlTestList, gbc_pnlTestList);
 
         lstTests = new JList<Test>();
+        lstTests.setBackground(UiUtil.getListBackgroundColor());
         lstTests.setCellRenderer(new TestCellRenderer());
         lstTests.setModel(new DefaultListModel<Test>());
         lstTests.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -461,7 +462,7 @@ public class Pondero implements Ponderable, WorkbookListener, TaskLauncher {
 
         JPanel pnlTestNavigation = new JPanel();
         pnlTestNavigation.setBackground(SystemColor.controlShadow);
-        pnlTestNavigation.setBorder(new EmptyBorder(10, 50, 10, 50));
+        pnlTestNavigation.setBorder(new EmptyBorder(12, 50, 10, 50));
         pnlTest.add(pnlTestNavigation, BorderLayout.SOUTH);
         pnlTestNavigation.setLayout(new BorderLayout(0, 0));
 

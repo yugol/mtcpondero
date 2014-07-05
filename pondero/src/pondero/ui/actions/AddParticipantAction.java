@@ -3,7 +3,7 @@ package pondero.ui.actions;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.L10n;
-import pondero.model.entities.Participant;
+import pondero.model.participants.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.PonderoOld;
 

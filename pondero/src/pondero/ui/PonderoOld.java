@@ -34,7 +34,7 @@ import pondero.engine.test.launch.TaskLauncher;
 import pondero.engine.test.launch.TestReport;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
-import pondero.model.entities.Participant;
+import pondero.model.participants.Participant;
 import pondero.tests.TestLoader;
 import pondero.ui.actions.TaskAction;
 import pondero.ui.update.UpdateDialog;

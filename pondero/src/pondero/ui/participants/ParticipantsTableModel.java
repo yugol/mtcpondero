@@ -3,7 +3,7 @@ package pondero.ui.participants;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import pondero.L10n;
-import pondero.model.entities.Participant;
+import pondero.model.participants.Participant;
 
 @SuppressWarnings("serial")
 public class ParticipantsTableModel extends AbstractTableModel {

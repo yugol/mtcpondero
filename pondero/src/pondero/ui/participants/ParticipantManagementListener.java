@@ -1,6 +1,6 @@
 package pondero.ui.participants;
 
-import pondero.model.entities.Participant;
+import pondero.model.participants.Participant;
 
 public interface ParticipantManagementListener {
 

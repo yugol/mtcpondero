@@ -26,9 +26,9 @@ import pondero.engine.staples.DateUtil;
 import pondero.engine.staples.StringUtil;
 import pondero.model.Workbook;
 import pondero.model.WorkbookListener;
-import pondero.model.entities.Participant;
 import pondero.model.entities.base.Record;
 import pondero.model.participants.DefaultParticipants;
+import pondero.model.participants.Participant;
 import pondero.model.participants.SurnameNameIdComparator;
 
 // http://poi.apache.org/spreadsheet/quick-guide.html

@@ -1,4 +1,4 @@
-package pondero.model.entities;
+package pondero.model.participants;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
