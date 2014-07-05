@@ -31,7 +31,7 @@ import pondero.SysUtil;
 import pondero.UiUtil;
 import pondero.engine.test.Test;
 import pondero.engine.test.launch.TaskLauncher;
-import pondero.engine.test.launch.TestReport;
+import pondero.engine.test.launch.TaskMonitor;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.model.participants.Participant;
@@ -152,9 +152,9 @@ public class PonderoOld implements TaskLauncher {
     }
 
     @Override
-    public void onTaskEnded(final Test task, final TestReport report) {
+    public void onTaskEnded(final Test task, final TaskMonitor report) {
         switch (report.getEndCode()) {
-            case TestReport.END_KILL:
+            case TaskMonitor.END_KILL:
                 setStatusMessage(ERROR, L10n.getString("msg.test-interrupted", report.getEndCode())); //$NON-NLS-1$
                 break;
             default:
@@ -174,7 +174,6 @@ public class PonderoOld implements TaskLauncher {
     }
 
     public void registerTask(final Test task) {
-        task.setLauncher(this);
         final JMenuItem mntmTask = new JMenuItem();
         mntmTask.setAction(new TaskAction(null, task));
         mnTasks.add(mntmTask);

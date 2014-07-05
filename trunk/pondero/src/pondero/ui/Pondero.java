@@ -1,6 +1,5 @@
 package pondero.ui;
 
-import static pondero.Logger.debug;
 import static pondero.Logger.error;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -31,6 +30,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -41,8 +41,6 @@ import pondero.MsgUtil;
 import pondero.SysUtil;
 import pondero.UiUtil;
 import pondero.engine.test.Test;
-import pondero.engine.test.launch.TaskLauncher;
-import pondero.engine.test.launch.TestReport;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.model.WorkbookListener;
@@ -62,7 +60,7 @@ import pondero.ui.actions.StartDocumentAction;
 import pondero.ui.actions.StartTaskAction;
 import pondero.ui.actions.UpdateAction;
 
-public class Pondero implements Ponderable, WorkbookListener, TaskLauncher {
+public class Pondero implements Ponderable, WorkbookListener {
 
     private static List<Test> TESTS;
 
@@ -176,16 +174,6 @@ public class Pondero implements Ponderable, WorkbookListener, TaskLauncher {
     }
 
     @Override
-    public void onTaskEnded(final Test task, final TestReport report) {
-        debug("endes test: ", task.getCodeName());
-    }
-
-    @Override
-    public void onTaskStarted(final Test task) {
-        debug("started test: ", task.getCodeName());
-    }
-
-    @Override
     public void setCurrentParticipant(Participant participant) {
         currentParticipant = participant;
         updateCurrentState();
@@ -213,13 +201,13 @@ public class Pondero implements Ponderable, WorkbookListener, TaskLauncher {
                 btnSelectParticipant.setEnabled(currentWorkbook != null);
                 btnAddParticipant.setEnabled(currentWorkbook != null);
                 btnModifyParticipant.setEnabled(currentWorkbook != null && currentParticipant != null);
-                btnNext.setEnabled(currentWorkbook != null && currentParticipant != null);
+                btnNext.setEnabled(currentWorkbook != null && (currentParticipant != null || Globals.isParticipantOptional()));
             } else if (PonderoState.TEST_SELECTION == state) {
                 CardLayout cl = (CardLayout) stage.getLayout();
                 cl.show(stage, "pnlTestSelection");
                 lblPageTitle.setText(L10n.getString("lbl.CHOOSE-TEST"));
                 lblPageHint.setText(L10n.getString("msg.CHOOSE-TEST"));
-                btnStart.setEnabled(currentWorkbook != null && currentParticipant != null && currentTask != null);
+                btnStart.setEnabled(currentWorkbook != null && (currentParticipant != null || Globals.isParticipantOptional()) && currentTask != null);
             }
             statusBar.setMessage(StatusBar.DEFAULT,
                     L10n.getString("lbl.data-register")
@@ -252,7 +240,6 @@ public class Pondero implements Ponderable, WorkbookListener, TaskLauncher {
     private void addTests() {
         DefaultListModel<Test> model = (DefaultListModel<Test>) lstTests.getModel();
         for (Test test : TESTS) {
-            test.setLauncher(this);
             model.addElement(test);
         }
     }
@@ -266,6 +253,7 @@ public class Pondero implements Ponderable, WorkbookListener, TaskLauncher {
      */
     private void initialize() {
         frame = new JFrame(L10n.getString("lbl.pondero"));
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.setLocationByPlatform(true);
         frame.setSize(800, 600);
         frame.setIconImage(Toolkit.getDefaultToolkit().getImage(PonderoOld.class.getResource("/pondero/res/pondero-48x48.png")));
@@ -274,6 +262,7 @@ public class Pondero implements Ponderable, WorkbookListener, TaskLauncher {
             @Override
             public void windowClosing(final WindowEvent e) {
                 quitAction.actionPerformed(null);
+
             }
 
         });

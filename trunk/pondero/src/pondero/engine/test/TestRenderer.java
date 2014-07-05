@@ -92,20 +92,12 @@ public abstract class TestRenderer extends TestBase {
         testWindow.showScene();
     }
 
-    protected void hideTestWindow() {
-        testWindow.hideTestWindow();
-    }
-
     protected void popScreencolor() {
         screenColorStack.pop();
     }
 
     protected void pushScreencolor(final HasScreencolor screenColor) {
         screenColorStack.push(screenColor);
-    }
-
-    protected void showTestWindow() {
-        testWindow.showTestWindow();
     }
 
 }

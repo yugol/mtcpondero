@@ -125,6 +125,10 @@ public final class Globals {
         return uiScaleFactor;
     }
 
+    public static boolean isParticipantOptional() {
+        return isRunningFromIde() || false;
+    }
+
     public static boolean isRunningFromIde() {
         return runningFromIde;
     }

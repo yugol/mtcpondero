@@ -49,13 +49,13 @@ public class Trial extends Element implements HasFeedback, IsController {
         test.showScene();
         doStatus = new DoStatus();
         test.pushController(this);
-        test.openRecord(this);
+        test._recordOpen(this);
     }
 
     @Override
     public void _doEnd() {
         doStatus = null;
-        test.closeRecord();
+        test._recordClose();
         test.popController();
     }
 
@@ -76,7 +76,6 @@ public class Trial extends Element implements HasFeedback, IsController {
                         prevFrameIndex = frame.getIndex();
                         test.presentStimuli();
                     }
-
                     doStatus.stimulusPresented = true;
                     return;
                 }
@@ -88,13 +87,13 @@ public class Trial extends Element implements HasFeedback, IsController {
                         if (validresponse.contains(keyResponse)) {
                             HasFeedback.FeedbackStimulus fb = null;
                             if (correctresponse.contains(keyResponse)) {
-                                test.setCorrectResponse(input.getTime());
+                                test.recordCorrectResponse(input.getTime());
                                 fb = test.getCorrectmessage();
                             } else {
-                                test.setErrorResponse(input.getTime());
+                                test.recordErrorResponse(input.getTime());
                                 fb = test.getErrormessage();
                             }
-                            test.setResponse(keyResponse);
+                            test.recordResponse(keyResponse);
                             passed = true;
                             if (fb != null) {
                                 final IsStimulus eltStimulus = test.getStimulus(fb.getStimulusName());

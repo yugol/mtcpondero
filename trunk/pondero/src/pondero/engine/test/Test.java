@@ -1,29 +1,38 @@
 package pondero.engine.test;
 
 import static pondero.Logger.error;
+import java.awt.EventQueue;
 import java.util.List;
 import java.util.Stack;
 import java.util.UUID;
+import pondero.MsgUtil;
 import pondero.engine.elements.interfaces.HasFeedback.FeedbackStimulus;
 import pondero.engine.elements.interfaces.HasScreencolor;
 import pondero.engine.elements.interfaces.IsController;
 import pondero.engine.elements.other.Block;
 import pondero.engine.elements.trial.Trial;
-import pondero.engine.test.launch.TestReport;
+import pondero.engine.test.launch.DefaultLauncher;
+import pondero.engine.test.launch.TaskLauncher;
+import pondero.engine.test.launch.TaskMonitor;
 import pondero.engine.test.responses.Response;
 import pondero.model.entities.TrialRecord;
+import pondero.model.participants.Participant;
 
 public abstract class Test extends TestRenderer implements IsController {
 
+    private Participant               participant;
+    private TaskLauncher              launcher;
+    private TaskMonitor               monitor;
+    private TrialRecord               record;
+
     private final Stack<IsController> controllerStack = new Stack<IsController>();
     private Block                     currentBlock;
-    private String                    runUuid;
 
     @Override
     public void _doBegin() {
-        runUuid = UUID.randomUUID().toString().replace("-", "");
-        startTimer();
-        getLauncher().onTaskStarted(this);
+        monitor = new TaskMonitor(UUID.randomUUID().toString().replace("-", ""));
+        monitor.markStartTime();
+        launcher.onTaskStarted(this);
         if (getExperiment() != null) {
             getExperiment()._doBegin();
         } else if (blocks.size() > 0) {
@@ -35,13 +44,9 @@ public abstract class Test extends TestRenderer implements IsController {
 
     @Override
     public void _doEnd() {
-        stopTimer();
-        hideTestWindow();
-        final TestReport report = new TestReport();
-        report.setEndCode(TestReport.END_SUCCESS);
-        report.setStartTime(getStartTime());
-        report.setStopTime(getStopTime());
-        getLauncher().onTaskEnded(this, report);
+        monitor.markStopTime(TaskMonitor.END_SUCCESS);
+        getTestWindow().hideTestWindow();
+        launcher.onTaskEnded(this, monitor);
     }
 
     @Override
@@ -54,16 +59,27 @@ public abstract class Test extends TestRenderer implements IsController {
         }
     }
 
-    public void closeRecord() {
+    public void _recordClose() {
         if (record != null) {
-            if (workbook != null) {
-                try {
-                    workbook.add(record);
-                } catch (final Exception e) {
-                    error(e);
-                }
-            }
+            monitor.add(record);
             record = null;
+        }
+    }
+
+    public TrialRecord _recordCreate(String runId) {
+        return new TrialRecord(getTestId(), runId);
+    }
+
+    public void _recordOpen(final Trial trial) {
+        record = _recordCreate(monitor.getRunId());
+        if (participant != null) {
+            record.setParticipant(participant);
+        }
+        if (currentBlock != null) {
+            record.setBlockName(currentBlock.$name());
+        }
+        if (trial != null) {
+            record.setTrialName(trial.$name());
         }
     }
 
@@ -83,22 +99,8 @@ public abstract class Test extends TestRenderer implements IsController {
     }
 
     public void kill() {
-        final TestReport report = new TestReport();
-        report.setEndCode(TestReport.END_KILL);
-        getLauncher().onTaskEnded(this, report);
-    }
-
-    public void openRecord(final Trial trial) {
-        record = new TrialRecord(getTestId(), runUuid);
-        if (participant != null) {
-            record.setParticipant(participant);
-        }
-        if (currentBlock != null) {
-            record.setBlockName(currentBlock.$name());
-        }
-        if (trial != null) {
-            record.setTrialName(trial.$name());
-        }
+        monitor.markStopTime(TaskMonitor.END_KILL);
+        launcher.onTaskEnded(this, monitor);
     }
 
     public IsController peekController() {
@@ -130,36 +132,47 @@ public abstract class Test extends TestRenderer implements IsController {
         }
     }
 
-    @Override
-    public void run() {
-        try {
-            pushScreencolor(getDefaults());
-            showTestWindow();
-            _doBegin();
-            _doStep(null);
-        } catch (final Exception e) {
-            error(e);
-        }
-    }
-
-    public void setCorrectResponse(final long time) {
+    public void recordCorrectResponse(final long time) {
         if (record != null) {
             record.setResponseTime(time);
             record.setResponseCorrect(true);
         }
     }
 
-    public void setErrorResponse(final long time) {
+    public void recordErrorResponse(final long time) {
         if (record != null) {
             record.setResponseTime(time);
             record.setResponseCorrect(false);
         }
     }
 
-    public void setResponse(final String keyResponse) {
+    public void recordResponse(final String keyResponse) {
         if (record != null) {
             record.setResponse(keyResponse);
         }
+    }
+
+    @Override
+    public void run() {
+        try {
+            pushScreencolor(getDefaults());
+            getTestWindow().showTestWindow();
+            _doBegin();
+            _doStep(null);
+        } catch (final Exception e) {
+            error(e);
+            MsgUtil.showExceptionMessage(null, e);
+            launcher.onTaskEnded(this, monitor);
+        }
+    }
+
+    public void setParticipant(Participant participant) {
+        this.participant = participant;
+    }
+
+    public void start(TaskLauncher launcher) {
+        this.launcher = launcher == null ? new DefaultLauncher() : launcher;
+        EventQueue.invokeLater(this);
     }
 
 }

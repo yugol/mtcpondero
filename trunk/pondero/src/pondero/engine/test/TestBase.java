@@ -1,7 +1,5 @@
 package pondero.engine.test;
 
-import static pondero.Logger.trace;
-import java.awt.EventQueue;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,11 +15,6 @@ import pondero.engine.elements.other.Page;
 import pondero.engine.elements.stimulus.Picture;
 import pondero.engine.elements.stimulus.Text;
 import pondero.engine.elements.trial.Trial;
-import pondero.engine.test.launch.DefaultLauncher;
-import pondero.engine.test.launch.TaskLauncher;
-import pondero.model.Workbook;
-import pondero.model.entities.TrialRecord;
-import pondero.model.participants.Participant;
 import pondero.update.Artifact;
 
 public abstract class TestBase implements Runnable {
@@ -42,14 +35,6 @@ public abstract class TestBase implements Runnable {
     protected final Map<String, Picture> pictures = new LinkedHashMap<String, Picture>();
     protected final Map<String, Page>    pages    = new HashMap<String, Page>();
     protected final Map<String, Item>    items    = new HashMap<String, Item>();
-
-    private TaskLauncher                 launcher = new DefaultLauncher();
-    private long                         startTime;
-    private long                         stopTime;
-
-    protected Participant                participant;
-    protected TrialRecord                record;
-    protected Workbook                   workbook;
 
     public TestBase() {
         if (locked) { throw new LockedTaskException(); }
@@ -120,10 +105,6 @@ public abstract class TestBase implements Runnable {
         return experiment;
     }
 
-    public String getTestId() {
-        return getArtifactDescriptor().getId();
-    }
-
     public Instruct getInstructions() {
         return instruct;
     }
@@ -132,16 +113,8 @@ public abstract class TestBase implements Runnable {
         return items.get(name);
     }
 
-    public TaskLauncher getLauncher() {
-        return launcher;
-    }
-
     public Page getPage(final String name) {
         return pages.get(name);
-    }
-
-    public long getStartTime() {
-        return startTime;
     }
 
     public IsStimulus getStimulus(final String name) {
@@ -152,8 +125,8 @@ public abstract class TestBase implements Runnable {
         return stimulus;
     }
 
-    public long getStopTime() {
-        return stopTime;
+    public String getTestId() {
+        return getArtifactDescriptor().getId();
     }
 
     public Text getText(final String name) {
@@ -164,36 +137,6 @@ public abstract class TestBase implements Runnable {
         return trials.get(name);
     }
 
-    public void setLauncher(final TaskLauncher launcher) {
-        this.launcher = launcher;
-    }
-
-    public void setParticipant(final Participant currentParticipant) {
-        participant = currentParticipant;
-    }
-
-    public void setWorkbook(final Workbook currentWorkbook) {
-        workbook = currentWorkbook;
-    }
-
-    public void start() {
-        EventQueue.invokeLater(this);
-    }
-
-    protected long getTaskTime() {
-        return System.currentTimeMillis() - startTime;
-    }
-
     protected abstract void script();
-
-    protected void startTimer() {
-        startTime = System.currentTimeMillis();
-        trace("Test started at ", startTime);
-    }
-
-    protected void stopTimer() {
-        stopTime = System.currentTimeMillis();
-        trace("Test ended at ", stopTime);
-    }
 
 }

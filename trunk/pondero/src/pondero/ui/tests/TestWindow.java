@@ -1,5 +1,6 @@
 package pondero.ui.tests;
 
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
@@ -38,7 +39,7 @@ public class TestWindow extends JFrame {
         });
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 800, 600);
+        setPreferredSize(new Dimension(1024, 768));
         contentPane = new JPanel();
         contentPane.setBorder(null);
         contentPane.setFocusable(false);
@@ -65,7 +66,6 @@ public class TestWindow extends JFrame {
 
     public void hideTestWindow() {
         setVisible(false);
-        dispose();
     }
 
     public void invalidateScene() {

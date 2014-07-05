@@ -1,5 +1,6 @@
 package pondero.model.excel;
 
+import static pondero.Logger.debug;
 import static pondero.Logger.info;
 import java.io.File;
 import java.io.FileInputStream;
@@ -87,7 +88,7 @@ public class ExcelWorkbook implements Workbook {
 
     @Override
     public void add(final Record record) throws Exception {
-        info("add record ", record.getClass().getSimpleName(), " : ", record.toCsv());
+        debug("add record ", record.getClass().getSimpleName(), " : ", record.toCsv());
         setDirty(true);
         int recordRowIdx = 0;
         Row recordRow = null;
@@ -110,14 +111,24 @@ public class ExcelWorkbook implements Workbook {
         }
         final Row firstRow = sheet.getRow(0);
         for (int colIdx = 0; colIdx < firstRow.getLastCellNum(); ++colIdx) {
-            final String cellName = firstRow.getCell(colIdx).getStringCellValue();
-            final String getterName = Record.getGetterName(cellName);
-            final Method getter = record.getClass().getMethod(getterName, (Class<?>[]) null);
-            final String val = (String) getter.invoke(record, (Object[]) null);
-            final Cell cell = recordRow.createCell(colIdx);
-            cell.setCellValue(val);
-            cell.setCellStyle(recordRowIdx % 2 == 0 ? evenStyle : oddStyle);
-            sheet.autoSizeColumn(colIdx);
+            Cell cell = firstRow.getCell(colIdx);
+            if (cell != null) {
+                final String cellName = cell.getStringCellValue();
+                if (StringUtil.isNullOrBlank(cellName)) {
+                    continue;
+                }
+                final String getterName = Record.getGetterName(cellName);
+                try {
+                    final Method getter = record.getClass().getMethod(getterName, (Class<?>[]) null);
+                    final String val = (String) getter.invoke(record, (Object[]) null);
+                    cell = recordRow.createCell(colIdx);
+                    cell.setCellValue(val);
+                    cell.setCellStyle(recordRowIdx % 2 == 0 ? evenStyle : oddStyle);
+                    sheet.autoSizeColumn(colIdx);
+                } catch (NoSuchMethodException e) {
+                    debug("getter method ", getterName, " could not be found for ", record.getClass().getSimpleName());
+                }
+            }
         }
     }
 
@@ -148,24 +159,39 @@ public class ExcelWorkbook implements Workbook {
         final List<Record> records = new ArrayList<Record>();
         final Sheet sheet = getSheet(prototype.newInstance());
         final Row firstRow = sheet.getRow(0);
-        outer: for (int rowIdx = 1; rowIdx <= sheet.getLastRowNum(); ++rowIdx) {
+        for (int rowIdx = 1; rowIdx <= sheet.getLastRowNum(); ++rowIdx) {
             final Row row = sheet.getRow(rowIdx);
             final Record record = prototype.newInstance();
+            boolean valid = false;
             for (int colIdx = 0; colIdx < firstRow.getLastCellNum(); ++colIdx) {
-                final String cellName = firstRow.getCell(colIdx).getStringCellValue();
+                Cell cell = firstRow.getCell(colIdx);
+                if (cell == null) {
+                    continue;
+                }
+                final String cellName = cell.getStringCellValue();
                 if (StringUtil.isNullOrBlank(cellName)) {
-                    break;
+                    continue;
+                }
+                cell = row.getCell(colIdx);
+                if (cell == null) {
+                    continue;
+                }
+                final String cellValue = getValueAsString(cell);
+                if (StringUtil.isNullOrBlank(cellValue)) {
+                    continue;
                 }
                 final String setterName = Record.getSetterName(cellName);
-                final Method setter = prototype.getMethod(setterName, String.class);
-                final Cell cell = row.getCell(colIdx);
-                final String cellValue = cell.getStringCellValue();
-                if (colIdx == 0 && StringUtil.isNullOrBlank(cellValue)) {
-                    break outer;
+                try {
+                    final Method setter = prototype.getMethod(setterName, String.class);
+                    setter.invoke(record, cellValue);
+                    valid = true;
+                } catch (NoSuchMethodException e) {
+                    debug("setter method ", setterName, " could not be found for ", prototype.getSimpleName());
                 }
-                setter.invoke(record, cellValue);
             }
-            records.add(record);
+            if (valid) {
+                records.add(record);
+            }
         }
         return records;
     }
@@ -185,9 +211,13 @@ public class ExcelWorkbook implements Workbook {
         int idColIdx = getIdColumnIndex(sheet);
         for (int rowIdx = 1; rowIdx <= sheet.getLastRowNum(); ++rowIdx) {
             final Row row = sheet.getRow(rowIdx);
-            int id = Integer.parseInt(row.getCell(idColIdx).getStringCellValue());
-            if (id > maxIdx) {
-                maxIdx = id;
+            try {
+                int id = Integer.parseInt(row.getCell(idColIdx).getStringCellValue());
+                if (id > maxIdx) {
+                    maxIdx = id;
+                }
+            } catch (Exception e) {
+                // ignore: if cell content is not a number then no number will duplicate it
             }
         }
         return String.valueOf(maxIdx + 1);
@@ -257,9 +287,12 @@ public class ExcelWorkbook implements Workbook {
         final Row firstRow = sheet.getRow(0);
         int inColIdx = 0;
         for (; inColIdx < firstRow.getLastCellNum(); ++inColIdx) {
-            final String cellName = firstRow.getCell(inColIdx).getStringCellValue();
-            if ("ID".equals(cellName)) {
-                break;
+            Cell cell = firstRow.getCell(inColIdx);
+            if (cell != null) {
+                final String cellName = cell.getStringCellValue();
+                if ("ID".equals(cellName)) {
+                    break;
+                }
             }
         }
         return inColIdx;
@@ -281,6 +314,21 @@ public class ExcelWorkbook implements Workbook {
             }
         }
         return sheet;
+    }
+
+    private String getValueAsString(Cell cell) {
+        switch (cell.getCellType()) {
+            case Cell.CELL_TYPE_NUMERIC:
+                return String.valueOf(cell.getNumericCellValue());
+            case Cell.CELL_TYPE_BOOLEAN:
+                return String.valueOf(cell.getBooleanCellValue());
+            case Cell.CELL_TYPE_FORMULA:
+                return cell.getCellFormula();
+            case Cell.CELL_TYPE_ERROR:
+                return "ERR(" + cell.getErrorCellValue() + ")";
+            default:
+                return cell.getStringCellValue();
+        }
     }
 
     private File normalizeWorkbookFile(File wbFile) throws IOException {
