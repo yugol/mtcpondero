@@ -3,11 +3,13 @@ package pondero;
 import static pondero.Logger.error;
 import static pondero.Logger.trace;
 import static pondero.Logger.warning;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.awt.SystemColor;
 import java.awt.Window;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -58,6 +60,32 @@ public class UiUtil {
         Collections.sort(names);
         trace(names);
         return names;
+    }
+
+    public static Color getListBackgroundColor() {
+        Color color = SystemColor.text;
+        return color;
+    }
+
+    public static Color getListForegroundColor() {
+        Color color = SystemColor.textText;
+        return color;
+    }
+
+    public static Color getListSelectedBackgroundColor() {
+        Color color = UIManager.getColor("List[Selected].textBackground");
+        if (color == null) {
+            color = SystemColor.textHighlight;
+        }
+        return color;
+    }
+
+    public static Color getListSelectedForegroundColor() {
+        Color color = UIManager.getColor("List[Selected].textForeground");
+        if (color == null) {
+            color = SystemColor.textHighlightText;
+        }
+        return color;
     }
 
     public static void scaleUi(final double factor) {

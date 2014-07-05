@@ -1,5 +1,6 @@
 package pondero.ui;
 
+import static pondero.Logger.debug;
 import static pondero.Logger.error;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -15,8 +16,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
@@ -30,11 +33,16 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import pondero.Globals;
 import pondero.L10n;
+import pondero.MsgUtil;
 import pondero.SysUtil;
 import pondero.UiUtil;
 import pondero.engine.test.Test;
+import pondero.engine.test.launch.TaskLauncher;
+import pondero.engine.test.launch.TestReport;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.model.WorkbookListener;
@@ -54,7 +62,9 @@ import pondero.ui.actions.StartTaskAction;
 import pondero.ui.actions.UpdateAction;
 import pondero.ui.participants.ParticipantReport;
 
-public class Pondero implements Ponderable, WorkbookListener {
+public class Pondero implements Ponderable, WorkbookListener, TaskLauncher {
+
+    private static List<Test> TESTS;
 
     /**
      * Launch the application.
@@ -64,7 +74,7 @@ public class Pondero implements Ponderable, WorkbookListener {
     public static void main(String[] args) throws Exception {
         Globals.loadPreferences(args.length >= 1 ? args[0] : null);
         SysUtil.configure();
-        TestLoader.loadTests();
+        TESTS = TestLoader.loadTests();
         UiUtil.getAvailableLafs();
         UiUtil.setLaf();
         UiUtil.scaleUi(Globals.getUiScaleFactor());
@@ -76,15 +86,13 @@ public class Pondero implements Ponderable, WorkbookListener {
                 try {
                     Pondero window = new Pondero();
                     window.frame.setVisible(true);
-                    try {
-                        window.setCurrentWorkbook(WorkbookFactory.openWorkbook(Globals.getLastWorkbookFile()));
-                    } catch (final Exception e) {
-                        error(e);
-                    }
+                    window.setCurrentWorkbook(WorkbookFactory.openWorkbook(Globals.getLastWorkbookFile()));
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    error(e);
+                    MsgUtil.showExceptionMessage(null, e);
                 }
             }
+
         });
     }
 
@@ -110,23 +118,23 @@ public class Pondero implements Ponderable, WorkbookListener {
 
     // Widgets
     private JFrame       frame;
-    private JPanel       stage;
-    private JButton      btnSelectParticipant;
     private JButton      btnAddParticipant;
+    private JButton      btnBack;
     private JButton      btnModifyParticipant;
     private JButton      btnNext;
+    private JButton      btnSelectParticipant;
+    private JButton      btnStart;
     private JEditorPane  epParticipantDescription;
-    private JMenuItem    mntmPreferences;
-    private StatusBar    statusBar;
+    private JLabel       lblPageHint;
+    private JLabel       lblPageTitle;
+    private JList<Test>  lstTests;
     private JMenu        mnAnalysis;
-    private JMenuItem    mntmView;
+    private JMenuItem    mntmPreferences;
     private JMenuItem    mntmSave;
     private JMenuItem    mntmSaveas;
-    private JButton      btnBack;
-    private JButton      btnStart;
-    private JList        lstTests;
-    private JLabel       lblPageTitle;
-    private JLabel       lblPageHint;
+    private JMenuItem    mntmView;
+    private JPanel       stage;
+    private StatusBar    statusBar;
 
     /**
      * Create the application.
@@ -138,6 +146,7 @@ public class Pondero implements Ponderable, WorkbookListener {
         configureNavigationButton(btnBack);
         configureNavigationButton(btnStart);
         lblPageTitle.setFont(lblPageTitle.getFont().deriveFont(Font.BOLD, 2 * lblPageTitle.getFont().getSize()));
+        addTests();
         setCurrentState(PonderoState.PARTICIPANT_SELECTION);
     }
 
@@ -164,6 +173,16 @@ public class Pondero implements Ponderable, WorkbookListener {
     @Override
     public void onDirtyFlagChanged(boolean dirty) {
         updateCurrentState();
+    }
+
+    @Override
+    public void onTaskEnded(final Test task, final TestReport report) {
+        debug("endes test: ", task.getCodeName());
+    }
+
+    @Override
+    public void onTaskStarted(final Test task) {
+        debug("started test: ", task.getCodeName());
     }
 
     @Override
@@ -228,6 +247,14 @@ public class Pondero implements Ponderable, WorkbookListener {
     @Override
     public void updateCurrentState() {
         setCurrentState(currentState);
+    }
+
+    private void addTests() {
+        DefaultListModel<Test> model = (DefaultListModel<Test>) lstTests.getModel();
+        for (Test test : TESTS) {
+            test.setLauncher(this);
+            model.addElement(test);
+        }
     }
 
     private void configureNavigationButton(JButton btn) {
@@ -324,7 +351,7 @@ public class Pondero implements Ponderable, WorkbookListener {
         pnlParticipant.setLayout(new BorderLayout(0, 0));
 
         JPanel pnlParticipantContent = new JPanel();
-        pnlParticipantContent.setBorder(new EmptyBorder(20, 20, 25, 20));
+        pnlParticipantContent.setBorder(new EmptyBorder(20, 20, 26, 20));
         pnlParticipant.add(pnlParticipantContent, BorderLayout.CENTER);
         GridBagLayout gbl_pnlParticipantContent = new GridBagLayout();
         gbl_pnlParticipantContent.columnWidths = new int[] { 0, 0 };
@@ -398,7 +425,7 @@ public class Pondero implements Ponderable, WorkbookListener {
         pnlTest.setLayout(new BorderLayout(0, 0));
 
         JPanel pnlTestContent = new JPanel();
-        pnlTestContent.setBorder(new EmptyBorder(20, 20, 25, 20));
+        pnlTestContent.setBorder(new EmptyBorder(20, 20, 26, 20));
         pnlTest.add(pnlTestContent);
         GridBagLayout gbl_pnlTestContent = new GridBagLayout();
         gbl_pnlTestContent.columnWidths = new int[] { 0 };
@@ -415,8 +442,21 @@ public class Pondero implements Ponderable, WorkbookListener {
         gbc_pnlTestList.gridy = 0;
         pnlTestContent.add(pnlTestList, gbc_pnlTestList);
 
-        lstTests = new JList();
+        lstTests = new JList<Test>();
+        lstTests.setCellRenderer(new TestCellRenderer());
+        lstTests.setModel(new DefaultListModel<Test>());
         lstTests.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        lstTests.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent arg0) {
+                Test newTask = lstTests.getSelectedValue();
+                if (newTask != currentTask) {
+                    setCurrentTask(newTask);
+                }
+            }
+
+        });
         pnlTestList.setViewportView(lstTests);
 
         JPanel pnlTestNavigation = new JPanel();
@@ -437,6 +477,7 @@ public class Pondero implements Ponderable, WorkbookListener {
         pnlTestNavigation.add(btnBack, BorderLayout.WEST);
 
         btnStart = new JButton(L10n.getString("lbl.start"));
+        btnStart.setAction(startTaskAction);
         pnlTestNavigation.add(btnStart, BorderLayout.EAST);
 
         statusBar = new StatusBar();
