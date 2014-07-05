@@ -1,7 +1,10 @@
+
 - experience: wizard based interface
 - add location key in registry
 - l10n for all strings
 - l10n for valMileage = new JSpinner();
+- TestReport -> TestMonitor and collects all TrialRecord(s)
+- store results message dialog at the end
 
 - preferences dialog
 - about dialog
