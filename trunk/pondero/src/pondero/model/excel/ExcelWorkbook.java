@@ -123,7 +123,9 @@ public class ExcelWorkbook implements Workbook {
 
     @Override
     public void addWorkbookListener(WorkbookListener listener) {
-        workbookListeners.add(listener);
+        if (!workbookListeners.contains(listener)) {
+            workbookListeners.add(listener);
+        }
     }
 
     @Override

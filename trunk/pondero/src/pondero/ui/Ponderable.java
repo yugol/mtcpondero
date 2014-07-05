@@ -21,7 +21,7 @@ public interface Ponderable {
 
     public abstract void setCurrentTask(Test task);
 
-    public abstract void setWorkbook(Workbook workbook);
+    public abstract void setCurrentWorkbook(Workbook workbook);
 
     public abstract void updateCurrentState();
 

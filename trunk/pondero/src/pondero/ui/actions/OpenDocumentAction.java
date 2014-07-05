@@ -44,7 +44,7 @@ public class OpenDocumentAction extends PonderoAction {
             dialog.setCurrentDirectory(Globals.getFolderResults());
             dialog.setFileFilter(new ExcelWorkbookFilter());
             if (JFileChooser.APPROVE_OPTION == dialog.showOpenDialog(getApp().getFrame())) {
-                getApp().setWorkbook(WorkbookFactory.openWorkbook(dialog.getSelectedFile()));
+                getApp().setCurrentWorkbook(WorkbookFactory.openWorkbook(dialog.getSelectedFile()));
 
             }
         } catch (final Exception e) {

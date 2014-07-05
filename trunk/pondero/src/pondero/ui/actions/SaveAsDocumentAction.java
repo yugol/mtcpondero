@@ -27,7 +27,7 @@ public class SaveAsDocumentAction extends PonderoAction {
             try {
                 Workbook wb = getApp().getCurrentWorkbook();
                 wb.saveAs(dialog.getSelectedFile());
-                getApp().setWorkbook(wb);
+                getApp().setCurrentWorkbook(wb);
             } catch (final Exception e) {
                 error(e);
                 MessageUtil.showExceptionMessage(getFrame(), e);
