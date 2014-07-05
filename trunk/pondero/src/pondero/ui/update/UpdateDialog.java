@@ -54,16 +54,16 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         }
     }
 
-    private final UpdateEngine       engine       = new UpdateEngine();
-    private final UpdateCellRenderer cellRenderer = new UpdateCellRenderer();
-    private boolean                  downloading  = false;
+    private final UpdateEngine         engine       = new UpdateEngine();
+    private final ArtifactCellRenderer cellRenderer = new ArtifactCellRenderer();
+    private boolean                    downloading  = false;
 
-    private final JPanel             contentPanel = new JPanel();
-    private JLabel                   lblTopStatus;
-    private JProgressBar             progressBar;
-    private JList<Artifact>          listUpdates;
-    private JButton                  btnStart;
-    private JScrollPane              scrollPane;
+    private final JPanel               contentPanel = new JPanel();
+    private JLabel                     lblTopStatus;
+    private JProgressBar               progressBar;
+    private JList<Artifact>            listUpdates;
+    private JButton                    btnStart;
+    private JScrollPane                scrollPane;
 
     public UpdateDialog() {
         this(null);
@@ -71,6 +71,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
 
     public UpdateDialog(Frame owner) {
         super(owner);
+        setType(Type.UTILITY);
         engine.addListener(this);
 
         setTitle(L10n.getString("lbl.pondero-update"));
@@ -308,4 +309,5 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         }
         btnStart.setEnabled(cellRenderer.getSelectedCount() > 0);
     }
+
 }

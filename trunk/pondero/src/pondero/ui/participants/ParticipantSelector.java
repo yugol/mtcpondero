@@ -26,12 +26,13 @@ import pondero.model.entities.Participant;
 @SuppressWarnings("serial")
 public class ParticipantSelector extends JComponent {
 
-    private static final int                         ID_COL_WIDTH       = 60;
+    private static final int                         ID_COL_WIDTH        = 70;
+    private final ParticipantCellRenderer            participantRenderer = new ParticipantCellRenderer();
 
     private List<Participant>                        participants;
     private final JTextField                         textPattern;
     private final JTable                             tblParticipants;
-    private final List<ParticipantSelectionListener> selectionListeners = new ArrayList<ParticipantSelectionListener>();
+    private final List<ParticipantSelectionListener> selectionListeners  = new ArrayList<ParticipantSelectionListener>();
     private Participant                              selectedParticipant;
 
     public ParticipantSelector(final Workbook wb) throws Exception {
@@ -97,6 +98,7 @@ public class ParticipantSelector extends JComponent {
         add(scrollPane, gbc_scrollPane);
 
         tblParticipants = new JTable();
+        tblParticipants.setRowHeight(22);
         tblParticipants.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -179,9 +181,13 @@ public class ParticipantSelector extends JComponent {
         final ParticipantsTableModel dataModel = new ParticipantsTableModel(data);
         tblParticipants.setModel(dataModel);
         final TableColumnModel columnModel = tblParticipants.getColumnModel();
-        final int idColSize = ID_COL_WIDTH;
-        columnModel.getColumn(0).setMinWidth(idColSize);
-        columnModel.getColumn(0).setMaxWidth(idColSize);
+        columnModel.getColumn(0).setCellRenderer(participantRenderer);
+        columnModel.getColumn(0).setMinWidth(ID_COL_WIDTH);
+        columnModel.getColumn(0).setMaxWidth(ID_COL_WIDTH);
+        columnModel.getColumn(1).setCellRenderer(participantRenderer);
+        columnModel.getColumn(1).setMinWidth(ID_COL_WIDTH);
+        columnModel.getColumn(2).setCellRenderer(participantRenderer);
+        columnModel.getColumn(2).setMinWidth(ID_COL_WIDTH);
         setSelectedIndex(-1);
     }
 
