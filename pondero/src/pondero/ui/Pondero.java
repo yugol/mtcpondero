@@ -3,13 +3,13 @@ package pondero.ui;
 import static pondero.Logger.error;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,11 +32,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import pondero.Globals;
 import pondero.L10n;
+import pondero.SysUtil;
+import pondero.UiUtil;
 import pondero.engine.test.Test;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.model.WorkbookListener;
 import pondero.model.entities.Participant;
+import pondero.tests.TestLoader;
 import pondero.ui.actions.AddParticipantAction;
 import pondero.ui.actions.ChooseParticipantAction;
 import pondero.ui.actions.HomePageAction;
@@ -59,8 +62,12 @@ public class Pondero implements Ponderable, WorkbookListener {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        String home = args.length >= 1 ? args[0] : null;
-        Globals.loadPreferences(home);
+        Globals.loadPreferences(args.length >= 1 ? args[0] : null);
+        SysUtil.configure();
+        TestLoader.loadTests();
+        UiUtil.getAvailableLafs();
+        UiUtil.setLaf();
+        UiUtil.scaleUi(Globals.getUiScaleFactor());
 
         EventQueue.invokeLater(new Runnable() {
 
@@ -370,7 +377,7 @@ public class Pondero implements Ponderable, WorkbookListener {
         pnlParticipantContent.add(btnModifyParticipant, gbc_btnModifyParticipant);
 
         JPanel pnlParticipantNavigation = new JPanel();
-        pnlParticipantNavigation.setBackground(Color.LIGHT_GRAY);
+        pnlParticipantNavigation.setBackground(SystemColor.controlShadow);
         pnlParticipantNavigation.setBorder(new EmptyBorder(10, 50, 10, 50));
         pnlParticipant.add(pnlParticipantNavigation, BorderLayout.SOUTH);
         pnlParticipantNavigation.setLayout(new BorderLayout(0, 0));
@@ -413,7 +420,7 @@ public class Pondero implements Ponderable, WorkbookListener {
         pnlTestList.setViewportView(lstTests);
 
         JPanel pnlTestNavigation = new JPanel();
-        pnlTestNavigation.setBackground(Color.LIGHT_GRAY);
+        pnlTestNavigation.setBackground(SystemColor.controlShadow);
         pnlTestNavigation.setBorder(new EmptyBorder(10, 50, 10, 50));
         pnlTest.add(pnlTestNavigation, BorderLayout.SOUTH);
         pnlTestNavigation.setLayout(new BorderLayout(0, 0));

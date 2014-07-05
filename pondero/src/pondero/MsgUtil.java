@@ -3,7 +3,7 @@ package pondero;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 
-public class MessageUtil {
+public class MsgUtil {
 
     public static void showExceptionMessage(Component parent, Throwable t) {
         JOptionPane.showInternalMessageDialog(parent, t.getMessage(), L10n.getString("lbl.pondero"), JOptionPane.ERROR_MESSAGE);

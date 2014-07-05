@@ -4,7 +4,6 @@ import static pondero.Logger.error;
 import java.util.List;
 import java.util.Stack;
 import java.util.UUID;
-import pondero.Globals;
 import pondero.engine.elements.interfaces.HasFeedback.FeedbackStimulus;
 import pondero.engine.elements.interfaces.HasScreencolor;
 import pondero.engine.elements.interfaces.IsController;
@@ -42,13 +41,6 @@ public abstract class Test extends TestRenderer implements IsController {
         report.setEndCode(TestReport.END_SUCCESS);
         report.setStartTime(getStartTime());
         report.setStopTime(getStopTime());
-        if (workbook != null && Globals.isAutoSaveExperimentData()) {
-            try {
-                workbook.save();
-            } catch (final Exception e) {
-                error(e);
-            }
-        }
         getLauncher().onTaskEnded(this, report);
     }
 

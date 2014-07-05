@@ -3,7 +3,7 @@ package pondero.ui.actions;
 import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import pondero.L10n;
-import pondero.MessageUtil;
+import pondero.MsgUtil;
 import pondero.ui.Ponderable;
 
 @SuppressWarnings("serial")
@@ -20,7 +20,7 @@ public class StartDocumentAction extends PonderoAction {
             getApp().getCurrentWorkbook().view();
         } catch (Exception e) {
             error(e);
-            MessageUtil.showExceptionMessage(getFrame(), e);
+            MsgUtil.showExceptionMessage(getFrame(), e);
         }
     }
 

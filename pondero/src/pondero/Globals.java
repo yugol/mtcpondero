@@ -10,11 +10,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 import pondero.engine.staples.StringUtil;
+import pondero.engine.test.CodeNameComparator;
+import pondero.engine.test.Test;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.update.Artifact;
@@ -38,13 +43,13 @@ public final class Globals {
     private static final String        DEFAULT_WORKBOOK_NAME   = "default.xlsx";
 
     private static File                homeFolder;
-    private static boolean             executedFromIde;
+    private static boolean             runningFromIde;
     private static File                propertiesFile;
     private static final Set<Artifact> artifacts               = new HashSet<Artifact>();
 
     private static File                lastWorkbookFile;
     private static String              localeString            = "ro";
-    private static String              uiLaf                   = "metal";
+    private static String              uiLaf                   = "nimbus";
     private static boolean             updateOnStartup         = false;
     private static double              uiScaleFactor           = 1.2;
 
@@ -105,16 +110,23 @@ public final class Globals {
         return new Locale(localeString);
     }
 
+    public static List<Test> getRegisteredTests() {
+        List<Test> tests = new ArrayList<Test>();
+        for (Object artifact : artifacts) {
+            if (artifact instanceof Test) {
+                tests.add((Test) artifact);
+            }
+        }
+        Collections.sort(tests, new CodeNameComparator());
+        return tests;
+    }
+
     public static double getUiScaleFactor() {
         return uiScaleFactor;
     }
 
-    public static boolean isAutoSaveExperimentData() {
-        return true;
-    }
-
-    public static boolean isIde() {
-        return executedFromIde;
+    public static boolean isRunningFromIde() {
+        return runningFromIde;
     }
 
     public static boolean isUpdateOnStartup() {
@@ -123,10 +135,10 @@ public final class Globals {
 
     public static void loadPreferences(String homeFolderName) throws Exception {
         if (StringUtil.isNullOrBlank(homeFolderName)) {
-            executedFromIde = true;
+            runningFromIde = true;
             homeFolderName = "../../Pondero";
         } else {
-            executedFromIde = false;
+            runningFromIde = false;
         }
         homeFolder = new File(homeFolderName);
         if (!homeFolder.exists()) {

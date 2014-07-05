@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import pondero.Globals;
 import pondero.L10n;
-import pondero.MessageUtil;
+import pondero.MsgUtil;
 import pondero.model.Workbook;
 import pondero.model.excel.ExcelWorkbookFilter;
 import pondero.ui.Ponderable;
@@ -30,7 +30,7 @@ public class SaveAsDocumentAction extends PonderoAction {
                 getApp().setCurrentWorkbook(wb);
             } catch (final Exception e) {
                 error(e);
-                MessageUtil.showExceptionMessage(getFrame(), e);
+                MsgUtil.showExceptionMessage(getFrame(), e);
             }
         }
     }

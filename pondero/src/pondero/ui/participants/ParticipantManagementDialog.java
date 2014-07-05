@@ -36,7 +36,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import pondero.Globals;
 import pondero.L10n;
-import pondero.MessageUtil;
+import pondero.MsgUtil;
 import pondero.engine.staples.StringUtil;
 import pondero.model.entities.Participant;
 import pondero.model.entities.domains.Education;
@@ -519,11 +519,11 @@ public class ParticipantManagementDialog extends JDialog {
 
     private boolean validateParticipant() {
         if (StringUtil.isNullOrBlank(valSurname.getText())) {
-            MessageUtil.showValidationMessage(null, L10n.getString("msg.surname-cannot-be-empty"));
+            MsgUtil.showValidationMessage(null, L10n.getString("msg.surname-cannot-be-empty"));
             return false;
         }
         if (StringUtil.isNullOrBlank(valName.getText())) {
-            MessageUtil.showValidationMessage(null, L10n.getString("msg.name-cannot-be-empty"));
+            MsgUtil.showValidationMessage(null, L10n.getString("msg.name-cannot-be-empty"));
             return false;
         }
         return true;
