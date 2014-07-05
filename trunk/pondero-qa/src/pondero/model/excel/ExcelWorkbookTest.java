@@ -10,8 +10,8 @@ import org.junit.Test;
 import pondero.Globals;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
-import pondero.model.entities.Participant;
 import pondero.model.participants.DefaultParticipants;
+import pondero.model.participants.Participant;
 
 public class ExcelWorkbookTest {
 
