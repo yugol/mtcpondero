@@ -1,5 +1,5 @@
-- store results message dialog at the end
 - primul caracter din textul licentei in programul de instalare este []
+- proper error message for trying to save over an opened xlsx file
 
 - core: 3 option question dialog when closing the application
 - l10n for all strings
