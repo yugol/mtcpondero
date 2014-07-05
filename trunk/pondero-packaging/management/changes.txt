@@ -1,5 +1,6 @@
 2014-07-27
 ==========
+- store results message dialog at the end
 - fault tolerant handling of *.xlsx documents
 - workbook independent data collection by using TaskMonitor class
 - wizard based interface
