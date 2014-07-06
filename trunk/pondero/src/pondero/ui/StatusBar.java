@@ -29,7 +29,7 @@ public class StatusBar extends JPanel {
     public StatusBar() {
         setBackground(SystemColor.control);
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(10, (int) (20 * Globals.getUiFontScaleFactor())));
+        setPreferredSize(new Dimension(10, (int) (18 * Globals.getUiFontScaleFactor())));
 
         lblMessage = new JLabel("");
         add(lblMessage, BorderLayout.CENTER);
@@ -59,20 +59,6 @@ public class StatusBar extends JPanel {
                 lblMessage.setForeground(DEFAULT_COLOR);
                 break;
         }
-    }
-
-    @Override
-    protected void paintComponent(final Graphics g) {
-        super.paintComponent(g);
-        int y = 0;
-        g.setColor(SystemColor.controlDkShadow);
-        g.drawLine(0, y, getWidth(), y);
-        y++;
-        g.setColor(SystemColor.controlShadow);
-        g.drawLine(0, y, getWidth(), y);
-        y++;
-        g.setColor(SystemColor.controlHighlight);
-        g.drawLine(0, y, getWidth(), y);
     }
 
 }
