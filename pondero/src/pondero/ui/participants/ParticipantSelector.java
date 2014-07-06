@@ -100,7 +100,7 @@ public class ParticipantSelector extends JComponent {
         add(scrollPane, gbc_scrollPane);
 
         tblParticipants = new JTable();
-        tblParticipants.setRowHeight((int) (20 * Globals.getUiFontScaleFactor()));
+        tblParticipants.setRowHeight((int) (18 * Globals.getUiFontScaleFactor()));
         tblParticipants.addMouseListener(new MouseAdapter() {
 
             @Override
