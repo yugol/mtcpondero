@@ -1,17 +1,21 @@
 package pondero.ui;
 
+import static pondero.Logger.error;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Locale;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
@@ -19,6 +23,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import pondero.Globals;
 import pondero.L10n;
+import pondero.MsgUtil;
 import pondero.UiUtil;
 
 @SuppressWarnings("serial")
@@ -161,10 +166,32 @@ public class PreferencesDialog extends JDialog {
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
                 final JButton okButton = new JButton(L10n.getString("lbl.save"));
+                okButton.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(final ActionEvent e) {
+                        if (savePreferences()) {
+                            JOptionPane.showMessageDialog(PreferencesDialog.this,
+                                    L10n.getString("msg.preferences-restart"),
+                                    L10n.getString("lbl.pondero"),
+                                    JOptionPane.INFORMATION_MESSAGE);
+                            PreferencesDialog.this.dispose();
+                        }
+                    }
+
+                });
                 buttonPane.add(okButton);
             }
             {
                 final JButton cancelButton = new JButton(L10n.getString("lbl.cancel"));
+                cancelButton.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(final ActionEvent arg0) {
+                        PreferencesDialog.this.dispose();
+                    }
+
+                });
                 buttonPane.add(cancelButton);
             }
         }
@@ -191,6 +218,20 @@ public class PreferencesDialog extends JDialog {
         scaleModel.addElement(new Double(1.2));
         cbScale.setModel(scaleModel);
         cbScale.setSelectedItem(Globals.getUiFontScaleFactor());
+    }
+
+    private boolean savePreferences() {
+        try {
+            Globals.setLocale((Locale) cbLanguage.getSelectedItem());
+            Globals.setUiThemeString((String) cbTheme.getSelectedItem());
+            Globals.setUiFontScaleFactor((Double) cbScale.getSelectedItem());
+            Globals.savePreferences();
+            return true;
+        } catch (final Exception e) {
+            error(e);
+            MsgUtil.showExceptionMessage(this, e);
+            return false;
+        }
     }
 
 }

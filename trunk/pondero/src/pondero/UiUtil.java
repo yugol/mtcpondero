@@ -27,11 +27,11 @@ import javax.swing.plaf.FontUIResource;
 public class UiUtil {
 
     static {
-        String seaglassLafClass = "com.seaglasslookandfeel.SeaGlassLookAndFeel";
+        final String seaglassLafClass = "com.seaglasslookandfeel.SeaGlassLookAndFeel";
         try {
             // Class.forName(seaglassLafClass);
             // UIManager.installLookAndFeel("Seaglass", seaglassLafClass);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             warning("could not install: ", seaglassLafClass);
             error(e);
         }
@@ -53,7 +53,7 @@ public class UiUtil {
     }
 
     public static List<String> getAvailableLafs() {
-        List<String> names = new ArrayList<String>();
+        final List<String> names = new ArrayList<String>();
         for (final LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
             names.add(info.getName());
         }
@@ -67,7 +67,7 @@ public class UiUtil {
     }
 
     public static Color getListBackgroundEvenColor() {
-        Color color = SystemColor.text;
+        final Color color = SystemColor.text;
         return color;
     }
 
@@ -80,7 +80,7 @@ public class UiUtil {
     }
 
     public static Color getListForegroundColor() {
-        Color color = SystemColor.textText;
+        final Color color = SystemColor.textText;
         return color;
     }
 
@@ -120,9 +120,10 @@ public class UiUtil {
     }
 
     public static void setLaf() {
+        final String themeHint = Globals.getThemeString().trim().toLowerCase();
         try {
             for (final LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if (info.getName().toLowerCase().indexOf(Globals.getThemeString()) >= 0) {
+                if (info.getName().toLowerCase().indexOf(themeHint) >= 0) {
                     UIManager.setLookAndFeel(info.getClassName());
                     return;
                 }
