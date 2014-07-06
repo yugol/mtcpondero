@@ -9,7 +9,7 @@ import pondero.L10n;
 import pondero.MsgUtil;
 import pondero.model.Workbook;
 import pondero.ui.Ponderable;
-import pondero.ui.PonderoOld;
+import pondero.ui.Pondero;
 
 @SuppressWarnings("serial")
 public class QuitAction extends PonderoAction {
@@ -17,16 +17,16 @@ public class QuitAction extends PonderoAction {
     public QuitAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.quit"));
-        putValue(SMALL_ICON, new ImageIcon(PonderoOld.class.getResource("/com/famfamfam/silk/cancel.png")));
+        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/cancel.png")));
     }
 
     @Override
     public void actionPerformed(final ActionEvent evt) {
         try {
-            Workbook wb = getApp().getCurrentWorkbook();
+            final Workbook wb = getApp().getCurrentWorkbook();
             if (wb != null) {
                 if (wb.isDirty()) {
-                    int decision = JOptionPane.showConfirmDialog(getFrame(),
+                    final int decision = JOptionPane.showConfirmDialog(getFrame(),
                             L10n.getString("msg.save-workbook", wb.getWorkbookName()),
                             L10n.getString("lbl.pondero"),
                             JOptionPane.YES_NO_CANCEL_OPTION);
