@@ -11,6 +11,8 @@ import pondero.engine.staples.StringUtil;
 
 public class NameFile {
 
+    public static final String FNAMES_FILE_NAME   = "./tools/participants/fnames.txt";
+    public static final String MNAMES_FILE_NAME   = "./tools/participants/mnames.txt";
     public static final String SURNAMES_FILE_NAME = "./tools/participants/surnames.txt";
 
     public static void main(final String... args) {
@@ -30,15 +32,23 @@ public class NameFile {
             String name = null;
             while (null != (name = reader.readLine())) {
                 name = name.trim();
-                if (!StringUtil.isNullOrBlank(name) && name.length() > 2) {
+                if (!StringUtil.isNullOrBlank(name) && name.length() > 2 && !hasDiacritics(name)) {
                     names.add(name);
-                    System.out.println(name);
+                    // System.out.println(name);
                 }
             }
         } catch (final IOException e) {
             e.printStackTrace();
         }
         return names;
+    }
+
+    private boolean hasDiacritics(final String name) {
+        for (int i = 0; i < name.length(); ++i) {
+            final int ch = name.charAt(i);
+            if (ch >= 128) { return true; }
+        }
+        return false;
     }
 
 }
