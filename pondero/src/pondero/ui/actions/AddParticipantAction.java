@@ -5,20 +5,20 @@ import javax.swing.ImageIcon;
 import pondero.L10n;
 import pondero.model.participants.Participant;
 import pondero.ui.Ponderable;
-import pondero.ui.PonderoOld;
+import pondero.ui.Pondero;
 
 @SuppressWarnings("serial")
 public class AddParticipantAction extends ModifyParticipantAction {
 
-    public AddParticipantAction(Ponderable app) {
+    public AddParticipantAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("html.add-participant"));
-        putValue(SMALL_ICON, new ImageIcon(PonderoOld.class.getResource("/com/famfamfam/silk/page_add.png")));
+        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/page_add.png")));
     }
 
     @Override
-    public void actionPerformed(ActionEvent arg0) {
-        Participant participant = new Participant();
+    public void actionPerformed(final ActionEvent arg0) {
+        final Participant participant = new Participant();
         participant.setId(getApp().getCurrentWorkbook().getNewUniqueParticipantId());
         showParticipantDialog(participant);
     }

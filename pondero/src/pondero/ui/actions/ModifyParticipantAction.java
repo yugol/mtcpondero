@@ -8,7 +8,7 @@ import pondero.L10n;
 import pondero.MsgUtil;
 import pondero.model.participants.Participant;
 import pondero.ui.Ponderable;
-import pondero.ui.PonderoOld;
+import pondero.ui.Pondero;
 import pondero.ui.participants.ParticipantManagementDialog;
 import pondero.ui.participants.ParticipantManagementListener;
 
@@ -20,7 +20,7 @@ public class ModifyParticipantAction extends PonderoAction implements Participan
     public ModifyParticipantAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("html.modify-participant"));
-        putValue(SMALL_ICON, new ImageIcon(PonderoOld.class.getResource("/com/famfamfam/silk/page_edit.png")));
+        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/page_edit.png")));
     }
 
     @Override

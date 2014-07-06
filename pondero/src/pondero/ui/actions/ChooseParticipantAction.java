@@ -7,7 +7,7 @@ import pondero.L10n;
 import pondero.MsgUtil;
 import pondero.model.participants.Participant;
 import pondero.ui.Ponderable;
-import pondero.ui.PonderoOld;
+import pondero.ui.Pondero;
 import pondero.ui.participants.ParticipantSelectionDialog;
 
 @SuppressWarnings("serial")
@@ -16,7 +16,7 @@ public class ChooseParticipantAction extends PonderoAction {
     public ChooseParticipantAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("html.choose-participant"));
-        putValue(SMALL_ICON, new ImageIcon(PonderoOld.class.getResource("/com/famfamfam/silk/find.png")));
+        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/find.png")));
     }
 
     @Override

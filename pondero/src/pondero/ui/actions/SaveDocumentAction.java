@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import pondero.L10n;
 import pondero.MsgUtil;
 import pondero.ui.Ponderable;
-import pondero.ui.PonderoOld;
+import pondero.ui.Pondero;
 
 @SuppressWarnings("serial")
 public class SaveDocumentAction extends PonderoAction {
@@ -15,7 +15,7 @@ public class SaveDocumentAction extends PonderoAction {
     public SaveDocumentAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.save"));
-        putValue(SMALL_ICON, new ImageIcon(PonderoOld.class.getResource("/com/famfamfam/silk/disk.png")));
+        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/disk.png")));
     }
 
     @Override
