@@ -50,7 +50,7 @@ public final class Globals {
 
     private static File                lastWorkbookFile;
     private static String              uiLocaleString           = "ro";
-    private static String              uiThemeString            = "nimbus";
+    private static String              uiThemeString            = "Nimbus";
     private static boolean             updateOnStartup          = false;
     private static double              uiFontScaleFactor        = 1;
 
@@ -170,7 +170,7 @@ public final class Globals {
             }
             foo = properties.getProperty(UI_THEME_STRING_KEY);
             if (!StringUtil.isNullOrBlank(foo)) {
-                uiThemeString = foo.trim().toLowerCase();
+                uiThemeString = foo.trim();
             }
             foo = properties.getProperty(UI_SCALE_FACTOR_KEY);
             if (!StringUtil.isNullOrBlank(foo)) {
@@ -232,6 +232,18 @@ public final class Globals {
         } catch (final Exception e) {
             error(e);
         }
+    }
+
+    public static void setLocale(final Locale value) {
+        uiLocaleString = value.toString();
+    }
+
+    public static void setUiFontScaleFactor(final Double value) {
+        uiFontScaleFactor = value;
+    }
+
+    public static void setUiThemeString(final String value) {
+        uiThemeString = value;
     }
 
     private static File getFolder(final String name) {
