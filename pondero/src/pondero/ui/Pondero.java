@@ -78,7 +78,7 @@ public class Pondero implements Ponderable, WorkbookListener {
         REGISTERED_TESTS = TestLoader.loadTests();
         UiUtil.getAvailableLafs();
         UiUtil.setLaf();
-        UiUtil.scaleUi(Globals.getUiScaleFactor());
+        UiUtil.scaleUi(Globals.getUiFontScaleFactor());
 
         EventQueue.invokeLater(new Runnable() {
 
@@ -184,7 +184,6 @@ public class Pondero implements Ponderable, WorkbookListener {
 
     @Override
     public void setCurrentState(final PonderoState state) {
-        mntmPreferences.setEnabled(false);
         mntmView.setEnabled(currentWorkbook != null);
         mntmSave.setEnabled(currentWorkbook != null);
         mntmSaveas.setEnabled(currentWorkbook != null);
@@ -358,10 +357,10 @@ public class Pondero implements Ponderable, WorkbookListener {
         frame.getContentPane().add(instructions, BorderLayout.NORTH);
         instructions.setLayout(new BoxLayout(instructions, BoxLayout.Y_AXIS));
 
-        lblPageTitle = new JLabel(L10n.getString("Pondero.lblPageTitle.text")); //$NON-NLS-1$
+        lblPageTitle = new JLabel("   ");
         instructions.add(lblPageTitle);
 
-        lblPageHint = new JLabel(L10n.getString("Pondero.lblPageHint.text")); //$NON-NLS-1$
+        lblPageHint = new JLabel("  ");
         instructions.add(lblPageHint);
 
         stage = new JPanel();
