@@ -26,32 +26,33 @@ import pondero.update.Artifact;
 
 public final class Globals {
 
-    public static final String         PURL_HOME               = "http://www.purl.org";
-    public static final String         HOME_PAGE_ADDRESS       = PURL_HOME + "/net/pondero/home";
-    public static final String         UPDATE_REGISTRY_ADDRESS = PURL_HOME + "/net/pondero/update/registry.xml";
-    public static final String         CONTACT_MAIL_ADDRESS    = "mindtrips.communications@gmail.com";
+    public static final String         PURL_HOME                = "http://www.purl.org";
+    public static final String         HOME_PAGE_ADDRESS        = PURL_HOME + "/net/pondero/home";
+    public static final String         UPDATE_REGISTRY_ADDRESS  = PURL_HOME + "/net/pondero/update/registry.xml";
+    public static final String         CONTACT_MAIL_ADDRESS     = "mindtrips.communications@gmail.com";
 
-    private static final String        CONSOLE_LOG_LEVEL_KEY   = "consoleLogLevel";
-    private static final String        FILE_LOG_LEVEL_KEY      = "fileLogLevel";
-    private static final String        LAST_WORKBOOK_FILE_KEY  = "lastWorkbookFile";
-    private static final String        LOCALE_STRING_KEY       = "localeString";
-    private static final String        UI_LAF_KEY              = "uiLaf";
-    private static final String        UI_SCALE_FACTOR_KEY     = "uiScaleFactor";
-    private static final String        UPDATE_ON_STARTUP_KEY   = "updateOnStartup";
+    private static final String        CONSOLE_LOG_LEVEL_KEY    = "consoleLogLevel";
+    private static final String        FILE_LOG_LEVEL_KEY       = "fileLogLevel";
+    private static final String        LAST_WORKBOOK_FILE_KEY   = "lastWorkbookFile";
+    private static final String        UI_LOCALE_STRING_KEY     = "uilocaleString";
+    private static final String        UI_THEME_STRING_KEY      = "uiThemeString";
+    private static final String        UI_SCALE_FACTOR_KEY      = "uiFontScaleFactor";
+    private static final String        UPDATE_ON_STARTUP_KEY    = "updateOnStartup";
 
-    private static final String        PROPERTIES_FILE_NAME    = "pondero.properties";
-    private static final String        DEFAULT_WORKBOOK_NAME   = "default.xlsx";
+    private static final String        PROPERTIES_FILE_NAME     = "pondero.properties";
+    private static final String        DEFAULT_HOME_FOLDER_NAME = "../../Pondero";
+    private static final String        DEFAULT_WORKBOOK_NAME    = "default.xlsx";
 
-    private static File                homeFolder;
     private static boolean             runningFromIde;
+    private static File                homeFolder;
     private static File                propertiesFile;
-    private static final Set<Artifact> artifacts               = new HashSet<Artifact>();
+    private static final Set<Artifact> artifacts                = new HashSet<Artifact>();
 
     private static File                lastWorkbookFile;
-    private static String              localeString            = "ro";
-    private static String              uiLaf                   = "nimbus";
-    private static boolean             updateOnStartup         = false;
-    private static double              uiScaleFactor           = 1.2;
+    private static String              uiLocaleString           = "ro";
+    private static String              uiThemeString            = "nimbus";
+    private static boolean             updateOnStartup          = false;
+    private static double              uiFontScaleFactor        = 1;
 
     public static boolean backupWorkbookOnOpen() {
         return true;
@@ -97,17 +98,13 @@ public final class Globals {
         return getFolder("tests");
     }
 
-    public static String getLaf() {
-        return uiLaf;
-    }
-
     public static File getLastWorkbookFile() {
         if (lastWorkbookFile != null) { return lastWorkbookFile; }
         return getDefaultWorkbookFile();
     }
 
     public static Locale getLocale() {
-        return new Locale(localeString);
+        return new Locale(uiLocaleString);
     }
 
     public static List<Test> getRegisteredTests() {
@@ -121,8 +118,12 @@ public final class Globals {
         return tests;
     }
 
-    public static double getUiScaleFactor() {
-        return uiScaleFactor;
+    public static String getThemeString() {
+        return uiThemeString;
+    }
+
+    public static double getUiFontScaleFactor() {
+        return uiFontScaleFactor;
     }
 
     public static boolean isParticipantOptional() {
@@ -140,7 +141,7 @@ public final class Globals {
     public static void loadPreferences(String homeFolderName) throws Exception {
         if (StringUtil.isNullOrBlank(homeFolderName)) {
             runningFromIde = true;
-            homeFolderName = "../../Pondero";
+            homeFolderName = DEFAULT_HOME_FOLDER_NAME;
         } else {
             runningFromIde = false;
         }
@@ -163,17 +164,17 @@ public final class Globals {
             if (!StringUtil.isNullOrBlank(foo)) {
                 Logger.maxFileLevel = Integer.parseInt(foo.trim());
             }
-            foo = properties.getProperty(LOCALE_STRING_KEY);
+            foo = properties.getProperty(UI_LOCALE_STRING_KEY);
             if (!StringUtil.isNullOrBlank(foo)) {
-                localeString = foo;
+                uiLocaleString = foo;
             }
-            foo = properties.getProperty(UI_LAF_KEY);
+            foo = properties.getProperty(UI_THEME_STRING_KEY);
             if (!StringUtil.isNullOrBlank(foo)) {
-                uiLaf = foo.trim().toLowerCase();
+                uiThemeString = foo.trim().toLowerCase();
             }
             foo = properties.getProperty(UI_SCALE_FACTOR_KEY);
             if (!StringUtil.isNullOrBlank(foo)) {
-                uiScaleFactor = Double.parseDouble(foo);
+                uiFontScaleFactor = Double.parseDouble(foo);
             }
             foo = properties.getProperty(UPDATE_ON_STARTUP_KEY);
             if (!StringUtil.isNullOrBlank(foo)) {
@@ -193,9 +194,9 @@ public final class Globals {
         debug("properties file: ", propertiesFile.getCanonicalPath());
         trace("property: ", CONSOLE_LOG_LEVEL_KEY, "=", Logger.maxConsoleLevel);
         trace("property: ", FILE_LOG_LEVEL_KEY, "=", Logger.maxFileLevel);
-        trace("property: ", LOCALE_STRING_KEY, "=", localeString);
-        trace("property: ", UI_LAF_KEY, "=", uiLaf);
-        trace("property: ", UI_SCALE_FACTOR_KEY, "=", uiScaleFactor);
+        trace("property: ", UI_LOCALE_STRING_KEY, "=", uiLocaleString);
+        trace("property: ", UI_THEME_STRING_KEY, "=", uiThemeString);
+        trace("property: ", UI_SCALE_FACTOR_KEY, "=", uiFontScaleFactor);
         trace("property: ", UPDATE_ON_STARTUP_KEY, "=", updateOnStartup);
         registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero.jar")));
         registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero-libs.jar")));
@@ -212,9 +213,9 @@ public final class Globals {
         final Properties properties = new Properties();
         properties.setProperty(CONSOLE_LOG_LEVEL_KEY, String.valueOf(Logger.maxConsoleLevel));
         properties.setProperty(FILE_LOG_LEVEL_KEY, String.valueOf(Logger.maxFileLevel));
-        properties.setProperty(LOCALE_STRING_KEY, String.valueOf(localeString));
-        properties.setProperty(UI_LAF_KEY, String.valueOf(uiLaf));
-        properties.setProperty(UI_SCALE_FACTOR_KEY, String.valueOf(uiScaleFactor));
+        properties.setProperty(UI_LOCALE_STRING_KEY, String.valueOf(uiLocaleString));
+        properties.setProperty(UI_THEME_STRING_KEY, String.valueOf(uiThemeString));
+        properties.setProperty(UI_SCALE_FACTOR_KEY, String.valueOf(uiFontScaleFactor));
         properties.setProperty(UPDATE_ON_STARTUP_KEY, String.valueOf(updateOnStartup));
         if (lastWorkbookFile != null) {
             properties.setProperty(LAST_WORKBOOK_FILE_KEY, lastWorkbookFile.getCanonicalPath());

@@ -122,7 +122,7 @@ public class UiUtil {
     public static void setLaf() {
         try {
             for (final LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if (info.getName().toLowerCase().indexOf(Globals.getLaf()) >= 0) {
+                if (info.getName().toLowerCase().indexOf(Globals.getThemeString()) >= 0) {
                     UIManager.setLookAndFeel(info.getClassName());
                     return;
                 }
