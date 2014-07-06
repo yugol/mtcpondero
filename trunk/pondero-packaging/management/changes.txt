@@ -1,5 +1,6 @@
 2014-07-27
 ==========
+- added application preferences dialog
 - option to randomly generate participants when opening an empty data file
 - store results message dialog at the end
 - fault tolerant handling of *.xlsx documents

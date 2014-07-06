@@ -8,10 +8,11 @@ import javax.swing.UIManager;
 
 public class L10n {
 
-    private static final String         BUNDLE_NAME     = "pondero.ui.messages";                        //$NON-NLS-1$
+    private static final String         BUNDLE_NAME     = "pondero.res.messages";                       //$NON-NLS-1$
     private static final Locale         LOCALE          = Globals.getLocale();
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, LOCALE);
     private static final MessageFormat  FORMATTER       = new MessageFormat("");
+
     static {
         FORMATTER.setLocale(LOCALE);
         localizeJOptionPaneButtons();

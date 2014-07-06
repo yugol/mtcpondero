@@ -16,7 +16,6 @@
 
 - config: send production flag in command line
 - config: check for installed java versions before installing
-- menu: Application -> Preferences...
 - menu: Help -> About page
 
 - test-ic: extensive test

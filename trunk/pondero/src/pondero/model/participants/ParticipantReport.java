@@ -4,10 +4,10 @@ import pondero.L10n;
 
 public class ParticipantReport {
 
-    public static String getHtml(Participant participant) {
-        StringBuilder html = new StringBuilder("<html>");
+    public static String getHtml(final Participant participant) {
+        final StringBuilder html = new StringBuilder("<html>");
         if (participant == null) {
-            html.append("Nu s-a ales nici un participant");
+            html.append(L10n.getString("msg.no-participant-selected"));
         } else {
             html.append("<center><h1>");
             html.append(participant.getSurname()).append(" ").append(participant.getName());
@@ -32,7 +32,7 @@ public class ParticipantReport {
         return html.toString();
     }
 
-    private static String years(int age) {
+    private static String years(final int age) {
         if (age == 1) { return "an"; }
         if (age == 0 || 1 < age && age < 20) { return "ani"; }
         return "de ani";
