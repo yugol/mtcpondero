@@ -1,7 +1,9 @@
 package pondero.ui;
 
+import static pondero.Logger.error;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -26,6 +28,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -44,6 +47,7 @@ import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.model.WorkbookListener;
 import pondero.model.participants.Participant;
+import pondero.model.participants.ParticipantGenerator;
 import pondero.model.participants.ParticipantReport;
 import pondero.tests.TestLoader;
 import pondero.ui.actions.AddParticipantAction;
@@ -58,11 +62,10 @@ import pondero.ui.actions.SetPreferencesAction;
 import pondero.ui.actions.StartDocumentAction;
 import pondero.ui.actions.StartTaskAction;
 import pondero.ui.actions.UpdateAction;
-import static pondero.Logger.error;
 
 public class Pondero implements Ponderable, WorkbookListener {
 
-    private static List<Test> TESTS;
+    private static List<Test> REGISTERED_TESTS;
 
     /**
      * Launch the application.
@@ -72,7 +75,7 @@ public class Pondero implements Ponderable, WorkbookListener {
     public static void main(final String[] args) throws Exception {
         Globals.loadPreferences(args.length >= 1 ? args[0] : null);
         SysUtil.configure();
-        TESTS = TestLoader.loadTests();
+        REGISTERED_TESTS = TestLoader.loadTests();
         UiUtil.getAvailableLafs();
         UiUtil.setLaf();
         UiUtil.scaleUi(Globals.getUiScaleFactor());
@@ -198,7 +201,7 @@ public class Pondero implements Ponderable, WorkbookListener {
                 lblPageHint.setText(L10n.getString("msg.CHOOSE-PARTICIPANT"));
                 epParticipantDescription.setEnabled(true);
                 epParticipantDescription.setText(ParticipantReport.getHtml(currentParticipant));
-                btnSelectParticipant.setEnabled(currentWorkbook != null);
+                btnSelectParticipant.setEnabled(currentWorkbook != null && currentWorkbook.getParticipantCount() > 0);
                 btnAddParticipant.setEnabled(currentWorkbook != null);
                 btnModifyParticipant.setEnabled(currentWorkbook != null && currentParticipant != null);
                 btnNext.setEnabled(currentWorkbook != null && (currentParticipant != null || Globals.isParticipantOptional()));
@@ -225,11 +228,41 @@ public class Pondero implements Ponderable, WorkbookListener {
 
     @Override
     public void setCurrentWorkbook(final Workbook workbook) {
-        currentWorkbook = workbook;
-        currentWorkbook.addWorkbookListener(this);
-        currentParticipant = null;
-        currentTask = null;
-        setCurrentState(PonderoState.PARTICIPANT_SELECTION);
+        final int maxParticipantCount = 25;
+        try {
+            currentWorkbook = workbook;
+            currentWorkbook.addWorkbookListener(this);
+            currentParticipant = null;
+            currentTask = null;
+            if (currentWorkbook.getParticipantCount() <= 0) {
+                final String decision = JOptionPane.showInputDialog(frame, L10n.getString("msg.how-many-random-participants", maxParticipantCount), "0");
+                try {
+                    int count = Integer.parseInt(decision);
+                    if (count < 0) {
+                        count = 0;
+                    }
+                    if (count > maxParticipantCount) {
+                        count = maxParticipantCount;
+                    }
+                    if (count > 0) {
+                        frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+                        final ParticipantGenerator pGen = new ParticipantGenerator();
+                        for (int i = 1; i <= count; ++i) {
+                            final Participant p = pGen.nextParticipant();
+                            p.setId(String.valueOf(i));
+                            currentWorkbook.add(p);
+                        }
+                    }
+                } catch (final NumberFormatException e) {
+                } finally {
+                    frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                }
+            }
+            setCurrentState(PonderoState.PARTICIPANT_SELECTION);
+        } catch (final Exception e) {
+            error(e);
+            MsgUtil.showExceptionMessage(frame, e);
+        }
     }
 
     @Override
@@ -239,7 +272,7 @@ public class Pondero implements Ponderable, WorkbookListener {
 
     private void addTests() {
         final DefaultListModel<Test> model = (DefaultListModel<Test>) lstTests.getModel();
-        for (final Test test : TESTS) {
+        for (final Test test : REGISTERED_TESTS) {
             model.addElement(test);
         }
     }
@@ -328,7 +361,7 @@ public class Pondero implements Ponderable, WorkbookListener {
         lblPageTitle = new JLabel(L10n.getString("Pondero.lblPageTitle.text")); //$NON-NLS-1$
         instructions.add(lblPageTitle);
 
-        lblPageHint = new JLabel("Lorem ipsum dolor sit amet...");
+        lblPageHint = new JLabel(L10n.getString("Pondero.lblPageHint.text")); //$NON-NLS-1$
         instructions.add(lblPageHint);
 
         stage = new JPanel();

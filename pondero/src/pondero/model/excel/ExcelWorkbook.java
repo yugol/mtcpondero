@@ -1,6 +1,7 @@
 package pondero.model.excel;
 
 import static pondero.Logger.debug;
+import static pondero.Logger.error;
 import static pondero.Logger.info;
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,7 +29,6 @@ import pondero.engine.staples.StringUtil;
 import pondero.model.Workbook;
 import pondero.model.WorkbookListener;
 import pondero.model.entities.base.Record;
-import pondero.model.participants.DefaultParticipants;
 import pondero.model.participants.Participant;
 import pondero.model.participants.SurnameNameIdComparator;
 
@@ -73,12 +73,6 @@ public class ExcelWorkbook implements Workbook {
         evenStyle.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
         evenStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
 
-        if (!workbookFile.exists()) {
-            for (final Participant p : DefaultParticipants.getParticipants()) {
-                add(p);
-            }
-        }
-
         setDirty(false);
     }
 
@@ -94,10 +88,10 @@ public class ExcelWorkbook implements Workbook {
         Row recordRow = null;
         final Sheet sheet = getSheet(record);
         if (record instanceof Participant) {
-            int inColIdx = getIdColumnIndex(sheet);
+            final int inColIdx = getIdColumnIndex(sheet);
             for (int rowIdx = 1; rowIdx <= sheet.getLastRowNum(); ++rowIdx) {
                 final Row row = sheet.getRow(rowIdx);
-                String id = row.getCell(inColIdx).getStringCellValue();
+                final String id = row.getCell(inColIdx).getStringCellValue();
                 if (id.equals(((Participant) record).getId())) {
                     recordRowIdx = rowIdx;
                     recordRow = row;
@@ -125,7 +119,7 @@ public class ExcelWorkbook implements Workbook {
                     cell.setCellValue(val);
                     cell.setCellStyle(recordRowIdx % 2 == 0 ? evenStyle : oddStyle);
                     sheet.autoSizeColumn(colIdx);
-                } catch (NoSuchMethodException e) {
+                } catch (final NoSuchMethodException e) {
                     debug("getter method ", getterName, " could not be found for ", record.getClass().getSimpleName());
                 }
             }
@@ -133,7 +127,7 @@ public class ExcelWorkbook implements Workbook {
     }
 
     @Override
-    public void addWorkbookListener(WorkbookListener listener) {
+    public void addWorkbookListener(final WorkbookListener listener) {
         if (!workbookListeners.contains(listener)) {
             workbookListeners.add(listener);
         }
@@ -185,7 +179,7 @@ public class ExcelWorkbook implements Workbook {
                     final Method setter = prototype.getMethod(setterName, String.class);
                     setter.invoke(record, cellValue);
                     valid = true;
-                } catch (NoSuchMethodException e) {
+                } catch (final NoSuchMethodException e) {
                     debug("setter method ", setterName, " could not be found for ", prototype.getSimpleName());
                 }
             }
@@ -199,7 +193,7 @@ public class ExcelWorkbook implements Workbook {
     @Override
     public List<Participant> getAllParticipants() throws Exception {
         @SuppressWarnings("unchecked")
-        List<Participant> buffer = (List<Participant>) getAll(Participant.class);
+        final List<Participant> buffer = (List<Participant>) getAll(Participant.class);
         Collections.sort(buffer, PARTICIPANT_COMPARATOR);
         return buffer;
     }
@@ -208,19 +202,29 @@ public class ExcelWorkbook implements Workbook {
     public String getNewUniqueParticipantId() {
         int maxIdx = 100;
         final Sheet sheet = getSheet(new Participant());
-        int idColIdx = getIdColumnIndex(sheet);
+        final int idColIdx = getIdColumnIndex(sheet);
         for (int rowIdx = 1; rowIdx <= sheet.getLastRowNum(); ++rowIdx) {
             final Row row = sheet.getRow(rowIdx);
             try {
-                int id = Integer.parseInt(row.getCell(idColIdx).getStringCellValue());
+                final int id = Integer.parseInt(row.getCell(idColIdx).getStringCellValue());
                 if (id > maxIdx) {
                     maxIdx = id;
                 }
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 // ignore: if cell content is not a number then no number will duplicate it
             }
         }
         return String.valueOf(maxIdx + 1);
+    }
+
+    @Override
+    public int getParticipantCount() {
+        try {
+            return getAllParticipants().size();
+        } catch (final Exception e) {
+            error(e);
+            return 0;
+        }
     }
 
     @Override
@@ -283,11 +287,11 @@ public class ExcelWorkbook implements Workbook {
         info("workbook backup: ", backupFile.getCanonicalPath());
     }
 
-    private int getIdColumnIndex(Sheet sheet) {
+    private int getIdColumnIndex(final Sheet sheet) {
         final Row firstRow = sheet.getRow(0);
         int inColIdx = 0;
         for (; inColIdx < firstRow.getLastCellNum(); ++inColIdx) {
-            Cell cell = firstRow.getCell(inColIdx);
+            final Cell cell = firstRow.getCell(inColIdx);
             if (cell != null) {
                 final String cellName = cell.getStringCellValue();
                 if ("ID".equals(cellName)) {
@@ -316,7 +320,7 @@ public class ExcelWorkbook implements Workbook {
         return sheet;
     }
 
-    private String getValueAsString(Cell cell) {
+    private String getValueAsString(final Cell cell) {
         switch (cell.getCellType()) {
             case Cell.CELL_TYPE_NUMERIC:
                 return String.valueOf(cell.getNumericCellValue());
@@ -364,10 +368,10 @@ public class ExcelWorkbook implements Workbook {
         setDirty(false);
     }
 
-    private void setDirty(boolean dirty) {
+    private void setDirty(final boolean dirty) {
         if (this.dirty != dirty) {
             this.dirty = dirty;
-            for (WorkbookListener listener : workbookListeners) {
+            for (final WorkbookListener listener : workbookListeners) {
                 listener.onDirtyFlagChanged(dirty);
             }
         }

@@ -22,6 +22,8 @@ public interface Workbook {
 
     String getNewUniqueParticipantId();
 
+    int getParticipantCount();
+
     String getWorkbookName();
 
     boolean isDirty();

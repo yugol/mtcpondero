@@ -5,7 +5,7 @@ import pondero.L10n;
 public enum Education {
 
     UNKNOWN (""),
-    LTEN ("---"),
+    LTEN ("-"),
     TEN ("X"),
     TWELVE ("XII"),
     HSG ("BAC"),
@@ -38,20 +38,22 @@ public enum Education {
     @Override
     public String toString() {
         switch (this) {
+            case LTEN:
+                return L10n.getString("lbl.education.lten");
+            case TEN:
+                return L10n.getString("lbl.education.ten");
+            case TWELVE:
+                return L10n.getString("lbl.education.twelve");
+            case HSG:
+                return L10n.getString("lbl.education.hsg");
             case BSC:
                 return L10n.getString("lbl.education.bsc");
             case MSC:
                 return L10n.getString("lbl.education.msc");
-            case LTEN:
-                return L10n.getString("lbl.education.none");
             case PHD:
                 return L10n.getString("lbl.education.phd");
-            case TEN:
-                return L10n.getString("lbl.education.pri");
-            case TWELVE:
-                return L10n.getString("lbl.education.sec");
             default:
-                return "";
+                return "lbl.education.na";
         }
     }
 

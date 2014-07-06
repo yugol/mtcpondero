@@ -10,7 +10,6 @@ import org.junit.Test;
 import pondero.Globals;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
-import pondero.model.participants.DefaultParticipants;
 import pondero.model.participants.Participant;
 
 public class ExcelWorkbookTest {
@@ -23,7 +22,7 @@ public class ExcelWorkbookTest {
         try {
             WB.close();
             WB_FILE.deleteOnExit();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }
@@ -34,15 +33,15 @@ public class ExcelWorkbookTest {
             Globals.loadPreferences(null);
             WB = WorkbookFactory.openWorkbook(WB_FILE);
             WB.save();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
 
     @Test
     public void testAddParticipant() throws Exception {
-        int participantCount = WB.getAllParticipants().size();
-        Participant participant = new Participant();
+        final int participantCount = WB.getAllParticipants().size();
+        final Participant participant = new Participant();
         participant.setId("10");
         participant.setName("Name");
         participant.setSurname("Surname");
@@ -52,7 +51,7 @@ public class ExcelWorkbookTest {
 
     @Test
     public void testCreation() throws Exception {
-        assertTrue(DefaultParticipants.getParticipants().size() <= WB.getAllParticipants().size());
+        assertTrue(WB.getAllParticipants().size() >= 1);
     }
 
     @Test
@@ -67,8 +66,8 @@ public class ExcelWorkbookTest {
 
     @Test
     public void testModifyParticipant() throws Exception {
-        int participantCount = WB.getAllParticipants().size();
-        Participant participant = new Participant();
+        final int participantCount = WB.getAllParticipants().size();
+        final Participant participant = new Participant();
         participant.setId("1");
         participant.setName("Name");
         participant.setSurname("Surname");

@@ -111,8 +111,8 @@ public final class Globals {
     }
 
     public static List<Test> getRegisteredTests() {
-        List<Test> tests = new ArrayList<Test>();
-        for (Object artifact : artifacts) {
+        final List<Test> tests = new ArrayList<Test>();
+        for (final Object artifact : artifacts) {
             if (artifact instanceof Test) {
                 tests.add((Test) artifact);
             }
@@ -126,7 +126,7 @@ public final class Globals {
     }
 
     public static boolean isParticipantOptional() {
-        return isRunningFromIde() || false;
+        return isRunningFromIde() && false;
     }
 
     public static boolean isRunningFromIde() {
@@ -224,23 +224,23 @@ public final class Globals {
         propertiesWriter.close();
     }
 
-    public static void setLastWorkbookFile(File file) {
+    public static void setLastWorkbookFile(final File file) {
         lastWorkbookFile = file;
         try {
             savePreferences();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             error(e);
         }
     }
 
-    private static File getFolder(String name) {
+    private static File getFolder(final String name) {
         try {
-            File folder = new File(homeFolder.getCanonicalPath(), name);
+            final File folder = new File(homeFolder.getCanonicalPath(), name);
             if (!folder.exists()) {
                 folder.mkdirs();
             }
             return folder;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             error(e);
             return null;
         }

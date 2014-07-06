@@ -13,9 +13,23 @@ import pondero.model.entities.domains.Gender;
 
 public class ParticipantGenerator {
 
+    private final static int MIN_AGE = 20;
+
+    public static List<Participant> nextParticipants(final int count) {
+        final ParticipantGenerator pGen = new ParticipantGenerator();
+        final List<Participant> group = new ArrayList<Participant>();
+        for (int i = 1; i <= count; ++i) {
+            final Participant p = pGen.nextParticipant();
+            p.setId(String.valueOf(i));
+            group.add(p);
+        }
+        return group;
+    }
+
     private final List<String> fnames;
     private final List<String> mnames;
     private final List<String> snames;
+
     private final Random       rnd = new Random();
 
     public ParticipantGenerator() {
@@ -26,8 +40,10 @@ public class ParticipantGenerator {
 
     public Participant nextParticipant() {
         final Participant p = new Participant();
+
         // gender
         p.setGender(rnd.nextBoolean() ? Gender.MASCULINE : Gender.FEMININE);
+
         // name
         p.setSurname(snames.get(rnd.nextInt(snames.size())));
         if (p.getGender() == Gender.FEMININE) {
@@ -35,15 +51,17 @@ public class ParticipantGenerator {
         } else {
             p.setName(mnames.get(rnd.nextInt(mnames.size())));
         }
+
         // age
-        p.setAge(rnd.nextInt(80) + 20);
+        p.setAge(rnd.nextInt(70 - MIN_AGE) + MIN_AGE);
+
         // education
         if (p.getAge() >= 18 && rnd.nextDouble() > 0.05) {
-            if (p.getAge() >= 20 && rnd.nextDouble() > 0.8) {
-                if (p.getAge() >= 25 && rnd.nextDouble() > 0.4) {
-                    if (p.getAge() >= 30 && rnd.nextDouble() > 0.2) {
-                        if (p.getAge() >= 35 && rnd.nextDouble() > 0.1) {
-                            if (p.getAge() >= 40 && rnd.nextDouble() > 0.05) {
+            if (p.getAge() >= 20 && rnd.nextDouble() < 0.9) {
+                if (p.getAge() >= 25 && rnd.nextDouble() < 0.5) {
+                    if (p.getAge() >= 30 && rnd.nextDouble() < 0.2) {
+                        if (p.getAge() >= 35 && rnd.nextDouble() < 0.1) {
+                            if (p.getAge() >= 40 && rnd.nextDouble() < 0.05) {
                                 p.setEducation(Education.PHD);
                             } else {
                                 p.setEducation(Education.MSC);
@@ -63,6 +81,22 @@ public class ParticipantGenerator {
         } else {
             p.setEducation(Education.LTEN);
         }
+
+        // driving age
+        int drivingAge = p.getAge() - 18;
+        if (drivingAge > 0) {
+            drivingAge = rnd.nextInt(drivingAge);
+        } else {
+            drivingAge = 0;
+        }
+        p.setDrivingAge(drivingAge);
+
+        // mileage
+        int mileage = drivingAge * 100000;
+        if (mileage > 0) {
+            mileage = rnd.nextInt(mileage);
+        }
+        p.setMileage(mileage);
 
         return p;
     }
