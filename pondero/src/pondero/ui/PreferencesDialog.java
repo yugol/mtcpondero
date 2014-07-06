@@ -58,10 +58,10 @@ public class PreferencesDialog extends JDialog {
         setType(Type.UTILITY);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
+        setBounds(100, 100, (int) (320 * Globals.getUiFontScaleFactor()), (int) (240 * Globals.getUiFontScaleFactor()));
         setTitle(L10n.getString("lbl.preferences"));
         getContentPane().setLayout(new BorderLayout());
-        contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPanel.setBorder(new EmptyBorder(10, 10, 5, 10));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(new BorderLayout(0, 0));
         {
@@ -69,7 +69,7 @@ public class PreferencesDialog extends JDialog {
             contentPanel.add(tabbedPane, BorderLayout.CENTER);
             {
                 final JPanel pnlGeneral = new JPanel();
-                pnlGeneral.setBorder(new EmptyBorder(10, 10, 10, 10));
+                pnlGeneral.setBorder(new EmptyBorder(15, 10, 10, 10));
                 tabbedPane.addTab(L10n.getString("lbl.preferences-general"), null, pnlGeneral, null); //$NON-NLS-1$
                 final GridBagLayout gbl_pnlGeneral = new GridBagLayout();
                 gbl_pnlGeneral.columnWidths = new int[] { 0, 0, 0, 0 };
@@ -81,7 +81,7 @@ public class PreferencesDialog extends JDialog {
                     final JLabel lblLanguage = new JLabel(L10n.getString("lbl.language")); //$NON-NLS-1$
                     final GridBagConstraints gbc_lblLanguage = new GridBagConstraints();
                     gbc_lblLanguage.anchor = GridBagConstraints.WEST;
-                    gbc_lblLanguage.insets = new Insets(0, 0, 15, 5);
+                    gbc_lblLanguage.insets = new Insets(0, 0, 5, 5);
                     gbc_lblLanguage.gridx = 0;
                     gbc_lblLanguage.gridy = 0;
                     pnlGeneral.add(lblLanguage, gbc_lblLanguage);
@@ -90,7 +90,7 @@ public class PreferencesDialog extends JDialog {
                     final JLabel label = new JLabel(":"); //$NON-NLS-1$
                     final GridBagConstraints gbc_label = new GridBagConstraints();
                     gbc_label.anchor = GridBagConstraints.EAST;
-                    gbc_label.insets = new Insets(0, 0, 15, 5);
+                    gbc_label.insets = new Insets(0, 0, 5, 5);
                     gbc_label.gridx = 1;
                     gbc_label.gridy = 0;
                     pnlGeneral.add(label, gbc_label);
@@ -98,7 +98,7 @@ public class PreferencesDialog extends JDialog {
                 {
                     cbLanguage = new JComboBox<Locale>();
                     final GridBagConstraints gbc_cbLanguage = new GridBagConstraints();
-                    gbc_cbLanguage.insets = new Insets(0, 0, 15, 5);
+                    gbc_cbLanguage.insets = new Insets(0, 0, 5, 5);
                     gbc_cbLanguage.fill = GridBagConstraints.HORIZONTAL;
                     gbc_cbLanguage.gridx = 2;
                     gbc_cbLanguage.gridy = 0;
@@ -108,7 +108,7 @@ public class PreferencesDialog extends JDialog {
                     final JLabel lblTheme = new JLabel(L10n.getString("lbl.theme")); //$NON-NLS-1$
                     final GridBagConstraints gbc_lblTheme = new GridBagConstraints();
                     gbc_lblTheme.anchor = GridBagConstraints.WEST;
-                    gbc_lblTheme.insets = new Insets(0, 0, 15, 5);
+                    gbc_lblTheme.insets = new Insets(0, 0, 5, 5);
                     gbc_lblTheme.gridx = 0;
                     gbc_lblTheme.gridy = 1;
                     pnlGeneral.add(lblTheme, gbc_lblTheme);
@@ -117,7 +117,7 @@ public class PreferencesDialog extends JDialog {
                     final JLabel label = new JLabel(":"); //$NON-NLS-1$
                     final GridBagConstraints gbc_label = new GridBagConstraints();
                     gbc_label.anchor = GridBagConstraints.EAST;
-                    gbc_label.insets = new Insets(0, 0, 15, 5);
+                    gbc_label.insets = new Insets(0, 0, 5, 5);
                     gbc_label.gridx = 1;
                     gbc_label.gridy = 1;
                     pnlGeneral.add(label, gbc_label);
@@ -125,7 +125,7 @@ public class PreferencesDialog extends JDialog {
                 {
                     cbTheme = new JComboBox<String>();
                     final GridBagConstraints gbc_cbTheme = new GridBagConstraints();
-                    gbc_cbTheme.insets = new Insets(0, 0, 15, 5);
+                    gbc_cbTheme.insets = new Insets(0, 0, 5, 5);
                     gbc_cbTheme.fill = GridBagConstraints.HORIZONTAL;
                     gbc_cbTheme.gridx = 2;
                     gbc_cbTheme.gridy = 1;
@@ -135,7 +135,7 @@ public class PreferencesDialog extends JDialog {
                     final JLabel lblScale = new JLabel(L10n.getString("lbl.scale")); //$NON-NLS-1$
                     final GridBagConstraints gbc_lblScale = new GridBagConstraints();
                     gbc_lblScale.anchor = GridBagConstraints.WEST;
-                    gbc_lblScale.insets = new Insets(0, 0, 15, 5);
+                    gbc_lblScale.insets = new Insets(0, 0, 5, 5);
                     gbc_lblScale.gridx = 0;
                     gbc_lblScale.gridy = 2;
                     pnlGeneral.add(lblScale, gbc_lblScale);
@@ -144,7 +144,7 @@ public class PreferencesDialog extends JDialog {
                     final JLabel lblNewLabel = new JLabel(":"); //$NON-NLS-1$
                     final GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
                     gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
-                    gbc_lblNewLabel.insets = new Insets(0, 0, 15, 5);
+                    gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
                     gbc_lblNewLabel.gridx = 1;
                     gbc_lblNewLabel.gridy = 2;
                     pnlGeneral.add(lblNewLabel, gbc_lblNewLabel);
@@ -152,7 +152,7 @@ public class PreferencesDialog extends JDialog {
                 {
                     cbScale = new JComboBox<Double>();
                     final GridBagConstraints gbc_cbScale = new GridBagConstraints();
-                    gbc_cbScale.insets = new Insets(0, 0, 15, 5);
+                    gbc_cbScale.insets = new Insets(0, 0, 5, 5);
                     gbc_cbScale.fill = GridBagConstraints.HORIZONTAL;
                     gbc_cbScale.gridx = 2;
                     gbc_cbScale.gridy = 2;
@@ -162,6 +162,7 @@ public class PreferencesDialog extends JDialog {
         }
         {
             final JPanel buttonPane = new JPanel();
+            buttonPane.setBorder(new EmptyBorder(0, 10, 8, 10));
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
@@ -214,8 +215,11 @@ public class PreferencesDialog extends JDialog {
         cbTheme.setSelectedItem(Globals.getThemeString());
 
         final DefaultComboBoxModel<Double> scaleModel = new DefaultComboBoxModel<Double>();
-        scaleModel.addElement(new Double(1));
-        scaleModel.addElement(new Double(1.2));
+        scaleModel.addElement(new Double(1.00));
+        scaleModel.addElement(new Double(1.25));
+        scaleModel.addElement(new Double(1.50));
+        scaleModel.addElement(new Double(1.75));
+        scaleModel.addElement(new Double(2.00));
         cbScale.setModel(scaleModel);
         cbScale.setSelectedItem(Globals.getUiFontScaleFactor());
     }

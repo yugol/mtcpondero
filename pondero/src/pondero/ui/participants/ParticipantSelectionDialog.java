@@ -38,7 +38,7 @@ public class ParticipantSelectionDialog extends JDialog implements ParticipantSe
         setResizable(false);
         setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantSelectionDialog.class.getResource("/com/famfamfam/silk/user_go.png")));
         setTitle(L10n.getString("lbl.select-participant")); //$NON-NLS-1$
-        setBounds(100, 100, 400, 450);
+        setBounds(100, 100, (int) (400 * Globals.getUiFontScaleFactor()), (int) (450 * Globals.getUiFontScaleFactor()));
         getContentPane().setLayout(new BorderLayout());
 
         final JPanel contentPanel = new JPanel();
@@ -73,7 +73,6 @@ public class ParticipantSelectionDialog extends JDialog implements ParticipantSe
                     }
 
                 });
-                cancelButton.setActionCommand("Cancel"); //$NON-NLS-1$
                 buttonPane.add(cancelButton);
             }
             contentPanel.add(buttonPane, BorderLayout.SOUTH);
@@ -83,7 +82,7 @@ public class ParticipantSelectionDialog extends JDialog implements ParticipantSe
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
+    public void actionPerformed(final ActionEvent evt) {
         closeOperation = JOptionPane.OK_OPTION;
         ParticipantSelectionDialog.this.setVisible(false);
     }
@@ -97,13 +96,13 @@ public class ParticipantSelectionDialog extends JDialog implements ParticipantSe
     }
 
     @Override
-    public void valueChanged(ListSelectionEvent e) {
+    public void valueChanged(final ListSelectionEvent e) {
         selection = lstParticipants.getSelectedValue();
         selectButton.setEnabled(selection != null);
     }
 
     @Override
-    public void valueChosen(ListSelectionEvent evt) {
+    public void valueChosen(final ListSelectionEvent evt) {
         selection = lstParticipants.getSelectedValue();
         if (selection != null) {
             actionPerformed(null);
