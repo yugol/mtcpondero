@@ -43,7 +43,7 @@ public class DefaultParticipants {
             foo.setGender(Gender.MASCULINE);
             foo.setDob("");
             foo.setAge(52);
-            foo.setEducation(Education.SEC);
+            foo.setEducation(Education.TWELVE);
             foo.setDrivingAge(33);
             foo.setMileage(432000);
             DEFAULT.add(foo);
@@ -55,7 +55,7 @@ public class DefaultParticipants {
             foo.setGender(Gender.FEMININE);
             foo.setDob("");
             foo.setAge(24);
-            foo.setEducation(Education.SEC);
+            foo.setEducation(Education.TWELVE);
             foo.setDrivingAge(1);
             foo.setMileage(2000);
             DEFAULT.add(foo);
@@ -91,7 +91,7 @@ public class DefaultParticipants {
             foo.setGender(Gender.FEMININE);
             foo.setDob("");
             foo.setAge(20);
-            foo.setEducation(Education.PRI);
+            foo.setEducation(Education.TEN);
             foo.setDrivingAge(0);
             foo.setMileage(0);
             DEFAULT.add(foo);
@@ -115,7 +115,7 @@ public class DefaultParticipants {
             foo.setGender(Gender.MASCULINE);
             foo.setDob("");
             foo.setAge(38);
-            foo.setEducation(Education.SEC);
+            foo.setEducation(Education.TWELVE);
             foo.setDrivingAge(7);
             foo.setMileage(59000);
             DEFAULT.add(foo);
