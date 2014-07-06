@@ -3,6 +3,7 @@
 - warn replace existing file
 - uniform speceing between for dialog elements
 
+- salvat coloane care nu exista atuci cand se adauga un participant vechi peste unul nou
 - replace Vuze picture from setup tutorial
 
 - core: 3 option question dialog when closing the application
