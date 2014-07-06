@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="create_run_jar" name="Create Runnable Jar for Project pondero-libs">
 
-	<property name="mavendir" location="C:/Users/Iulian/.m2/repository" />
-
 	<target name="create_run_jar">
 		<jar destfile="${pkgdir}/bin/pondero-libs.jar" filesetmanifest="mergewithoutmain">
 			<manifest>
