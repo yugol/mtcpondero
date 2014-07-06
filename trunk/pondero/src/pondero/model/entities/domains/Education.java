@@ -53,7 +53,7 @@ public enum Education {
             case PHD:
                 return L10n.getString("lbl.education.phd");
             default:
-                return "lbl.education.na";
+                return L10n.getString("lbl.education.na");
         }
     }
 

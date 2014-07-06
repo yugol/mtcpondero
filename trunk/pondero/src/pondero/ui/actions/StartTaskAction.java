@@ -29,10 +29,9 @@ public class StartTaskAction extends PonderoAction implements TaskLauncher {
     }
 
     @Override
-    public void onTaskEnded(Test task, TaskMonitor report) {
+    public void onTaskEnded(final Test task, final TaskMonitor report) {
         trace("ended task: ", task.getCodeName());
-        getFrame().setVisible(true);
-        StringBuilder html = new StringBuilder("<html>");
+        final StringBuilder html = new StringBuilder("<html>");
         if (TaskMonitor.END_SUCCESS == report.getEndCode()) {
             html.append(L10n.getString("msg.test-completed", report.getRunningTimeInSeconds()));
         } else {
@@ -46,18 +45,19 @@ public class StartTaskAction extends PonderoAction implements TaskLauncher {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE)) {
             try {
-                for (TrialRecord record : report.getRecords()) {
+                for (final TrialRecord record : report.getRecords()) {
                     getApp().getCurrentWorkbook().add(record);
                 }
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 error(e);
                 MsgUtil.showExceptionMessage(getFrame(), e);
             }
         }
+        getFrame().setVisible(true);
     }
 
     @Override
-    public void onTaskStarted(Test task) {
+    public void onTaskStarted(final Test task) {
         trace("started task: ", task.getCodeName());
         getFrame().setVisible(false);
     }

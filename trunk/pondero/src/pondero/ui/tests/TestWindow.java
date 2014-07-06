@@ -1,6 +1,7 @@
 package pondero.ui.tests;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
@@ -26,6 +27,7 @@ public class TestWindow extends JFrame {
      * Create the frame.
      */
     public TestWindow(final Test task) {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(TestWindow.class.getResource("/javax/swing/plaf/metal/icons/ocean/question.png")));
 
         addWindowListener(new WindowAdapter() {
 

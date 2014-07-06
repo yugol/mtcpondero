@@ -3,6 +3,7 @@ package pondero.ui.actions;
 import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import pondero.L10n;
 import pondero.MsgUtil;
 import pondero.model.participants.Participant;
@@ -26,9 +27,11 @@ public class ChooseParticipantAction extends PonderoAction {
             dlg.setLocationRelativeTo(getFrame());
             dlg.setModal(true);
             dlg.setVisible(true);
-            final Participant selection = dlg.getSelection();
-            if (selection != null) {
-                getApp().setCurrentParticipant(selection);
+            if (dlg.getCloseOperation() == JOptionPane.YES_OPTION) {
+                final Participant selection = dlg.getSelection();
+                if (selection != null) {
+                    getApp().setCurrentParticipant(selection);
+                }
             }
         } catch (final Exception e) {
             error(e);

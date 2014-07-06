@@ -112,7 +112,7 @@ public class ParticipantManagementDialog extends JDialog {
         setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantManagementDialog.class.getResource("/com/famfamfam/silk/group.png")));
 
         setTitle(L10n.getString("lbl.manage-participants"));
-        setBounds(100, 100, 400, 400);
+        setBounds(100, 100, (int) (400 * Globals.getUiFontScaleFactor()), (int) (400 * Globals.getUiFontScaleFactor()));
 
         final JPanel background = new JPanel();
         background.setBorder(new EmptyBorder(15, 15, 15, 15));

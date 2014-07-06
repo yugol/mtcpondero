@@ -86,6 +86,7 @@ public class Pondero implements Ponderable, WorkbookListener {
             public void run() {
                 try {
                     final Pondero window = new Pondero();
+                    window.frame.setLocationRelativeTo(null);
                     window.frame.setVisible(true);
                     window.setCurrentWorkbook(WorkbookFactory.openWorkbook(Globals.getLastWorkbookFile()));
                 } catch (final Exception e) {
@@ -142,7 +143,8 @@ public class Pondero implements Ponderable, WorkbookListener {
      */
     public Pondero() {
         initialize();
-        frame.setMinimumSize(new Dimension(700, 525));
+        frame.setMinimumSize(new Dimension(640, 480));
+        frame.setSize((int) (640 * Globals.getUiFontScaleFactor()), (int) (480 * Globals.getUiFontScaleFactor()));
         configureNavigationButton(btnNext);
         configureNavigationButton(btnBack);
         configureNavigationButton(btnStart);
@@ -227,7 +229,7 @@ public class Pondero implements Ponderable, WorkbookListener {
 
     @Override
     public void setCurrentWorkbook(final Workbook workbook) {
-        final int maxParticipantCount = 25;
+        final int maxParticipantCount = 30;
         try {
             currentWorkbook = workbook;
             currentWorkbook.addWorkbookListener(this);
@@ -277,7 +279,7 @@ public class Pondero implements Ponderable, WorkbookListener {
     }
 
     private void configureNavigationButton(final JButton btn) {
-        btn.setPreferredSize(new Dimension(150, 40));
+        btn.setMinimumSize(new Dimension(150, 40));
     }
 
     /**
@@ -287,7 +289,6 @@ public class Pondero implements Ponderable, WorkbookListener {
         frame = new JFrame(L10n.getString("lbl.pondero"));
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.setLocationByPlatform(true);
-        frame.setSize(800, 600);
         frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Pondero.class.getResource("/pondero/res/pondero-48x48.png")));
         frame.addWindowListener(new WindowAdapter() {
 
@@ -395,6 +396,8 @@ public class Pondero implements Ponderable, WorkbookListener {
         epParticipantDescription = new JEditorPane();
         epParticipantDescription.setEditable(false);
         epParticipantDescription.setContentType("text/html");
+        epParticipantDescription.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+        epParticipantDescription.setFont(new JLabel().getFont());
         pnlParticipantDescription.setViewportView(epParticipantDescription);
 
         btnSelectParticipant = new JButton("<html>\r\n<center>\r\nChoose<br/>\r\nparticipant<br/>\r\nfrom list\r\n</center>\r\n</html>");

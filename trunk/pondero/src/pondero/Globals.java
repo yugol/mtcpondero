@@ -52,7 +52,7 @@ public final class Globals {
     private static String              uiLocaleString           = "ro";
     private static String              uiThemeString            = "Nimbus";
     private static boolean             updateOnStartup          = false;
-    private static double              uiFontScaleFactor        = 1;
+    private static double              uiFontScaleFactor        = 1.25;
 
     public static boolean backupWorkbookOnOpen() {
         return true;

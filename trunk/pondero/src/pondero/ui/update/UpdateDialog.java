@@ -43,14 +43,14 @@ public class UpdateDialog extends JDialog implements UpdateListener {
     /**
      * Launch the application.
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         try {
             Globals.loadPreferences(null);
-            UpdateDialog dialog = new UpdateDialog();
+            final UpdateDialog dialog = new UpdateDialog();
             dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
             dialog.beginUpdate();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             error(e);
         }
     }
@@ -70,7 +70,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         this(null);
     }
 
-    public UpdateDialog(Frame owner) {
+    public UpdateDialog(final Frame owner) {
         super(owner);
         setType(Type.UTILITY);
         engine.addListener(this);
@@ -78,11 +78,11 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         setTitle(L10n.getString("lbl.pondero-update"));
         setResizable(false);
 
-        setBounds(100, 100, 450, 450);
+        setBounds(100, 100, (int) (450 * Globals.getUiFontScaleFactor()), (int) (450 * Globals.getUiFontScaleFactor()));
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(15, 15, 0, 15));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
-        GridBagLayout gbl_contentPanel = new GridBagLayout();
+        final GridBagLayout gbl_contentPanel = new GridBagLayout();
         gbl_contentPanel.columnWidths = new int[] { 0, 0 };
         gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0 };
         gbl_contentPanel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
@@ -90,7 +90,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         contentPanel.setLayout(gbl_contentPanel);
         {
             lblTopStatus = new JLabel("N/A");
-            GridBagConstraints gbc_lblTopStatus = new GridBagConstraints();
+            final GridBagConstraints gbc_lblTopStatus = new GridBagConstraints();
             gbc_lblTopStatus.weightx = 1.0;
             gbc_lblTopStatus.insets = new Insets(0, 0, 5, 0);
             gbc_lblTopStatus.anchor = GridBagConstraints.EAST;
@@ -103,7 +103,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
             progressBar = new JProgressBar();
             progressBar.setIndeterminate(true);
 
-            GridBagConstraints gbc_progressBar = new GridBagConstraints();
+            final GridBagConstraints gbc_progressBar = new GridBagConstraints();
             gbc_progressBar.insets = new Insets(5, 0, 5, 0);
             gbc_progressBar.fill = GridBagConstraints.HORIZONTAL;
             gbc_progressBar.gridx = 0;
@@ -112,7 +112,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         }
         {
             scrollPane = new JScrollPane();
-            GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+            final GridBagConstraints gbc_scrollPane = new GridBagConstraints();
             gbc_scrollPane.weightx = 1.0;
             gbc_scrollPane.weighty = 1.0;
             gbc_scrollPane.fill = GridBagConstraints.BOTH;
@@ -125,10 +125,10 @@ public class UpdateDialog extends JDialog implements UpdateListener {
                 listUpdates.addMouseListener(new MouseAdapter() {
 
                     @Override
-                    public void mouseClicked(MouseEvent evt) {
+                    public void mouseClicked(final MouseEvent evt) {
                         if (listUpdates.isEnabled()) {
-                            int index = listUpdates.locationToIndex(evt.getPoint());
-                            Artifact update = listUpdates.getModel().getElementAt(index);
+                            final int index = listUpdates.locationToIndex(evt.getPoint());
+                            final Artifact update = listUpdates.getModel().getElementAt(index);
                             if (!update.isMandatory()) {
                                 cellRenderer.toggle(index);
                                 listUpdates.setSelectedIndices(new int[] {});
@@ -146,7 +146,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
             }
         }
         {
-            JPanel buttonPane = new JPanel();
+            final JPanel buttonPane = new JPanel();
             buttonPane.setBorder(new EmptyBorder(5, 15, 10, 15));
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
@@ -155,7 +155,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
                 btnStart.addActionListener(new ActionListener() {
 
                     @Override
-                    public void actionPerformed(ActionEvent evt) {
+                    public void actionPerformed(final ActionEvent evt) {
                         beginDownload();
                     }
 
@@ -164,15 +164,15 @@ public class UpdateDialog extends JDialog implements UpdateListener {
                 getRootPane().setDefaultButton(btnStart);
             }
             {
-                Component horizontalStrut = Box.createHorizontalStrut(1);
+                final Component horizontalStrut = Box.createHorizontalStrut(1);
                 buttonPane.add(horizontalStrut);
             }
             {
-                JButton btnClose = new JButton(L10n.getString("lbl.close"));
+                final JButton btnClose = new JButton(L10n.getString("lbl.close"));
                 btnClose.addActionListener(new ActionListener() {
 
                     @Override
-                    public void actionPerformed(ActionEvent evt) {
+                    public void actionPerformed(final ActionEvent evt) {
                         UpdateDialog.this.setVisible(false);
                         if (!downloading) {
                             UpdateDialog.this.dispose();
@@ -189,15 +189,15 @@ public class UpdateDialog extends JDialog implements UpdateListener {
     }
 
     @Override
-    public void readRegistryEnded(Updates applicableUpdates) {
-        for (Artifact update : applicableUpdates) {
+    public void readRegistryEnded(final Updates applicableUpdates) {
+        for (final Artifact update : applicableUpdates) {
             info("found update: " + update.getCodeName());
         }
         debug("reading update registry: ended");
         downloading = false;
         progressBar.setVisible(false);
         if (applicableUpdates.size() > 0) {
-            setHeight(450);
+            setHeight((int) (450 * Globals.getUiFontScaleFactor()));
             if (!isVisible()) {
                 setVisible(true);
             }
@@ -213,7 +213,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
     }
 
     @Override
-    public void readRegistryFailed(Exception e) {
+    public void readRegistryFailed(final Exception e) {
         downloading = false;
         setTopStatusMessage(L10n.getString("msg.update-failed"));
         lblTopStatus.setForeground(Color.red);
@@ -225,29 +225,29 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         debug("reading update registry: started");
         downloading = true;
         setTopStatusMessage(L10n.getString("msg.downloading-update-list"));
-        setHeight(150);
+        setHeight((int) (150 * Globals.getUiFontScaleFactor()));
         progressBar.setVisible(true);
         scrollPane.setVisible(false);
         btnStart.setVisible(false);
     }
 
     @Override
-    public void updateArtifactEnded(Artifact update) {
-        DefaultListModel<Artifact> model = (DefaultListModel<Artifact>) listUpdates.getModel();
-        int index = model.indexOf(update);
+    public void updateArtifactEnded(final Artifact update) {
+        final DefaultListModel<Artifact> model = (DefaultListModel<Artifact>) listUpdates.getModel();
+        final int index = model.indexOf(update);
         model.remove(index);
         cellRenderer.removeElement(index);
     }
 
     @Override
-    public void updateArtifactFailed(Artifact update, Exception e) {
+    public void updateArtifactFailed(final Artifact update, final Exception e) {
         setTopStatusMessage(update.getCodeName() + " - " + L10n.getString("msg.update-failed"));
         lblTopStatus.setForeground(Color.red);
         error(e);
     }
 
     @Override
-    public void updateArtifactStarted(Artifact update) {
+    public void updateArtifactStarted(final Artifact update) {
         setTopStatusMessage(L10n.getString("msg.downloading-update") + ": " + update.getCodeName());
     }
 
@@ -262,14 +262,14 @@ public class UpdateDialog extends JDialog implements UpdateListener {
     }
 
     @Override
-    public void updateProcessStarted(int updateCount) {
+    public void updateProcessStarted(final int updateCount) {
         downloading = true;
         listUpdates.setEnabled(false);
         progressBar.setVisible(true);
     }
 
     private void beginDownload() {
-        Updates selectedUpdates = new Updates();
+        final Updates selectedUpdates = new Updates();
         for (int index = 0; index < cellRenderer.getUpdateCount(); ++index) {
             if (cellRenderer.isSelected(index)) {
                 selectedUpdates.add(listUpdates.getModel().getElementAt(index));
@@ -278,10 +278,10 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         engine.downloadUpdates(selectedUpdates);
     }
 
-    private void populateList(Updates applicableUpdates) {
-        DefaultListModel<Artifact> listModel = (DefaultListModel<Artifact>) listUpdates.getModel();
+    private void populateList(final Updates applicableUpdates) {
+        final DefaultListModel<Artifact> listModel = (DefaultListModel<Artifact>) listUpdates.getModel();
         listModel.removeAllElements();
-        for (Artifact update : applicableUpdates) {
+        for (final Artifact update : applicableUpdates) {
             listModel.addElement(update);
             if (update.isMandatory()) {
                 cellRenderer.addElement(true);
@@ -291,7 +291,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         }
     }
 
-    private void setHeight(int height) {
+    private void setHeight(final int height) {
         setSize(getWidth(), height);
     }
 

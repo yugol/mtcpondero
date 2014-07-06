@@ -9,6 +9,7 @@ import java.awt.SystemColor;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import pondero.Globals;
 
 @SuppressWarnings("serial")
 public class StatusBar extends JPanel {
@@ -28,18 +29,18 @@ public class StatusBar extends JPanel {
     public StatusBar() {
         setBackground(SystemColor.control);
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(10, 23));
+        setPreferredSize(new Dimension(10, (int) (20 * Globals.getUiFontScaleFactor())));
 
         lblMessage = new JLabel("");
         add(lblMessage, BorderLayout.CENTER);
 
-        JPanel rightPanel = new JPanel(new BorderLayout());
+        final JPanel rightPanel = new JPanel(new BorderLayout());
         rightPanel.add(new JLabel(new AngledLinesWindowsCornerIcon()), BorderLayout.SOUTH);
         rightPanel.setOpaque(false);
         add(rightPanel, BorderLayout.EAST);
     }
 
-    public void setMessage(int level, String message) {
+    public void setMessage(final int level, String message) {
         if (message == null) {
             message = "";
         }
@@ -61,7 +62,7 @@ public class StatusBar extends JPanel {
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         int y = 0;
         g.setColor(SystemColor.controlDkShadow);
@@ -92,7 +93,7 @@ class AngledLinesWindowsCornerIcon implements Icon {
     }
 
     @Override
-    public void paintIcon(Component c, Graphics g, int _x, int _y) {
+    public void paintIcon(final Component c, final Graphics g, final int _x, final int _y) {
         g.setColor(SystemColor.controlShadow);
         for (int x = 0; x < WIDTH; x += 4) {
             for (int y = 0; y < HEIGHT; y += 4) {
