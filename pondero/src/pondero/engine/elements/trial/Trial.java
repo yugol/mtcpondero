@@ -16,7 +16,7 @@ import pondero.engine.test.stimuli.Stimulus;
 import pondero.engine.test.stimuli.VisualStimulus;
 import pondero.ui.tests.TestCanvas;
 import pondero.ui.tests.TestScene;
-import pondero.util.SysUtil;
+import pondero.util.SystemUtil;
 
 public class Trial extends Element implements HasFeedback, IsController {
 
@@ -184,7 +184,7 @@ public class Trial extends Element implements HasFeedback, IsController {
     public void stimulusframes(final String expr) {
         stimulustimes = new FrameSequence(expr);
         for (final Frame frame : stimulustimes) {
-            frame.setIndex(frame.getIndex() * SysUtil.getFrameRate());
+            frame.setIndex(frame.getIndex() * SystemUtil.getFrameRate());
         }
     }
 
