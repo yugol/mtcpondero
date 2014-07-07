@@ -3,15 +3,15 @@ package pondero.model.wb;
 public class PColumn {
 
     private final PSheet sheet;
-    private final PHead  head;
+    private final String name;
 
     public PColumn(final PSheet sheet, final String name) {
         this.sheet = sheet;
-        head = new PHead(this, name);
+        this.name = name;
     }
 
-    public PHead getHead() {
-        return head;
+    public String getName() {
+        return name;
     }
 
     public PSheet getSheet() {

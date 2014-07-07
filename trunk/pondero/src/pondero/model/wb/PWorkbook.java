@@ -8,17 +8,22 @@ import java.util.Map;
 
 public class PWorkbook {
 
-    private final String         name;
-    private final List<PSheet>   sheets     = new ArrayList<PSheet>();
-    private Map<String, Integer> name2index = null;
+    private final String                   name;
+    private final List<PSheet>             sheets     = new ArrayList<PSheet>();
+    private transient Map<String, Integer> name2index = null;
 
     public PWorkbook(final String name) {
         this.name = name;
     }
 
-    public void add(final PSheet sheet) {
+    public PSheet addSheet(final PSheet sheet) {
         name2index = null;
         sheets.add(sheet);
+        return sheet;
+    }
+
+    public PSheet addSheet(final String name) {
+        return addSheet(new PSheet(this, name));
     }
 
     public String getName() {
