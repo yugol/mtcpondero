@@ -19,40 +19,55 @@ public class DateUtil {
         return Calendar.getInstance().get(Calendar.YEAR);
     }
 
-    public static Calendar parseIsoDate(String dob) {
+    public static Calendar parseIsoDate(final String dob) {
         try {
             if (StringUtil.isNullOrBlank(dob)) { return null; }
-            Date date = ISO_DATE_FORMATTER.parse(dob);
-            Calendar cal = Calendar.getInstance();
+            final Date date = ISO_DATE_FORMATTER.parse(dob);
+            final Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(date.getTime());
             return cal;
-        } catch (Exception e) {
+        } catch (final Exception e) {
             error(e);
             return null;
         }
     }
 
-    public static String toCompactDate(long time) {
+    public static String toCompactDate(final long time) {
         return COMPACT_DATE_FORMATTER.format(new Date(time));
     }
 
-    public static String toCompactTime(long time) {
+    public static String toCompactTime(final long time) {
         return COMPACT_TIME_FORMATTER.format(new Date(time));
     }
 
-    public static String toIsoDate(Calendar cal) {
+    public static String toIsoDate(final Calendar cal) {
         return toIsoDate(cal.getTimeInMillis());
     }
 
-    public static String toIsoDate(long time) {
+    public static String toIsoDate(final long time) {
         return ISO_DATE_FORMATTER.format(new Date(time));
     }
 
-    public static String toIsoTime(long time) {
+    public static String toIsoTime(final long time) {
         return ISO_TIME_FORMATTER.format(new Date(time));
     }
 
-    public static String toUiDate(Calendar cal) {
+    public static java.sql.Date toSqlDate(final Object value) {
+        if (value instanceof java.sql.Date) { return (java.sql.Date) value; }
+        throw new UnsupportedOperationException("toSqlDate for " + value.getClass().getName());
+    }
+
+    public static java.sql.Time toSqlTime(final Object value) {
+        if (value instanceof java.sql.Time) { return (java.sql.Time) value; }
+        throw new UnsupportedOperationException("toSqlTime for " + value.getClass().getName());
+    }
+
+    public static java.sql.Timestamp toSqlTimestamp(final Object value) {
+        if (value instanceof java.sql.Timestamp) { return (java.sql.Timestamp) value; }
+        throw new UnsupportedOperationException("toSqlTimestamp for " + value.getClass().getName());
+    }
+
+    public static String toUiDate(final Calendar cal) {
         return DATE_UI_FORMATTER.format(cal.getTime());
     }
 

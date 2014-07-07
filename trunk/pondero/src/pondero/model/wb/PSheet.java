@@ -37,10 +37,12 @@ public class PSheet {
         return addColumn(new PColumn(this, name, type));
     }
 
-    public PRow addRow(final PRow row) {
-        lock();
-        rows.add(row);
-        return row;
+    public PRow addRow() {
+        return addRow(new PRow(this));
+    }
+
+    public Object get(final int rowIdx, final int colIdx) {
+        return rows.get(rowIdx).get(colIdx);
     }
 
     public PColumn getColumn(final int index) {
@@ -53,6 +55,10 @@ public class PSheet {
 
     public String getName() {
         return name;
+    }
+
+    public int getRowCount() {
+        return rows.size();
     }
 
     public PColumn getSheet(final String name) {
@@ -73,8 +79,129 @@ public class PSheet {
         return name2index.get(name);
     }
 
-    public Iterator<PColumn> itera1torColumns() {
+    public Iterator<PColumn> iteratorColumns() {
         return columns.iterator();
+    }
+
+    public Iterator<? extends PRow> iteratorRows() {
+        return rows.iterator();
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder txt = new StringBuilder();
+        txt.append(renderName());
+        txt.append(renderColumns());
+        final int[] columnLenghts = new int[1 + getColumnCount()];
+        columnLenghts[0] = String.valueOf(getRowCount()).length();
+        for (int colIdx = 0; colIdx < getColumnCount(); ++colIdx) {
+            columnLenghts[colIdx + 1] = columns.get(colIdx).getName().length();
+        }
+        final String[][] data = new String[getRowCount()][];
+        for (int rowIdx = 0; rowIdx < getRowCount(); ++rowIdx) {
+            data[rowIdx] = new String[getColumnCount()];
+            for (int colIdx = 0; colIdx < getColumnCount(); ++colIdx) {
+                final Object value = get(rowIdx, colIdx);
+                String valueString = "-";
+                if (value != null) {
+                    valueString = String.valueOf(value);
+                }
+                data[rowIdx][colIdx] = valueString;
+                if (valueString.length() > columnLenghts[colIdx + 1]) {
+                    columnLenghts[colIdx + 1] = valueString.length();
+                }
+            }
+        }
+        final String heading = renderHeading(columnLenghts);
+        txt.append(heading).append("\n");
+        appendPadding(txt, '-', heading.length()).append("\n");
+        for (int rowIdx = 0; rowIdx < getRowCount(); ++rowIdx) {
+            appendToken(txt, String.valueOf(rowIdx + 1), ' ', columnLenghts[0], 1);
+            for (int colIdx = 0; colIdx < getColumnCount(); ++colIdx) {
+                txt.append("|");
+                appendToken(txt, data[rowIdx][colIdx], ' ', columnLenghts[1 + colIdx], -1);
+            }
+            txt.append("\n");
+        }
+        if (getRowCount() > 10) {
+            appendPadding(txt, '-', heading.length()).append("\n");
+            txt.append(heading).append("\n");
+        }
+        return txt.toString();
+    }
+
+    private StringBuilder appendPadding(final StringBuilder txt, final char padding, final int length) {
+        for (int i = 0; i < length; ++i) {
+            txt.append(padding);
+        }
+        return txt;
+    }
+
+    private StringBuilder appendToken(final StringBuilder txt, final String token, final char padding, final int available, final int position) {
+        final int delta = available - token.length();
+        int before = 0;
+        int after = 0;
+        if (delta > 0) {
+            if (position < 0) {
+                after = delta;
+            } else if (position > 0) {
+                before = delta;
+            } else {
+                before = delta / 2;
+                after = delta - before;
+            }
+        }
+        appendPadding(txt, padding, before);
+        txt.append(token);
+        appendPadding(txt, padding, after);
+        return txt;
+    }
+
+    private int getMaxColumnNameLength() {
+        int maxColumnNameLength = 0;
+        for (final PColumn column : columns) {
+            final int columnNameLength = column.getName().length();
+            if (columnNameLength > maxColumnNameLength) {
+                maxColumnNameLength = columnNameLength;
+            }
+        }
+        return maxColumnNameLength;
+    }
+
+    private String renderColumns() {
+        final StringBuilder txt = new StringBuilder();
+        final int maxColumnNameLength = getMaxColumnNameLength();
+        for (final PColumn column : columns) {
+            appendToken(txt, column.getName(), ' ', maxColumnNameLength, 1);
+            txt.append(" : ");
+            txt.append(column.getType());
+            txt.append("\n");
+        }
+        return txt.toString();
+    }
+
+    private String renderHeading(final int[] columnLenghts) {
+        final StringBuilder txt = new StringBuilder();
+        appendToken(txt, "#", ' ', columnLenghts[0], 0);
+        for (int colIdx = 0; colIdx < getColumnCount(); ++colIdx) {
+            txt.append("|");
+            appendToken(txt, columns.get(colIdx).getName(), ' ', columnLenghts[colIdx + 1], 0);
+        }
+        return txt.toString();
+    }
+
+    private String renderName() {
+        final StringBuilder txt = new StringBuilder(getName());
+        txt.append("\n");
+        appendPadding(txt, '=', getName().length());
+        txt.append("\n");
+        return txt.toString();
+    }
+
+    protected PRow addRow(final PRow row) {
+        lock();
+        rows.add(row);
+        return row;
     }
 
     protected void lock() {

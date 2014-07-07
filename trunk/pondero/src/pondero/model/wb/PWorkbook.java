@@ -33,8 +33,13 @@ public abstract class PWorkbook {
         return sheets.size();
     }
 
-    public Iterator<PSheet> iteratorSheets() {
+    public Iterator<? extends PSheet> iteratorSheets() {
         return sheets.iterator();
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 
     private Integer name2index(final String name) {
