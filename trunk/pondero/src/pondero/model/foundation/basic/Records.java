@@ -27,7 +27,7 @@ public class Records extends PSheet {
         addColumn(ATTR_TRIAL_ID, PType.STRING);
         addColumn(ATTR_TRIAL_TIMESTAMP, PType.TIMESTAMP);
         addColumn(ATTR_RESPONSE, PType.STRING);
-        addColumn(ATTR_RESPONSE_TIME, PType.FIXED);
+        addColumn(ATTR_RESPONSE_TIME, PType.DECIMAL);
         addColumn(ATTR_RESPONSE_CORRECT, PType.BOOLEAN);
         lock();
     }

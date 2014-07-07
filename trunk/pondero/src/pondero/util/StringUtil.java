@@ -69,8 +69,7 @@ public class StringUtil {
                 return DateUtil.toIsoTime(value);
             case TIMESTAMP:
                 return DateUtil.toIsoTimestamp(value);
-            case FIXED:
-            case FLOAT:
+            case DECIMAL:
             case BOOLEAN:
                 return toString(value);
             default:

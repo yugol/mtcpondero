@@ -78,6 +78,16 @@ public class DateUtil {
     }
 
     public static Long toMillis(final Object value) {
+        if (value instanceof Double) {
+            final double oadate = (double) value;
+            long num = (long) (oadate * 86400000.0 + (oadate >= 0.0 ? 0.5 : -0.5));
+            if (num < 0L) {
+                num -= num % 0x5265c00L * 2L;
+            }
+            num += 0x3680b5e1fc00L;
+            num -= 62135596800000L;
+            return num;
+        }
         if (value instanceof Number) { return ((Number) value).longValue(); }
         if (value instanceof Calendar) { return ((Calendar) value).getTimeInMillis(); }
         if (value instanceof String) { return parseIsoDate(((String) value).trim()).getTime(); }

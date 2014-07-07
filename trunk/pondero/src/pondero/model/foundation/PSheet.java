@@ -170,8 +170,7 @@ public abstract class PSheet {
         switch (type) {
             case STRING:
                 return -1;
-            case FIXED:
-            case FLOAT:
+            case DECIMAL:
                 return 1;
             case DATE:
             case TIME:

@@ -7,8 +7,7 @@ public enum PType {
 
     BOOLEAN (Boolean.class),
     DATE (Long.class),
-    FIXED (BigDecimal.class),
-    FLOAT (Double.class),
+    DECIMAL (BigDecimal.class),
     STRING (String.class),
     TIME (Long.class),
     TIMESTAMP (Long.class),
@@ -26,10 +25,8 @@ public enum PType {
         switch (this) {
             case BOOLEAN:
                 return r.nextBoolean();
-            case FIXED:
+            case DECIMAL:
                 return BigDecimal.valueOf(r.nextInt());
-            case FLOAT:
-                return r.nextDouble();
             case STRING:
                 final StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < r.nextInt(10); ++i) {
