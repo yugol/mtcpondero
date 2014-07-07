@@ -1,3 +1,10 @@
+- analytics
+- catalog online
+- tests
+- documenatation
+- Export / Analysis / Reports
+- Office???
+
 - primul caracter din textul licentei in programul de instalare este []
 - proper error message for trying to save over an opened xlsx file
 - warn replace existing file
