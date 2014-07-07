@@ -60,7 +60,7 @@ import pondero.ui.actions.StartDocumentAction;
 import pondero.ui.actions.StartTaskAction;
 import pondero.ui.actions.UpdateAction;
 import pondero.util.MsgUtil;
-import pondero.util.SysUtil;
+import pondero.util.SystemUtil;
 import pondero.util.UiUtil;
 
 public class Pondero implements Ponderable, WorkbookListener {
@@ -74,7 +74,7 @@ public class Pondero implements Ponderable, WorkbookListener {
      */
     public static void main(final String[] args) throws Exception {
         Globals.loadPreferences(args.length >= 1 ? args[0] : null);
-        SysUtil.configure();
+        SystemUtil.configure();
         REGISTERED_TESTS = TestLoader.loadTests();
         UiUtil.getAvailableLafs();
         UiUtil.setLaf();

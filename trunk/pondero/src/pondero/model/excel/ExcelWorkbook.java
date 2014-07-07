@@ -30,7 +30,7 @@ import pondero.model.participants.Participant;
 import pondero.model.participants.SurnameNameIdComparator;
 import pondero.util.DateUtil;
 import pondero.util.StringUtil;
-import pondero.util.SysUtil;
+import pondero.util.SystemUtil;
 
 // http://poi.apache.org/spreadsheet/quick-guide.html
 
@@ -264,9 +264,9 @@ public class ExcelWorkbook implements Workbook {
         workbook.write(tempOut);
         tempOut.close();
         String[] cmd = null;
-        if (SysUtil.isWindows()) {
+        if (SystemUtil.isWindows()) {
             cmd = new String[] { "cmd.exe", "/c", tempFile.getCanonicalPath() };
-        } else if (SysUtil.isMacOSX()) {
+        } else if (SystemUtil.isMacOSX()) {
             cmd = new String[] { "open", tempFile.getCanonicalPath() };
         }
         Runtime.getRuntime().exec(cmd);

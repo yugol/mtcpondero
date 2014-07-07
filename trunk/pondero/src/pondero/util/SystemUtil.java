@@ -2,7 +2,7 @@ package pondero.util;
 
 import pondero.L10n;
 
-public class SysUtil {
+public class SystemUtil {
 
     public static void configure() {
         if (isMacOSX()) {
