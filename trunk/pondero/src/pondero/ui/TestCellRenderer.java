@@ -7,8 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
-import pondero.UiUtil;
 import pondero.engine.test.Test;
+import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
 public class TestCellRenderer extends JPanel implements ListCellRenderer<Test> {

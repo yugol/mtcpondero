@@ -5,7 +5,6 @@ import java.awt.EventQueue;
 import java.util.List;
 import java.util.Stack;
 import java.util.UUID;
-import pondero.MsgUtil;
 import pondero.engine.elements.interfaces.HasFeedback.FeedbackStimulus;
 import pondero.engine.elements.interfaces.HasScreencolor;
 import pondero.engine.elements.interfaces.IsController;
@@ -17,6 +16,7 @@ import pondero.engine.test.launch.TaskMonitor;
 import pondero.engine.test.responses.Response;
 import pondero.model.entities.TrialRecord;
 import pondero.model.participants.Participant;
+import pondero.util.MsgUtil;
 
 public abstract class Test extends TestRenderer implements IsController {
 

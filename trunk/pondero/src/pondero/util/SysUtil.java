@@ -1,4 +1,6 @@
-package pondero;
+package pondero.util;
+
+import pondero.L10n;
 
 public class SysUtil {
 

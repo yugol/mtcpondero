@@ -3,12 +3,12 @@ package pondero.model.participants;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.UUID;
-import pondero.engine.staples.DateUtil;
 import pondero.model.entities.base.Column;
 import pondero.model.entities.base.Record;
 import pondero.model.entities.base.Sheet;
 import pondero.model.entities.domains.Education;
 import pondero.model.entities.domains.Gender;
+import pondero.util.DateUtil;
 
 @Sheet(name = "PARTICIPANTS")
 public class Participant extends Record {

@@ -5,11 +5,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import pondero.L10n;
-import pondero.MsgUtil;
 import pondero.model.participants.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
 import pondero.ui.participants.ParticipantSelectionDialog;
+import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
 public class ChooseParticipantAction extends PonderoAction {

@@ -15,9 +15,9 @@ import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import pondero.L10n;
-import pondero.UiUtil;
-import pondero.engine.staples.DateUtil;
 import pondero.update.Artifact;
+import pondero.util.DateUtil;
+import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
 public class ArtifactCellRenderer extends JPanel implements ListCellRenderer<Artifact> {

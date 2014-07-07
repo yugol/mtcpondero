@@ -1,4 +1,4 @@
-package pondero;
+package pondero.util;
 
 import static pondero.Logger.trace;
 import java.awt.Desktop;

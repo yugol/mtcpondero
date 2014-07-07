@@ -5,10 +5,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import pondero.Globals;
 import pondero.L10n;
-import pondero.MsgUtil;
 import pondero.model.Workbook;
 import pondero.model.excel.ExcelWorkbookFilter;
 import pondero.ui.Ponderable;
+import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
 public class SaveAsDocumentAction extends PonderoAction {

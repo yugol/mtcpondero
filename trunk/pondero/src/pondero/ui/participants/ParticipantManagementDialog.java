@@ -36,11 +36,11 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import pondero.Globals;
 import pondero.L10n;
-import pondero.MsgUtil;
-import pondero.engine.staples.StringUtil;
 import pondero.model.entities.domains.Education;
 import pondero.model.entities.domains.Gender;
 import pondero.model.participants.Participant;
+import pondero.util.MsgUtil;
+import pondero.util.StringUtil;
 import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")

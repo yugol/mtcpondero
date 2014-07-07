@@ -2,7 +2,6 @@ package pondero.engine.elements.trial;
 
 import java.util.HashSet;
 import java.util.Set;
-import pondero.SysUtil;
 import pondero.engine.elements.Element;
 import pondero.engine.elements.interfaces.HasFeedback;
 import pondero.engine.elements.interfaces.IsController;
@@ -10,13 +9,14 @@ import pondero.engine.elements.interfaces.IsStimulus;
 import pondero.engine.elements.interfaces.IsVisualStimulus;
 import pondero.engine.staples.Frame;
 import pondero.engine.staples.FrameSequence;
-import pondero.engine.staples.TimingUtil;
+import pondero.engine.staples.Timing;
 import pondero.engine.test.responses.KeyPressResponse;
 import pondero.engine.test.responses.Response;
 import pondero.engine.test.stimuli.Stimulus;
 import pondero.engine.test.stimuli.VisualStimulus;
 import pondero.ui.tests.TestCanvas;
 import pondero.ui.tests.TestScene;
+import pondero.util.SysUtil;
 
 public class Trial extends Element implements HasFeedback, IsController {
 
@@ -67,11 +67,11 @@ public class Trial extends Element implements HasFeedback, IsController {
             public void run() {
 
                 if (!doStatus.stimulusPresented) {
-                    TimingUtil.pause(pretrialpause);
+                    Timing.pause(pretrialpause);
                     long prevFrameIndex = 0;
                     for (final Frame frame : stimulustimes) {
                         final long wait = frame.getIndex() - prevFrameIndex;
-                        TimingUtil.pause(wait);
+                        Timing.pause(wait);
                         putVisualStimuli(frame);
                         prevFrameIndex = frame.getIndex();
                         test.presentStimuli();
@@ -103,7 +103,7 @@ public class Trial extends Element implements HasFeedback, IsController {
                                     test.addVisualStimulus((VisualStimulus) actualStimulus);
                                 }
                                 test.presentStimuli();
-                                TimingUtil.pause(fb.getDuration());
+                                Timing.pause(fb.getDuration());
                                 if (eltStimulus instanceof IsVisualStimulus) {
                                     test.removeVisualStimulus((VisualStimulus) actualStimulus);
                                 }
@@ -114,7 +114,7 @@ public class Trial extends Element implements HasFeedback, IsController {
                 }
 
                 if (passed) {
-                    TimingUtil.pause(posttrialpause);
+                    Timing.pause(posttrialpause);
                     _doEnd();
                 }
             }

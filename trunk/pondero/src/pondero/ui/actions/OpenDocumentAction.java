@@ -7,12 +7,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import pondero.Globals;
 import pondero.L10n;
-import pondero.MsgUtil;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.model.excel.ExcelWorkbookFilter;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
+import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
 public class OpenDocumentAction extends PonderoAction {

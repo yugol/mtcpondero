@@ -2,7 +2,7 @@ package pondero.engine.staples;
 
 import static pondero.Logger.error;
 
-public class TimingUtil {
+public class Timing {
 
     public static void pause(final long millis) {
         if (millis > 0) {

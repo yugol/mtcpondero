@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
-import pondero.engine.staples.StringUtil;
 import pondero.engine.test.CodeNameComparator;
 import pondero.engine.test.Test;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.update.Artifact;
+import pondero.util.StringUtil;
 
 public final class Globals {
 

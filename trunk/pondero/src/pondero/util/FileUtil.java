@@ -1,7 +1,8 @@
-package pondero;
+package pondero.util;
 
 import static pondero.Logger.error;
 import java.io.File;
+import pondero.Globals;
 
 public class FileUtil {
 

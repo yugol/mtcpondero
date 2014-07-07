@@ -5,10 +5,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.Globals;
 import pondero.L10n;
-import pondero.MsgUtil;
-import pondero.WebUtil;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
+import pondero.util.MsgUtil;
+import pondero.util.WebUtil;
 
 @SuppressWarnings("serial")
 public class HomePageAction extends PonderoAction {

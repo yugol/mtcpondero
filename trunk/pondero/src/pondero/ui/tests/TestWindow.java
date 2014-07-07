@@ -8,9 +8,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-import pondero.UiUtil;
 import pondero.engine.elements.other.Page;
 import pondero.engine.test.Test;
+import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
 public class TestWindow extends JFrame {
