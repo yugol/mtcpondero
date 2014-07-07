@@ -14,4 +14,9 @@ public class NumberUtil {
         throw new UnsupportedOperationException("toFloat for " + value.getClass().getName());
     }
 
+    public static Integer toInteger(final Object value) {
+        if (value != null) { return ((Number) value).intValue(); }
+        return null;
+    }
+
 }

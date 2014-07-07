@@ -20,6 +20,12 @@ public class DateUtil {
         return Calendar.getInstance().get(Calendar.YEAR);
     }
 
+    public static Date getDate(final Object value) {
+        if (value instanceof Date) { return (Date) value; }
+        if (value instanceof Number) { return new Date(((Number) value).longValue()); }
+        return null;
+    }
+
     public static Calendar parseIsoDate(final String str) {
         try {
             if (StringUtil.isNullOrBlank(str)) { return null; }
@@ -31,6 +37,16 @@ public class DateUtil {
             error(e);
             return null;
         }
+    }
+
+    public static Calendar toCalendar(final Object value) {
+        if (value instanceof Calendar) { return (Calendar) value; }
+        if (value instanceof Number) {
+            final Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(((Number) value).longValue());
+            return cal;
+        }
+        return null;
     }
 
     public static String toCompactDate(final Object value) {
