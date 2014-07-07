@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class NumberUtil {
 
     public static BigDecimal toFixed(final Object value) {
-        if (value instanceof BigDecimal) { return (BigDecimal) value; }
+        if (value instanceof Integer) { return BigDecimal.valueOf((Integer) value); }
         throw new UnsupportedOperationException("toFixed for " + value.getClass().getName());
     }
 

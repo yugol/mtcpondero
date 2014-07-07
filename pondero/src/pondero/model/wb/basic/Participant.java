@@ -4,14 +4,19 @@ import static pondero.Logger.error;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import pondero.model.entities.domains.Education;
 import pondero.model.entities.domains.Gender;
 import pondero.model.participants.ParticipantGenerator;
 import pondero.model.wb.PRow;
 import pondero.model.wb.PSheet;
+import pondero.util.DateUtil;
 import pondero.util.StringUtil;
 
 public class Participant extends PRow {
@@ -45,6 +50,56 @@ public class Participant extends PRow {
 
     Participant(final PSheet sheet) {
         super(sheet);
+        setId(UUID.randomUUID().toString());
+    }
+
+    public Integer getAge() {
+        final Calendar dob = getDob();
+        if (dob != null) {
+            final int dobYear = dob.get(Calendar.YEAR);
+            return DateUtil.getCurrentYear() - dobYear;
+        }
+        return null;
+    }
+
+    public Calendar getDob() {
+        return (Calendar) get(Participants.ATTR_DOB);
+    }
+
+    public Integer getDrivingAge() {
+        final BigDecimal drivingAge = (BigDecimal) get(Participants.ATTR_DRIVING_AGE);
+        if (drivingAge != null) {
+            drivingAge.intValueExact();
+        }
+        return null;
+    }
+
+    public Education getEducation() {
+        final String education = (String) get(Participants.ATTR_EDUCATION);
+        return Education.parse(education);
+    }
+
+    public Gender getGender() {
+        final String gender = (String) get(Participants.ATTR_GENDER);
+        return Gender.parse(gender);
+    }
+
+    public String getId() {
+        return (String) get(Participants.ATTR_ID);
+    }
+
+    public Integer getMileage() {
+        final BigDecimal mileage = (BigDecimal) get(Participants.ATTR_MILEAGE);
+        if (mileage != null) { return mileage.intValue(); }
+        return null;
+    }
+
+    public String getName() {
+        return (String) get(Participants.ATTR_NAME);
+    }
+
+    public String getSurname() {
+        return (String) get(Participants.ATTR_SURNAME);
     }
 
     public void randomize() {
@@ -106,48 +161,64 @@ public class Participant extends PRow {
         setMileage(mileage);
     }
 
-    private int getAge() {
-        // TODO Auto-generated method stub
-        return 0;
+    public void setAge(final Integer value) {
+        setDob(new GregorianCalendar(DateUtil.getCurrentYear() - value, Calendar.JANUARY, 1));
     }
 
-    private Gender getGender() {
-        // TODO Auto-generated method stub
-        return null;
+    public void setDob(final Calendar value) {
+        set(Participants.ATTR_DOB, value);
     }
 
-    private void setAge(final int i) {
-        // TODO Auto-generated method stub
-
+    public void setDrivingAge(final Integer value) {
+        set(Participants.ATTR_DRIVING_AGE, value);
     }
 
-    private void setDrivingAge(final int drivingAge) {
-        // TODO Auto-generated method stub
-
+    public void setEducation(final Education value) {
+        set(Participants.ATTR_EDUCATION, value.code);
     }
 
-    private void setEducation(final Education phd) {
-        // TODO Auto-generated method stub
-
+    public void setGender(final Gender value) {
+        set(Participants.ATTR_GENDER, value.code);
     }
 
-    private void setGender(final Gender gender) {
-        set(Participants.ATTR_GENDER, gender.code);
+    public void setId(final int id) {
+        setId(String.valueOf(id));
     }
 
-    private void setMileage(final int mileage) {
-        // TODO Auto-generated method stub
-
+    public void setId(final String value) {
+        set(Participants.ATTR_ID, value);
     }
 
-    private void setName(final String string) {
-        // TODO Auto-generated method stub
-
+    public void setMileage(final Integer value) {
+        set(Participants.ATTR_MILEAGE, value);
     }
 
-    private void setSurname(final String string) {
-        // TODO Auto-generated method stub
+    public void setName(final String value) {
+        set(Participants.ATTR_NAME, value);
+    }
 
+    public void setSurname(final String value) {
+        set(Participants.ATTR_SURNAME, value);
+    }
+
+    @Override
+    public String toCsv() {
+        final StringBuilder csv = new StringBuilder();
+        csv.append(getId()).append(", ");
+        csv.append(getSurname()).append(", ");
+        csv.append(getName()).append(", ");
+        csv.append(getDob()).append(", ");
+        csv.append(getAge()).append(", ");
+        csv.append(getGender()).append(", ");
+        csv.append(getEducation()).append(", ");
+        csv.append(getDrivingAge()).append(", ");
+        csv.append(getMileage());
+        return csv.toString();
+    }
+
+    @Override
+    public String toString() {
+        return getSurname() + ", " + getName() + " (" + getId() + ")";
     }
 
 }

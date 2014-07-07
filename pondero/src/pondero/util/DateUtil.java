@@ -9,11 +9,12 @@ import pondero.Globals;
 
 public class DateUtil {
 
-    public static final SimpleDateFormat  ISO_DATE_FORMATTER     = new SimpleDateFormat("yyyy-MM-dd");
-    public static final SimpleDateFormat  ISO_TIME_FORMATTER     = new SimpleDateFormat("HH:mm:ss");
-    private static final SimpleDateFormat COMPACT_DATE_FORMATTER = new SimpleDateFormat("yyyyMMdd");
-    private static final SimpleDateFormat COMPACT_TIME_FORMATTER = new SimpleDateFormat("HHmmss");
-    private static final DateFormat       DATE_UI_FORMATTER      = DateFormat.getDateInstance(DateFormat.LONG, Globals.getLocale());
+    public static final SimpleDateFormat  ISO_DATE_FORMATTER      = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat  ISO_TIME_FORMATTER      = new SimpleDateFormat("HH:mm:ss");
+    public static final SimpleDateFormat  ISO_TIMESTAMP_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final SimpleDateFormat COMPACT_DATE_FORMATTER  = new SimpleDateFormat("yyyyMMdd");
+    private static final SimpleDateFormat COMPACT_TIME_FORMATTER  = new SimpleDateFormat("HHmmss");
+    private static final DateFormat       DATE_UI_FORMATTER       = DateFormat.getDateInstance(DateFormat.LONG, Globals.getLocale());
 
     public static int getCurrentYear() {
         return Calendar.getInstance().get(Calendar.YEAR);
@@ -40,6 +41,11 @@ public class DateUtil {
         return COMPACT_TIME_FORMATTER.format(new Date(time));
     }
 
+    public static Calendar toDate(final Object value) {
+        if (value instanceof Calendar) { return (Calendar) value; }
+        throw new UnsupportedOperationException("toSqlDate for " + value.getClass().getName());
+    }
+
     public static String toIsoDate(final Calendar cal) {
         return toIsoDate(cal.getTimeInMillis());
     }
@@ -48,22 +54,29 @@ public class DateUtil {
         return ISO_DATE_FORMATTER.format(new Date(time));
     }
 
+    public static String toIsoTime(final Calendar cal) {
+        return toIsoTime(cal.getTimeInMillis());
+    }
+
     public static String toIsoTime(final long time) {
         return ISO_TIME_FORMATTER.format(new Date(time));
     }
 
-    public static java.sql.Date toSqlDate(final Object value) {
-        if (value instanceof java.sql.Date) { return (java.sql.Date) value; }
-        throw new UnsupportedOperationException("toSqlDate for " + value.getClass().getName());
+    public static String toIsoTimestamp(final Calendar cal) {
+        return toIsoTimestamp(cal.getTimeInMillis());
     }
 
-    public static java.sql.Time toSqlTime(final Object value) {
-        if (value instanceof java.sql.Time) { return (java.sql.Time) value; }
+    public static String toIsoTimestamp(final long time) {
+        return ISO_TIMESTAMP_FORMATTER.format(new Date(time));
+    }
+
+    public static Calendar toTime(final Object value) {
+        if (value instanceof Calendar) { return (Calendar) value; }
         throw new UnsupportedOperationException("toSqlTime for " + value.getClass().getName());
     }
 
-    public static java.sql.Timestamp toSqlTimestamp(final Object value) {
-        if (value instanceof java.sql.Timestamp) { return (java.sql.Timestamp) value; }
+    public static Calendar toTimestamp(final Object value) {
+        if (value instanceof Calendar) { return (Calendar) value; }
         throw new UnsupportedOperationException("toSqlTimestamp for " + value.getClass().getName());
     }
 

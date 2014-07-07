@@ -1,9 +1,7 @@
 package pondero.model.wb;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 public enum PType {
 
@@ -11,9 +9,9 @@ public enum PType {
     FIXED (BigDecimal.class),
     FLOAT (Double.class),
     STRING (String.class),
-    DATE (Date.class),
-    TIME (Time.class),
-    TIMESTAMP (Timestamp.class),
+    DATE (Calendar.class),
+    TIME (Calendar.class),
+    TIMESTAMP (Calendar.class),
 
     ;
 

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import pondero.util.StringUtil;
 
 public class PSheet {
 
@@ -91,7 +92,9 @@ public class PSheet {
     public String toString() {
         final StringBuilder txt = new StringBuilder();
         txt.append(renderName());
+        txt.append("\n");
         txt.append(renderColumns());
+        txt.append("\n");
         final int[] columnLenghts = new int[1 + getColumnCount()];
         columnLenghts[0] = String.valueOf(getRowCount()).length();
         for (int colIdx = 0; colIdx < getColumnCount(); ++colIdx) {
@@ -104,7 +107,7 @@ public class PSheet {
                 final Object value = get(rowIdx, colIdx);
                 String valueString = "-";
                 if (value != null) {
-                    valueString = String.valueOf(value);
+                    valueString = StringUtil.toString(value, getColumn(colIdx).getType());
                 }
                 data[rowIdx][colIdx] = valueString;
                 if (valueString.length() > columnLenghts[colIdx + 1]) {
@@ -119,7 +122,7 @@ public class PSheet {
             appendToken(txt, String.valueOf(rowIdx + 1), ' ', columnLenghts[0], 1);
             for (int colIdx = 0; colIdx < getColumnCount(); ++colIdx) {
                 txt.append("|");
-                appendToken(txt, data[rowIdx][colIdx], ' ', columnLenghts[1 + colIdx], -1);
+                appendToken(txt, data[rowIdx][colIdx], ' ', columnLenghts[1 + colIdx], getAlignment(getColumn(colIdx).getType()));
             }
             txt.append("\n");
         }
@@ -155,6 +158,22 @@ public class PSheet {
         txt.append(token);
         appendPadding(txt, padding, after);
         return txt;
+    }
+
+    private int getAlignment(final PType type) {
+        switch (type) {
+            case STRING:
+                return -1;
+            case FIXED:
+            case FLOAT:
+                return 1;
+            case ANY:
+            case DATE:
+            case TIME:
+            case TIMESTAMP:
+            default:
+                return 0;
+        }
     }
 
     private int getMaxColumnNameLength() {
