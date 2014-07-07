@@ -30,7 +30,11 @@ public class PSheet {
     }
 
     public PColumn addColumn(final String name) {
-        return addColumn(new PColumn(this, name));
+        return addColumn(name, PType.ANY);
+    }
+
+    public PColumn addColumn(final String name, final PType type) {
+        return addColumn(new PColumn(this, name, type));
     }
 
     public PRow addRow(final PRow row) {
@@ -52,18 +56,14 @@ public class PSheet {
     }
 
     public PColumn getSheet(final String name) {
-        return getColumn(name2index(name));
+        return getColumn(index(name));
     }
 
     public PWorkbook getWorkbook() {
         return workbook;
     }
 
-    public Iterator<PColumn> itera1torColumns() {
-        return columns.iterator();
-    }
-
-    private int name2index(final String name) {
+    public int index(final String name) {
         if (name2index == null) {
             name2index = new HashMap<String, Integer>();
             for (int i = 0; i < columns.size(); ++i) {
@@ -71,6 +71,10 @@ public class PSheet {
             }
         }
         return name2index.get(name);
+    }
+
+    public Iterator<PColumn> itera1torColumns() {
+        return columns.iterator();
     }
 
     protected void lock() {
