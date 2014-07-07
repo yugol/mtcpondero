@@ -25,8 +25,8 @@ public class Participants extends PSheet {
         addColumn(ATTR_DOB, PType.DATE);
         addColumn(ATTR_GENDER, PType.STRING);
         addColumn(ATTR_EDUCATION, PType.STRING);
-        addColumn(ATTR_DRIVING_AGE, PType.FIXED);
-        addColumn(ATTR_MILEAGE, PType.FIXED);
+        addColumn(ATTR_DRIVING_AGE, PType.DECIMAL);
+        addColumn(ATTR_MILEAGE, PType.DECIMAL);
         lock();
     }
 

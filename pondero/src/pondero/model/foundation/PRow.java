@@ -37,11 +37,8 @@ public abstract class PRow {
                 case TIMESTAMP:
                     data[index] = DateUtil.toMillis(value);
                     break;
-                case FIXED:
-                    data[index] = NumberUtil.toFixed(value);
-                    break;
-                case FLOAT:
-                    data[index] = NumberUtil.toFloat(value);
+                case DECIMAL:
+                    data[index] = NumberUtil.toDecimal(value);
                     break;
                 default:
                     throw new IllegalArgumentException("Unsupported type " + value.getClass().getName());
@@ -84,7 +81,7 @@ public abstract class PRow {
     }
 
     protected Integer getInteger(final int index) {
-        return NumberUtil.toInteger(get(index));
+        return NumberUtil.toDecimal(get(index)).intValue();
     }
 
     protected Integer getInteger(final String name) {
