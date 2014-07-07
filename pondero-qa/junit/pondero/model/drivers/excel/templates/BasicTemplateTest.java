@@ -26,7 +26,7 @@ public class BasicTemplateTest {
         xlsx.open();
         final BasicModel model = new BasicModel("abc");
         final Participants ps = model.getParticipants();
-        for (int i = 1; i <= 10; ++i) {
+        for (int i = 1; i <= 100; ++i) {
             final Participant p = ps.addRow();
             p.randomize();
             p.setId(i);
