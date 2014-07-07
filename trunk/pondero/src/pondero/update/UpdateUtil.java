@@ -149,7 +149,7 @@ public class UpdateUtil {
             Artifact aDesc = new Artifact(artifactType, id, Integer.parseInt(major), Integer.parseInt(minor), maturity);
             aDesc.setProtected(isProtected);
             aDesc.setMandatory(mandatory);
-            aDesc.setReleaseDate(DateUtil.parseIsoDate(releaseDate));
+            aDesc.setReleaseDate(DateUtil.parseIsoCalendar(releaseDate));
             aDesc.setPasswordHash(passwordHash);
             aDesc.setUrl(url);
             return aDesc;

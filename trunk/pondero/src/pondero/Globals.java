@@ -54,60 +54,69 @@ public final class Globals {
     private static boolean             updateOnStartup          = false;
     private static double              uiFontScaleFactor        = 1.25;
 
-    public static boolean backupWorkbookOnOpen() {
-        return true;
-    }
-
     public static Set<Artifact> getArtifacts() {
+        enable();
         return artifacts;
     }
 
     public static Workbook getDefaultWorkbook() throws Exception {
+        enable();
         return WorkbookFactory.openWorkbook(Globals.getDefaultWorkbookFile());
     }
 
     public static File getDefaultWorkbookFile() {
+        enable();
         return new File(getFolderResults(), DEFAULT_WORKBOOK_NAME);
     }
 
     public static File getFolderBin() {
+        enable();
         return getFolder("bin");
     }
 
     public static File getFolderLogs() {
+        enable();
         return getFolder("logs");
     }
 
     public static File getFolderRes() {
+        enable();
         return getFolder("res");
     }
 
     public static File getFolderResults() {
+        enable();
         return getFolder("results");
     }
 
     public static File getFolderResultsBackup() {
+        enable();
         return getFolder("results/backup");
     }
 
     public static File getFolderResultsTemp() {
+        enable();
         return getFolder("results/temp");
     }
 
     public static File getFolderTests() {
+        enable();
         return getFolder("tests");
     }
 
     public static File getLastWorkbookFile() {
+        enable();
         if (lastWorkbookFile != null) { return lastWorkbookFile; }
         return getDefaultWorkbookFile();
     }
 
     public static Locale getLocale() {
+        enable();
         return new Locale(uiLocaleString);
     }
 
     public static List<Test> getRegisteredTests() {
+        enable();
         final List<Test> tests = new ArrayList<Test>();
         for (final Object artifact : artifacts) {
             if (artifact instanceof Test) {
@@ -119,22 +128,32 @@ public final class Globals {
     }
 
     public static String getThemeString() {
+        enable();
         return uiThemeString;
     }
 
     public static double getUiFontScaleFactor() {
+        enable();
         return uiFontScaleFactor;
     }
 
+    public static boolean isBackupWorkbookOnOpen() {
+        enable();
+        return true;
+    }
+
     public static boolean isParticipantOptional() {
+        enable();
         return isRunningFromIde() && false;
     }
 
     public static boolean isRunningFromIde() {
+        enable();
         return runningFromIde;
     }
 
     public static boolean isUpdateOnStartup() {
+        enable();
         return updateOnStartup;
     }
 
@@ -204,12 +223,14 @@ public final class Globals {
     }
 
     public static void registerArtifact(final Artifact artifact) {
+        enable();
         if (artifact != null && artifacts.add(artifact)) {
             info("registered artifact: " + artifact.getCodeName());
         }
     }
 
     public static void savePreferences() throws Exception {
+        enable();
         final Properties properties = new Properties();
         properties.setProperty(CONSOLE_LOG_LEVEL_KEY, String.valueOf(Logger.maxConsoleLevel));
         properties.setProperty(FILE_LOG_LEVEL_KEY, String.valueOf(Logger.maxFileLevel));
@@ -226,6 +247,7 @@ public final class Globals {
     }
 
     public static void setLastWorkbookFile(final File file) {
+        enable();
         lastWorkbookFile = file;
         try {
             savePreferences();
@@ -235,15 +257,28 @@ public final class Globals {
     }
 
     public static void setLocale(final Locale value) {
+        enable();
         uiLocaleString = value.toString();
     }
 
     public static void setUiFontScaleFactor(final Double value) {
+        enable();
         uiFontScaleFactor = value;
     }
 
     public static void setUiThemeString(final String value) {
+        enable();
         uiThemeString = value;
+    }
+
+    private static void enable() {
+        if (homeFolder == null) {
+            try {
+                loadPreferences(null);
+            } catch (final Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static File getFolder(final String name) {

@@ -32,8 +32,9 @@ public class Records extends PSheet {
         lock();
     }
 
-    public TrialRecord addRow(final String experimentId) {
-        return (TrialRecord) addRow(new TrialRecord(this, experimentId));
+    @Override
+    public TrialRecord addRow() {
+        return (TrialRecord) addRow(new TrialRecord(this));
     }
 
     @Override

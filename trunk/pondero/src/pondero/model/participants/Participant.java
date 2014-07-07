@@ -113,7 +113,7 @@ public class Participant extends Record {
     }
 
     public void setDob(final String dob) {
-        this.dob = DateUtil.parseIsoDate(dob);
+        this.dob = DateUtil.parseIsoCalendar(dob);
     }
 
     public void setDrivingAge(final int drivingAge) {
