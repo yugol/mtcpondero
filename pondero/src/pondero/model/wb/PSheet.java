@@ -8,15 +8,15 @@ import pondero.util.StringUtil;
 
 public class PSheet {
 
-    private final PWorkbook                workbook;
+    private final PModel                   model;
     private final String                   name;
     private final List<PColumn>            columns    = new ArrayList<PColumn>();
     private final List<PRow>               rows       = new ArrayList<PRow>();
     private transient Map<String, Integer> name2index = null;
     private boolean                        locked     = false;
 
-    public PSheet(final PWorkbook workbook, final String name) {
-        this.workbook = workbook;
+    public PSheet(final PModel model, final String name) {
+        this.model = model;
         this.name = name;
     }
 
@@ -54,6 +54,10 @@ public class PSheet {
         return columns.size();
     }
 
+    public PModel getModel() {
+        return model;
+    }
+
     public String getName() {
         return name;
     }
@@ -68,10 +72,6 @@ public class PSheet {
 
     public PColumn getSheet(final String name) {
         return getColumn(index(name));
-    }
-
-    public PWorkbook getWorkbook() {
-        return workbook;
     }
 
     public int index(final String name) {
@@ -233,7 +233,7 @@ public class PSheet {
     }
 
     void setDirty(final boolean flag) {
-        workbook.setDirty(flag);
+        model.setDirty(flag);
     }
 
 }

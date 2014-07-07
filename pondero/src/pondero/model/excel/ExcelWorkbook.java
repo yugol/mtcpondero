@@ -24,7 +24,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import pondero.Globals;
 import pondero.model.Workbook;
-import pondero.model.WorkbookListener;
+import pondero.model.ModelListener;
 import pondero.model.entities.base.Record;
 import pondero.model.participants.Participant;
 import pondero.model.participants.SurnameNameIdComparator;
@@ -46,7 +46,7 @@ public class ExcelWorkbook implements Workbook {
     private final CellStyle                      oddStyle;
     private final CellStyle                      evenStyle;
 
-    private final List<WorkbookListener>         workbookListeners      = new ArrayList<WorkbookListener>();
+    private final List<ModelListener>         workbookListeners      = new ArrayList<ModelListener>();
 
     public ExcelWorkbook() throws Exception {
         this("implicit.xlsx");
@@ -127,7 +127,7 @@ public class ExcelWorkbook implements Workbook {
     }
 
     @Override
-    public void addWorkbookListener(final WorkbookListener listener) {
+    public void addWorkbookListener(final ModelListener listener) {
         if (!workbookListeners.contains(listener)) {
             workbookListeners.add(listener);
         }
@@ -371,7 +371,7 @@ public class ExcelWorkbook implements Workbook {
     private void setDirty(final boolean dirty) {
         if (this.dirty != dirty) {
             this.dirty = dirty;
-            for (final WorkbookListener listener : workbookListeners) {
+            for (final ModelListener listener : workbookListeners) {
                 listener.onDirtyFlagChanged(dirty);
             }
         }

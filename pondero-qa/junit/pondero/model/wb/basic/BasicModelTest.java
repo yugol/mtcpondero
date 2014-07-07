@@ -2,11 +2,11 @@ package pondero.model.wb.basic;
 
 import org.junit.Test;
 
-public class BasicWorkbookTest {
+public class BasicModelTest {
 
     @Test
     public void testParticipants() {
-        final BasicWorkbook wb = new BasicWorkbook("My Workbook");
+        final BasicModel wb = new BasicModel("My Workbook");
 
         final Participants ps = wb.getParticipants();
         for (int i = 1; i <= 10; ++i) {

@@ -2,7 +2,7 @@ package pondero.model.wb.basic;
 
 import pondero.model.wb.PSheet;
 import pondero.model.wb.PType;
-import pondero.model.wb.PWorkbook;
+import pondero.model.wb.PModel;
 
 public class Records extends PSheet {
 
@@ -17,8 +17,8 @@ public class Records extends PSheet {
     public static final String ATTR_RESPONSE_TIME       = "RESPONSE_TIME";
     public static final String ATTR_RESPONSE_CORRECT    = "RESPONSE_CORRECT";
 
-    Records(final PWorkbook workbook, final String name) {
-        super(workbook, name);
+    Records(final PModel model, final String name) {
+        super(model, name);
         addColumn(ATTR_PARTICIPANT_SURNAME, PType.STRING);
         addColumn(ATTR_PARTICIPANT_NAME, PType.STRING);
         addColumn(ATTR_PARTICIPANT_ID, PType.STRING);
