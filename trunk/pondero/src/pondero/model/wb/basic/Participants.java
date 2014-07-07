@@ -30,9 +30,13 @@ public class Participants extends PSheet {
         lock();
     }
 
-    @Override
     public Participant addRow() {
         return (Participant) addRow(new Participant(this));
+    }
+
+    @Override
+    public Participant getRow(final int index) {
+        return (Participant) super.getRow(index);
     }
 
 }

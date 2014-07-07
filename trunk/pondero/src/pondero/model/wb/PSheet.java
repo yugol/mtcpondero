@@ -2,7 +2,6 @@ package pondero.model.wb;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import pondero.util.StringUtil;
@@ -38,12 +37,12 @@ public class PSheet {
         return addColumn(new PColumn(this, name, type));
     }
 
-    public PRow addRow() {
-        return addRow(new PRow(this));
-    }
-
     public Object get(final int rowIdx, final int colIdx) {
         return rows.get(rowIdx).get(colIdx);
+    }
+
+    public Object get(final int rowIdx, final String colId) {
+        return rows.get(rowIdx).get(index(colId));
     }
 
     public PColumn getColumn(final int index) {
@@ -56,6 +55,10 @@ public class PSheet {
 
     public String getName() {
         return name;
+    }
+
+    public PRow getRow(final int index) {
+        return rows.get(index);
     }
 
     public int getRowCount() {
@@ -78,14 +81,6 @@ public class PSheet {
             }
         }
         return name2index.get(name);
-    }
-
-    public Iterator<PColumn> iteratorColumns() {
-        return columns.iterator();
-    }
-
-    public Iterator<? extends PRow> iteratorRows() {
-        return rows.iterator();
     }
 
     @Override
@@ -126,7 +121,7 @@ public class PSheet {
             }
             txt.append("\n");
         }
-        if (getRowCount() > 10) {
+        if (getRowCount() > 3) {
             appendPadding(txt, '-', heading.length()).append("\n");
             txt.append(heading).append("\n");
         }

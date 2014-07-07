@@ -2,7 +2,6 @@ package pondero.model.wb;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +13,12 @@ public abstract class PWorkbook {
 
     public PWorkbook(final String name) {
         this.name = name;
+    }
+
+    public PSheet addSheet(final PSheet sheet) {
+        name2index = null;
+        sheets.add(sheet);
+        return sheet;
     }
 
     public String getName() {
@@ -33,10 +38,6 @@ public abstract class PWorkbook {
         return sheets.size();
     }
 
-    public Iterator<? extends PSheet> iteratorSheets() {
-        return sheets.iterator();
-    }
-
     @Override
     public String toString() {
         return getName();
@@ -50,16 +51,6 @@ public abstract class PWorkbook {
             }
         }
         return name2index.get(name);
-    }
-
-    protected PSheet addSheet(final PSheet sheet) {
-        name2index = null;
-        sheets.add(sheet);
-        return sheet;
-    }
-
-    protected PSheet addSheet(final String name) {
-        return addSheet(new PSheet(this, name));
     }
 
 }
