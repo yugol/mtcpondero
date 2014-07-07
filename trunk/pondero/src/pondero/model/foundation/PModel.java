@@ -1,4 +1,4 @@
-package pondero.model.wb;
+package pondero.model.foundation;
 
 import java.util.ArrayList;
 import java.util.HashMap;

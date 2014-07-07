@@ -1,6 +1,6 @@
 package pondero.util;
 
-import pondero.model.wb.PType;
+import pondero.model.foundation.PType;
 
 public class StringUtil {
 

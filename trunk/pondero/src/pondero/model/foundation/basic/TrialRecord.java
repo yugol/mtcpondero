@@ -1,9 +1,9 @@
-package pondero.model.wb.basic;
+package pondero.model.foundation.basic;
 
 import java.util.Date;
+import pondero.model.foundation.PRow;
+import pondero.model.foundation.PSheet;
 import pondero.model.participants.Participant;
-import pondero.model.wb.PRow;
-import pondero.model.wb.PSheet;
 
 public class TrialRecord extends PRow {
 

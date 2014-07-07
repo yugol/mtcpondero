@@ -1,4 +1,4 @@
-package pondero.model.wb.basic;
+package pondero.model.foundation.basic;
 
 import static pondero.Logger.error;
 import java.io.BufferedReader;
@@ -12,9 +12,9 @@ import java.util.Random;
 import java.util.UUID;
 import pondero.model.entities.domains.Education;
 import pondero.model.entities.domains.Gender;
+import pondero.model.foundation.PRow;
+import pondero.model.foundation.PSheet;
 import pondero.model.participants.ParticipantGenerator;
-import pondero.model.wb.PRow;
-import pondero.model.wb.PSheet;
 import pondero.util.DateUtil;
 import pondero.util.StringUtil;
 

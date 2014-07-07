@@ -1,4 +1,4 @@
-package pondero.model.wb;
+package pondero.model.foundation;
 
 import java.util.Calendar;
 import java.util.Date;
