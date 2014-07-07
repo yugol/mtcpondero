@@ -21,4 +21,8 @@ public class StringUtil {
         return foo;
     }
 
+    public static String toString(final Object value) {
+        return String.valueOf(value);
+    }
+
 }

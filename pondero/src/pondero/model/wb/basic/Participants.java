@@ -17,7 +17,7 @@ public class Participants extends PSheet {
     public static final String ATTR_DRIVING_AGE = "DRIVING_AGE";
     public static final String ATTR_MILEAGE     = "MILEAGE";
 
-    public Participants(final PWorkbook workbook) {
+    Participants(final PWorkbook workbook) {
         super(workbook, NAME);
         addColumn(ATTR_ID, PType.STRING);
         addColumn(ATTR_SURNAME, PType.STRING);
@@ -28,6 +28,11 @@ public class Participants extends PSheet {
         addColumn(ATTR_DRIVING_AGE, PType.FIXED);
         addColumn(ATTR_MILEAGE, PType.FIXED);
         lock();
+    }
+
+    @Override
+    public Participant addRow() {
+        return (Participant) addRow(new Participant(this));
     }
 
 }
