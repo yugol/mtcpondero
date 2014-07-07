@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class PWorkbook {
+public abstract class PWorkbook {
 
     private final String                   name;
     private final List<PSheet>             sheets     = new ArrayList<PSheet>();
@@ -16,21 +16,12 @@ public class PWorkbook {
         this.name = name;
     }
 
-    public PSheet addSheet(final PSheet sheet) {
-        name2index = null;
-        sheets.add(sheet);
-        return sheet;
-    }
-
-    public PSheet addSheet(final String name) {
-        return addSheet(new PSheet(this, name));
-    }
-
     public String getName() {
         return name;
     }
 
-    public PSheet getSheet(final int index) {
+    public PSheet getSheet(final Integer index) {
+        if (index == null) { return null; }
         return sheets.get(index);
     }
 
@@ -46,7 +37,7 @@ public class PWorkbook {
         return sheets.iterator();
     }
 
-    private int name2index(final String name) {
+    private Integer name2index(final String name) {
         if (name2index == null) {
             name2index = new HashMap<String, Integer>();
             for (int i = 0; i < sheets.size(); ++i) {
@@ -54,6 +45,16 @@ public class PWorkbook {
             }
         }
         return name2index.get(name);
+    }
+
+    protected PSheet addSheet(final PSheet sheet) {
+        name2index = null;
+        sheets.add(sheet);
+        return sheet;
+    }
+
+    protected PSheet addSheet(final String name) {
+        return addSheet(new PSheet(this, name));
     }
 
 }
