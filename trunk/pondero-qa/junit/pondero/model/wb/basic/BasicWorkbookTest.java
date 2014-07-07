@@ -8,8 +8,11 @@ public class BasicWorkbookTest {
     public void testBasicWorkbook() {
         final BasicWorkbook wb = new BasicWorkbook("My Workbook");
         final Participants ps = wb.getParticipants();
-        final Participant p = ps.addRow();
-        p.randomize();
+        for (int i = 1; i <= 100; ++i) {
+            final Participant p = ps.addRow();
+            p.setId(i);
+            p.randomize();
+        }
         System.out.println(ps);
     }
 
