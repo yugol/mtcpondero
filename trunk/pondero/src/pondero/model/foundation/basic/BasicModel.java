@@ -6,6 +6,7 @@ public class BasicModel extends PModel {
 
     public BasicModel(final String name) {
         super(name);
+        getParticipants(); // this must be the first sheet
     }
 
     public Participants getParticipants() {
