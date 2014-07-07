@@ -24,6 +24,7 @@ public class PSheet {
         if (!locked) {
             name2index = null;
             columns.add(column);
+            setDirty(true);
             return column;
         }
         throw new IndexOutOfBoundsException("sheet is locked for adding/removing columns");
@@ -34,7 +35,7 @@ public class PSheet {
     }
 
     public PColumn addColumn(final String name, final PType type) {
-        return addColumn(new PColumn(this, name, type));
+        return addColumn(new PColumn(this, columns.size(), name, type));
     }
 
     public Object get(final int rowIdx, final int colIdx) {
@@ -81,6 +82,14 @@ public class PSheet {
             }
         }
         return name2index.get(name);
+    }
+
+    public void set(final int rowIdx, final int colIdx, final Object value) {
+        rows.get(rowIdx).set(colIdx, value);
+    }
+
+    public void set(final int rowIdx, final String colId, final Object value) {
+        set(rowIdx, index(colId), value);
     }
 
     @Override
@@ -215,11 +224,16 @@ public class PSheet {
     protected PRow addRow(final PRow row) {
         lock();
         rows.add(row);
+        setDirty(true);
         return row;
     }
 
     protected void lock() {
         locked = true;
+    }
+
+    void setDirty(final boolean flag) {
+        workbook.setDirty(flag);
     }
 
 }
