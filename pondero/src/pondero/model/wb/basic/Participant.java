@@ -4,7 +4,6 @@ import static pondero.Logger.error;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -63,15 +62,11 @@ public class Participant extends PRow {
     }
 
     public Calendar getDob() {
-        return (Calendar) get(Participants.ATTR_DOB);
+        return getCalendar(Participants.ATTR_DOB);
     }
 
     public Integer getDrivingAge() {
-        final BigDecimal drivingAge = (BigDecimal) get(Participants.ATTR_DRIVING_AGE);
-        if (drivingAge != null) {
-            drivingAge.intValueExact();
-        }
-        return null;
+        return getInteger(Participants.ATTR_DRIVING_AGE);
     }
 
     public Education getEducation() {
@@ -89,9 +84,7 @@ public class Participant extends PRow {
     }
 
     public Integer getMileage() {
-        final BigDecimal mileage = (BigDecimal) get(Participants.ATTR_MILEAGE);
-        if (mileage != null) { return mileage.intValue(); }
-        return null;
+        return getInteger(Participants.ATTR_MILEAGE);
     }
 
     public String getName() {
@@ -102,6 +95,7 @@ public class Participant extends PRow {
         return (String) get(Participants.ATTR_SURNAME);
     }
 
+    @Override
     public void randomize() {
         // gender
         setGender(rnd.nextBoolean() ? Gender.MASCULINE : Gender.FEMININE);

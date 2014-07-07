@@ -1,6 +1,5 @@
 package pondero.util;
 
-import java.util.Calendar;
 import pondero.model.wb.PType;
 
 public class StringUtil {
@@ -65,13 +64,14 @@ public class StringUtil {
             case STRING:
                 return (String) value;
             case DATE:
-                return DateUtil.toIsoDate((Calendar) value);
+                return DateUtil.toIsoDate(value);
             case TIME:
-                return DateUtil.toIsoTime((Calendar) value);
+                return DateUtil.toIsoTime(value);
             case TIMESTAMP:
-                return DateUtil.toIsoTimestamp((Calendar) value);
+                return DateUtil.toIsoTimestamp(value);
             case FIXED:
             case FLOAT:
+            case BOOLEAN:
             case ANY:
                 return toString(value);
             default:

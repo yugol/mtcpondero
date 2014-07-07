@@ -20,10 +20,10 @@ public class DateUtil {
         return Calendar.getInstance().get(Calendar.YEAR);
     }
 
-    public static Calendar parseIsoDate(final String dob) {
+    public static Calendar parseIsoDate(final String str) {
         try {
-            if (StringUtil.isNullOrBlank(dob)) { return null; }
-            final Date date = ISO_DATE_FORMATTER.parse(dob);
+            if (StringUtil.isNullOrBlank(str)) { return null; }
+            final Date date = ISO_DATE_FORMATTER.parse(str);
             final Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(date.getTime());
             return cal;
@@ -33,50 +33,29 @@ public class DateUtil {
         }
     }
 
-    public static String toCompactDate(final long time) {
-        return COMPACT_DATE_FORMATTER.format(new Date(time));
+    public static String toCompactDate(final Object value) {
+        return COMPACT_DATE_FORMATTER.format(new Date(toMillis(value)));
     }
 
-    public static String toCompactTime(final long time) {
-        return COMPACT_TIME_FORMATTER.format(new Date(time));
+    public static String toCompactTime(final Object value) {
+        return COMPACT_TIME_FORMATTER.format(new Date(toMillis(value)));
     }
 
-    public static Calendar toDate(final Object value) {
-        if (value instanceof Calendar) { return (Calendar) value; }
-        throw new UnsupportedOperationException("toSqlDate for " + value.getClass().getName());
+    public static String toIsoDate(final Object value) {
+        return ISO_DATE_FORMATTER.format(new Date(toMillis(value)));
     }
 
-    public static String toIsoDate(final Calendar cal) {
-        return toIsoDate(cal.getTimeInMillis());
+    public static String toIsoTime(final Object value) {
+        return ISO_TIME_FORMATTER.format(new Date(toMillis(value)));
     }
 
-    public static String toIsoDate(final long time) {
-        return ISO_DATE_FORMATTER.format(new Date(time));
+    public static String toIsoTimestamp(final Object value) {
+        return ISO_TIMESTAMP_FORMATTER.format(new Date(toMillis(value)));
     }
 
-    public static String toIsoTime(final Calendar cal) {
-        return toIsoTime(cal.getTimeInMillis());
-    }
-
-    public static String toIsoTime(final long time) {
-        return ISO_TIME_FORMATTER.format(new Date(time));
-    }
-
-    public static String toIsoTimestamp(final Calendar cal) {
-        return toIsoTimestamp(cal.getTimeInMillis());
-    }
-
-    public static String toIsoTimestamp(final long time) {
-        return ISO_TIMESTAMP_FORMATTER.format(new Date(time));
-    }
-
-    public static Calendar toTime(final Object value) {
-        if (value instanceof Calendar) { return (Calendar) value; }
-        throw new UnsupportedOperationException("toSqlTime for " + value.getClass().getName());
-    }
-
-    public static Calendar toTimestamp(final Object value) {
-        if (value instanceof Calendar) { return (Calendar) value; }
+    public static Long toMillis(final Object value) {
+        if (value instanceof Calendar) { return ((Calendar) value).getTimeInMillis(); }
+        if (value instanceof Number) { return ((Number) value).longValue(); }
         throw new UnsupportedOperationException("toSqlTimestamp for " + value.getClass().getName());
     }
 
