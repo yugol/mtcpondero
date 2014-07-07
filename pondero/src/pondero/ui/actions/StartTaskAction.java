@@ -5,12 +5,12 @@ import static pondero.Logger.trace;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import pondero.L10n;
-import pondero.MsgUtil;
 import pondero.engine.test.Test;
 import pondero.engine.test.launch.TaskLauncher;
 import pondero.engine.test.launch.TaskMonitor;
 import pondero.model.entities.TrialRecord;
 import pondero.ui.Ponderable;
+import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
 public class StartTaskAction extends PonderoAction implements TaskLauncher {

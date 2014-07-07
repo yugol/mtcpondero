@@ -30,12 +30,12 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import pondero.Globals;
 import pondero.L10n;
-import pondero.UiUtil;
-import pondero.engine.staples.StringUtil;
 import pondero.update.Artifact;
 import pondero.update.UpdateEngine;
 import pondero.update.UpdateListener;
 import pondero.update.Updates;
+import pondero.util.StringUtil;
+import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
 public class UpdateDialog extends JDialog implements UpdateListener {

@@ -5,9 +5,9 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 import pondero.L10n;
-import pondero.MsgUtil;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
+import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
 public class SaveDocumentAction extends PonderoAction {

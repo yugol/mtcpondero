@@ -1,4 +1,4 @@
-package pondero.engine.staples;
+package pondero.util;
 
 import java.math.BigDecimal;
 

@@ -1,4 +1,4 @@
-package pondero.engine.staples;
+package pondero.util;
 
 public class StringUtil {
 

@@ -1,4 +1,4 @@
-package pondero;
+package pondero.util;
 
 import static pondero.Logger.error;
 import static pondero.Logger.trace;
@@ -23,6 +23,7 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.plaf.FontUIResource;
+import pondero.Globals;
 
 public class UiUtil {
 

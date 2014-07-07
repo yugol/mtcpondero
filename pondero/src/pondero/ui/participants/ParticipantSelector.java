@@ -20,10 +20,10 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumnModel;
 import pondero.Globals;
 import pondero.L10n;
-import pondero.UiUtil;
-import pondero.engine.staples.StringUtil;
 import pondero.model.Workbook;
 import pondero.model.participants.Participant;
+import pondero.util.StringUtil;
+import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
 public class ParticipantSelector extends JComponent {

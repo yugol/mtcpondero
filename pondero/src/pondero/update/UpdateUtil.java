@@ -13,8 +13,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import pondero.Globals;
-import pondero.engine.staples.DateUtil;
-import pondero.engine.staples.StringUtil;
+import pondero.util.DateUtil;
+import pondero.util.StringUtil;
 
 public class UpdateUtil {
 

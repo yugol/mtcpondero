@@ -3,8 +3,8 @@ package pondero.ui.actions;
 import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import pondero.L10n;
-import pondero.MsgUtil;
 import pondero.ui.Ponderable;
+import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
 public class StartDocumentAction extends PonderoAction {

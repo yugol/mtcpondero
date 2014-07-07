@@ -23,8 +23,8 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import pondero.Globals;
 import pondero.L10n;
-import pondero.MsgUtil;
-import pondero.UiUtil;
+import pondero.util.MsgUtil;
+import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
 public class PreferencesDialog extends JDialog {

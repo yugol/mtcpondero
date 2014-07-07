@@ -1,8 +1,8 @@
 package pondero.model.wb;
 
-import pondero.engine.staples.DateUtil;
-import pondero.engine.staples.NumberUtil;
-import pondero.engine.staples.StringUtil;
+import pondero.util.DateUtil;
+import pondero.util.NumberUtil;
+import pondero.util.StringUtil;
 
 public class PRow {
 

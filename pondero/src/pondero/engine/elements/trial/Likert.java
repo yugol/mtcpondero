@@ -5,11 +5,11 @@ import java.util.Map;
 import pondero.engine.elements.interfaces.HasPosition;
 import pondero.engine.staples.Coordinate;
 import pondero.engine.staples.Coordinates;
-import pondero.engine.staples.StringUtil;
 import pondero.engine.test.Test;
 import pondero.ui.tests.TestCanvas;
 import pondero.ui.tests.TestLikertComponent;
 import pondero.ui.tests.TestScene;
+import pondero.util.StringUtil;
 
 public class Likert extends Trial implements HasPosition {
 

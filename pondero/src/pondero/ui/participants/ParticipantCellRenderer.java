@@ -5,7 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
-import pondero.UiUtil;
+import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
 public class ParticipantCellRenderer extends JLabel implements TableCellRenderer {

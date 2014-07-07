@@ -39,9 +39,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import pondero.Globals;
 import pondero.L10n;
-import pondero.MsgUtil;
-import pondero.SysUtil;
-import pondero.UiUtil;
 import pondero.engine.test.Test;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
@@ -62,6 +59,9 @@ import pondero.ui.actions.SetPreferencesAction;
 import pondero.ui.actions.StartDocumentAction;
 import pondero.ui.actions.StartTaskAction;
 import pondero.ui.actions.UpdateAction;
+import pondero.util.MsgUtil;
+import pondero.util.SysUtil;
+import pondero.util.UiUtil;
 
 public class Pondero implements Ponderable, WorkbookListener {
 

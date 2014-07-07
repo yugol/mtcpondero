@@ -5,12 +5,12 @@ import static pondero.Logger.info;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.L10n;
-import pondero.MsgUtil;
 import pondero.model.participants.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
 import pondero.ui.participants.ParticipantManagementDialog;
 import pondero.ui.participants.ParticipantManagementListener;
+import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
 public class ModifyParticipantAction extends PonderoAction implements ParticipantManagementListener {

@@ -1,7 +1,8 @@
-package pondero;
+package pondero.util;
 
 import java.awt.Component;
 import javax.swing.JOptionPane;
+import pondero.L10n;
 
 public class MsgUtil {
 
