@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import pondero.model.entities.domains.Education;
-import pondero.model.entities.domains.Gender;
+import pondero.model.domains.Education;
+import pondero.model.domains.Gender;
 import pondero.util.StringUtil;
 
 public class ParticipantGenerator {
