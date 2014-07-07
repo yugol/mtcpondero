@@ -1,10 +1,10 @@
 package pondero.model.wb.basic;
 
-import pondero.model.wb.PWorkbook;
+import pondero.model.wb.PModel;
 
-public class BasicWorkbook extends PWorkbook {
+public class BasicModel extends PModel {
 
-    public BasicWorkbook(final String name) {
+    public BasicModel(final String name) {
         super(name);
     }
 

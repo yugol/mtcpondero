@@ -1,6 +1,6 @@
 package pondero.model;
 
-public interface WorkbookListener {
+public interface ModelListener {
 
     void onDirtyFlagChanged(boolean dirty);
 

@@ -2,7 +2,7 @@ package pondero.model.wb.basic;
 
 import pondero.model.wb.PSheet;
 import pondero.model.wb.PType;
-import pondero.model.wb.PWorkbook;
+import pondero.model.wb.PModel;
 
 public class Participants extends PSheet {
 
@@ -17,8 +17,8 @@ public class Participants extends PSheet {
     public static final String ATTR_DRIVING_AGE = "DRIVING_AGE";
     public static final String ATTR_MILEAGE     = "MILEAGE";
 
-    Participants(final PWorkbook workbook) {
-        super(workbook, NAME);
+    Participants(final PModel model) {
+        super(model, NAME);
         addColumn(ATTR_ID, PType.STRING);
         addColumn(ATTR_SURNAME, PType.STRING);
         addColumn(ATTR_NAME, PType.STRING);

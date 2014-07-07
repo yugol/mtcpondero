@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import pondero.model.WorkbookListener;
+import pondero.model.ModelListener;
 
-public abstract class PWorkbook {
+public abstract class PModel {
 
-    private final String                           name;
-    private final List<PSheet>                     sheets            = new ArrayList<PSheet>();
-    private transient boolean                      dirty             = false;
-    private transient final List<WorkbookListener> workbookListeners = new ArrayList<WorkbookListener>();
-    private transient Map<String, Integer>         name2index        = null;
+    private final String                        name;
+    private final List<PSheet>                  sheets     = new ArrayList<PSheet>();
+    private transient boolean                   dirty      = false;
+    private transient final List<ModelListener> listeners  = new ArrayList<ModelListener>();
+    private transient Map<String, Integer>      name2index = null;
 
-    public PWorkbook(final String name) {
+    public PModel(final String name) {
         this.name = name;
     }
 
@@ -25,8 +25,8 @@ public abstract class PWorkbook {
         return sheet;
     }
 
-    public void addWorkbookListener(final WorkbookListener listener) {
-        workbookListeners.add(listener);
+    public void addModelListener(final ModelListener listener) {
+        listeners.add(listener);
     }
 
     public String getName() {
@@ -68,7 +68,7 @@ public abstract class PWorkbook {
     void setDirty(final boolean flag) {
         if (dirty != flag) {
             dirty = flag;
-            for (final WorkbookListener listener : workbookListeners) {
+            for (final ModelListener listener : listeners) {
                 listener.onDirtyFlagChanged(dirty);
             }
         }

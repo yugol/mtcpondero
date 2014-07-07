@@ -42,7 +42,7 @@ import pondero.L10n;
 import pondero.engine.test.Test;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
-import pondero.model.WorkbookListener;
+import pondero.model.ModelListener;
 import pondero.model.participants.Participant;
 import pondero.model.participants.ParticipantGenerator;
 import pondero.model.participants.ParticipantReport;
@@ -63,7 +63,7 @@ import pondero.util.MsgUtil;
 import pondero.util.SystemUtil;
 import pondero.util.UiUtil;
 
-public class Pondero implements Ponderable, WorkbookListener {
+public class Pondero implements Ponderable, ModelListener {
 
     private static List<Test> REGISTERED_TESTS;
 

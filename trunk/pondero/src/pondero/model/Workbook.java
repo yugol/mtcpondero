@@ -10,7 +10,7 @@ public interface Workbook {
 
     void add(Record record) throws Exception;
 
-    void addWorkbookListener(WorkbookListener listener);
+    void addWorkbookListener(ModelListener listener);
 
     void close() throws IOException;
 
