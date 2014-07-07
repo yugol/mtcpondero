@@ -26,13 +26,21 @@ public class DateUtil {
         return null;
     }
 
-    public static Calendar parseIsoDate(final String str) {
-        try {
-            if (StringUtil.isNullOrBlank(str)) { return null; }
-            final Date date = ISO_DATE_FORMATTER.parse(str);
+    public static Calendar parseIsoCalendar(final String str) {
+        final Date date = parseIsoDate(str);
+        if (date != null) {
             final Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(date.getTime());
             return cal;
+        }
+        return null;
+    }
+
+    public static Date parseIsoDate(final String str) {
+        try {
+            if (StringUtil.isNullOrBlank(str)) { return null; }
+            final Date date = ISO_DATE_FORMATTER.parse(str);
+            return date;
         } catch (final Exception e) {
             error(e);
             return null;
@@ -70,9 +78,10 @@ public class DateUtil {
     }
 
     public static Long toMillis(final Object value) {
-        if (value instanceof Calendar) { return ((Calendar) value).getTimeInMillis(); }
         if (value instanceof Number) { return ((Number) value).longValue(); }
-        throw new UnsupportedOperationException("toSqlTimestamp for " + value.getClass().getName());
+        if (value instanceof Calendar) { return ((Calendar) value).getTimeInMillis(); }
+        if (value instanceof String) { return parseIsoDate(((String) value).trim()).getTime(); }
+        throw new UnsupportedOperationException("toMillis for " + value.getClass().getName());
     }
 
     public static String toUiDate(final Calendar cal) {

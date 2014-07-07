@@ -23,6 +23,38 @@ public abstract class PRow {
         }
     }
 
+    public Object set(final int index, final Object value) {
+        final PType type = sheet.getColumn(index).getType();
+        if (value == null) {
+            data[index] = value;
+        } else {
+            switch (type) {
+                case STRING:
+                    data[index] = StringUtil.toString(value);
+                    break;
+                case DATE:
+                case TIME:
+                case TIMESTAMP:
+                    data[index] = DateUtil.toMillis(value);
+                    break;
+                case FIXED:
+                    data[index] = NumberUtil.toFixed(value);
+                    break;
+                case FLOAT:
+                    data[index] = NumberUtil.toFloat(value);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unsupported type " + value.getClass().getName());
+            }
+        }
+        sheet.setDirty(true);
+        return data[index];
+    }
+
+    public Object set(final String name, final Object value) {
+        return set(sheet.index(name), value);
+    }
+
     public String toCsv() {
         return toString();
     }
@@ -61,38 +93,6 @@ public abstract class PRow {
 
     protected PSheet getSheet() {
         return sheet;
-    }
-
-    protected Object set(final int index, final Object value) {
-        final PType type = sheet.getColumn(index).getType();
-        if (value == null || type == PType.ANY) {
-            data[index] = value;
-        } else {
-            switch (type) {
-                case STRING:
-                    data[index] = StringUtil.toString(value);
-                    break;
-                case DATE:
-                case TIME:
-                case TIMESTAMP:
-                    data[index] = DateUtil.toMillis(value);
-                    break;
-                case FIXED:
-                    data[index] = NumberUtil.toFixed(value);
-                    break;
-                case FLOAT:
-                    data[index] = NumberUtil.toFloat(value);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unsupported type " + value.getClass().getName());
-            }
-        }
-        sheet.setDirty(true);
-        return data[index];
-    }
-
-    protected Object set(final String name, final Object value) {
-        return set(sheet.index(name), value);
     }
 
 }

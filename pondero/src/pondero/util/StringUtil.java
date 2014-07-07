@@ -72,7 +72,6 @@ public class StringUtil {
             case FIXED:
             case FLOAT:
             case BOOLEAN:
-            case ANY:
                 return toString(value);
             default:
                 throw new UnsupportedOperationException("toString for PType " + type);

@@ -2,11 +2,12 @@ package pondero.model.foundation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import pondero.model.ModelListener;
 
-public abstract class PModel {
+public abstract class PModel implements Iterable<PSheet> {
 
     private final String                        name;
     private final List<PSheet>                  sheets     = new ArrayList<PSheet>();
@@ -18,15 +19,15 @@ public abstract class PModel {
         this.name = name;
     }
 
+    public void addModelListener(final ModelListener listener) {
+        listeners.add(listener);
+    }
+
     public PSheet addSheet(final PSheet sheet) {
         name2index = null;
         sheets.add(sheet);
         setDirty(true);
         return sheet;
-    }
-
-    public void addModelListener(final ModelListener listener) {
-        listeners.add(listener);
     }
 
     public String getName() {
@@ -51,6 +52,20 @@ public abstract class PModel {
     }
 
     @Override
+    public Iterator<PSheet> iterator() {
+        return sheets.iterator();
+    }
+
+    public void setDirty(final boolean flag) {
+        if (dirty != flag) {
+            dirty = flag;
+            for (final ModelListener listener : listeners) {
+                listener.onDirtyFlagChanged(dirty);
+            }
+        }
+    }
+
+    @Override
     public String toString() {
         return getName();
     }
@@ -63,15 +78,6 @@ public abstract class PModel {
             }
         }
         return name2index.get(name);
-    }
-
-    void setDirty(final boolean flag) {
-        if (dirty != flag) {
-            dirty = flag;
-            for (final ModelListener listener : listeners) {
-                listener.onDirtyFlagChanged(dirty);
-            }
-        }
     }
 
 }

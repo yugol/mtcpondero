@@ -7,9 +7,8 @@ import pondero.model.participants.Participant;
 
 public class TrialRecord extends PRow {
 
-    TrialRecord(final PSheet sheet, final String experimentId) {
+    TrialRecord(final PSheet sheet) {
         super(sheet);
-        set(Records.ATTR_EXPERIMNT_ID, experimentId);
         set(Records.ATTR_TRIAL_TIMESTAMP, System.currentTimeMillis());
     }
 
@@ -55,6 +54,10 @@ public class TrialRecord extends PRow {
 
     public void setBlockId(final String value) {
         set(Records.ATTR_BLOCK_ID, value);
+    }
+
+    public void setExperimentId(final String id) {
+        set(Records.ATTR_EXPERIMNT_ID, id);
     }
 
     public void setParticipant(final Participant participant) {

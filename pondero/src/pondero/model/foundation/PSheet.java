@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import pondero.util.StringUtil;
 
-public class PSheet {
+public abstract class PSheet {
 
     private final PModel                   model;
     private final String                   name;
@@ -30,13 +30,11 @@ public class PSheet {
         throw new IndexOutOfBoundsException("sheet is locked for adding/removing columns");
     }
 
-    public PColumn addColumn(final String name) {
-        return addColumn(name, PType.ANY);
-    }
-
     public PColumn addColumn(final String name, final PType type) {
         return addColumn(new PColumn(this, columns.size(), name, type));
     }
+
+    public abstract PRow addRow();
 
     public Object get(final int rowIdx, final int colIdx) {
         return rows.get(rowIdx).get(colIdx);
@@ -52,6 +50,10 @@ public class PSheet {
 
     public int getColumnCount() {
         return columns.size();
+    }
+
+    public List<PColumn> getColumns() {
+        return columns;
     }
 
     public PModel getModel() {
@@ -74,7 +76,7 @@ public class PSheet {
         return getColumn(index(name));
     }
 
-    public int index(final String name) {
+    public Integer index(final String name) {
         if (name2index == null) {
             name2index = new HashMap<String, Integer>();
             for (int i = 0; i < columns.size(); ++i) {
@@ -171,7 +173,6 @@ public class PSheet {
             case FIXED:
             case FLOAT:
                 return 1;
-            case ANY:
             case DATE:
             case TIME:
             case TIMESTAMP:

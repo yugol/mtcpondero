@@ -5,7 +5,6 @@ import java.util.Random;
 
 public enum PType {
 
-    ANY (Object.class),
     BOOLEAN (Boolean.class),
     DATE (Long.class),
     FIXED (BigDecimal.class),
@@ -41,7 +40,6 @@ public enum PType {
             case TIME:
             case TIMESTAMP:
                 return r.nextLong();
-            case ANY:
             default:
                 return null;
         }
