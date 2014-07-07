@@ -2,7 +2,7 @@ package pondero.model.entities.base;
 
 import java.util.Random;
 import org.junit.Test;
-import pondero.model.entities.domains.Education;
+import pondero.model.domains.Education;
 
 public class RandomGen {
 
