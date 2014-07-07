@@ -130,6 +130,9 @@ public class BasicTemplate extends ExcelDriver {
             cell.setCellStyle(headerStyle);
         }
         for (int rowIdx = 0; rowIdx < pSheet.getRowCount(); ++rowIdx) {
+            if (rowIdx % 50 == 0) {
+                System.out.println(rowIdx);
+            }
             xRow = xSheet.createRow(1 + rowIdx);
             for (int colIdx = 0; colIdx < pSheet.getColumnCount(); ++colIdx) {
                 final PType pType = pSheet.getColumn(colIdx).getType();
@@ -142,8 +145,10 @@ public class BasicTemplate extends ExcelDriver {
                 }
             }
         }
-        for (int colIdx = 0; colIdx < pSheet.getColumnCount(); ++colIdx) {
-            xSheet.autoSizeColumn(colIdx);
+        if (pSheet.getRowCount() <= 1000) {
+            for (int colIdx = 0; colIdx < pSheet.getColumnCount(); ++colIdx) {
+                xSheet.autoSizeColumn(colIdx);
+            }
         }
     }
 
