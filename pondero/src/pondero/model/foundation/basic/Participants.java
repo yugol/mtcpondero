@@ -1,8 +1,8 @@
-package pondero.model.wb.basic;
+package pondero.model.foundation.basic;
 
-import pondero.model.wb.PSheet;
-import pondero.model.wb.PType;
-import pondero.model.wb.PModel;
+import pondero.model.foundation.PModel;
+import pondero.model.foundation.PSheet;
+import pondero.model.foundation.PType;
 
 public class Participants extends PSheet {
 
