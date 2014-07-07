@@ -1,11 +1,6 @@
 package pondero.model.foundation.basic;
 
 import org.junit.Test;
-import pondero.model.foundation.basic.BasicModel;
-import pondero.model.foundation.basic.Participant;
-import pondero.model.foundation.basic.Participants;
-import pondero.model.foundation.basic.Records;
-import pondero.model.foundation.basic.TrialRecord;
 
 public class BasicModelTest {
 
@@ -24,8 +19,9 @@ public class BasicModelTest {
 
         final Records rs = wb.getRecords("IC");
         for (int i = 0; i < 10; ++i) {
-            final TrialRecord tr = rs.addRow("dolor");
+            final TrialRecord tr = rs.addRow();
             tr.randomize();
+            tr.setExperimentId("dolor");
             System.out.println(tr.toCsv());
         }
         System.out.println(rs);
