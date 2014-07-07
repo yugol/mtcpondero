@@ -111,7 +111,7 @@ public class ExcelWorkbook implements Workbook {
                 if (StringUtil.isNullOrBlank(cellName)) {
                     continue;
                 }
-                final String getterName = Record.getGetterName(cellName);
+                final String getterName = StringUtil.getGetterName(cellName);
                 try {
                     final Method getter = record.getClass().getMethod(getterName, (Class<?>[]) null);
                     final String val = (String) getter.invoke(record, (Object[]) null);
@@ -174,7 +174,7 @@ public class ExcelWorkbook implements Workbook {
                 if (StringUtil.isNullOrBlank(cellValue)) {
                     continue;
                 }
-                final String setterName = Record.getSetterName(cellName);
+                final String setterName = StringUtil.getSetterName(cellName);
                 try {
                     final Method setter = prototype.getMethod(setterName, String.class);
                     setter.invoke(record, cellValue);
