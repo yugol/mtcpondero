@@ -9,13 +9,6 @@ import pondero.Globals;
 
 public class DateUtil {
 
-    public static final SimpleDateFormat  ISO_DATE_FORMATTER      = new SimpleDateFormat("yyyy-MM-dd");
-    public static final SimpleDateFormat  ISO_TIME_FORMATTER      = new SimpleDateFormat("HH:mm:ss");
-    public static final SimpleDateFormat  ISO_TIMESTAMP_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private static final SimpleDateFormat COMPACT_DATE_FORMATTER  = new SimpleDateFormat("yyyyMMdd");
-    private static final SimpleDateFormat COMPACT_TIME_FORMATTER  = new SimpleDateFormat("HHmmss");
-    private static final DateFormat       DATE_UI_FORMATTER       = DateFormat.getDateInstance(DateFormat.LONG, Globals.getLocale());
-
     public static int getCurrentYear() {
         return Calendar.getInstance().get(Calendar.YEAR);
     }
@@ -36,7 +29,7 @@ public class DateUtil {
         return null;
     }
 
-    public static Date parseIsoDate(final String str) {
+    public synchronized static Date parseIsoDate(final String str) {
         try {
             if (StringUtil.isNullOrBlank(str)) { return null; }
             final Date date = ISO_DATE_FORMATTER.parse(str);
@@ -57,23 +50,23 @@ public class DateUtil {
         return null;
     }
 
-    public static String toCompactDate(final Object value) {
+    public synchronized static String toCompactDate(final Object value) {
         return COMPACT_DATE_FORMATTER.format(new Date(toMillis(value)));
     }
 
-    public static String toCompactTime(final Object value) {
+    public synchronized static String toCompactTime(final Object value) {
         return COMPACT_TIME_FORMATTER.format(new Date(toMillis(value)));
     }
 
-    public static String toIsoDate(final Object value) {
+    public synchronized static String toIsoDate(final Object value) {
         return ISO_DATE_FORMATTER.format(new Date(toMillis(value)));
     }
 
-    public static String toIsoTime(final Object value) {
+    public synchronized static String toIsoTime(final Object value) {
         return ISO_TIME_FORMATTER.format(new Date(toMillis(value)));
     }
 
-    public static String toIsoTimestamp(final Object value) {
+    public synchronized static String toIsoTimestamp(final Object value) {
         return ISO_TIMESTAMP_FORMATTER.format(new Date(toMillis(value)));
     }
 
@@ -94,8 +87,15 @@ public class DateUtil {
         throw new UnsupportedOperationException("toMillis for " + value.getClass().getName());
     }
 
-    public static String toUiDate(final Calendar cal) {
+    public synchronized static String toUiDate(final Calendar cal) {
         return DATE_UI_FORMATTER.format(cal.getTime());
     }
+
+    private static final SimpleDateFormat ISO_DATE_FORMATTER      = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat ISO_TIME_FORMATTER      = new SimpleDateFormat("HH:mm:ss");
+    private static final SimpleDateFormat ISO_TIMESTAMP_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final SimpleDateFormat COMPACT_DATE_FORMATTER  = new SimpleDateFormat("yyyyMMdd");
+    private static final SimpleDateFormat COMPACT_TIME_FORMATTER  = new SimpleDateFormat("HHmmss");
+    private static final DateFormat       DATE_UI_FORMATTER       = DateFormat.getDateInstance(DateFormat.LONG, Globals.getLocale());
 
 }

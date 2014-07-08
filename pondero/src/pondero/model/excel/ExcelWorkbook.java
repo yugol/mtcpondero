@@ -23,12 +23,13 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import pondero.Globals;
-import pondero.model.Workbook;
 import pondero.model.ModelListener;
+import pondero.model.Workbook;
 import pondero.model.entities.base.Record;
 import pondero.model.participants.Participant;
 import pondero.model.participants.SurnameNameIdComparator;
 import pondero.util.DateUtil;
+import pondero.util.NumberUtil;
 import pondero.util.StringUtil;
 import pondero.util.SystemUtil;
 
@@ -46,7 +47,7 @@ public class ExcelWorkbook implements Workbook {
     private final CellStyle                      oddStyle;
     private final CellStyle                      evenStyle;
 
-    private final List<ModelListener>         workbookListeners      = new ArrayList<ModelListener>();
+    private final List<ModelListener>            workbookListeners      = new ArrayList<ModelListener>();
 
     public ExcelWorkbook() throws Exception {
         this("implicit.xlsx");
@@ -117,7 +118,7 @@ public class ExcelWorkbook implements Workbook {
                     final String val = (String) getter.invoke(record, (Object[]) null);
                     cell = recordRow.createCell(colIdx);
                     cell.setCellValue(val);
-                    cell.setCellStyle(recordRowIdx % 2 == 0 ? evenStyle : oddStyle);
+                    cell.setCellStyle(NumberUtil.isOdd(recordRowIdx) ? oddStyle : evenStyle);
                     sheet.autoSizeColumn(colIdx);
                 } catch (final NoSuchMethodException e) {
                     debug("getter method ", getterName, " could not be found for ", record.getClass().getSimpleName());
@@ -268,6 +269,8 @@ public class ExcelWorkbook implements Workbook {
             cmd = new String[] { "cmd.exe", "/c", tempFile.getCanonicalPath() };
         } else if (SystemUtil.isMacOSX()) {
             cmd = new String[] { "open", tempFile.getCanonicalPath() };
+        } else {
+            throw new UnsupportedOperationException("Your OS is not supported for view");
         }
         Runtime.getRuntime().exec(cmd);
     }

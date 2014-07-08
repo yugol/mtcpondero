@@ -6,11 +6,11 @@ import pondero.L10n;
 
 public class MsgUtil {
 
-    public static void showExceptionMessage(Component parent, Throwable t) {
+    public static void showExceptionMessage(final Component parent, final Throwable t) {
         JOptionPane.showMessageDialog(parent, t.getMessage(), L10n.getString("lbl.pondero"), JOptionPane.ERROR_MESSAGE);
     }
 
-    public static void showValidationMessage(Component parent, String message) {
+    public static void showValidationMessage(final Component parent, final String message) {
         JOptionPane.showMessageDialog(parent, message, L10n.getString("lbl.pondero"), JOptionPane.WARNING_MESSAGE);
     }
 

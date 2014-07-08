@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
+import pondero.util.NumberUtil;
 import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
@@ -22,10 +23,10 @@ public class ParticipantCellRenderer extends JLabel implements TableCellRenderer
             setBackground(UiUtil.getListSelectedBackgroundColor());
             setForeground(UiUtil.getListSelectedForegroundColor());
         } else {
-            if (row % 2 == 0) {
-                setBackground(UiUtil.getListBackgroundEvenColor());
-            } else {
+            if (NumberUtil.isOdd(row)) {
                 setBackground(UiUtil.getListBackgroundOddColor());
+            } else {
+                setBackground(UiUtil.getListBackgroundEvenColor());
             }
             setForeground(UiUtil.getListForegroundColor());
         }

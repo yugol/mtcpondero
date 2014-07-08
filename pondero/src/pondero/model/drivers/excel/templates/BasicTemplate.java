@@ -15,6 +15,7 @@ import pondero.model.foundation.PSheet;
 import pondero.model.foundation.PType;
 import pondero.model.foundation.basic.BasicModel;
 import pondero.model.foundation.basic.Participants;
+import pondero.util.NumberUtil;
 
 public class BasicTemplate extends ExcelDriver {
 
@@ -139,9 +140,9 @@ public class BasicTemplate extends ExcelDriver {
                 final Cell cell = xRow.createCell(colIdx);
                 setCellValue(cell, pSheet.get(rowIdx, colIdx), pType);
                 if (PType.DATE == pType) {
-                    cell.setCellStyle(rowIdx % 2 == 1 ? evenDateStyle : oddDateStyle);
+                    cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? evenDateStyle : oddDateStyle);
                 } else {
-                    cell.setCellStyle(rowIdx % 2 == 1 ? evenStyle : oddStyle);
+                    cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? evenStyle : oddStyle);
                 }
             }
         }
@@ -151,5 +152,4 @@ public class BasicTemplate extends ExcelDriver {
             }
         }
     }
-
 }
