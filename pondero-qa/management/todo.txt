@@ -1,22 +1,39 @@
-- analytics
-- catalog online
-- tests
-- documenatation
-- Export / Analysis / Reports
-- Office???
+=====================================================================
+CURRENT VERSION: 2014-07-27
+=====================================================================
 
-- primul caracter din textul licentei in programul de instalare este []
+* tests
+- config: send production flag in command line
+- core: 3 option question dialog when closing the application
 - proper error message for trying to save over an opened xlsx file
 - warn replace existing file
-- uniform speceing between for dialog elements
+- uniform spacing between for dialog elements
 
-- salvat coloane care nu exista atuci cand se adauga un participant vechi peste unul nou
+* Export / Analysis / Reports
+
+
+* online catalog
+
+
+* packaging
+- primul caracter din textul licentei in programul de instalare este []
+- do not package tests with main application
+- setup: add location key in registry
+
+
+* documentation
 - replace Vuze picture from setup tutorial
 
-- core: 3 option question dialog when closing the application
+
+* MS Office integration
+
+
+
+=====================================================================
+FUTURE VERSIONS
+=====================================================================
+
 - l10n for all strings
-- setup: provide application with no test
-- setup: add location key in registry
 - update: provide only tests in Catalog
 - sistem de raportare a erorilor/exceptiilor prin e-mail
 - culegerea de informatii despre utilizator
@@ -24,7 +41,6 @@
 
 - error reporting tool
 
-- config: send production flag in command line
 - config: check for installed java versions before installing
 - menu: Help -> About page
 
