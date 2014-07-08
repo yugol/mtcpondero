@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import pondero.L10n;
 import pondero.update.Artifact;
 import pondero.util.DateUtil;
+import pondero.util.NumberUtil;
 import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
@@ -30,7 +31,7 @@ public class ArtifactCellRenderer extends JPanel implements ListCellRenderer<Art
 
     public ArtifactCellRenderer() {
         setBorder(new EmptyBorder(5, 10, 10, 10));
-        GridBagLayout gridBagLayout = new GridBagLayout();
+        final GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] { 0, 0, 0 };
         gridBagLayout.rowHeights = new int[] { 0, 0 };
         gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 1.0 };
@@ -39,7 +40,7 @@ public class ArtifactCellRenderer extends JPanel implements ListCellRenderer<Art
 
         chckbxSelected = new JCheckBox("");
         chckbxSelected.setHorizontalAlignment(SwingConstants.CENTER);
-        GridBagConstraints gbc_chckbxSelected = new GridBagConstraints();
+        final GridBagConstraints gbc_chckbxSelected = new GridBagConstraints();
         gbc_chckbxSelected.insets = new Insets(0, 5, 5, 10);
         gbc_chckbxSelected.gridx = 0;
         gbc_chckbxSelected.gridy = 0;
@@ -47,7 +48,7 @@ public class ArtifactCellRenderer extends JPanel implements ListCellRenderer<Art
 
         lblIcon = new JLabel("");
         lblIcon.setHorizontalAlignment(SwingConstants.CENTER);
-        GridBagConstraints gbc_lblIcon = new GridBagConstraints();
+        final GridBagConstraints gbc_lblIcon = new GridBagConstraints();
         gbc_lblIcon.fill = GridBagConstraints.BOTH;
         gbc_lblIcon.insets = new Insets(0, 0, 5, 5);
         gbc_lblIcon.gridx = 1;
@@ -55,7 +56,7 @@ public class ArtifactCellRenderer extends JPanel implements ListCellRenderer<Art
         add(lblIcon, gbc_lblIcon);
 
         lblId = new JLabel("id");
-        GridBagConstraints gbc_lblId = new GridBagConstraints();
+        final GridBagConstraints gbc_lblId = new GridBagConstraints();
         gbc_lblId.anchor = GridBagConstraints.WEST;
         gbc_lblId.insets = new Insets(0, 0, 5, 0);
         gbc_lblId.gridx = 2;
@@ -63,7 +64,7 @@ public class ArtifactCellRenderer extends JPanel implements ListCellRenderer<Art
         add(lblId, gbc_lblId);
 
         lblReleaseDate = new JLabel("release");
-        GridBagConstraints gbc_lblReleaseDate = new GridBagConstraints();
+        final GridBagConstraints gbc_lblReleaseDate = new GridBagConstraints();
         gbc_lblReleaseDate.gridwidth = 2;
         gbc_lblReleaseDate.anchor = GridBagConstraints.WEST;
         gbc_lblReleaseDate.gridx = 1;
@@ -71,17 +72,17 @@ public class ArtifactCellRenderer extends JPanel implements ListCellRenderer<Art
         add(lblReleaseDate, gbc_lblReleaseDate);
     }
 
-    public void addElement(boolean downloadFlag) {
+    public void addElement(final boolean downloadFlag) {
         selection.add(downloadFlag);
     }
 
     @Override
     public Component getListCellRendererComponent(
-            JList<? extends Artifact> parent,
-            Artifact value,
-            int index,
-            boolean isSelected,
-            boolean cellHasFocus) {
+            final JList<? extends Artifact> parent,
+            final Artifact value,
+            final int index,
+            final boolean isSelected,
+            final boolean cellHasFocus) {
 
         if (selection.get(index)) {
             chckbxSelected.setSelected(true);
@@ -90,10 +91,10 @@ public class ArtifactCellRenderer extends JPanel implements ListCellRenderer<Art
             lblReleaseDate.setForeground(UiUtil.getListSelectedForegroundColor());
         } else {
             chckbxSelected.setSelected(false);
-            if (index % 2 == 0) {
-                setBackground(UiUtil.getListBackgroundEvenColor());
-            } else {
+            if (NumberUtil.isOdd(index)) {
                 setBackground(UiUtil.getListBackgroundOddColor());
+            } else {
+                setBackground(UiUtil.getListBackgroundEvenColor());
             }
             lblId.setForeground(UiUtil.getListForegroundColor());
             lblReleaseDate.setForeground(UiUtil.getListForegroundColor());
@@ -114,7 +115,7 @@ public class ArtifactCellRenderer extends JPanel implements ListCellRenderer<Art
 
     public int getSelectedCount() {
         int count = 0;
-        for (boolean flag : selection) {
+        for (final boolean flag : selection) {
             if (flag) {
                 ++count;
             }
@@ -126,16 +127,16 @@ public class ArtifactCellRenderer extends JPanel implements ListCellRenderer<Art
         return selection.size();
     }
 
-    public boolean isSelected(int index) {
+    public boolean isSelected(final int index) {
         return selection.get(index);
     }
 
-    public void removeElement(int index) {
+    public void removeElement(final int index) {
         selection.remove(index);
     }
 
-    public void toggle(int index) {
-        boolean value = !selection.get(index);
+    public void toggle(final int index) {
+        final boolean value = !selection.get(index);
         selection.set(index, value);
     }
 

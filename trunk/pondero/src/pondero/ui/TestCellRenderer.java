@@ -8,6 +8,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import pondero.engine.test.Test;
+import pondero.util.NumberUtil;
 import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
@@ -28,20 +29,20 @@ public class TestCellRenderer extends JPanel implements ListCellRenderer<Test> {
 
     @Override
     public Component getListCellRendererComponent(
-            JList<? extends Test> parent,
-            Test value,
-            int index,
-            boolean isSelected,
-            boolean cellHasFocus) {
+            final JList<? extends Test> parent,
+            final Test value,
+            final int index,
+            final boolean isSelected,
+            final boolean cellHasFocus) {
         lblName.setText(value.getCodeName());
         if (isSelected) {
             setBackground(UiUtil.getListSelectedBackgroundColor());
             lblName.setForeground(UiUtil.getListSelectedForegroundColor());
         } else {
-            if (index % 2 == 0) {
-                setBackground(UiUtil.getListBackgroundEvenColor());
-            } else {
+            if (NumberUtil.isOdd(index)) {
                 setBackground(UiUtil.getListBackgroundOddColor());
+            } else {
+                setBackground(UiUtil.getListBackgroundEvenColor());
             }
             lblName.setForeground(UiUtil.getListForegroundColor());
         }

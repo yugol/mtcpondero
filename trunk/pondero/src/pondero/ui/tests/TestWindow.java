@@ -19,10 +19,6 @@ public class TestWindow extends JFrame {
     private final TestScene        scene;
     private final TestInstructions instructions;
 
-    public TestWindow() {
-        this(null);
-    }
-
     /**
      * Create the frame.
      */

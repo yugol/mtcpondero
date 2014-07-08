@@ -7,10 +7,10 @@ import pondero.Globals;
 public class FileUtil {
 
     public static void deleteTempFiles() {
-        for (File file : Globals.getFolderResultsTemp().listFiles()) {
+        for (final File file : Globals.getFolderResultsTemp().listFiles()) {
             try {
                 file.deleteOnExit();
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 error(e);
             }
         }

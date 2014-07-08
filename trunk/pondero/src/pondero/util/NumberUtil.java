@@ -5,6 +5,10 @@ import java.math.BigDecimal;
 
 public class NumberUtil {
 
+    public static boolean isOdd(final int i) {
+        return (i & 1) == 1;
+    }
+
     public static BigDecimal toDecimal(final Object value) {
         try {
             if (value instanceof BigDecimal) { return (BigDecimal) value; }
