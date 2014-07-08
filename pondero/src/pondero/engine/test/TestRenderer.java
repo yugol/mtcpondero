@@ -14,18 +14,18 @@ import pondero.engine.elements.other.Page;
 import pondero.engine.elements.stimulus.Text;
 import pondero.engine.staples.Coordinates;
 import pondero.engine.test.stimuli.VisualStimulus;
-import pondero.ui.tests.TestWindow;
+import pondero.ui.tests.TestFrame;
 
 public abstract class TestRenderer extends TestBase {
 
-    private final TestWindow            testWindow;
+    private final TestFrame            testWindow;
 
     private final Stack<HasScreencolor> screenColorStack = new Stack<HasScreencolor>();
     private final List<VisualStimulus>  visualStimuli    = new ArrayList<VisualStimulus>(); ;
 
     public TestRenderer() {
         super();
-        testWindow = new TestWindow((Test) this);
+        testWindow = new TestFrame((Test) this);
     }
 
     public void addVisualStimulus(final VisualStimulus stimulus) {
@@ -45,7 +45,7 @@ public abstract class TestRenderer extends TestBase {
         return peekScreencolor()._getScreencolor();
     }
 
-    public TestWindow getTestWindow() {
+    public TestFrame getTestWindow() {
         return testWindow;
     }
 

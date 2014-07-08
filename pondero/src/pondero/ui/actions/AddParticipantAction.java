@@ -17,7 +17,7 @@ public class AddParticipantAction extends ModifyParticipantAction {
 
     @Override
     public void actionPerformed(final ActionEvent arg0) {
-        final String participantId = getApp().getCurrentWorkbook().getNextPariciantId();
+        final String participantId = getCurrentWorkbook().getNextPariciantId();
         showParticipantDialog(participantId);
     }
 

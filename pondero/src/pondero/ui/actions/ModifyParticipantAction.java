@@ -25,32 +25,32 @@ public class ModifyParticipantAction extends PonderoAction implements Participan
 
     @Override
     public void actionPerformed(final ActionEvent evt) {
-        showParticipantDialog(getApp().getCurrentParticipant());
+        showParticipantDialog(getCurrentParticipant());
     }
 
     @Override
     public void onParticipantSave(final ParticipantManagementDialog source) {
         info("saving participant");
         try {
-            final Participant p = getApp().getCurrentWorkbook().addParticipant();
+            final Participant p = getCurrentWorkbook().addParticipant();
             source.getParticipant(p);
         } catch (final Exception e) {
             error(e);
-            MsgUtil.showExceptionMessage(getFrame(), e);
+            MsgUtil.showExceptionMessage(getMainFrame(), e);
         }
     }
 
     protected void showParticipantDialog(final Object participant) {
         try {
-            dlg = new ParticipantManagementDialog();
+            dlg = new ParticipantManagementDialog(getMainFrame());
             dlg.addManagementListener(this);
-            dlg.setLocationRelativeTo(getApp().getFrame());
+            dlg.setLocationRelativeTo(getMainFrame());
             dlg.setParticipant(participant);
             dlg.setModal(true);
             dlg.setVisible(true);
         } catch (final Exception e) {
             error(e);
-            MsgUtil.showExceptionMessage(getFrame(), e);
+            MsgUtil.showExceptionMessage(getMainFrame(), e);
         }
     }
 

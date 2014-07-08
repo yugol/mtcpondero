@@ -2,6 +2,7 @@ package pondero.ui.participants;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,8 +21,10 @@ import pondero.model.foundation.basic.Participant;
 @SuppressWarnings("serial")
 public class ParticipantSelectionDialog extends JDialog implements ParticipantSelectionListener, ActionListener {
 
+    public static final String DIALOG_NAME = "participantSelectionDialor";
+
     public static void main(final String[] args) throws Exception {
-        final ParticipantSelectionDialog dialog = new ParticipantSelectionDialog(Globals.getDefaultWorkbook());
+        final ParticipantSelectionDialog dialog = new ParticipantSelectionDialog(null, Globals.getDefaultWorkbook());
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         dialog.setVisible(true);
     }
@@ -33,7 +36,9 @@ public class ParticipantSelectionDialog extends JDialog implements ParticipantSe
     private final JButton             selectButton;
     private final JButton             cancelButton;
 
-    public ParticipantSelectionDialog(final Workbook wb) throws Exception {
+    public ParticipantSelectionDialog(final Frame owner, final Workbook wb) throws Exception {
+        super(owner);
+        setName(DIALOG_NAME);
         setType(Type.UTILITY);
         setResizable(false);
         setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantSelectionDialog.class.getResource("/com/famfamfam/silk/user_go.png")));

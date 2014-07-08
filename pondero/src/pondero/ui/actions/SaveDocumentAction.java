@@ -21,10 +21,10 @@ public class SaveDocumentAction extends PonderoAction {
     @Override
     public void actionPerformed(final ActionEvent evt) {
         try {
-            getApp().getCurrentWorkbook().save();
+            getCurrentWorkbook().save();
         } catch (final IOException e) {
             error(e);
-            MsgUtil.showExceptionMessage(getFrame(), e);
+            MsgUtil.showExceptionMessage(getMainFrame(), e);
         }
     }
 

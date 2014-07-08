@@ -19,19 +19,19 @@ public class SaveAsDocumentAction extends PonderoAction {
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
+    public void actionPerformed(final ActionEvent evt) {
         final JFileChooser dialog = new JFileChooser(".");
         dialog.setDialogTitle(L10n.getString("lbl.save-as-workbook"));
         dialog.setCurrentDirectory(Globals.getFolderResults());
         dialog.setFileFilter(new ExcelFileFilter());
-        if (JFileChooser.APPROVE_OPTION == dialog.showSaveDialog(getApp().getFrame())) {
+        if (JFileChooser.APPROVE_OPTION == dialog.showSaveDialog(getMainFrame())) {
             try {
-                Workbook wb = getApp().getCurrentWorkbook();
+                final Workbook wb = getCurrentWorkbook();
                 wb.saveAs(dialog.getSelectedFile());
                 getApp().setCurrentWorkbook(wb);
             } catch (final Exception e) {
                 error(e);
-                MsgUtil.showExceptionMessage(getFrame(), e);
+                MsgUtil.showExceptionMessage(getMainFrame(), e);
             }
         }
     }

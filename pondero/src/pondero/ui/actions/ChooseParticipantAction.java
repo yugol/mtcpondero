@@ -23,8 +23,8 @@ public class ChooseParticipantAction extends PonderoAction {
     @Override
     public void actionPerformed(final ActionEvent evt) {
         try {
-            final ParticipantSelectionDialog dlg = new ParticipantSelectionDialog(getApp().getCurrentWorkbook());
-            dlg.setLocationRelativeTo(getFrame());
+            final ParticipantSelectionDialog dlg = new ParticipantSelectionDialog(getMainFrame(), getCurrentWorkbook());
+            dlg.setLocationRelativeTo(getMainFrame());
             dlg.setModal(true);
             dlg.setVisible(true);
             if (dlg.getCloseOperation() == JOptionPane.YES_OPTION) {
@@ -35,7 +35,7 @@ public class ChooseParticipantAction extends PonderoAction {
             }
         } catch (final Exception e) {
             error(e);
-            MsgUtil.showExceptionMessage(getFrame(), e);
+            MsgUtil.showExceptionMessage(getMainFrame(), e);
         }
     }
 

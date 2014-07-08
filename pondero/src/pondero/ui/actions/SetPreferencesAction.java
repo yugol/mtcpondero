@@ -18,8 +18,8 @@ public class SetPreferencesAction extends PonderoAction {
 
     @Override
     public void actionPerformed(final ActionEvent arg0) {
-        final PreferencesDialog dlg = new PreferencesDialog(getFrame());
-        dlg.setLocationRelativeTo(getFrame());
+        final PreferencesDialog dlg = new PreferencesDialog(getMainFrame());
+        dlg.setLocationRelativeTo(getMainFrame());
         dlg.setModal(true);
         dlg.setVisible(true);
     }

@@ -63,12 +63,19 @@ import pondero.util.UiUtil;
 
 public class Pondero implements Ponderable, ModelListener {
 
+    public static final String MAIN_FRAME_NAME = "ponderoMainFrame";
+
     /**
      * Launch the application.
      *
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
+        start(args);
+    }
+
+    public static Pondero start(final String[] args) throws Exception {
+        // initialize context
         Globals.loadPreferences(args.length >= 1 ? args[0] : null);
         SystemUtil.configure();
         REGISTERED_TESTS = TestLoader.loadTests();
@@ -76,15 +83,16 @@ public class Pondero implements Ponderable, ModelListener {
         UiUtil.setLaf();
         UiUtil.scaleUi(Globals.getUiFontScaleFactor());
 
+        // start application
+        final Pondero app = new Pondero();
         EventQueue.invokeLater(new Runnable() {
 
             @Override
             public void run() {
                 try {
-                    final Pondero window = new Pondero();
-                    window.frame.setLocationRelativeTo(null);
-                    window.frame.setVisible(true);
-                    window.setCurrentWorkbook(WorkbookFactory.openWorkbook(Globals.getLastWorkbookFile()));
+                    app.mainFrame.setLocationRelativeTo(null);
+                    app.mainFrame.setVisible(true);
+                    app.setCurrentWorkbook(WorkbookFactory.openWorkbook(Globals.getLastWorkbookFile()));
                 } catch (final Exception e) {
                     error(e);
                     MsgUtil.showExceptionMessage(null, e);
@@ -92,6 +100,7 @@ public class Pondero implements Ponderable, ModelListener {
             }
 
         });
+        return app;
     }
 
     private static List<Test> REGISTERED_TESTS;
@@ -117,7 +126,7 @@ public class Pondero implements Ponderable, ModelListener {
     private final Action      updateAction            = new UpdateAction(this);
 
     // Widgets
-    private JFrame            frame;
+    private JFrame            mainFrame;
     private JButton           btnAddParticipant;
     private JButton           btnBack;
     private JButton           btnModifyParticipant;
@@ -141,8 +150,8 @@ public class Pondero implements Ponderable, ModelListener {
      */
     public Pondero() {
         initialize();
-        frame.setMinimumSize(new Dimension(640, 480));
-        frame.setSize((int) (640 * Globals.getUiFontScaleFactor()), (int) (480 * Globals.getUiFontScaleFactor()));
+        mainFrame.setMinimumSize(new Dimension(640, 480));
+        mainFrame.setSize((int) (640 * Globals.getUiFontScaleFactor()), (int) (480 * Globals.getUiFontScaleFactor()));
         configureNavigationButton(btnNext);
         configureNavigationButton(btnBack);
         configureNavigationButton(btnStart);
@@ -167,8 +176,13 @@ public class Pondero implements Ponderable, ModelListener {
     }
 
     @Override
-    public JFrame getFrame() {
-        return frame;
+    public JFrame getMainFrame() {
+        return mainFrame;
+    }
+
+    public JFrame getTestFrame() {
+        if (currentTask != null) { return currentTask.getTestWindow(); }
+        return null;
     }
 
     @Override
@@ -213,8 +227,8 @@ public class Pondero implements Ponderable, ModelListener {
             }
             statusBar.setMessage(StatusBar.DEFAULT,
                     L10n.getString("lbl.data-register")
-                            + ": " + currentWorkbook.getName()
-                            + (currentWorkbook.isDirty() ? " *" : ""));
+                    + ": " + currentWorkbook.getName()
+                    + (currentWorkbook.isDirty() ? " *" : ""));
         }
         currentState = state;
     }
@@ -234,7 +248,7 @@ public class Pondero implements Ponderable, ModelListener {
             currentParticipant = null;
             currentTask = null;
             if (currentWorkbook.getParticipantCount() <= 0) {
-                final String decision = JOptionPane.showInputDialog(frame, L10n.getString("msg.how-many-random-participants", maxParticipantCount), "0");
+                final String decision = JOptionPane.showInputDialog(mainFrame, L10n.getString("msg.how-many-random-participants", maxParticipantCount), "0");
                 try {
                     int count = Integer.parseInt(decision);
                     if (count < 0) {
@@ -244,7 +258,7 @@ public class Pondero implements Ponderable, ModelListener {
                         count = maxParticipantCount;
                     }
                     if (count > 0) {
-                        frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+                        mainFrame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
                         for (int i = 1; i <= count; ++i) {
                             final pondero.model.foundation.basic.Participant p = currentWorkbook.addParticipant();
                             p.randomize();
@@ -253,13 +267,13 @@ public class Pondero implements Ponderable, ModelListener {
                     }
                 } catch (final NumberFormatException e) {
                 } finally {
-                    frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
             }
             setCurrentState(PonderoState.PARTICIPANT_SELECTION);
         } catch (final Exception e) {
             error(e);
-            MsgUtil.showExceptionMessage(frame, e);
+            MsgUtil.showExceptionMessage(mainFrame, e);
         }
     }
 
@@ -283,11 +297,12 @@ public class Pondero implements Ponderable, ModelListener {
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        frame = new JFrame(L10n.getString("lbl.pondero"));
-        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.setLocationByPlatform(true);
-        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Pondero.class.getResource("/pondero/res/pondero-48x48.png")));
-        frame.addWindowListener(new WindowAdapter() {
+        mainFrame = new JFrame(L10n.getString("lbl.pondero"));
+        mainFrame.setName(MAIN_FRAME_NAME);
+        mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        mainFrame.setLocationByPlatform(true);
+        mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(Pondero.class.getResource("/pondero/res/pondero-48x48.png")));
+        mainFrame.addWindowListener(new WindowAdapter() {
 
             @Override
             public void windowClosing(final WindowEvent e) {
@@ -298,7 +313,7 @@ public class Pondero implements Ponderable, ModelListener {
         });
 
         final JMenuBar menuBar = new JMenuBar();
-        frame.setJMenuBar(menuBar);
+        mainFrame.setJMenuBar(menuBar);
 
         final JMenu mnApplication = new JMenu(" " + L10n.getString("lbl.application") + " ");
         menuBar.add(mnApplication);
@@ -352,7 +367,7 @@ public class Pondero implements Ponderable, ModelListener {
 
         final JPanel instructions = new JPanel();
         instructions.setBorder(new EmptyBorder(20, 20, 0, 100));
-        frame.getContentPane().add(instructions, BorderLayout.NORTH);
+        mainFrame.getContentPane().add(instructions, BorderLayout.NORTH);
         instructions.setLayout(new BoxLayout(instructions, BoxLayout.Y_AXIS));
 
         lblPageTitle = new JLabel("   ");
@@ -362,7 +377,7 @@ public class Pondero implements Ponderable, ModelListener {
         instructions.add(lblPageHint);
 
         stage = new JPanel();
-        frame.getContentPane().add(stage, BorderLayout.CENTER);
+        mainFrame.getContentPane().add(stage, BorderLayout.CENTER);
         stage.setLayout(new CardLayout(0, 0));
 
         final JPanel pnlParticipant = new JPanel();
@@ -503,7 +518,7 @@ public class Pondero implements Ponderable, ModelListener {
         pnlTestNavigation.add(btnStart, BorderLayout.EAST);
 
         statusBar = new StatusBar();
-        frame.getContentPane().add(statusBar, BorderLayout.SOUTH);
+        mainFrame.getContentPane().add(statusBar, BorderLayout.SOUTH);
     }
 
 }

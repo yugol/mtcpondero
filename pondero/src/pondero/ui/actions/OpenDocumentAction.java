@@ -26,11 +26,11 @@ public class OpenDocumentAction extends PonderoAction {
     @Override
     public void actionPerformed(final ActionEvent evt) {
         try {
-            final Workbook wb = getApp().getCurrentWorkbook();
+            final Workbook wb = getCurrentWorkbook();
             if (wb != null) {
                 if (wb.isDirty()) {
                     if (JOptionPane.showConfirmDialog(
-                            getApp().getFrame(),
+                            getMainFrame(),
                             L10n.getString("msg.save-workbook", wb.getName()),
                             L10n.getString("lbl.pondero"),
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -43,13 +43,13 @@ public class OpenDocumentAction extends PonderoAction {
             dialog.setDialogTitle(L10n.getString("lbl.open-workbook"));
             dialog.setCurrentDirectory(Globals.getFolderResults());
             dialog.setFileFilter(new ExcelFileFilter());
-            if (JFileChooser.APPROVE_OPTION == dialog.showOpenDialog(getApp().getFrame())) {
+            if (JFileChooser.APPROVE_OPTION == dialog.showOpenDialog(getMainFrame())) {
                 getApp().setCurrentWorkbook(WorkbookFactory.openWorkbook(dialog.getSelectedFile()));
 
             }
         } catch (final Exception e) {
             error(e);
-            MsgUtil.showExceptionMessage(getFrame(), e);
+            MsgUtil.showExceptionMessage(getMainFrame(), e);
         }
     }
 

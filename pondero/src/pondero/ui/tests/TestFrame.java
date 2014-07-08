@@ -13,7 +13,9 @@ import pondero.engine.test.Test;
 import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
-public class TestWindow extends JFrame {
+public class TestFrame extends JFrame {
+
+    public static final String     WINDOW_NAME = "testWindow";
 
     private final JPanel           contentPane;
     private final TestScene        scene;
@@ -22,8 +24,9 @@ public class TestWindow extends JFrame {
     /**
      * Create the frame.
      */
-    public TestWindow(final Test task) {
-        setIconImage(Toolkit.getDefaultToolkit().getImage(TestWindow.class.getResource("/javax/swing/plaf/metal/icons/ocean/question.png")));
+    public TestFrame(final Test task) {
+        setName(WINDOW_NAME);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(TestFrame.class.getResource("/javax/swing/plaf/metal/icons/ocean/question.png")));
 
         addWindowListener(new WindowAdapter() {
 

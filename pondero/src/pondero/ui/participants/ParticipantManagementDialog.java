@@ -4,6 +4,7 @@ import static pondero.Logger.trace;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -46,6 +47,8 @@ import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")
 public class ParticipantManagementDialog extends JDialog {
+
+    public static final String                        DIALOG_NAME         = "participantSelectionDialor";
 
     private final DocumentListener                    txtDocListener      = new DocumentListener() {
 
@@ -98,7 +101,9 @@ public class ParticipantManagementDialog extends JDialog {
     private final JTextField                          valName;
     private final JTextField                          valSurname;
 
-    public ParticipantManagementDialog() throws Exception {
+    public ParticipantManagementDialog(final Frame owner) throws Exception {
+        super(owner);
+        setName(DIALOG_NAME);
         setType(Type.UTILITY);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
