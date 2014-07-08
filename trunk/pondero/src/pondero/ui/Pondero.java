@@ -43,9 +43,7 @@ import pondero.engine.test.Test;
 import pondero.model.ModelListener;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
-import pondero.model.participants.Participant;
-import pondero.model.participants.ParticipantGenerator;
-import pondero.model.participants.ParticipantReport;
+import pondero.model.foundation.basic.Participant;
 import pondero.tests.TestLoader;
 import pondero.ui.actions.AddParticipantAction;
 import pondero.ui.actions.ChooseParticipantAction;
@@ -201,7 +199,7 @@ public class Pondero implements Ponderable, ModelListener {
                 lblPageTitle.setText(L10n.getString("lbl.CHOOSE-PARTICIPANT"));
                 lblPageHint.setText(L10n.getString("msg.CHOOSE-PARTICIPANT"));
                 epParticipantDescription.setEnabled(true);
-                epParticipantDescription.setText(ParticipantReport.getHtml(currentParticipant));
+                epParticipantDescription.setText(Participant.getHtml(currentParticipant));
                 btnSelectParticipant.setEnabled(currentWorkbook != null && currentWorkbook.getParticipantCount() > 0);
                 btnAddParticipant.setEnabled(currentWorkbook != null);
                 btnModifyParticipant.setEnabled(currentWorkbook != null && currentParticipant != null);
@@ -215,8 +213,8 @@ public class Pondero implements Ponderable, ModelListener {
             }
             statusBar.setMessage(StatusBar.DEFAULT,
                     L10n.getString("lbl.data-register")
-                    + ": " + currentWorkbook.getWorkbookName()
-                    + (currentWorkbook.isDirty() ? " *" : ""));
+                            + ": " + currentWorkbook.getName()
+                            + (currentWorkbook.isDirty() ? " *" : ""));
         }
         currentState = state;
     }
@@ -247,11 +245,10 @@ public class Pondero implements Ponderable, ModelListener {
                     }
                     if (count > 0) {
                         frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-                        final ParticipantGenerator pGen = new ParticipantGenerator();
                         for (int i = 1; i <= count; ++i) {
-                            final Participant p = pGen.nextParticipant();
-                            p.setId(String.valueOf(i));
-                            currentWorkbook.add(p);
+                            final pondero.model.foundation.basic.Participant p = currentWorkbook.addParticipant();
+                            p.randomize();
+                            p.setId(i);
                         }
                     }
                 } catch (final NumberFormatException e) {

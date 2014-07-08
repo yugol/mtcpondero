@@ -1,7 +1,6 @@
 package pondero.model.excel;
 
 import static pondero.Logger.debug;
-import static pondero.Logger.error;
 import static pondero.Logger.info;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import org.apache.commons.io.FileUtils;
@@ -24,10 +22,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import pondero.Globals;
 import pondero.model.ModelListener;
-import pondero.model.Workbook;
-import pondero.model.entities.base.Record;
-import pondero.model.participants.Participant;
-import pondero.model.participants.SurnameNameIdComparator;
+import pondero.model.drivers.excel.ExcelFileFilter;
 import pondero.util.DateUtil;
 import pondero.util.NumberUtil;
 import pondero.util.StringUtil;
@@ -35,19 +30,18 @@ import pondero.util.SystemUtil;
 
 // http://poi.apache.org/spreadsheet/quick-guide.html
 
-public class ExcelWorkbook implements Workbook {
+@Deprecated
+public class ExcelWorkbook {
 
-    private static final SurnameNameIdComparator PARTICIPANT_COMPARATOR = new SurnameNameIdComparator();
+    private File                      workbookFile;
+    private final XSSFWorkbook        workbook;
+    private boolean                   dirty;
 
-    private File                                 workbookFile;
-    private final XSSFWorkbook                   workbook;
-    private boolean                              dirty;
+    private final CellStyle           headerStyle;
+    private final CellStyle           oddStyle;
+    private final CellStyle           evenStyle;
 
-    private final CellStyle                      headerStyle;
-    private final CellStyle                      oddStyle;
-    private final CellStyle                      evenStyle;
-
-    private final List<ModelListener>            workbookListeners      = new ArrayList<ModelListener>();
+    private final List<ModelListener> workbookListeners = new ArrayList<ModelListener>();
 
     public ExcelWorkbook() throws Exception {
         this("implicit.xlsx");
@@ -81,7 +75,6 @@ public class ExcelWorkbook implements Workbook {
         this(new File(workbookPath));
     }
 
-    @Override
     public void add(final Record record) throws Exception {
         debug("add record ", record.getClass().getSimpleName(), " : ", record.toCsv());
         setDirty(true);
@@ -127,19 +120,16 @@ public class ExcelWorkbook implements Workbook {
         }
     }
 
-    @Override
     public void addWorkbookListener(final ModelListener listener) {
         if (!workbookListeners.contains(listener)) {
             workbookListeners.add(listener);
         }
     }
 
-    @Override
     public void close() throws IOException {
         info("close workbook: ", workbookFile.getCanonicalPath());
     }
 
-    @Override
     public void deleteParticipants() {
         info("delete participants: ");
         final Sheet sheet = getSheet(new Participant());
@@ -149,7 +139,6 @@ public class ExcelWorkbook implements Workbook {
         }
     }
 
-    @Override
     public List<? extends Record> getAll(final Class<? extends Record> prototype) throws Exception {
         final List<Record> records = new ArrayList<Record>();
         final Sheet sheet = getSheet(prototype.newInstance());
@@ -191,15 +180,6 @@ public class ExcelWorkbook implements Workbook {
         return records;
     }
 
-    @Override
-    public List<Participant> getAllParticipants() throws Exception {
-        @SuppressWarnings("unchecked")
-        final List<Participant> buffer = (List<Participant>) getAll(Participant.class);
-        Collections.sort(buffer, PARTICIPANT_COMPARATOR);
-        return buffer;
-    }
-
-    @Override
     public String getNewUniqueParticipantId() {
         int maxIdx = 100;
         final Sheet sheet = getSheet(new Participant());
@@ -218,33 +198,19 @@ public class ExcelWorkbook implements Workbook {
         return String.valueOf(maxIdx + 1);
     }
 
-    @Override
-    public int getParticipantCount() {
-        try {
-            return getAllParticipants().size();
-        } catch (final Exception e) {
-            error(e);
-            return 0;
-        }
-    }
-
-    @Override
     public String getWorkbookName() {
         return workbookFile.getName();
     }
 
-    @Override
     public boolean isDirty() {
         return dirty;
     }
 
-    @Override
     public void save() throws IOException {
         info("save workbook: ", workbookFile.getCanonicalPath());
         saveWorkbook(workbookFile);
     }
 
-    @Override
     public void saveAs(final File selectedFile) throws IOException {
         info("save workbook as: ", selectedFile.getCanonicalPath());
         workbookFile = normalizeWorkbookFile(selectedFile);
@@ -257,7 +223,6 @@ public class ExcelWorkbook implements Workbook {
         return workbookFile.getName();
     }
 
-    @Override
     public void view() throws Exception {
         final File tempFile = viewWorkbookFile();
         info("view workbook: ", tempFile.getCanonicalPath());
@@ -340,8 +305,8 @@ public class ExcelWorkbook implements Workbook {
 
     private File normalizeWorkbookFile(File wbFile) throws IOException {
         String filePath = wbFile.getCanonicalPath();
-        if (!filePath.endsWith(ExcelWorkbookFilter.EXT)) {
-            filePath += ExcelWorkbookFilter.EXT;
+        if (!filePath.endsWith(ExcelFileFilter.DEFAULT_EXTENSION)) {
+            filePath += ExcelFileFilter.DEFAULT_EXTENSION;
             wbFile = new File(filePath);
         }
         return wbFile;
@@ -387,7 +352,7 @@ public class ExcelWorkbook implements Workbook {
         if (dotIndex >= 0) {
             fileName = fileName.substring(0, dotIndex);
         }
-        final String tempFileName = fileName + "-" + UUID.randomUUID().toString().replace("-", "") + ExcelWorkbookFilter.EXT;
+        final String tempFileName = fileName + "-" + UUID.randomUUID().toString().replace("-", "") + ExcelFileFilter.DEFAULT_EXTENSION;
         final File tempFile = new File(tempFolder, tempFileName);
         return tempFile;
     }

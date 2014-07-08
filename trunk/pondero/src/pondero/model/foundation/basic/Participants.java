@@ -30,6 +30,22 @@ public class Participants extends PSheet {
         lock();
     }
 
+    public String getNextPariciantId() {
+        int maxIdx = 100;
+        for (final int rowIdx = 0; rowIdx < getRowCount();) {
+            try {
+                final int id = Integer.parseInt((String) get(rowIdx, ATTR_ID));
+                if (id > maxIdx) {
+                    maxIdx = id;
+                }
+            } catch (final Exception e) {
+                // ignore: if cell content is not a number then no number will duplicate it
+            }
+        }
+        return String.valueOf(maxIdx + 1);
+    }
+
+    @Override
     public Participant addRow() {
         return (Participant) addRow(new Participant(this));
     }

@@ -3,7 +3,6 @@ package pondero.model.foundation.basic;
 import java.util.Date;
 import pondero.model.foundation.PRow;
 import pondero.model.foundation.PSheet;
-import pondero.model.participants.Participant;
 
 public class TrialRecord extends PRow {
 
@@ -78,7 +77,7 @@ public class TrialRecord extends PRow {
         set(Records.ATTR_RESPONSE_TIME, responseTimestamp - (Long) get(Records.ATTR_TRIAL_TIMESTAMP));
     }
 
-    public void setTrialName(final String value) {
+    public void setTrialId(final String value) {
         set(Records.ATTR_TRIAL_ID, value);
     }
 

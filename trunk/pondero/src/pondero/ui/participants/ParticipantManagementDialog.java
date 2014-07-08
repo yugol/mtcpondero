@@ -15,6 +15,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -38,7 +39,7 @@ import pondero.Globals;
 import pondero.L10n;
 import pondero.model.domains.Education;
 import pondero.model.domains.Gender;
-import pondero.model.participants.Participant;
+import pondero.model.foundation.basic.Participant;
 import pondero.util.MsgUtil;
 import pondero.util.StringUtil;
 import com.toedter.calendar.JDateChooser;
@@ -48,40 +49,40 @@ public class ParticipantManagementDialog extends JDialog {
 
     private final DocumentListener                    txtDocListener      = new DocumentListener() {
 
-                                                                              @Override
-                                                                              public void changedUpdate(final DocumentEvent e) {
-                                                                                  setDirtyFlag();
-                                                                              }
+        @Override
+        public void changedUpdate(final DocumentEvent e) {
+            setDirtyFlag();
+        }
 
-                                                                              @Override
-                                                                              public void insertUpdate(final DocumentEvent e) {
-                                                                                  setDirtyFlag();
-                                                                              }
+        @Override
+        public void insertUpdate(final DocumentEvent e) {
+            setDirtyFlag();
+        }
 
-                                                                              @Override
-                                                                              public void removeUpdate(final DocumentEvent e) {
-                                                                                  setDirtyFlag();
-                                                                              }
+        @Override
+        public void removeUpdate(final DocumentEvent e) {
+            setDirtyFlag();
+        }
 
-                                                                          };
+    };
 
     private final ItemListener                        itemListener        = new ItemListener() {
 
-                                                                              @Override
-                                                                              public void itemStateChanged(final ItemEvent arg0) {
-                                                                                  setDirtyFlag();
-                                                                              }
+        @Override
+        public void itemStateChanged(final ItemEvent arg0) {
+            setDirtyFlag();
+        }
 
-                                                                          };
+    };
 
     private final ChangeListener                      changeListener      = new ChangeListener() {
 
-                                                                              @Override
-                                                                              public void stateChanged(final ChangeEvent arg0) {
-                                                                                  setDirtyFlag();
-                                                                              }
+        @Override
+        public void stateChanged(final ChangeEvent arg0) {
+            setDirtyFlag();
+        }
 
-                                                                          };
+    };
 
     private final List<ParticipantManagementListener> managementListeners = new ArrayList<ParticipantManagementListener>();
     private boolean                                   dirty               = false;
@@ -432,8 +433,7 @@ public class ParticipantManagementDialog extends JDialog {
         }
     }
 
-    public Participant getParticipant() {
-        final Participant participant = new Participant();
+    public void getParticipant(final Participant participant) {
         participant.setId(valId.getText());
         participant.setSurname(valSurname.getText());
         participant.setName(valName.getText());
@@ -442,20 +442,34 @@ public class ParticipantManagementDialog extends JDialog {
         participant.setEducation((Education) valEducation.getSelectedItem());
         participant.setDrivingAge((int) valDrivingAge.getValue());
         participant.setMileage((int) valMileage.getValue());
-        return participant;
     }
 
-    public void setParticipant(final Participant participant) {
-        trace("set participant: ", participant.getId());
-        valId.setText(participant.getId());
-        valSurname.setText(participant.getSurname());
-        valName.setText(participant.getName());
-        valDob.setDate(participant.getDob().getTime());
-        valAge.setValue(participant.getAge());
-        valGender.setSelectedItem(participant.getGender());
-        valEducation.setSelectedItem(participant.getEducation());
-        valDrivingAge.setValue(participant.getDrivingAge());
-        valMileage.setValue(participant.getMileage());
+    public void setParticipant(final Object p) {
+        if (p instanceof Participant) {
+            final Participant participant = (Participant) p;
+            trace("set participant: ", participant.getId());
+            valId.setText(participant.getId());
+            valSurname.setText(participant.getSurname());
+            valName.setText(participant.getName());
+            valDob.setDate(participant.getDob().getTime());
+            valAge.setValue(participant.getAge());
+            valGender.setSelectedItem(participant.getGender());
+            valEducation.setSelectedItem(participant.getEducation());
+            valDrivingAge.setValue(participant.getDrivingAge());
+            valMileage.setValue(participant.getMileage());
+        } else {
+            final String participantId = (String) p;
+            trace("set participant: ", participantId);
+            valId.setText(participantId);
+            valSurname.setText("");
+            valName.setText("");
+            valDob.setDate(new Date());
+            valAge.setValue(0);
+            valGender.setSelectedItem(Gender.UNSPECIFIED);
+            valEducation.setSelectedItem(Education.UNKNOWN);
+            valDrivingAge.setValue(0);
+            valMileage.setValue(0);
+        }
         clearDirtyFlag();
     }
 
@@ -503,7 +517,7 @@ public class ParticipantManagementDialog extends JDialog {
         trace("user event: save participant");
         if (validateParticipant()) {
             for (final ParticipantManagementListener listener : managementListeners) {
-                listener.onParticipantSave(getParticipant());
+                listener.onParticipantSave(this);
             }
             clearDirtyFlag();
             return true;

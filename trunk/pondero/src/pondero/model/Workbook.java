@@ -2,31 +2,32 @@ package pondero.model;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import pondero.model.entities.base.Record;
-import pondero.model.participants.Participant;
+import java.util.Collection;
+import pondero.model.foundation.basic.Participant;
+import pondero.model.foundation.basic.Participants;
+import pondero.model.foundation.basic.TrialRecord;
 
 public interface Workbook {
 
-    void add(Record record) throws Exception;
+    Participant addParticipant();
+
+    TrialRecord addTrialRecord(String experimentId);
 
     void addWorkbookListener(ModelListener listener);
 
-    void close() throws IOException;
+    void close() throws Exception;
 
-    void deleteParticipants();
+    Participants getAllParticipants();
 
-    List<? extends Record> getAll(Class<? extends Record> prototype) throws Exception;
-
-    List<Participant> getAllParticipants() throws Exception;
-
-    String getNewUniqueParticipantId();
+    String getNextPariciantId();
 
     int getParticipantCount();
 
-    String getWorkbookName();
+    String getName();
 
     boolean isDirty();
+
+    void removeRecords(String testId, Collection<TrialRecord> records);
 
     void save() throws IOException;
 

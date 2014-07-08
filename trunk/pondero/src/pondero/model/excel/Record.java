@@ -1,10 +1,11 @@
-package pondero.model.entities.base;
+package pondero.model.excel;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import pondero.util.StringUtil;
 
+@Deprecated
 public abstract class Record {
 
     public List<String> getColumnNames() {

@@ -27,7 +27,7 @@ public class QuitAction extends PonderoAction {
             if (wb != null) {
                 if (wb.isDirty()) {
                     final int decision = JOptionPane.showConfirmDialog(getFrame(),
-                            L10n.getString("msg.save-workbook", wb.getWorkbookName()),
+                            L10n.getString("msg.save-workbook", wb.getName()),
                             L10n.getString("lbl.pondero"),
                             JOptionPane.YES_NO_CANCEL_OPTION);
                     if (decision == JOptionPane.CANCEL_OPTION) {

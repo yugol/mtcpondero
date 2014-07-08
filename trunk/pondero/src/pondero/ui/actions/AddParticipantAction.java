@@ -3,7 +3,6 @@ package pondero.ui.actions;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.L10n;
-import pondero.model.participants.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
 
@@ -18,9 +17,8 @@ public class AddParticipantAction extends ModifyParticipantAction {
 
     @Override
     public void actionPerformed(final ActionEvent arg0) {
-        final Participant participant = new Participant();
-        participant.setId(getApp().getCurrentWorkbook().getNewUniqueParticipantId());
-        showParticipantDialog(participant);
+        final String participantId = getApp().getCurrentWorkbook().getNextPariciantId();
+        showParticipantDialog(participantId);
     }
 
 }

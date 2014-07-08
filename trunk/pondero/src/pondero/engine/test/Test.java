@@ -14,12 +14,14 @@ import pondero.engine.test.launch.DefaultLauncher;
 import pondero.engine.test.launch.TaskLauncher;
 import pondero.engine.test.launch.TaskMonitor;
 import pondero.engine.test.responses.Response;
-import pondero.model.entities.TrialRecord;
-import pondero.model.participants.Participant;
+import pondero.model.Workbook;
+import pondero.model.foundation.basic.Participant;
+import pondero.model.foundation.basic.TrialRecord;
 import pondero.util.MsgUtil;
 
 public abstract class Test extends TestRenderer implements IsController {
 
+    private Workbook                  workbook;
     private Participant               participant;
     private TaskLauncher              launcher;
     private TaskMonitor               monitor;
@@ -66,8 +68,10 @@ public abstract class Test extends TestRenderer implements IsController {
         }
     }
 
-    public TrialRecord _recordCreate(String runId) {
-        return new TrialRecord(getTestId(), runId);
+    public TrialRecord _recordCreate(final String runId) {
+        final TrialRecord record = workbook.addTrialRecord(getTestId());
+        record.setExperimentId(runId);
+        return record;
     }
 
     public void _recordOpen(final Trial trial) {
@@ -76,10 +80,10 @@ public abstract class Test extends TestRenderer implements IsController {
             record.setParticipant(participant);
         }
         if (currentBlock != null) {
-            record.setBlockName(currentBlock.$name());
+            record.setBlockId(currentBlock.$name());
         }
         if (trial != null) {
-            record.setTrialName(trial.$name());
+            record.setTrialId(trial.$name());
         }
     }
 
@@ -134,14 +138,14 @@ public abstract class Test extends TestRenderer implements IsController {
 
     public void recordCorrectResponse(final long time) {
         if (record != null) {
-            record.setResponseTime(time);
+            record.setResponseTimestamp(time);
             record.setResponseCorrect(true);
         }
     }
 
     public void recordErrorResponse(final long time) {
         if (record != null) {
-            record.setResponseTime(time);
+            record.setResponseTimestamp(time);
             record.setResponseCorrect(false);
         }
     }
@@ -166,13 +170,17 @@ public abstract class Test extends TestRenderer implements IsController {
         }
     }
 
-    public void setParticipant(Participant participant) {
+    public void setParticipant(final Participant participant) {
         this.participant = participant;
     }
 
-    public void start(TaskLauncher launcher) {
+    public void start(final TaskLauncher launcher) {
         this.launcher = launcher == null ? new DefaultLauncher() : launcher;
         EventQueue.invokeLater(this);
+    }
+
+    public void setWorkbook(final Workbook workbook) {
+        this.workbook = workbook;
     }
 
 }

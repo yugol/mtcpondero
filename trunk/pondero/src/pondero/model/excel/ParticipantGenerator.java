@@ -1,4 +1,4 @@
-package pondero.model.participants;
+package pondero.model.excel;
 
 import static pondero.Logger.error;
 import java.io.BufferedReader;
@@ -11,6 +11,7 @@ import pondero.model.domains.Education;
 import pondero.model.domains.Gender;
 import pondero.util.StringUtil;
 
+@Deprecated
 public class ParticipantGenerator {
 
     private final static int MIN_AGE = 20;
