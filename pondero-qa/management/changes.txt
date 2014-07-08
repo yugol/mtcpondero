@@ -1,0 +1,30 @@
+2014-07-27
+==========
+- added application preferences dialog
+- option to randomly generate participants when opening an empty data file
+- store results message dialog at the end
+- fault tolerant handling of *.xlsx documents
+- workbook independent data collection by using TaskMonitor class
+- wizard based interface
+- new add/modify participant actions
+- build full Participant report
+- DOB only support in database for participants
+- double click on participant selection dialog selects participant
+- open utility windows centred on parent
+- added Analysis menu
+- building new interface...
+- translated JFileChooser dialogs
+- separate project for pondero-qa
+- change name sex -> gender
+
+
+2014-06-28
+==========
+- developed application site
+- simplificat modalitatea de instalare a aplicatiei si de integrare a acesteia in sistemul de operare
+- adaugat optiune de vizualizare a registrului de date in Excel direct din meniul aplicatiei
+- adaugat posibilitatea salvarii fisierului cu alt nume
+- adaugat un meniu de Ajutor care permite deschidera paginii web a aplicatiei
+- implementat un sistem de logging pentru a usura raportarea si corectarea erorilor
+- implementat o strategie de backup a fisierelor de date la deschiderea acestora
+
