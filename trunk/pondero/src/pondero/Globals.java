@@ -38,17 +38,18 @@ public final class Globals {
     private static final String        UI_THEME_STRING_KEY      = "uiThemeString";
     private static final String        UI_SCALE_FACTOR_KEY      = "uiFontScaleFactor";
     private static final String        UPDATE_ON_STARTUP_KEY    = "updateOnStartup";
-
     private static final String        PROPERTIES_FILE_NAME     = "pondero.properties";
+
     private static final String        DEFAULT_HOME_FOLDER_NAME = "../../Pondero";
     private static final String        DEFAULT_WORKBOOK_NAME    = "default.xlsx";
+
+    private static final Set<Artifact> ARTIFACTS                = new HashSet<Artifact>();
 
     private static boolean             runningFromIde;
     private static File                homeFolder;
     private static File                propertiesFile;
-    private static final Set<Artifact> artifacts                = new HashSet<Artifact>();
-
     private static File                lastWorkbookFile;
+
     private static String              uiLocaleString           = "ro";
     private static String              uiThemeString            = "Nimbus";
     private static boolean             updateOnStartup          = false;
@@ -56,7 +57,7 @@ public final class Globals {
 
     public static Set<Artifact> getArtifacts() {
         enable();
-        return artifacts;
+        return ARTIFACTS;
     }
 
     public static Workbook getDefaultWorkbook() throws Exception {
@@ -118,7 +119,7 @@ public final class Globals {
     public static List<Test> getRegisteredTests() {
         enable();
         final List<Test> tests = new ArrayList<Test>();
-        for (final Object artifact : artifacts) {
+        for (final Object artifact : ARTIFACTS) {
             if (artifact instanceof Test) {
                 tests.add((Test) artifact);
             }
@@ -224,7 +225,7 @@ public final class Globals {
 
     public static void registerArtifact(final Artifact artifact) {
         enable();
-        if (artifact != null && artifacts.add(artifact)) {
+        if (artifact != null && ARTIFACTS.add(artifact)) {
             info("registered artifact: " + artifact.getCodeName());
         }
     }

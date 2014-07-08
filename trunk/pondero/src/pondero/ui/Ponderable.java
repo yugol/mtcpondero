@@ -7,22 +7,22 @@ import pondero.model.participants.Participant;
 
 public interface Ponderable {
 
-    public abstract Participant getCurrentParticipant();
+    Participant getCurrentParticipant();
 
-    public abstract Test getCurrentTask();
+    Test getCurrentTask();
 
-    public abstract Workbook getCurrentWorkbook();
+    Workbook getCurrentWorkbook();
 
-    public abstract JFrame getFrame();
+    JFrame getFrame();
 
-    public abstract void setCurrentParticipant(Participant participant);
+    void setCurrentParticipant(Participant participant);
 
-    public abstract void setCurrentState(PonderoState state);
+    void setCurrentState(PonderoState state);
 
-    public abstract void setCurrentTask(Test task);
+    void setCurrentTask(Test task);
 
-    public abstract void setCurrentWorkbook(Workbook workbook);
+    void setCurrentWorkbook(Workbook workbook);
 
-    public abstract void updateCurrentState();
+    void updateCurrentState();
 
 }

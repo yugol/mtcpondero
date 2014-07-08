@@ -6,7 +6,7 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import javax.swing.UIManager;
 
-public class L10n {
+public final class L10n {
 
     private static final String         BUNDLE_NAME     = "pondero.res.messages";                       //$NON-NLS-1$
     private static final Locale         LOCALE          = Globals.getLocale();

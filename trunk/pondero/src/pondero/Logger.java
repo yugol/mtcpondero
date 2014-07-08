@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import pondero.util.DateUtil;
 
-public class Logger {
+public final class Logger {
 
     public static final int    NONE            = 0;
     public static final int    CRITICAL        = 10;
@@ -18,7 +18,7 @@ public class Logger {
     public static int          maxConsoleLevel = INFO;
     public static int          maxFileLevel    = TRACE;
 
-    private static final File  logFile         = new File(Globals.getFolderLogs(), buildLogFileName());
+    private static final File  LOG_FILE         = new File(Globals.getFolderLogs(), buildLogFileName());
     private static PrintStream logFileOut;
 
     public static void critical(final Object... obj) {
@@ -90,7 +90,7 @@ public class Logger {
     private static PrintStream log() {
         if (logFileOut == null) {
             try {
-                logFileOut = new PrintStream(logFile);
+                logFileOut = new PrintStream(LOG_FILE);
             } catch (final FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -167,6 +167,9 @@ public class Logger {
             justPrintTheDamnThing(out, logEntry.toString(), t);
             out.flush();
         }
+    }
+
+    private Logger() {
     }
 
 }

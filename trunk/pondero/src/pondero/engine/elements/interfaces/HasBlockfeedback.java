@@ -10,8 +10,8 @@ public interface HasBlockfeedback {
     String MEDIANLATENCY = "medianlatency";
     String WINDOW        = "window";
 
-    public Set<String> _getBlockfeedback();
+    Set<String> _getBlockfeedback();
 
-    public void blockfeedback(String... blockfeedback);
+    void blockfeedback(String... blockfeedback);
 
 }
