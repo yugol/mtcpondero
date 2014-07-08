@@ -18,12 +18,12 @@ import pondero.util.DateUtil;
 import pondero.util.NumberUtil;
 import pondero.util.StringUtil;
 
+//http://poi.apache.org/spreadsheet/quick-guide.html
+
 public abstract class ExcelDriver extends Driver {
 
-    public static final String DEFAULT_FILE_EXTENSION = ".xlsx";
-
-    private File               dataFile;
-    private XSSFWorkbook       workbook;
+    private File         dataFile;
+    private XSSFWorkbook workbook;
 
     public ExcelDriver(final String connectionString) {
         super(connectionString);
@@ -50,8 +50,8 @@ public abstract class ExcelDriver extends Driver {
             }
         } else {
             String filePath = dataFile.getCanonicalPath();
-            if (!filePath.endsWith(DEFAULT_FILE_EXTENSION)) {
-                filePath += DEFAULT_FILE_EXTENSION;
+            if (!filePath.endsWith(ExcelFileFilter.DEFAULT_EXTENSION)) {
+                filePath += ExcelFileFilter.DEFAULT_EXTENSION;
                 dataFile = new File(filePath);
             }
             info("opening existing data file: ", getConnectionString());

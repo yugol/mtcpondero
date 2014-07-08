@@ -1,6 +1,5 @@
 package pondero.ui.actions;
 
-import static pondero.Logger.error;
 import static pondero.Logger.trace;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
@@ -8,9 +7,7 @@ import pondero.L10n;
 import pondero.engine.test.Test;
 import pondero.engine.test.launch.TaskLauncher;
 import pondero.engine.test.launch.TaskMonitor;
-import pondero.model.entities.TrialRecord;
 import pondero.ui.Ponderable;
-import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
 public class StartTaskAction extends PonderoAction implements TaskLauncher {
@@ -24,6 +21,7 @@ public class StartTaskAction extends PonderoAction implements TaskLauncher {
     @Override
     public void actionPerformed(final ActionEvent e) {
         final Test task = getApp().getCurrentTask();
+        task.setWorkbook(getApp().getCurrentWorkbook());
         task.setParticipant(getApp().getCurrentParticipant());
         task.start(this);
     }
@@ -40,18 +38,13 @@ public class StartTaskAction extends PonderoAction implements TaskLauncher {
         html.append("<br/>");
         html.append(L10n.getString("msg.save-responses-?"));
         html.append("</html>");
-        if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(getFrame(),
+        final int decision = JOptionPane.showConfirmDialog(getFrame(),
                 html, L10n.getString("lbl.pondero"),
                 JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE)) {
-            try {
-                for (final TrialRecord record : report.getRecords()) {
-                    getApp().getCurrentWorkbook().add(record);
-                }
-            } catch (final Exception e) {
-                error(e);
-                MsgUtil.showExceptionMessage(getFrame(), e);
-            }
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (JOptionPane.NO_OPTION == decision) {
+            getApp().getCurrentWorkbook().removeRecords(task.getTestId(), report.getRecords());
         }
         getFrame().setVisible(true);
     }

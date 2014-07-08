@@ -2,7 +2,7 @@ package pondero.engine.test.launch;
 
 import java.util.ArrayList;
 import java.util.List;
-import pondero.model.entities.TrialRecord;
+import pondero.model.foundation.basic.TrialRecord;
 
 public class TaskMonitor {
 
@@ -15,11 +15,11 @@ public class TaskMonitor {
     private int                     stopCode;
     private final List<TrialRecord> records     = new ArrayList<TrialRecord>();
 
-    public TaskMonitor(String runId) {
+    public TaskMonitor(final String runId) {
         this.runId = runId;
     }
 
-    public void add(TrialRecord record) {
+    public void add(final TrialRecord record) {
         records.add(record);
     }
 
@@ -51,7 +51,7 @@ public class TaskMonitor {
         startTime = System.currentTimeMillis();
     }
 
-    public void markStopTime(int stopCode) {
+    public void markStopTime(final int stopCode) {
         stopTime = System.currentTimeMillis();
         this.stopCode = stopCode;
     }

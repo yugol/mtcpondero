@@ -9,7 +9,7 @@ import pondero.Globals;
 import pondero.L10n;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
-import pondero.model.excel.ExcelWorkbookFilter;
+import pondero.model.drivers.excel.ExcelFileFilter;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
 import pondero.util.MsgUtil;
@@ -31,7 +31,7 @@ public class OpenDocumentAction extends PonderoAction {
                 if (wb.isDirty()) {
                     if (JOptionPane.showConfirmDialog(
                             getApp().getFrame(),
-                            L10n.getString("msg.save-workbook", wb.getWorkbookName()),
+                            L10n.getString("msg.save-workbook", wb.getName()),
                             L10n.getString("lbl.pondero"),
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         wb.save();
@@ -42,7 +42,7 @@ public class OpenDocumentAction extends PonderoAction {
             final JFileChooser dialog = new JFileChooser(".");
             dialog.setDialogTitle(L10n.getString("lbl.open-workbook"));
             dialog.setCurrentDirectory(Globals.getFolderResults());
-            dialog.setFileFilter(new ExcelWorkbookFilter());
+            dialog.setFileFilter(new ExcelFileFilter());
             if (JFileChooser.APPROVE_OPTION == dialog.showOpenDialog(getApp().getFrame())) {
                 getApp().setCurrentWorkbook(WorkbookFactory.openWorkbook(dialog.getSelectedFile()));
 

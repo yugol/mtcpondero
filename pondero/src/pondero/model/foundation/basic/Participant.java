@@ -10,11 +10,11 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import pondero.L10n;
 import pondero.model.domains.Education;
 import pondero.model.domains.Gender;
 import pondero.model.foundation.PRow;
 import pondero.model.foundation.PSheet;
-import pondero.model.participants.ParticipantGenerator;
 import pondero.util.DateUtil;
 import pondero.util.StringUtil;
 
@@ -31,9 +31,43 @@ public class Participant extends PRow {
         snames = readNames("/pondero/res/snames.txt");
     }
 
+    public static String getHtml(final Participant participant) {
+        final StringBuilder html = new StringBuilder("<html>");
+        if (participant == null) {
+            html.append(L10n.getString("msg.no-participant-selected"));
+        } else {
+            html.append("<center><h1>");
+            html.append(participant.getSurname()).append(" ").append(participant.getName());
+            html.append("</h1></center>");
+            html.append("<p>&nbsp;</p>");
+            html.append("<table cellborder='0'>");
+            html.append("<tr>");
+            html.append("<td align='right' color='gray'><b>").append(L10n.getString("lbl.participant.age")).append(": ").append("</b></td>");
+            html.append("<td><i>").append(participant.getAge()).append(" ").append(years(participant.getAge())).append("</i></td>");
+            html.append("</tr>");
+            html.append("<tr>");
+            html.append("<td align='right' color='gray'><b>").append(L10n.getString("lbl.participant.gender")).append(": ").append("</b></td>");
+            html.append("<td><i>").append(participant.getGender()).append("</i></td>");
+            html.append("</tr>");
+            html.append("<tr>");
+            html.append("<td align='right' color='gray'><b>").append(L10n.getString("lbl.participant.driving-age")).append(": ").append("</b></td>");
+            html.append("<td><i>").append(participant.getDrivingAge()).append(" ").append(years(participant.getDrivingAge())).append("</i></td>");
+            html.append("</tr>");
+            html.append("</table>");
+        }
+        html.append("</html>");
+        return html.toString();
+    }
+
+    private static String years(final int age) {
+        if (age == 1) { return "an"; }
+        if (age == 0 || 1 < age && age < 20) { return "ani"; }
+        return "de ani";
+    }
+
     private static List<String> readNames(final String url) {
         final List<String> names = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(ParticipantGenerator.class.getResourceAsStream(url), "UTF-8"))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Participant.class.getResourceAsStream(url), "UTF-8"))) {
             String name = null;
             while (null != (name = reader.readLine())) {
                 names.add(name);

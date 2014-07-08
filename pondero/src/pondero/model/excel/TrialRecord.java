@@ -1,10 +1,8 @@
-package pondero.model.entities;
+package pondero.model.excel;
 
-import pondero.model.entities.base.Column;
-import pondero.model.entities.base.Record;
-import pondero.model.participants.Participant;
 import pondero.util.DateUtil;
 
+@Deprecated
 public class TrialRecord extends Record {
 
     private final long   startTime          = System.currentTimeMillis();
@@ -129,7 +127,7 @@ public class TrialRecord extends Record {
 
     @Override
     public String toCsv() {
-        StringBuilder csv = new StringBuilder();
+        final StringBuilder csv = new StringBuilder();
         csv.append(getExperimentIdString()).append(", ");
         csv.append(getParticipantIdString()).append(", ");
         csv.append(getParticipantSurnameString()).append(", ");

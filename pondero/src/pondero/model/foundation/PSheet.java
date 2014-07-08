@@ -1,6 +1,7 @@
 package pondero.model.foundation;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +71,10 @@ public abstract class PSheet {
 
     public int getRowCount() {
         return rows.size();
+    }
+
+    public void removeRows(final Collection<? extends PRow> records) {
+        rows.removeAll(records);
     }
 
     public PColumn getSheet(final String name) {

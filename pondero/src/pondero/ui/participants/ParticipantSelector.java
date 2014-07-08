@@ -21,7 +21,8 @@ import javax.swing.table.TableColumnModel;
 import pondero.Globals;
 import pondero.L10n;
 import pondero.model.Workbook;
-import pondero.model.participants.Participant;
+import pondero.model.foundation.basic.Participant;
+import pondero.model.foundation.basic.Participants;
 import pondero.util.StringUtil;
 import pondero.util.UiUtil;
 
@@ -30,7 +31,7 @@ public class ParticipantSelector extends JComponent {
 
     private final ParticipantCellRenderer            participantRenderer = new ParticipantCellRenderer();
 
-    private List<Participant>                        participants;
+    private Participants                             participants;
     private final JTextField                         textPattern;
     private final JTable                             tblParticipants;
     private final List<ParticipantSelectionListener> selectionListeners  = new ArrayList<ParticipantSelectionListener>();
@@ -157,7 +158,8 @@ public class ParticipantSelector extends JComponent {
     private List<Participant> select(String pattern) {
         pattern = StringUtil.normalizeForSearch(pattern);
         final List<Participant> selection = new ArrayList<Participant>();
-        for (final Participant participant : participants) {
+        for (int i = 0; i < participants.getRowCount(); ++i) {
+            final pondero.model.foundation.basic.Participant participant = participants.getRow(i);
             if (getFootprint(participant).indexOf(pattern) >= 0) {
                 selection.add(participant);
             }

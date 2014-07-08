@@ -1,15 +1,13 @@
-package pondero.model.participants;
+package pondero.model.excel;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.UUID;
 import pondero.model.domains.Education;
 import pondero.model.domains.Gender;
-import pondero.model.entities.base.Column;
-import pondero.model.entities.base.Record;
-import pondero.model.entities.base.Sheet;
 import pondero.util.DateUtil;
 
+@Deprecated
 @Sheet(name = "PARTICIPANTS")
 public class Participant extends Record {
 

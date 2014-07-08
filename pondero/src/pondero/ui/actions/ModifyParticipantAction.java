@@ -5,7 +5,7 @@ import static pondero.Logger.info;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.L10n;
-import pondero.model.participants.Participant;
+import pondero.model.foundation.basic.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
 import pondero.ui.participants.ParticipantManagementDialog;
@@ -29,18 +29,18 @@ public class ModifyParticipantAction extends PonderoAction implements Participan
     }
 
     @Override
-    public void onParticipantSave(final Participant participant) {
-        info("saving participant:", participant.getId());
+    public void onParticipantSave(final ParticipantManagementDialog source) {
+        info("saving participant");
         try {
-            getApp().getCurrentWorkbook().add(participant);
-            getApp().setCurrentParticipant(participant);
+            final Participant p = getApp().getCurrentWorkbook().addParticipant();
+            source.getParticipant(p);
         } catch (final Exception e) {
             error(e);
             MsgUtil.showExceptionMessage(getFrame(), e);
         }
     }
 
-    protected void showParticipantDialog(final Participant participant) {
+    protected void showParticipantDialog(final Object participant) {
         try {
             dlg = new ParticipantManagementDialog();
             dlg.addManagementListener(this);

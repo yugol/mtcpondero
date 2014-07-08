@@ -6,7 +6,7 @@ import javax.swing.JFileChooser;
 import pondero.Globals;
 import pondero.L10n;
 import pondero.model.Workbook;
-import pondero.model.excel.ExcelWorkbookFilter;
+import pondero.model.drivers.excel.ExcelFileFilter;
 import pondero.ui.Ponderable;
 import pondero.util.MsgUtil;
 
@@ -23,7 +23,7 @@ public class SaveAsDocumentAction extends PonderoAction {
         final JFileChooser dialog = new JFileChooser(".");
         dialog.setDialogTitle(L10n.getString("lbl.save-as-workbook"));
         dialog.setCurrentDirectory(Globals.getFolderResults());
-        dialog.setFileFilter(new ExcelWorkbookFilter());
+        dialog.setFileFilter(new ExcelFileFilter());
         if (JFileChooser.APPROVE_OPTION == dialog.showSaveDialog(getApp().getFrame())) {
             try {
                 Workbook wb = getApp().getCurrentWorkbook();

@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import pondero.L10n;
-import pondero.model.participants.Participant;
+import pondero.model.foundation.basic.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
 import pondero.ui.participants.ParticipantSelectionDialog;
