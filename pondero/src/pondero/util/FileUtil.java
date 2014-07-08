@@ -4,7 +4,7 @@ import static pondero.Logger.error;
 import java.io.File;
 import pondero.Globals;
 
-public class FileUtil {
+public final class FileUtil {
 
     public static void deleteTempFiles() {
         for (final File file : Globals.getFolderResultsTemp().listFiles()) {
@@ -14,6 +14,9 @@ public class FileUtil {
                 error(e);
             }
         }
+    }
+
+    private FileUtil() {
     }
 
 }
