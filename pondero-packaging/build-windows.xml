@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="quick" name="Create Runnable Jar for Project pondero-libs">
 
-	<property name="jredir" location="/Java/jre7" />
+	<property name="jredir" location="F:/Java/jre7-32" />
 	<property name="mavendir" location="C:/Users/Iulian/.m2/repository" />
-	<property name="soldir" location="/Workspace/pondero-dev" />
-	<property name="pkgdir" location="/Workspace/Pondero" />
+	<property name="soldir" location="F:/Workspace/pondero-dev" />
+	<property name="pkgdir" location="F:/Workspace/Pondero" />
 	<property name="iscc" value='"C:/Program Files (x86)/Inno Setup 5/iscc.exe"' />
 
 	<target name="full" depends="pondero-libs, pondero, pondero-test-ic" />
