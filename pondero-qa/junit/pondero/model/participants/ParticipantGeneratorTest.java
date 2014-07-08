@@ -1,7 +1,7 @@
 package pondero.model.participants;
 
 import org.junit.Test;
-import pondero.model.excel.ParticipantGenerator;
+import pondero.model._.ParticipantGenerator;
 
 public class ParticipantGeneratorTest {
 
