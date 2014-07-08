@@ -25,7 +25,7 @@ public class HomePageAction extends PonderoAction {
             WebUtil.browse(Globals.HOME_PAGE_ADDRESS);
         } catch (final Exception e) {
             error(e);
-            MsgUtil.showExceptionMessage(getFrame(), e);
+            MsgUtil.showExceptionMessage(getMainFrame(), e);
         }
     }
 

@@ -29,9 +29,11 @@ import pondero.util.UiUtil;
 @SuppressWarnings("serial")
 public class PreferencesDialog extends JDialog {
 
+    public static final String DIALOG_NAME = "preferencesDialog";
+
     /**
      * Launch the application.
-     * 
+     *
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
@@ -55,6 +57,7 @@ public class PreferencesDialog extends JDialog {
      */
     public PreferencesDialog(final Frame owner) {
         super(owner);
+        setName(DIALOG_NAME);
         setType(Type.UTILITY);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

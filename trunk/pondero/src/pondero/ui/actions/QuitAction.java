@@ -23,10 +23,10 @@ public class QuitAction extends PonderoAction {
     @Override
     public void actionPerformed(final ActionEvent evt) {
         try {
-            final Workbook wb = getApp().getCurrentWorkbook();
+            final Workbook wb = getCurrentWorkbook();
             if (wb != null) {
                 if (wb.isDirty()) {
-                    final int decision = JOptionPane.showConfirmDialog(getFrame(),
+                    final int decision = JOptionPane.showConfirmDialog(getMainFrame(),
                             L10n.getString("msg.save-workbook", wb.getName()),
                             L10n.getString("lbl.pondero"),
                             JOptionPane.YES_NO_CANCEL_OPTION);
@@ -43,7 +43,7 @@ public class QuitAction extends PonderoAction {
             System.exit(0);
         } catch (final Exception e) {
             error(e);
-            MsgUtil.showExceptionMessage(getFrame(), e);
+            MsgUtil.showExceptionMessage(getMainFrame(), e);
         }
     }
 

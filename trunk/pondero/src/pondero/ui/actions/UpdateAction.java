@@ -18,8 +18,8 @@ public class UpdateAction extends PonderoAction {
 
     @Override
     public void actionPerformed(final ActionEvent e) {
-        final UpdateDialog dlg = new UpdateDialog(getFrame());
-        dlg.setLocationRelativeTo(getFrame());
+        final UpdateDialog dlg = new UpdateDialog(getMainFrame());
+        dlg.setLocationRelativeTo(getMainFrame());
         dlg.setModal(false);
         dlg.setVisible(true);
         dlg.beginUpdate();

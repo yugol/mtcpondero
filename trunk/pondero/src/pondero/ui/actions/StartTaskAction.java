@@ -20,9 +20,9 @@ public class StartTaskAction extends PonderoAction implements TaskLauncher {
 
     @Override
     public void actionPerformed(final ActionEvent e) {
-        final Test task = getApp().getCurrentTask();
-        task.setWorkbook(getApp().getCurrentWorkbook());
-        task.setParticipant(getApp().getCurrentParticipant());
+        final Test task = getCurrentTask();
+        task.setWorkbook(getCurrentWorkbook());
+        task.setParticipant(getCurrentParticipant());
         task.start(this);
     }
 
@@ -38,21 +38,21 @@ public class StartTaskAction extends PonderoAction implements TaskLauncher {
         html.append("<br/>");
         html.append(L10n.getString("msg.save-responses-?"));
         html.append("</html>");
-        final int decision = JOptionPane.showConfirmDialog(getFrame(),
+        final int decision = JOptionPane.showConfirmDialog(getMainFrame(),
                 html, L10n.getString("lbl.pondero"),
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
 
         if (JOptionPane.NO_OPTION == decision) {
-            getApp().getCurrentWorkbook().removeRecords(task.getTestId(), report.getRecords());
+            getCurrentWorkbook().removeRecords(task.getTestId(), report.getRecords());
         }
-        getFrame().setVisible(true);
+        getMainFrame().setVisible(true);
     }
 
     @Override
     public void onTaskStarted(final Test task) {
         trace("started task: ", task.getCodeName());
-        getFrame().setVisible(false);
+        getMainFrame().setVisible(false);
     }
 
 }

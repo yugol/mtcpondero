@@ -13,7 +13,9 @@ public interface Ponderable {
 
     Workbook getCurrentWorkbook();
 
-    JFrame getFrame();
+    JFrame getMainFrame();
+
+    JFrame getTestFrame();
 
     void setCurrentParticipant(Participant participant);
 

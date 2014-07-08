@@ -40,6 +40,8 @@ import pondero.util.UiUtil;
 @SuppressWarnings("serial")
 public class UpdateDialog extends JDialog implements UpdateListener {
 
+    public static final String DIALOG_NAME = "updateDialog";
+
     /**
      * Launch the application.
      */
@@ -72,6 +74,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
 
     public UpdateDialog(final Frame owner) {
         super(owner);
+        setName(DIALOG_NAME);
         setType(Type.UTILITY);
         engine.addListener(this);
 

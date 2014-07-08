@@ -15,12 +15,12 @@ public class StartDocumentAction extends PonderoAction {
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
+    public void actionPerformed(final ActionEvent evt) {
         try {
-            getApp().getCurrentWorkbook().view();
-        } catch (Exception e) {
+            getCurrentWorkbook().view();
+        } catch (final Exception e) {
             error(e);
-            MsgUtil.showExceptionMessage(getFrame(), e);
+            MsgUtil.showExceptionMessage(getMainFrame(), e);
         }
     }
 
