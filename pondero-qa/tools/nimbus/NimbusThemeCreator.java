@@ -415,7 +415,6 @@ public class NimbusThemeCreator implements ActionListener, ChangeListener,
         }
 
         private void export(Writer writer, String prefix) throws IOException {
-            @SuppressWarnings("resource")
             BufferedWriter buf = writer instanceof BufferedWriter ? (BufferedWriter) writer : null;
             UIDefaults def = UIManager.getDefaults();
             for (Map.Entry<Object, Object> entry : def.entrySet()) {
