@@ -20,7 +20,7 @@ public class BasicWorkbook implements Workbook {
     public BasicWorkbook(final File file) throws Exception {
         driver = new BasicTemplate(file);
         driver.open();
-        model = driver.getModel();
+        model = driver.fetchModel();
     }
 
     @Override
@@ -75,8 +75,7 @@ public class BasicWorkbook implements Workbook {
 
     @Override
     public void save() throws Exception {
-        driver.putModel(model);
-        driver.save();
+        driver.commitModel(model);
     }
 
     @Override
@@ -84,9 +83,8 @@ public class BasicWorkbook implements Workbook {
         driver.close();
         driver = new BasicTemplate(selectedFile.getCanonicalPath());
         driver.open();
-        driver.putModel(model);
-        driver.save();
-        model = driver.getModel();
+        driver.commitModel(model);
+        model = driver.fetchModel();
     }
 
     @Override
@@ -103,8 +101,7 @@ public class BasicWorkbook implements Workbook {
 
         final BasicTemplate viewDriver = new BasicTemplate(tempFile);
         viewDriver.open();
-        viewDriver.putModel(model);
-        viewDriver.save();
+        viewDriver.commitModel(model);
         viewDriver.close();
 
         String[] cmd = null;

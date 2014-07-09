@@ -60,8 +60,7 @@ public abstract class ExcelDriver extends Driver {
         setConnectionString(dataFile.getCanonicalPath());
     }
 
-    @Override
-    public void save() throws Exception {
+    protected void save() throws Exception {
         info("saving data file: ", getConnectionString());
         try (FileOutputStream fileOut = new FileOutputStream(dataFile)) {
             workbook.write(fileOut);

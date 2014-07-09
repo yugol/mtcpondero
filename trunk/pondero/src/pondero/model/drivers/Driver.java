@@ -16,13 +16,11 @@ public abstract class Driver {
         return connectionString;
     }
 
-    public abstract PModel getModel() throws Exception;
+    public abstract PModel fetchModel() throws Exception;
 
     public abstract void open() throws Exception;
 
-    public abstract void putModel(PModel model) throws Exception;
-
-    public abstract void save() throws Exception;
+    public abstract void commitModel(PModel model) throws Exception;
 
     protected void setConnectionString(final String connectionString) {
         this.connectionString = connectionString;
