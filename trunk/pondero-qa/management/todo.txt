@@ -3,16 +3,14 @@ CURRENT VERSION: 2014-07-27
 =====================================================================
 
 * tests
-- config: send production flag in command line
-- core: 3 option question dialog when closing the application
-- proper error message for trying to save over an opened xlsx file
-- warn replace existing file
-- uniform spacing between for dialog elements
+- collecting user data
+- test all combinations (PType, CellType)
+
 
 * Export / Analysis / Reports
 
 
-* online catalog
+* online catalogue
 
 
 * packaging
@@ -33,8 +31,12 @@ CURRENT VERSION: 2014-07-27
 FUTURE VERSIONS
 =====================================================================
 
+- proper error message for trying to save over an opened xlsx file
+- warn replace existing file
+- uniform spacing between for dialog elements
+- config: send production flag in command line
 - l10n for all strings
-- update: provide only tests in Catalog
+- update: provide only tests in Catalogue
 - sistem de raportare a erorilor/exceptiilor prin e-mail
 - culegerea de informatii despre utilizator
 - servicii de inregistrarea a utilizatorilor

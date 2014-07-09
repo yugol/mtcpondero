@@ -1,6 +1,7 @@
 package pondero.model.drivers.excel.templates;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -19,14 +20,18 @@ import pondero.util.NumberUtil;
 
 public class BasicTemplate extends ExcelDriver {
 
-    private CellStyle headerStyle;
-    private CellStyle oddStyle;
-    private CellStyle evenStyle;
-    private CellStyle oddDateStyle;
     private CellStyle evenDateStyle;
+    private CellStyle evenStyle;
+    private CellStyle headerStyle;
+    private CellStyle oddDateStyle;
+    private CellStyle oddStyle;
 
     public BasicTemplate(final String connectionString) {
         super(connectionString);
+    }
+
+    public BasicTemplate(final File tempFile) throws IOException {
+        this(tempFile.getCanonicalPath());
     }
 
     @Override
@@ -131,9 +136,6 @@ public class BasicTemplate extends ExcelDriver {
             cell.setCellStyle(headerStyle);
         }
         for (int rowIdx = 0; rowIdx < pSheet.getRowCount(); ++rowIdx) {
-            if (rowIdx % 50 == 0) {
-                System.out.println(rowIdx);
-            }
             xRow = xSheet.createRow(1 + rowIdx);
             for (int colIdx = 0; colIdx < pSheet.getColumnCount(); ++colIdx) {
                 final PType pType = pSheet.getColumn(colIdx).getType();
