@@ -48,7 +48,13 @@ import com.toedter.calendar.JDateChooser;
 @SuppressWarnings("serial")
 public class ParticipantManagementDialog extends JDialog {
 
-    public static final String                        DIALOG_NAME         = "participantSelectionDialor";
+    public static final String                        DIALOG_NAME         = "participantSelectionDialog";
+
+    public static final String                        BUTTON_CANCEL_NAME  = "cancelButton";
+    public static final String                        BUTTON_SAVE_NAME    = "saveButton";
+    public static final String                        FIELD_ID_NAME       = "idField";
+    public static final String                        FIELD_NAME_NAME     = "nameField";
+    public static final String                        FIELD_SURNAME_NAME  = "surnameField";
 
     private final DocumentListener                    txtDocListener      = new DocumentListener() {
 
@@ -150,6 +156,7 @@ public class ParticipantManagementDialog extends JDialog {
         pnlParticipant.add(lblColumn_01, gbc_lblColumn_01);
 
         valId = new JTextField();
+        valId.setName(FIELD_ID_NAME);
         valId.setEnabled(false);
         valId.setText("");
         final GridBagConstraints gbc_valId = new GridBagConstraints();
@@ -177,6 +184,7 @@ public class ParticipantManagementDialog extends JDialog {
         pnlParticipant.add(lblColumn_02, gbc_lblColumn_02);
 
         valSurname = new JTextField();
+        valSurname.setName(FIELD_SURNAME_NAME);
         valSurname.getDocument().addDocumentListener(txtDocListener);
         valSurname.setText("");
         final GridBagConstraints gbc_valSurname = new GridBagConstraints();
@@ -204,6 +212,7 @@ public class ParticipantManagementDialog extends JDialog {
         pnlParticipant.add(lblColumn_03, gbc_lblColumn_03);
 
         valName = new JTextField();
+        valName.setName(FIELD_NAME_NAME);
         valName.getDocument().addDocumentListener(txtDocListener);
         valName.setText("");
         final GridBagConstraints gbc_valName = new GridBagConstraints();
@@ -405,6 +414,7 @@ public class ParticipantManagementDialog extends JDialog {
         flowLayout.setAlignment(FlowLayout.RIGHT);
         background.add(pnlControls, BorderLayout.SOUTH);
 
+        btnSave.setName(BUTTON_SAVE_NAME);
         btnSave.addActionListener(new ActionListener() {
 
             @Override
@@ -420,8 +430,9 @@ public class ParticipantManagementDialog extends JDialog {
         final Component horizontalStrut = Box.createHorizontalStrut(0);
         pnlControls.add(horizontalStrut);
 
-        final JButton btnClose = new JButton(L10n.getString("lbl.close"));
-        btnClose.addActionListener(new ActionListener() {
+        final JButton btnCancel = new JButton(L10n.getString("lbl.cancel"));
+        btnCancel.setName(BUTTON_CANCEL_NAME);
+        btnCancel.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(final ActionEvent arg0) {
@@ -429,7 +440,7 @@ public class ParticipantManagementDialog extends JDialog {
             }
 
         });
-        pnlControls.add(btnClose);
+        pnlControls.add(btnCancel);
     }
 
     public void addManagementListener(final ParticipantManagementListener listener) {
@@ -537,6 +548,7 @@ public class ParticipantManagementDialog extends JDialog {
     }
 
     private boolean validateParticipant() {
+        trace("validating participant: ", valSurname.getText(), " / ", valName.getText());
         if (StringUtil.isNullOrBlank(valSurname.getText())) {
             MsgUtil.showValidationMessage(null, L10n.getString("msg.surname-cannot-be-empty"));
             return false;
