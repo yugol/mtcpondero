@@ -40,7 +40,7 @@ public class QuitAction extends PonderoAction {
                 wb.close();
             }
             FileUtil.deleteTempFiles();
-            System.exit(0);
+            getMainFrame().dispose();
         } catch (final Exception e) {
             error(e);
             MsgUtil.showExceptionMessage(getMainFrame(), e);
