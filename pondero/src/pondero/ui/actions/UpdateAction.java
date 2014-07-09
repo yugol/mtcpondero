@@ -13,7 +13,7 @@ public class UpdateAction extends PonderoAction {
     public UpdateAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.update..."));
-        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/arrow_down.png")));
+        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/world_add.png")));
     }
 
     @Override
