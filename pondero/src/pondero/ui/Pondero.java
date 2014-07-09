@@ -63,7 +63,8 @@ import pondero.util.UiUtil;
 
 public class Pondero implements Ponderable, ModelListener {
 
-    public static final String MAIN_FRAME_NAME = "ponderoMainFrame";
+    public static final String MAIN_FRAME_NAME     = "ponderoMainFrame";
+    public static final String MENU_ITEM_QUIT_NAME = "menuItemQuit";
 
     /**
      * Launch the application.
@@ -180,6 +181,7 @@ public class Pondero implements Ponderable, ModelListener {
         return mainFrame;
     }
 
+    @Override
     public JFrame getTestFrame() {
         if (currentTask != null) { return currentTask.getTestWindow(); }
         return null;
@@ -331,6 +333,7 @@ public class Pondero implements Ponderable, ModelListener {
         mnApplication.addSeparator();
 
         final JMenuItem mntmQuit = new JMenuItem("quit");
+        mntmQuit.setName(MENU_ITEM_QUIT_NAME);
         mntmQuit.setAction(quitAction);
         mnApplication.add(mntmQuit);
 
