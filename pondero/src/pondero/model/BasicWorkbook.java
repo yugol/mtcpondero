@@ -70,8 +70,9 @@ public class BasicWorkbook implements Workbook {
     }
 
     @Override
-    public void save() throws IOException {
-        throw new UnsupportedOperationException("save");
+    public void save() throws Exception {
+        driver.putModel(model);
+        driver.save();
     }
 
     @Override
