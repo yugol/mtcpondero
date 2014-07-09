@@ -11,6 +11,7 @@ CURRENT VERSION: 2014-07-27
 
 
 * online catalogue
+- Actualizare... -> Catalog online...
 
 
 * packaging

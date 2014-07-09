@@ -2,6 +2,7 @@ package pondero.model.foundation;
 
 import java.util.Calendar;
 import java.util.Date;
+import pondero.util.BooleanUtil;
 import pondero.util.DateUtil;
 import pondero.util.NumberUtil;
 import pondero.util.StringUtil;
@@ -39,6 +40,9 @@ public abstract class PRow {
                     break;
                 case DECIMAL:
                     data[index] = NumberUtil.toDecimal(value);
+                    break;
+                case BOOLEAN:
+                    data[index] = BooleanUtil.toBoolean(value);
                     break;
                 default:
                     throw new IllegalArgumentException("Unsupported type " + value.getClass().getName());

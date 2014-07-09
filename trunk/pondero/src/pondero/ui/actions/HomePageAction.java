@@ -16,7 +16,7 @@ public class HomePageAction extends PonderoAction {
     public HomePageAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.home-page"));
-        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/world_link.png")));
+        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/house.png")));
     }
 
     @Override
