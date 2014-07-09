@@ -32,7 +32,7 @@ public class Participants extends PSheet {
 
     public String getNextPariciantId() {
         int maxIdx = 100;
-        for (final int rowIdx = 0; rowIdx < getRowCount();) {
+        for (int rowIdx = 0; rowIdx < getRowCount(); ++rowIdx) {
             try {
                 final int id = Integer.parseInt((String) get(rowIdx, ATTR_ID));
                 if (id > maxIdx) {

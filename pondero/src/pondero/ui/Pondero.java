@@ -63,8 +63,15 @@ import pondero.util.UiUtil;
 
 public class Pondero implements Ponderable, ModelListener {
 
-    public static final String MAIN_FRAME_NAME     = "ponderoMainFrame";
-    public static final String MENU_ITEM_QUIT_NAME = "menuItemQuit";
+    public static final String BUTTON_ADD_NAME         = "addButton";
+    public static final String BUTTON_BACK_NAME        = "backButton";
+    public static final String BUTTON_MODIFY_NAME      = "modifyButton";
+    public static final String BUTTON_NEXT_NAME        = "nextButton";
+    public static final String BUTTON_SELECT_NAME      = "selectButton";
+    public static final String BUTTON_START_NAME       = "startButton";
+    public static final String MAIN_FRAME_NAME         = "ponderoMainFrame";
+    public static final String MENU_ITEM_QUIT_NAME     = "quitMenuItem";
+    public static final String REPORT_PARTICIPANT_NAME = "participantReport";
 
     /**
      * Launch the application.
@@ -409,13 +416,15 @@ public class Pondero implements Ponderable, ModelListener {
         pnlParticipantContent.add(pnlParticipantDescription, gbc_pnlParticipantDescription);
 
         epParticipantDescription = new JEditorPane();
+        epParticipantDescription.setName(REPORT_PARTICIPANT_NAME);
         epParticipantDescription.setEditable(false);
         epParticipantDescription.setContentType("text/html");
         epParticipantDescription.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
         epParticipantDescription.setFont(new JLabel().getFont());
         pnlParticipantDescription.setViewportView(epParticipantDescription);
 
-        btnSelectParticipant = new JButton("<html>\r\n<center>\r\nChoose<br/>\r\nparticipant<br/>\r\nfrom list\r\n</center>\r\n</html>");
+        btnSelectParticipant = new JButton("");
+        btnSelectParticipant.setName(BUTTON_SELECT_NAME);
         btnSelectParticipant.setAction(chooseParticipantAction);
         final GridBagConstraints gbc_btnSelectParticipant = new GridBagConstraints();
         gbc_btnSelectParticipant.insets = new Insets(0, 0, 20, 0);
@@ -425,7 +434,8 @@ public class Pondero implements Ponderable, ModelListener {
         gbc_btnSelectParticipant.gridy = 0;
         pnlParticipantContent.add(btnSelectParticipant, gbc_btnSelectParticipant);
 
-        btnAddParticipant = new JButton("Add...");
+        btnAddParticipant = new JButton("");
+        btnAddParticipant.setName(BUTTON_ADD_NAME);
         btnAddParticipant.setAction(addParticipantAction);
         final GridBagConstraints gbc_btnAddParticipant = new GridBagConstraints();
         gbc_btnAddParticipant.fill = GridBagConstraints.HORIZONTAL;
@@ -434,7 +444,8 @@ public class Pondero implements Ponderable, ModelListener {
         gbc_btnAddParticipant.gridy = 2;
         pnlParticipantContent.add(btnAddParticipant, gbc_btnAddParticipant);
 
-        btnModifyParticipant = new JButton("Modify...");
+        btnModifyParticipant = new JButton("");
+        btnModifyParticipant.setName(BUTTON_MODIFY_NAME);
         btnModifyParticipant.setAction(modifyParticipantAction);
         final GridBagConstraints gbc_btnModifyParticipant = new GridBagConstraints();
         gbc_btnModifyParticipant.fill = GridBagConstraints.HORIZONTAL;
@@ -449,6 +460,7 @@ public class Pondero implements Ponderable, ModelListener {
         pnlParticipantNavigation.setLayout(new BorderLayout(0, 0));
 
         btnNext = new JButton(L10n.getString("lbl.next"));
+        btnNext.setName(BUTTON_NEXT_NAME);
         btnNext.addActionListener(new ActionListener() {
 
             @Override
@@ -506,6 +518,7 @@ public class Pondero implements Ponderable, ModelListener {
         pnlTestNavigation.setLayout(new BorderLayout(0, 0));
 
         btnBack = new JButton(L10n.getString("lbl.back"));
+        btnBack.setName(BUTTON_BACK_NAME);
         btnBack.addActionListener(new ActionListener() {
 
             @Override
@@ -517,6 +530,7 @@ public class Pondero implements Ponderable, ModelListener {
         pnlTestNavigation.add(btnBack, BorderLayout.WEST);
 
         btnStart = new JButton(L10n.getString("lbl.start"));
+        btnStart.setName(BUTTON_START_NAME);
         btnStart.setAction(startTaskAction);
         pnlTestNavigation.add(btnStart, BorderLayout.EAST);
 

@@ -34,6 +34,7 @@ public class ModifyParticipantAction extends PonderoAction implements Participan
         try {
             final Participant p = getCurrentWorkbook().addParticipant();
             source.getParticipant(p);
+            getApp().setCurrentParticipant(p);
         } catch (final Exception e) {
             error(e);
             MsgUtil.showExceptionMessage(getMainFrame(), e);

@@ -12,10 +12,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import pondero.Globals;
-import pondero.TestUtil;
+import pondero.PonderoTest;
 import pondero.ui.Pondero;
 
-public class QuitTest {
+public class QuitTest extends PonderoTest {
 
     private static final File TEST_XLSX = new File("./punit/pondero/quit/quit.xlsx");
 
@@ -29,7 +29,7 @@ public class QuitTest {
         }
         assertFalse(TEST_XLSX.exists());
         Globals.setLastWorkbookFile(TEST_XLSX);
-        app = TestUtil.getApp();
+        app = getAppWithParticipants();
         assertTrue(app.getMainFrame().isVisible());
     }
 
@@ -42,7 +42,7 @@ public class QuitTest {
 
     @Test
     public void testQuitCancel() throws Exception {
-        final JMenuItem quitItem = (JMenuItem) TestUtil.getChild(app.getMainFrame(), Pondero.MENU_ITEM_QUIT_NAME);
+        final JMenuItem quitItem = (JMenuItem) getChild(app.getMainFrame(), Pondero.MENU_ITEM_QUIT_NAME);
         assertNotNull(quitItem);
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -54,18 +54,18 @@ public class QuitTest {
 
         });
 
-        final JButton btnCancel = (JButton) TestUtil.getChild(app.getMainFrame(), JButton.class, 2);
+        final JButton btnCancel = (JButton) getGrandchild(app.getMainFrame(), JButton.class, 2);
         assertNotNull(btnCancel);
         btnCancel.doClick();
         Thread.sleep(200);
         assertTrue(app.getMainFrame().isVisible());
-        assertNull(TestUtil.getChild(app.getMainFrame(), JButton.class, 2));
+        assertNull(getGrandchild(app.getMainFrame(), JButton.class, 2));
         assertFalse(TEST_XLSX.exists());
     }
 
     @Test
     public void testQuitNoSave() throws Exception {
-        final JMenuItem quitItem = (JMenuItem) TestUtil.getChild(app.getMainFrame(), Pondero.MENU_ITEM_QUIT_NAME);
+        final JMenuItem quitItem = (JMenuItem) getChild(app.getMainFrame(), Pondero.MENU_ITEM_QUIT_NAME);
         assertNotNull(quitItem);
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -77,7 +77,7 @@ public class QuitTest {
 
         });
 
-        final JButton btnNo = (JButton) TestUtil.getChild(app.getMainFrame(), JButton.class, 1);
+        final JButton btnNo = (JButton) getGrandchild(app.getMainFrame(), JButton.class, 1);
         assertNotNull(btnNo);
         btnNo.doClick();
         Thread.sleep(500);
@@ -87,7 +87,7 @@ public class QuitTest {
 
     @Test
     public void testQuitSave() throws Exception {
-        final JMenuItem quitItem = (JMenuItem) TestUtil.getChild(app.getMainFrame(), Pondero.MENU_ITEM_QUIT_NAME);
+        final JMenuItem quitItem = (JMenuItem) getChild(app.getMainFrame(), Pondero.MENU_ITEM_QUIT_NAME);
         assertNotNull(quitItem);
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -99,7 +99,7 @@ public class QuitTest {
 
         });
 
-        final JButton btnYes = (JButton) TestUtil.getChild(app.getMainFrame(), JButton.class, 0);
+        final JButton btnYes = (JButton) getGrandchild(app.getMainFrame(), JButton.class, 0);
         assertNotNull(btnYes);
         btnYes.doClick();
         Thread.sleep(500);
