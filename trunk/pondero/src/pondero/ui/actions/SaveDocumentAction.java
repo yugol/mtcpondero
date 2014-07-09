@@ -2,7 +2,6 @@ package pondero.ui.actions;
 
 import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import javax.swing.ImageIcon;
 import pondero.L10n;
 import pondero.ui.Ponderable;
@@ -22,7 +21,7 @@ public class SaveDocumentAction extends PonderoAction {
     public void actionPerformed(final ActionEvent evt) {
         try {
             getCurrentWorkbook().save();
-        } catch (final IOException e) {
+        } catch (final Exception e) {
             error(e);
             MsgUtil.showExceptionMessage(getMainFrame(), e);
         }

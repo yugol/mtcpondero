@@ -1,7 +1,6 @@
 package pondero.model;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 import pondero.model.foundation.basic.Participant;
 import pondero.model.foundation.basic.Participants;
@@ -29,9 +28,9 @@ public interface Workbook {
 
     void removeRecords(String testId, Collection<TrialRecord> records);
 
-    void save() throws IOException;
+    void save() throws Exception;
 
-    void saveAs(File selectedFile) throws IOException;
+    void saveAs(File selectedFile) throws Exception;
 
     void view() throws Exception;
 

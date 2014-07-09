@@ -17,12 +17,13 @@ import pondero.ui.Pondero;
 
 public class QuitTest {
 
-    private static final File TEST_XLSX = new File("./pondero-qa/punit/pondeo/quit/quit.xlsx");
+    private static final File TEST_XLSX = new File("./punit/pondero/quit/quit.xlsx");
 
     private Pondero           app;
 
     @Before
     public void setUp() throws Exception {
+        System.out.println(TEST_XLSX.getCanonicalPath());
         if (TEST_XLSX.exists()) {
             TEST_XLSX.delete();
         }
@@ -55,16 +56,7 @@ public class QuitTest {
 
         final JButton btnCancel = (JButton) TestUtil.getChild(app.getMainFrame(), JButton.class, 2);
         assertNotNull(btnCancel);
-
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                btnCancel.doClick();
-            }
-
-        });
-
+        btnCancel.doClick();
         Thread.sleep(200);
         assertTrue(app.getMainFrame().isVisible());
         assertNull(TestUtil.getChild(app.getMainFrame(), JButton.class, 2));
@@ -87,17 +79,8 @@ public class QuitTest {
 
         final JButton btnNo = (JButton) TestUtil.getChild(app.getMainFrame(), JButton.class, 1);
         assertNotNull(btnNo);
-
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                btnNo.doClick();
-            }
-
-        });
-
-        Thread.sleep(200);
+        btnNo.doClick();
+        Thread.sleep(500);
         assertFalse(app.getMainFrame().isVisible());
         assertFalse(TEST_XLSX.exists());
     }
@@ -118,17 +101,8 @@ public class QuitTest {
 
         final JButton btnYes = (JButton) TestUtil.getChild(app.getMainFrame(), JButton.class, 0);
         assertNotNull(btnYes);
-
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                btnYes.doClick();
-            }
-
-        });
-
-        Thread.sleep(200);
+        btnYes.doClick();
+        Thread.sleep(500);
         assertFalse(app.getMainFrame().isVisible());
         assertTrue(TEST_XLSX.exists());
     }

@@ -159,68 +159,70 @@ public final class Globals {
     }
 
     public static void loadPreferences(String homeFolderName) throws Exception {
-        if (StringUtil.isNullOrBlank(homeFolderName)) {
-            runningFromIde = true;
-            homeFolderName = DEFAULT_HOME_FOLDER_NAME;
-        } else {
-            runningFromIde = false;
-        }
-        homeFolder = new File(homeFolderName);
-        if (!homeFolder.exists()) {
-            homeFolder.mkdirs();
-        }
-        propertiesFile = new File(getFolderRes(), PROPERTIES_FILE_NAME);
-        if (propertiesFile.exists()) {
-            final Reader propertiesReader = new FileReader(propertiesFile);
-            final Properties properties = new Properties();
-            properties.load(propertiesReader);
-            propertiesReader.close();
-            String foo = null;
-            foo = properties.getProperty(CONSOLE_LOG_LEVEL_KEY);
-            if (!StringUtil.isNullOrBlank(foo)) {
-                Logger.maxConsoleLevel = Integer.parseInt(foo.trim());
+        if (homeFolder == null) {
+            if (StringUtil.isNullOrBlank(homeFolderName)) {
+                runningFromIde = true;
+                homeFolderName = DEFAULT_HOME_FOLDER_NAME;
+            } else {
+                runningFromIde = false;
             }
-            foo = properties.getProperty(FILE_LOG_LEVEL_KEY);
-            if (!StringUtil.isNullOrBlank(foo)) {
-                Logger.maxFileLevel = Integer.parseInt(foo.trim());
+            homeFolder = new File(homeFolderName);
+            if (!homeFolder.exists()) {
+                homeFolder.mkdirs();
             }
-            foo = properties.getProperty(UI_LOCALE_STRING_KEY);
-            if (!StringUtil.isNullOrBlank(foo)) {
-                uiLocaleString = foo;
-            }
-            foo = properties.getProperty(UI_THEME_STRING_KEY);
-            if (!StringUtil.isNullOrBlank(foo)) {
-                uiThemeString = foo.trim();
-            }
-            foo = properties.getProperty(UI_SCALE_FACTOR_KEY);
-            if (!StringUtil.isNullOrBlank(foo)) {
-                uiFontScaleFactor = Double.parseDouble(foo);
-            }
-            foo = properties.getProperty(UPDATE_ON_STARTUP_KEY);
-            if (!StringUtil.isNullOrBlank(foo)) {
-                updateOnStartup = Boolean.parseBoolean(foo.trim().toLowerCase());
-            }
-            foo = properties.getProperty(LAST_WORKBOOK_FILE_KEY);
-            if (!StringUtil.isNullOrBlank(foo)) {
-                lastWorkbookFile = new File(foo);
-                if (!lastWorkbookFile.exists()) {
-                    lastWorkbookFile = null;
+            propertiesFile = new File(getFolderRes(), PROPERTIES_FILE_NAME);
+            if (propertiesFile.exists()) {
+                final Reader propertiesReader = new FileReader(propertiesFile);
+                final Properties properties = new Properties();
+                properties.load(propertiesReader);
+                propertiesReader.close();
+                String foo = null;
+                foo = properties.getProperty(CONSOLE_LOG_LEVEL_KEY);
+                if (!StringUtil.isNullOrBlank(foo)) {
+                    Logger.maxConsoleLevel = Integer.parseInt(foo.trim());
                 }
+                foo = properties.getProperty(FILE_LOG_LEVEL_KEY);
+                if (!StringUtil.isNullOrBlank(foo)) {
+                    Logger.maxFileLevel = Integer.parseInt(foo.trim());
+                }
+                foo = properties.getProperty(UI_LOCALE_STRING_KEY);
+                if (!StringUtil.isNullOrBlank(foo)) {
+                    uiLocaleString = foo;
+                }
+                foo = properties.getProperty(UI_THEME_STRING_KEY);
+                if (!StringUtil.isNullOrBlank(foo)) {
+                    uiThemeString = foo.trim();
+                }
+                foo = properties.getProperty(UI_SCALE_FACTOR_KEY);
+                if (!StringUtil.isNullOrBlank(foo)) {
+                    uiFontScaleFactor = Double.parseDouble(foo);
+                }
+                foo = properties.getProperty(UPDATE_ON_STARTUP_KEY);
+                if (!StringUtil.isNullOrBlank(foo)) {
+                    updateOnStartup = Boolean.parseBoolean(foo.trim().toLowerCase());
+                }
+                foo = properties.getProperty(LAST_WORKBOOK_FILE_KEY);
+                if (!StringUtil.isNullOrBlank(foo)) {
+                    lastWorkbookFile = new File(foo);
+                    if (!lastWorkbookFile.exists()) {
+                        lastWorkbookFile = null;
+                    }
+                }
+            } else {
+                savePreferences();
             }
-        } else {
-            savePreferences();
+            info("home folder: ", homeFolder.getCanonicalPath());
+            debug("properties file: ", propertiesFile.getCanonicalPath());
+            trace("property: ", CONSOLE_LOG_LEVEL_KEY, "=", Logger.maxConsoleLevel);
+            trace("property: ", FILE_LOG_LEVEL_KEY, "=", Logger.maxFileLevel);
+            trace("property: ", UI_LOCALE_STRING_KEY, "=", uiLocaleString);
+            trace("property: ", UI_THEME_STRING_KEY, "=", uiThemeString);
+            trace("property: ", UI_SCALE_FACTOR_KEY, "=", uiFontScaleFactor);
+            trace("property: ", UPDATE_ON_STARTUP_KEY, "=", updateOnStartup);
+            registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero.jar")));
+            registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero-libs.jar")));
+            registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero-install.jar")));
         }
-        info("home folder: ", homeFolder.getCanonicalPath());
-        debug("properties file: ", propertiesFile.getCanonicalPath());
-        trace("property: ", CONSOLE_LOG_LEVEL_KEY, "=", Logger.maxConsoleLevel);
-        trace("property: ", FILE_LOG_LEVEL_KEY, "=", Logger.maxFileLevel);
-        trace("property: ", UI_LOCALE_STRING_KEY, "=", uiLocaleString);
-        trace("property: ", UI_THEME_STRING_KEY, "=", uiThemeString);
-        trace("property: ", UI_SCALE_FACTOR_KEY, "=", uiFontScaleFactor);
-        trace("property: ", UPDATE_ON_STARTUP_KEY, "=", updateOnStartup);
-        registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero.jar")));
-        registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero-libs.jar")));
-        registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero-install.jar")));
     }
 
     public static void registerArtifact(final Artifact artifact) {
