@@ -35,7 +35,7 @@ public class BasicTemplate extends ExcelDriver {
     }
 
     @Override
-    public BasicModel getModel() throws Exception {
+    public BasicModel fetchModel() throws Exception {
         final BasicModel model = new BasicModel(new File(getConnectionString()).getName());
         for (int sheetIdx = 0; sheetIdx < getWorkbook().getNumberOfSheets(); ++sheetIdx) {
             final Sheet sheet = getWorkbook().getSheetAt(sheetIdx);
@@ -89,10 +89,11 @@ public class BasicTemplate extends ExcelDriver {
     }
 
     @Override
-    public void putModel(final PModel model) throws Exception {
+    public void commitModel(final PModel model) throws Exception {
         for (final PSheet pSheet : model) {
             writeSheet(pSheet);
         }
+        save();
     }
 
     private void setCellValue(final Cell cell, final Object value, final PType pType) {

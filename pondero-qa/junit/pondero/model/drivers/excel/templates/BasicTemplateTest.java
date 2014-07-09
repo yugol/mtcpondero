@@ -13,7 +13,7 @@ public class BasicTemplateTest {
     public void testGetModel() throws Exception {
         final BasicTemplate xlsx = new BasicTemplate(Globals.getDefaultWorkbookFile().getCanonicalPath());
         xlsx.open();
-        final BasicModel model = xlsx.getModel();
+        final BasicModel model = xlsx.fetchModel();
         xlsx.close();
         for (final PSheet sheet : model) {
             System.out.println(sheet);
@@ -34,8 +34,7 @@ public class BasicTemplateTest {
         for (final PSheet sheet : model) {
             System.out.println(sheet);
         }
-        xlsx.putModel(model);
-        xlsx.save();
+        xlsx.commitModel(model);
         xlsx.close();
     }
 
