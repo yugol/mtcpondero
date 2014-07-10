@@ -14,7 +14,7 @@ import pondero.tests.elements.other.Page;
 import pondero.tests.elements.stimulus.Text;
 import pondero.tests.staples.Coordinates;
 import pondero.tests.test.stimuli.VisualStimulus;
-import pondero.ui.tests.TestFrame;
+import pondero.ui.testing.TestFrame;
 
 public abstract class TestRenderer extends TestBase {
 

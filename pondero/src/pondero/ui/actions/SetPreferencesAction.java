@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
 import pondero.L10n;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
-import pondero.ui.PreferencesDialog;
+import pondero.ui.preferences.PreferencesDialog;
 
 @SuppressWarnings("serial")
 public class SetPreferencesAction extends PonderoAction {

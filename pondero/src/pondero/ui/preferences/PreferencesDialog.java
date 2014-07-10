@@ -1,4 +1,4 @@
-package pondero.ui;
+package pondero.ui.preferences;
 
 import static pondero.Logger.error;
 import java.awt.BorderLayout;
