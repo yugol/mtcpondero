@@ -21,7 +21,7 @@ public class TestCanvas extends TestVisualComponent {
             @Override
             public void keyPressed(final KeyEvent e) {
                 if (test != null) {
-                    test._doStep(new KeyPressResponse(e));
+                    test.doStep(new KeyPressResponse(e));
                 }
             }
 
@@ -32,7 +32,7 @@ public class TestCanvas extends TestVisualComponent {
             @Override
             public void mouseClicked(final MouseEvent e) {
                 if (test != null) {
-                    test._doStep(new MouseClickResponse(e));
+                    test.doStep(new MouseClickResponse(e));
                 }
             }
 

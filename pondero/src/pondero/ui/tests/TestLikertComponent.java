@@ -172,7 +172,7 @@ public class TestLikertComponent extends TestVisualComponent {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                test._doStep(new KeyPressResponse("1"));
+                test.doStep(new KeyPressResponse("1"));
             }
         });
         final GridBagConstraints gbc_btn1 = new GridBagConstraints();
@@ -188,7 +188,7 @@ public class TestLikertComponent extends TestVisualComponent {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                test._doStep(new KeyPressResponse("2"));
+                test.doStep(new KeyPressResponse("2"));
             }
         });
         final GridBagConstraints gbc_btn2 = new GridBagConstraints();
@@ -204,7 +204,7 @@ public class TestLikertComponent extends TestVisualComponent {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                test._doStep(new KeyPressResponse("3"));
+                test.doStep(new KeyPressResponse("3"));
             }
         });
         final GridBagConstraints gbc_btn3 = new GridBagConstraints();
@@ -220,7 +220,7 @@ public class TestLikertComponent extends TestVisualComponent {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                test._doStep(new KeyPressResponse("4"));
+                test.doStep(new KeyPressResponse("4"));
             }
         });
         final GridBagConstraints gbc_btn4 = new GridBagConstraints();
@@ -236,7 +236,7 @@ public class TestLikertComponent extends TestVisualComponent {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                test._doStep(new KeyPressResponse("5"));
+                test.doStep(new KeyPressResponse("5"));
             }
         });
         final GridBagConstraints gbc_btn5 = new GridBagConstraints();
@@ -252,7 +252,7 @@ public class TestLikertComponent extends TestVisualComponent {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                test._doStep(new KeyPressResponse("6"));
+                test.doStep(new KeyPressResponse("6"));
             }
         });
         final GridBagConstraints gbc_btn6 = new GridBagConstraints();
@@ -268,7 +268,7 @@ public class TestLikertComponent extends TestVisualComponent {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                test._doStep(new KeyPressResponse("7"));
+                test.doStep(new KeyPressResponse("7"));
             }
         });
         final GridBagConstraints gbc_btn7 = new GridBagConstraints();
@@ -284,7 +284,7 @@ public class TestLikertComponent extends TestVisualComponent {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                test._doStep(new KeyPressResponse("8"));
+                test.doStep(new KeyPressResponse("8"));
             }
         });
         final GridBagConstraints gbc_btn8 = new GridBagConstraints();
@@ -299,7 +299,7 @@ public class TestLikertComponent extends TestVisualComponent {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                test._doStep(new KeyPressResponse("9"));
+                test.doStep(new KeyPressResponse("9"));
             }
         });
         final GridBagConstraints gbc_btn9 = new GridBagConstraints();

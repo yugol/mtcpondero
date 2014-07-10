@@ -48,19 +48,19 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
     }
 
     @Override
-    public void _doBegin() {
+    public void doBegin() {
         doStatus = new DoStatus();
         test.pushController(this);
     }
 
     @Override
-    public void _doEnd() {
+    public void doEnd() {
         doStatus = null;
         test.popController();
     }
 
     @Override
-    public void _doStep(final Response input) {
+    public void doStep(final Response input) {
         if (doStatus != null) {
             if (preinstructions != null) {
                 if (input != null && input instanceof PrevNextResponse) {
@@ -82,8 +82,8 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
             }
             if (doStatus.currentTrialIndex < trials.size()) {
                 final Trial trial = test.getTrial(trials.get(doStatus.currentTrialIndex++));
-                trial._doBegin();
-                test._doStep(null);
+                trial.doBegin();
+                test.doStep(null);
                 return;
             }
             if (postinstructions != null) {
@@ -105,7 +105,7 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
                 }
             }
             // TODO show block feedback
-            _doEnd();
+            doEnd();
         }
     }
 

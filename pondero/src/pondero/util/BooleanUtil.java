@@ -10,7 +10,7 @@ public final class BooleanUtil {
             if (value instanceof Boolean) { return (Boolean) value; }
             if (value instanceof String) { return Boolean.valueOf((String) value); }
         }
-        return null;
+        throw new IllegalArgumentException("Cannot cast " + value + " to booelan");
     }
 
 }

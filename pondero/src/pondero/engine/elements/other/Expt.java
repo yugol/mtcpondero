@@ -33,19 +33,19 @@ public class Expt extends Element implements HasPreinstructions, HasPostinstruct
     }
 
     @Override
-    public void _doBegin() {
+    public void doBegin() {
         doStatus = new DoStatus();
         test.pushController(this);
     }
 
     @Override
-    public void _doEnd() {
+    public void doEnd() {
         doStatus = null;
         test.popController();
     }
 
     @Override
-    public void _doStep(final Response input) {
+    public void doStep(final Response input) {
         if (doStatus != null) {
             if (preinstructions != null) {
                 if (input != null && input instanceof PrevNextResponse) {
@@ -67,8 +67,8 @@ public class Expt extends Element implements HasPreinstructions, HasPostinstruct
             }
             if (doStatus.currentBlockIndex < blocks.size()) {
                 final Block block = test.getBlock(blocks.get(doStatus.currentBlockIndex++));
-                block._doBegin();
-                test._doStep(null);
+                block.doBegin();
+                test.doStep(null);
                 return;
             }
             if (postinstructions != null) {
@@ -89,7 +89,7 @@ public class Expt extends Element implements HasPreinstructions, HasPostinstruct
                     return;
                 }
             }
-            _doEnd();
+            doEnd();
         }
     }
 

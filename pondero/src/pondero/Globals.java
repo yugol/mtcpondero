@@ -158,7 +158,7 @@ public final class Globals {
         return updateOnStartup;
     }
 
-    public static void loadPreferences(String homeFolderName) throws Exception {
+    public static synchronized void loadPreferences(String homeFolderName) throws Exception {
         if (homeFolder == null) {
             if (StringUtil.isNullOrBlank(homeFolderName)) {
                 runningFromIde = true;

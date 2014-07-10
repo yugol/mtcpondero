@@ -31,51 +31,51 @@ public abstract class Test extends TestRenderer implements IsController {
     private Block                     currentBlock;
 
     @Override
-    public void _doBegin() {
+    public void doBegin() {
         monitor = new TaskMonitor(UUID.randomUUID().toString().replace("-", ""));
         monitor.markStartTime();
         launcher.onTaskStarted(this);
         if (getExperiment() != null) {
-            getExperiment()._doBegin();
+            getExperiment().doBegin();
         } else if (blocks.size() > 0) {
-            blocks.values().iterator().next()._doBegin();
+            blocks.values().iterator().next().doBegin();
         } else if (trials.size() > 0) {
-            trials.values().iterator().next()._doBegin();
+            trials.values().iterator().next().doBegin();
         }
     }
 
     @Override
-    public void _doEnd() {
+    public void doEnd() {
         monitor.markStopTime(TaskMonitor.END_SUCCESS);
         getTestWindow().hideTestWindow();
         launcher.onTaskEnded(this, monitor);
     }
 
     @Override
-    public void _doStep(final Response input) {
+    public void doStep(final Response input) {
         final IsController controller = peekController();
         if (controller == null) {
-            _doEnd();
+            doEnd();
         } else {
-            controller._doStep(input);
+            controller.doStep(input);
         }
     }
 
-    public void _recordClose() {
+    public void closeRecord() {
         if (record != null) {
             monitor.add(record);
             record = null;
         }
     }
 
-    public TrialRecord _recordCreate(final String runId) {
+    public TrialRecord createRecord(final String runId) {
         final TrialRecord record = workbook.addTrialRecord(getTestId());
         record.setExperimentId(runId);
         return record;
     }
 
     public void _recordOpen(final Trial trial) {
-        record = _recordCreate(monitor.getRunId());
+        record = createRecord(monitor.getRunId());
         if (participant != null) {
             record.setParticipant(participant);
         }
@@ -123,7 +123,7 @@ public abstract class Test extends TestRenderer implements IsController {
         if (controller instanceof HasScreencolor) {
             popScreencolor();
         }
-        _doStep(null);
+        doStep(null);
     }
 
     public void pushController(final IsController controller) {
@@ -161,8 +161,8 @@ public abstract class Test extends TestRenderer implements IsController {
         try {
             pushScreencolor(getDefaults());
             getTestWindow().showTestWindow();
-            _doBegin();
-            _doStep(null);
+            doBegin();
+            doStep(null);
         } catch (final Exception e) {
             error(e);
             MsgUtil.showExceptionMessage(null, e);

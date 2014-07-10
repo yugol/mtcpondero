@@ -69,7 +69,7 @@ public class TestInstructions extends JPanel {
             public void mouseClicked(final MouseEvent e) {
                 final PrevNextResponse input = new PrevNextResponse();
                 input.setPrev(true);
-                test._doStep(input);
+                test.doStep(input);
             }
 
         });
@@ -90,7 +90,7 @@ public class TestInstructions extends JPanel {
             public void mouseClicked(final MouseEvent e) {
                 final PrevNextResponse input = new PrevNextResponse();
                 input.setNext(true);
-                test._doStep(input);
+                test.doStep(input);
             }
 
         });
@@ -148,7 +148,7 @@ public class TestInstructions extends JPanel {
         final PrevNextResponse input = new PrevNextResponse();
         input.setNext(e.getKeyChar() == test.getInstructions()._getNextkey());
         input.setPrev(e.getKeyChar() == test.getInstructions()._getPrevkey());
-        test._doStep(input);
+        test.doStep(input);
     }
 
 }

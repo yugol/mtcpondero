@@ -20,15 +20,15 @@ import pondero.util.StringUtil;
 
 public class Participant extends PRow {
 
-    private static final Random       rnd = new Random();
-    private static final List<String> fnames;
-    private static final List<String> mnames;
-    private static final List<String> snames;
+    private static final Random       RND = new Random();
+    private static final List<String> FNAMES;
+    private static final List<String> MNAMES;
+    private static final List<String> SNAMES;
 
     static {
-        fnames = readNames("/pondero/res/fnames.txt");
-        mnames = readNames("/pondero/res/mnames.txt");
-        snames = readNames("/pondero/res/snames.txt");
+        FNAMES = readNames("/pondero/res/fnames.txt");
+        MNAMES = readNames("/pondero/res/mnames.txt");
+        SNAMES = readNames("/pondero/res/snames.txt");
     }
 
     public static String getHtml(final Participant participant) {
@@ -132,26 +132,26 @@ public class Participant extends PRow {
     @Override
     public void randomize() {
         // gender
-        setGender(rnd.nextBoolean() ? Gender.MASCULINE : Gender.FEMININE);
+        setGender(RND.nextBoolean() ? Gender.MASCULINE : Gender.FEMININE);
 
         // name
-        setSurname(snames.get(rnd.nextInt(snames.size())));
+        setSurname(SNAMES.get(RND.nextInt(SNAMES.size())));
         if (getGender() == Gender.FEMININE) {
-            setName(fnames.get(rnd.nextInt(fnames.size())));
+            setName(FNAMES.get(RND.nextInt(FNAMES.size())));
         } else {
-            setName(mnames.get(rnd.nextInt(mnames.size())));
+            setName(MNAMES.get(RND.nextInt(MNAMES.size())));
         }
 
         // age
-        setAge(rnd.nextInt(70 - 20) + 20);
+        setAge(RND.nextInt(70 - 20) + 20);
 
         // education
-        if (getAge() >= 18 && rnd.nextDouble() > 0.05) {
-            if (getAge() >= 20 && rnd.nextDouble() < 0.9) {
-                if (getAge() >= 25 && rnd.nextDouble() < 0.5) {
-                    if (getAge() >= 30 && rnd.nextDouble() < 0.2) {
-                        if (getAge() >= 35 && rnd.nextDouble() < 0.1) {
-                            if (getAge() >= 40 && rnd.nextDouble() < 0.05) {
+        if (getAge() >= 18 && RND.nextDouble() > 0.05) {
+            if (getAge() >= 20 && RND.nextDouble() < 0.9) {
+                if (getAge() >= 25 && RND.nextDouble() < 0.5) {
+                    if (getAge() >= 30 && RND.nextDouble() < 0.2) {
+                        if (getAge() >= 35 && RND.nextDouble() < 0.1) {
+                            if (getAge() >= 40 && RND.nextDouble() < 0.05) {
                                 setEducation(Education.PHD);
                             } else {
                                 setEducation(Education.MSC);
@@ -175,7 +175,7 @@ public class Participant extends PRow {
         // driving age
         int drivingAge = getAge() - 18;
         if (drivingAge > 0) {
-            drivingAge = rnd.nextInt(drivingAge);
+            drivingAge = RND.nextInt(drivingAge);
         } else {
             drivingAge = 0;
         }
@@ -184,7 +184,7 @@ public class Participant extends PRow {
         // mileage
         int mileage = drivingAge * 100000;
         if (mileage > 0) {
-            mileage = rnd.nextInt(mileage);
+            mileage = RND.nextInt(mileage);
         }
         setMileage(mileage);
     }
