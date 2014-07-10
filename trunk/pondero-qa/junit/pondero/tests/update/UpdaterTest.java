@@ -1,6 +1,10 @@
-package pondero.update;
+package pondero.tests.update;
 
 import static pondero.Logger.error;
+import pondero.tests.update.Artifact;
+import pondero.tests.update.UpdateEngine;
+import pondero.tests.update.UpdateListener;
+import pondero.tests.update.Updates;
 
 public class UpdaterTest {
 

@@ -1,8 +1,9 @@
-package pondero.update;
+package pondero.tests.update;
 
 import java.io.IOException;
 import org.junit.Test;
 import pondero.Context;
+import pondero.tests.update.UrlUtil;
 
 public class UrlUtilTest {
 

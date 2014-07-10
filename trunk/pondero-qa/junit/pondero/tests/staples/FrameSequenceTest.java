@@ -1,4 +1,4 @@
-package pondero.engine.staples;
+package pondero.tests.staples;
 
 import org.junit.Test;
 import pondero.tests.staples.Frame;

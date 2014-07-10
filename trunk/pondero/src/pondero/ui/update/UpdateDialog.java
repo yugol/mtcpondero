@@ -30,10 +30,10 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import pondero.Context;
 import pondero.L10n;
-import pondero.update.Artifact;
-import pondero.update.UpdateEngine;
-import pondero.update.UpdateListener;
-import pondero.update.Updates;
+import pondero.tests.update.Artifact;
+import pondero.tests.update.UpdateEngine;
+import pondero.tests.update.UpdateListener;
+import pondero.tests.update.Updates;
 import pondero.util.StringUtil;
 import pondero.util.UiUtil;
 
