@@ -2,10 +2,11 @@ package pondero.model.drivers.excel.templates;
 
 import org.junit.Test;
 import pondero.Context;
-import pondero.model.foundation.PSheet;
-import pondero.model.foundation.basic.BasicModel;
-import pondero.model.foundation.basic.Participant;
-import pondero.model.foundation.basic.Participants;
+import pondero.data.drivers.excel.templates.BasicTemplate;
+import pondero.data.foundation.PSheet;
+import pondero.data.foundation.basic.BasicModel;
+import pondero.data.foundation.basic.Participant;
+import pondero.data.foundation.basic.Participants;
 
 public class BasicTemplateTest {
 

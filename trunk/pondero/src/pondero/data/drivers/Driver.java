@@ -1,6 +1,6 @@
-package pondero.model.drivers;
+package pondero.data.drivers;
 
-import pondero.model.foundation.PModel;
+import pondero.data.foundation.PModel;
 
 public abstract class Driver {
 

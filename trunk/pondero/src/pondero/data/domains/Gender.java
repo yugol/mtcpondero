@@ -1,4 +1,4 @@
-package pondero.model.domains;
+package pondero.data.domains;
 
 import pondero.L10n;
 

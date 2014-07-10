@@ -1,5 +1,7 @@
 package pondero.model.foundation;
 
+import pondero.data.foundation.PModel;
+
 public class TestModel extends PModel {
 
     public TestModel(final String name) {

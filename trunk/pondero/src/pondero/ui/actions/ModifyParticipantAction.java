@@ -5,7 +5,7 @@ import static pondero.Logger.info;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.L10n;
-import pondero.model.foundation.basic.Participant;
+import pondero.data.foundation.basic.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
 import pondero.ui.participants.ParticipantManagementDialog;

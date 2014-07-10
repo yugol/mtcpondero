@@ -1,7 +1,7 @@
 package pondero.engine.test.launch;
 
+import pondero.data.foundation.basic.TrialRecord;
 import pondero.engine.test.Test;
-import pondero.model.foundation.basic.TrialRecord;
 
 public class DefaultLauncher implements TaskLauncher {
 

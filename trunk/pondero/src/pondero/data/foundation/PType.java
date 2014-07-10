@@ -1,4 +1,4 @@
-package pondero.model.foundation;
+package pondero.data.foundation;
 
 import java.math.BigDecimal;
 import java.util.Random;

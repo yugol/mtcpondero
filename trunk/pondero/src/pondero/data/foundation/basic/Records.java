@@ -1,8 +1,8 @@
-package pondero.model.foundation.basic;
+package pondero.data.foundation.basic;
 
-import pondero.model.foundation.PModel;
-import pondero.model.foundation.PSheet;
-import pondero.model.foundation.PType;
+import pondero.data.foundation.PModel;
+import pondero.data.foundation.PSheet;
+import pondero.data.foundation.PType;
 
 public class Records extends PSheet {
 
