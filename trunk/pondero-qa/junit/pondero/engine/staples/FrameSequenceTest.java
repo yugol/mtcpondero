@@ -1,8 +1,8 @@
 package pondero.engine.staples;
 
 import org.junit.Test;
-import pondero.engine.staples.Frame;
-import pondero.engine.staples.FrameSequence;
+import pondero.tests.staples.Frame;
+import pondero.tests.staples.FrameSequence;
 
 public class FrameSequenceTest {
 

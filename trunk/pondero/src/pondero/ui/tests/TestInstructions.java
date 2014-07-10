@@ -12,9 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import pondero.L10n;
-import pondero.engine.elements.other.Page;
-import pondero.engine.test.Test;
-import pondero.engine.test.responses.PrevNextResponse;
+import pondero.tests.elements.other.Page;
+import pondero.tests.test.Test;
+import pondero.tests.test.responses.PrevNextResponse;
 
 @SuppressWarnings("serial")
 public class TestInstructions extends JPanel {

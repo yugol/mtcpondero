@@ -19,8 +19,8 @@ import java.util.Properties;
 import java.util.Set;
 import pondero.data.Workbook;
 import pondero.data.WorkbookFactory;
-import pondero.engine.test.CodeNameComparator;
-import pondero.engine.test.Test;
+import pondero.tests.test.CodeNameComparator;
+import pondero.tests.test.Test;
 import pondero.update.Artifact;
 import pondero.util.StringUtil;
 

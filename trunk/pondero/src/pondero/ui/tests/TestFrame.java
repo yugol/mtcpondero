@@ -8,8 +8,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-import pondero.engine.elements.other.Page;
-import pondero.engine.test.Test;
+import pondero.tests.elements.other.Page;
+import pondero.tests.test.Test;
 import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")

@@ -3,7 +3,7 @@ package pondero.ui.tests;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.JPanel;
-import pondero.engine.test.Test;
+import pondero.tests.test.Test;
 
 @SuppressWarnings("serial")
 public class TestScene extends JPanel {

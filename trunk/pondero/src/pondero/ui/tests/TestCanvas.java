@@ -7,9 +7,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import pondero.engine.test.Test;
-import pondero.engine.test.responses.KeyPressResponse;
-import pondero.engine.test.responses.MouseClickResponse;
+import pondero.tests.test.Test;
+import pondero.tests.test.responses.KeyPressResponse;
+import pondero.tests.test.responses.MouseClickResponse;
 
 @SuppressWarnings("serial")
 public class TestCanvas extends TestVisualComponent {

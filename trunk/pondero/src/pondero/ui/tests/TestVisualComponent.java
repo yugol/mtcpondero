@@ -1,7 +1,7 @@
 package pondero.ui.tests;
 
 import javax.swing.JComponent;
-import pondero.engine.test.Test;
+import pondero.tests.test.Test;
 
 @SuppressWarnings("serial")
 public class TestVisualComponent extends JComponent {
