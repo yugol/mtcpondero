@@ -4,7 +4,6 @@ import static pondero.Logger.error;
 import java.awt.EventQueue;
 import java.util.List;
 import java.util.Stack;
-import java.util.UUID;
 import pondero.engine.elements.interfaces.HasFeedback.FeedbackStimulus;
 import pondero.engine.elements.interfaces.HasScreencolor;
 import pondero.engine.elements.interfaces.IsController;
@@ -30,9 +29,22 @@ public abstract class Test extends TestRenderer implements IsController {
     private final Stack<IsController> controllerStack = new Stack<IsController>();
     private Block                     currentBlock;
 
+    public void closeRecord() {
+        if (record != null) {
+            monitor.add(record);
+            record = null;
+        }
+    }
+
+    public TrialRecord createRecord(final String runId) {
+        final TrialRecord record = workbook.addTrialRecord(getTestId());
+        record.setExperimentId(runId);
+        return record;
+    }
+
     @Override
     public void doBegin() {
-        monitor = new TaskMonitor(UUID.randomUUID().toString().replace("-", ""));
+        monitor = new TaskMonitor(String.valueOf(System.currentTimeMillis()));
         monitor.markStartTime();
         launcher.onTaskStarted(this);
         if (getExperiment() != null) {
@@ -61,32 +73,6 @@ public abstract class Test extends TestRenderer implements IsController {
         }
     }
 
-    public void closeRecord() {
-        if (record != null) {
-            monitor.add(record);
-            record = null;
-        }
-    }
-
-    public TrialRecord createRecord(final String runId) {
-        final TrialRecord record = workbook.addTrialRecord(getTestId());
-        record.setExperimentId(runId);
-        return record;
-    }
-
-    public void _recordOpen(final Trial trial) {
-        record = createRecord(monitor.getRunId());
-        if (participant != null) {
-            record.setParticipant(participant);
-        }
-        if (currentBlock != null) {
-            record.setBlockId(currentBlock.$name());
-        }
-        if (trial != null) {
-            record.setTrialId(trial.$name());
-        }
-    }
-
     public List<String> getBgstim() {
         if (currentBlock != null) { return currentBlock._getBgstim(); }
         return null;
@@ -105,6 +91,19 @@ public abstract class Test extends TestRenderer implements IsController {
     public void kill() {
         monitor.markStopTime(TaskMonitor.END_KILL);
         launcher.onTaskEnded(this, monitor);
+    }
+
+    public void openRecord(final Trial trial) {
+        record = createRecord(monitor.getRunId());
+        if (participant != null) {
+            record.setParticipant(participant);
+        }
+        if (currentBlock != null) {
+            record.setBlockId(currentBlock.$name());
+        }
+        if (trial != null) {
+            record.setTrialId(trial.$name());
+        }
     }
 
     public IsController peekController() {
@@ -174,13 +173,13 @@ public abstract class Test extends TestRenderer implements IsController {
         this.participant = participant;
     }
 
+    public void setWorkbook(final Workbook workbook) {
+        this.workbook = workbook;
+    }
+
     public void start(final TaskLauncher launcher) {
         this.launcher = launcher == null ? new DefaultLauncher() : launcher;
         EventQueue.invokeLater(this);
-    }
-
-    public void setWorkbook(final Workbook workbook) {
-        this.workbook = workbook;
     }
 
 }
