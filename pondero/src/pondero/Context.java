@@ -174,6 +174,10 @@ public final class Context {
         return getFolder("results/backup");
     }
 
+    public static File getFolderResultsReports() {
+        return getFolder("results/reports");
+    }
+
     public static File getFolderResultsTemp() {
         return getFolder("results/temp");
     }
