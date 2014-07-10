@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="quick" name="Create Runnable Jar for Project pondero-libs">
 
-	<property name="mavendir" location="/Users/iuliangoriac/.m2/repository" />
-	<property name="soldir" location="/Users/iuliangoriac/Documents/psih" />
-	<property name="pkgdir" location="/Users/iuliangoriac/Documents/Pondero" />
+	<property name="mavendir" location="/Users/Iulian/.m2/repository" />
+	<property name="soldir" location="/Users/Iulian/Documents/psih" />
+	<property name="pkgdir" location="/Users/Iulian/Documents/Pondero" />
 
 	<target name="full" depends="pondero-libs, pondero, pondero-test-ic" />
 	<target name="quick" depends="pondero, pondero-test-ic" />
