@@ -1,4 +1,4 @@
-package pondero.ui.tests;
+package pondero.ui.testing;
 
 import static pondero.Logger.error;
 import java.awt.Graphics;

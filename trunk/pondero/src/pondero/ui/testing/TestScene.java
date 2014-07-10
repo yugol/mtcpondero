@@ -1,4 +1,4 @@
-package pondero.ui.tests;
+package pondero.ui.testing;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

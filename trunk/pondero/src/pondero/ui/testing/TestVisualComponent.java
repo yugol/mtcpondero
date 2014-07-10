@@ -1,4 +1,4 @@
-package pondero.ui.tests;
+package pondero.ui.testing;
 
 import javax.swing.JComponent;
 import pondero.tests.test.Test;

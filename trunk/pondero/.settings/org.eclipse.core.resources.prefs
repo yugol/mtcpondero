@@ -2,4 +2,4 @@ eclipse.preferences.version=1
 encoding//src/pondero/tests/a_subliminal_priming_task/ASubliminalPrimingTask.java=UTF-8
 encoding//src/pondero/ui/actions/QuitAction.java=UTF-8
 encoding//src/pondero/ui/actions/RunTaskAction.java=UTF-8
-encoding//src/pondero/ui/tests/TestInstructions.java=UTF-8
+encoding//src/pondero/ui/testing/TestInstructions.java=UTF-8

@@ -6,9 +6,9 @@ import pondero.tests.elements.interfaces.HasPosition;
 import pondero.tests.staples.Coordinate;
 import pondero.tests.staples.Coordinates;
 import pondero.tests.test.Test;
-import pondero.ui.tests.TestCanvas;
-import pondero.ui.tests.TestLikertComponent;
-import pondero.ui.tests.TestScene;
+import pondero.ui.testing.TestCanvas;
+import pondero.ui.testing.TestLikertComponent;
+import pondero.ui.testing.TestScene;
 import pondero.util.StringUtil;
 
 public class Likert extends Trial implements HasPosition {

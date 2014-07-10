@@ -16,8 +16,8 @@ import pondero.tests.test.responses.KeyPressResponse;
 import pondero.tests.test.responses.Response;
 import pondero.tests.test.stimuli.Stimulus;
 import pondero.tests.test.stimuli.VisualStimulus;
-import pondero.ui.tests.TestCanvas;
-import pondero.ui.tests.TestScene;
+import pondero.ui.testing.TestCanvas;
+import pondero.ui.testing.TestScene;
 
 public class Trial extends Element implements HasFeedback, IsController {
 
