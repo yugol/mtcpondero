@@ -10,8 +10,8 @@ import pondero.tests.elements.other.Page;
 import pondero.tests.elements.stimulus.Text;
 import pondero.tests.elements.trial.Trial;
 import pondero.tests.test.Test;
-import pondero.update.Artifact;
-import pondero.update.ArtifactType;
+import pondero.tests.update.Artifact;
+import pondero.tests.update.ArtifactType;
 
 public class ASubliminalPrimingTask extends Test {
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import pondero.Context;
 import pondero.tests.test.Test;
-import pondero.update.Artifact;
+import pondero.tests.update.Artifact;
 
 public class TestLoader {
 

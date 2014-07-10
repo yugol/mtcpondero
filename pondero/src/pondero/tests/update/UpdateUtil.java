@@ -1,4 +1,4 @@
-package pondero.update;
+package pondero.tests.update;
 
 import static pondero.Logger.info;
 import java.io.File;

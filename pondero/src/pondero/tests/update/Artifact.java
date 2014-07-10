@@ -1,4 +1,4 @@
-package pondero.update;
+package pondero.tests.update;
 
 import static pondero.Logger.error;
 import static pondero.Logger.trace;

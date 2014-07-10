@@ -15,7 +15,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import pondero.L10n;
-import pondero.update.Artifact;
+import pondero.tests.update.Artifact;
 import pondero.util.DateUtil;
 import pondero.util.NumberUtil;
 import pondero.util.UiUtil;

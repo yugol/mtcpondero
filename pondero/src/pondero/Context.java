@@ -21,7 +21,7 @@ import pondero.data.Workbook;
 import pondero.data.WorkbookFactory;
 import pondero.tests.test.CodeNameComparator;
 import pondero.tests.test.Test;
-import pondero.update.Artifact;
+import pondero.tests.update.Artifact;
 import pondero.util.StringUtil;
 
 public final class Context {

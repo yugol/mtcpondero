@@ -1,4 +1,4 @@
-package pondero.update;
+package pondero.tests.update;
 
 public interface PasswordReader {
 

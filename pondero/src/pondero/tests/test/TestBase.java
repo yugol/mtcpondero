@@ -15,7 +15,7 @@ import pondero.tests.elements.other.Page;
 import pondero.tests.elements.stimulus.Picture;
 import pondero.tests.elements.stimulus.Text;
 import pondero.tests.elements.trial.Trial;
-import pondero.update.Artifact;
+import pondero.tests.update.Artifact;
 
 public abstract class TestBase implements Runnable {
 
