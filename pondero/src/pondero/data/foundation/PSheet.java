@@ -1,4 +1,4 @@
-package pondero.model.foundation;
+package pondero.data.foundation;
 
 import java.util.ArrayList;
 import java.util.Collection;

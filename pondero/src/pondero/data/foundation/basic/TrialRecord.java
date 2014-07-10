@@ -1,8 +1,8 @@
-package pondero.model.foundation.basic;
+package pondero.data.foundation.basic;
 
 import java.util.Date;
-import pondero.model.foundation.PRow;
-import pondero.model.foundation.PSheet;
+import pondero.data.foundation.PRow;
+import pondero.data.foundation.PSheet;
 
 public class TrialRecord extends PRow {
 

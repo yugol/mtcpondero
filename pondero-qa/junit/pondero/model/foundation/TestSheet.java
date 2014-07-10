@@ -1,5 +1,9 @@
 package pondero.model.foundation;
 
+import pondero.data.foundation.PModel;
+import pondero.data.foundation.PSheet;
+import pondero.data.foundation.PType;
+
 public class TestSheet extends PSheet {
 
     public static final String NAME           = "PTypes";

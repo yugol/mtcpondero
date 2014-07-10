@@ -1,6 +1,11 @@
 package pondero.model.foundation.basic;
 
 import org.junit.Test;
+import pondero.data.foundation.basic.BasicModel;
+import pondero.data.foundation.basic.Participant;
+import pondero.data.foundation.basic.Participants;
+import pondero.data.foundation.basic.Records;
+import pondero.data.foundation.basic.TrialRecord;
 
 public class BasicModelTest {
 

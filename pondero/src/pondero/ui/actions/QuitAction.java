@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import pondero.Context;
 import pondero.L10n;
-import pondero.model.Workbook;
+import pondero.data.Workbook;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
 import pondero.util.FileUtil;

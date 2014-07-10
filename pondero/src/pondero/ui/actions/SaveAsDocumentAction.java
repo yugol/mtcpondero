@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import pondero.Context;
 import pondero.L10n;
-import pondero.model.Workbook;
-import pondero.model.drivers.excel.ExcelFileFilter;
+import pondero.data.Workbook;
+import pondero.data.drivers.excel.ExcelFileFilter;
 import pondero.ui.Ponderable;
 import pondero.util.MsgUtil;
 

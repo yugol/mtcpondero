@@ -1,6 +1,6 @@
-package pondero.model.foundation.basic;
+package pondero.data.foundation.basic;
 
-import pondero.model.foundation.PModel;
+import pondero.data.foundation.PModel;
 
 public class BasicModel extends PModel {
 

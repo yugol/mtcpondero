@@ -1,15 +1,15 @@
-package pondero.model;
+package pondero.data;
 
 import static pondero.Logger.info;
 import java.io.File;
 import java.util.Collection;
 import pondero.Context;
-import pondero.model.drivers.excel.ExcelFileFilter;
-import pondero.model.drivers.excel.templates.BasicTemplate;
-import pondero.model.foundation.basic.BasicModel;
-import pondero.model.foundation.basic.Participant;
-import pondero.model.foundation.basic.Participants;
-import pondero.model.foundation.basic.TrialRecord;
+import pondero.data.drivers.excel.ExcelFileFilter;
+import pondero.data.drivers.excel.templates.BasicTemplate;
+import pondero.data.foundation.basic.BasicModel;
+import pondero.data.foundation.basic.Participant;
+import pondero.data.foundation.basic.Participants;
+import pondero.data.foundation.basic.TrialRecord;
 
 public class BasicWorkbook implements Workbook {
 

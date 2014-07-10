@@ -1,4 +1,4 @@
-package pondero.model.foundation.basic;
+package pondero.data.foundation.basic;
 
 import java.util.Comparator;
 
