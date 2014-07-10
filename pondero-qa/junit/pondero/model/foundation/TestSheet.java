@@ -27,4 +27,9 @@ public class TestSheet extends PSheet {
         return (TestRow) super.addRow(new TestRow(this));
     }
 
+    @Override
+    public TestRow getRow(final int index) {
+        return (TestRow) super.getRow(index);
+    }
+
 }

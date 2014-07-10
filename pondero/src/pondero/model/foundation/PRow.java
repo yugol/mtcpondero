@@ -1,7 +1,10 @@
 package pondero.model.foundation;
 
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 import pondero.util.BooleanUtil;
 import pondero.util.DateUtil;
 import pondero.util.NumberUtil;
@@ -72,6 +75,14 @@ public abstract class PRow {
         return data[sheet.index(name)];
     }
 
+    protected Boolean getBoolean(final int index) {
+        return (Boolean) data[index];
+    }
+
+    protected Boolean getBoolean(final String name) {
+        return getBoolean(sheet.index(name));
+    }
+
     protected Calendar getCalendar(final int index) throws Exception {
         return DateUtil.toCalendar(get(index));
     }
@@ -81,11 +92,20 @@ public abstract class PRow {
     }
 
     protected Date getDate(final int index) {
-        return DateUtil.getDate(get(index));
+        if (data[index] == null) { return null; }
+        return new Date((long) data[index]);
     }
 
     protected Date getDate(final String name) {
         return getDate(sheet.index(name));
+    }
+
+    protected BigDecimal getDecimal(final int index) {
+        return (BigDecimal) data[index];
+    }
+
+    protected BigDecimal getDecimal(final String name) {
+        return getDecimal(sheet.index(name));
     }
 
     protected Integer getInteger(final int index) {
@@ -98,6 +118,32 @@ public abstract class PRow {
 
     protected PSheet getSheet() {
         return sheet;
+    }
+
+    protected String getString(final int index) {
+        return (String) data[index];
+    }
+
+    protected String getString(final String name) {
+        return getString(sheet.index(name));
+    }
+
+    protected Time getTime(final int index) {
+        if (data[index] == null) { return null; }
+        return new Time((long) data[index]);
+    }
+
+    protected Time getTime(final String name) {
+        return getTime(sheet.index(name));
+    }
+
+    protected Timestamp getTimestamp(final int index) {
+        if (data[index] == null) { return null; }
+        return new Timestamp((long) data[index]);
+    }
+
+    protected Timestamp getTimestamp(final String name) {
+        return getTimestamp(sheet.index(name));
     }
 
 }
