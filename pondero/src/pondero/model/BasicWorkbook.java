@@ -20,6 +20,7 @@ public class BasicWorkbook implements Workbook {
         template = new BasicTemplate(file);
         template.open();
         model = template.fetchModel();
+        model.setDirty(false);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class BasicWorkbook implements Workbook {
     }
 
     @Override
-    public void addWorkbookListener(final ModelListener listener) {
+    public void addModelListener(final PModelListener listener) {
         model.addModelListener(listener);
     }
 
@@ -75,6 +76,7 @@ public class BasicWorkbook implements Workbook {
     @Override
     public void save() throws Exception {
         template.pushModel(model);
+        model.setDirty(false);
     }
 
     @Override
@@ -84,6 +86,7 @@ public class BasicWorkbook implements Workbook {
         template.open();
         template.pushModel(model);
         model = template.fetchModel();
+        model.setDirty(false);
     }
 
     @Override

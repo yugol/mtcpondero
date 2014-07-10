@@ -30,7 +30,6 @@ public class BasicTemplate extends ExcelDriver {
                 readSheet(model.getRecords(sheetName), sheet);
             }
         }
-        model.setDirty(false);
         return model;
     }
 
