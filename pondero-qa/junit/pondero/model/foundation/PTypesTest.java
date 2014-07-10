@@ -24,7 +24,7 @@ public class PTypesTest {
 
     @AfterClass
     public static void cleanup() throws Exception {
-        GEN_FILE.deleteOnExit();
+        // GEN_FILE.deleteOnExit();
     }
 
     @Test
@@ -62,19 +62,30 @@ public class PTypesTest {
         model.getSheet().addRow().setDecimal(BigDecimal.valueOf(123.45));
         model.getSheet().addRow().setDecimal("123.45");
 
+        final long now = System.currentTimeMillis();
+        final Calendar nowCal = Calendar.getInstance();
+        nowCal.setTimeInMillis(now);
+
         model.getSheet().addRow().setDate(null);
-        model.getSheet().addRow().setDate(System.currentTimeMillis());
-        model.getSheet().addRow().setDate(new Date());
-        model.getSheet().addRow().setDate(new java.sql.Date(System.currentTimeMillis()));
-        model.getSheet().addRow().setDate(Calendar.getInstance());
-        model.getSheet().addRow().setDate(DateUtil.toIsoDate(System.currentTimeMillis()));
+        model.getSheet().addRow().setDate(now);
+        model.getSheet().addRow().setDate(new Date(now));
+        model.getSheet().addRow().setDate(new java.sql.Date(now));
+        model.getSheet().addRow().setDate(nowCal);
+        model.getSheet().addRow().setDate(DateUtil.toIsoDate(now));
 
         model.getSheet().addRow().setTime(null);
-        model.getSheet().addRow().setTime(System.currentTimeMillis());
-        model.getSheet().addRow().setTime(new Date());
-        model.getSheet().addRow().setTime(new java.sql.Time(System.currentTimeMillis()));
-        model.getSheet().addRow().setTime(Calendar.getInstance());
-        model.getSheet().addRow().setTime(DateUtil.toIsoTime(System.currentTimeMillis()));
+        model.getSheet().addRow().setTime(now);
+        model.getSheet().addRow().setTime(new Date(now));
+        model.getSheet().addRow().setTime(new java.sql.Time(now));
+        model.getSheet().addRow().setTime(nowCal);
+        model.getSheet().addRow().setTime(DateUtil.toIsoTime(now));
+
+        model.getSheet().addRow().setTimestamp(null);
+        model.getSheet().addRow().setTimestamp(now);
+        model.getSheet().addRow().setTimestamp(new Date(now));
+        model.getSheet().addRow().setTimestamp(new java.sql.Timestamp(now));
+        model.getSheet().addRow().setTimestamp(nowCal);
+        model.getSheet().addRow().setTimestamp(DateUtil.toIsoTimestamp(now));
 
         System.out.println(model.getSheet());
 
