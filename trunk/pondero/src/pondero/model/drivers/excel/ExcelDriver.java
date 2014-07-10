@@ -33,9 +33,13 @@ public abstract class ExcelDriver extends Driver {
 
     private CellStyle    evenDateStyle;
     private CellStyle    evenStyle;
+    private CellStyle    evenTimeStyle;
+    private CellStyle    evenTimestampStyle;
     private CellStyle    headerStyle;
     private CellStyle    oddDateStyle;
     private CellStyle    oddStyle;
+    private CellStyle    oddTimeStyle;
+    private CellStyle    oddTimestampStyle;
 
     public ExcelDriver(final File dataFile) throws Exception {
         super(dataFile.getCanonicalPath());
@@ -96,6 +100,30 @@ public abstract class ExcelDriver extends Driver {
         evenDateStyle.setBorderRight(CellStyle.BORDER_THIN);
         evenDateStyle.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
         evenDateStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
+        oddTimeStyle = getWorkbook().createCellStyle();
+        oddTimeStyle.setDataFormat(createHelper.createDataFormat().getFormat("HH:mm:ss"));
+        oddTimeStyle.setBorderRight(CellStyle.BORDER_THIN);
+        oddTimeStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+        oddTimeStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
+        evenTimeStyle = getWorkbook().createCellStyle();
+        evenTimeStyle.setDataFormat(createHelper.createDataFormat().getFormat("HH:mm:ss"));
+        evenTimeStyle.setBorderRight(CellStyle.BORDER_THIN);
+        evenTimeStyle.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+        evenTimeStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
+        oddTimestampStyle = getWorkbook().createCellStyle();
+        oddTimestampStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
+        oddTimestampStyle.setBorderRight(CellStyle.BORDER_THIN);
+        oddTimestampStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+        oddTimestampStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
+        evenTimestampStyle = getWorkbook().createCellStyle();
+        evenTimestampStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
+        evenTimestampStyle.setBorderRight(CellStyle.BORDER_THIN);
+        evenTimestampStyle.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+        evenTimestampStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
     }
 
     @Override
@@ -197,10 +225,18 @@ public abstract class ExcelDriver extends Driver {
                 final PType pType = pSheet.getColumn(colIdx).getType();
                 final Cell cell = xRow.createCell(colIdx);
                 setCellValue(cell, pSheet.get(rowIdx, colIdx), pType);
-                if (PType.DATE == pType) {
-                    cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? evenDateStyle : oddDateStyle);
-                } else {
-                    cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? evenStyle : oddStyle);
+                switch (pType) {
+                    case DATE:
+                        cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? evenDateStyle : oddDateStyle);
+                        break;
+                    case TIME:
+                        cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? evenTimeStyle : oddTimeStyle);
+                        break;
+                    case TIMESTAMP:
+                        cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? evenTimestampStyle : oddTimestampStyle);
+                        break;
+                    default:
+                        cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? evenStyle : oddStyle);
                 }
             }
         }
@@ -215,21 +251,28 @@ public abstract class ExcelDriver extends Driver {
         final int xType = cell.getCellType();
         if (PType.STRING == pType) {
             if (Cell.CELL_TYPE_STRING == xType) { return StringUtil.toCellString(cell.getStringCellValue()); }
+            if (Cell.CELL_TYPE_BLANK == xType) { return null; }
         } else if (PType.BOOLEAN == pType) {
-            if (Cell.CELL_TYPE_STRING == xType) { return BooleanUtil.toBoolean(cell.getStringCellValue()); }
+            if (Cell.CELL_TYPE_BOOLEAN == xType) { return cell.getBooleanCellValue(); }
             if (Cell.CELL_TYPE_NUMERIC == xType) { return BooleanUtil.toBoolean(cell.getNumericCellValue()); }
+            if (Cell.CELL_TYPE_STRING == xType) { return BooleanUtil.toBoolean(cell.getStringCellValue()); }
+            if (Cell.CELL_TYPE_BLANK == xType) { return null; }
         } else if (PType.DECIMAL == pType) {
             if (Cell.CELL_TYPE_NUMERIC == xType) { return NumberUtil.toDecimal(cell.getNumericCellValue()); }
             if (Cell.CELL_TYPE_STRING == xType) { return NumberUtil.toDecimal(cell.getStringCellValue()); }
+            if (Cell.CELL_TYPE_BLANK == xType) { return null; }
         } else if (PType.DATE == pType) {
             if (Cell.CELL_TYPE_NUMERIC == xType) { return DateUtil.toDateMillis(cell.getNumericCellValue()); }
             if (Cell.CELL_TYPE_STRING == xType) { return DateUtil.toDateMillis(cell.getStringCellValue()); }
+            if (Cell.CELL_TYPE_BLANK == xType) { return null; }
         } else if (PType.TIME == pType) {
             if (Cell.CELL_TYPE_NUMERIC == xType) { return DateUtil.toTimeMillis(cell.getNumericCellValue()); }
             if (Cell.CELL_TYPE_STRING == xType) { return DateUtil.toTimeMillis(cell.getStringCellValue()); }
+            if (Cell.CELL_TYPE_BLANK == xType) { return null; }
         } else if (PType.TIMESTAMP == pType) {
             if (Cell.CELL_TYPE_NUMERIC == xType) { return DateUtil.toTimestampMillis(cell.getNumericCellValue()); }
             if (Cell.CELL_TYPE_STRING == xType) { return DateUtil.toTimestampMillis(cell.getStringCellValue()); }
+            if (Cell.CELL_TYPE_BLANK == xType) { return null; }
         }
         warning("getCellValue could not match ", pType, " with ", xType);
         return null;

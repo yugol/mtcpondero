@@ -1,5 +1,9 @@
 package pondero.model.foundation;
 
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import pondero.util.BooleanUtil;
 import pondero.util.DateUtil;
 import pondero.util.NumberUtil;
@@ -11,8 +15,28 @@ public class TestRow extends PRow {
         super(sheet);
     }
 
-    public void setDecimal(final Object value) throws Exception {
-        set(TestSheet.ATTR_DECIMAL, NumberUtil.toDecimal(value));
+    public Boolean getBoolean() {
+        return getBoolean(TestSheet.ATTR_BOOLEAN);
+    }
+
+    public Date getDate() {
+        return getDate(TestSheet.ATTR_DATE);
+    }
+
+    public BigDecimal getDecimal() {
+        return getDecimal(TestSheet.ATTR_DECIMAL);
+    }
+
+    public String getString() {
+        return getString(TestSheet.ATTR_STRING);
+    }
+
+    public Time getTime() {
+        return getTime(TestSheet.ATTR_TIME);
+    }
+
+    public Timestamp getTimestamp() {
+        return getTimestamp(TestSheet.ATTR_TIMESTAMP);
     }
 
     public void setBoolean(final Object value) throws Exception {
@@ -21,6 +45,10 @@ public class TestRow extends PRow {
 
     public void setDate(final Object value) throws Exception {
         set(TestSheet.ATTR_DATE, DateUtil.toDateMillis(value));
+    }
+
+    public void setDecimal(final Object value) throws Exception {
+        set(TestSheet.ATTR_DECIMAL, NumberUtil.toDecimal(value));
     }
 
     public void setString(final Object value) throws Exception {

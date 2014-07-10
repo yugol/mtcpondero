@@ -42,9 +42,9 @@ public final class DateUtil {
         return Calendar.getInstance().get(Calendar.YEAR);
     }
 
-    public static Date getDate(final Object value) {
-        if (value instanceof Date) { return (Date) value; }
-        if (value instanceof Number) { return new Date(((Number) value).longValue()); }
+    public static java.sql.Date getDate(final Object value) {
+        if (value instanceof java.sql.Date) { return (java.sql.Date) value; }
+        if (value instanceof Number) { return new java.sql.Date(((Number) value).longValue()); }
         return null;
     }
 

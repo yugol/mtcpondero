@@ -1,5 +1,7 @@
 package pondero.model.foundation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -15,7 +17,6 @@ import pondero.util.DateUtil;
 public class PTypesTest {
 
     private static final File GEN_FILE = new File("./junit/pondero/model/foundation/gen.xlsx");
-    private static final File MAN_FILE = new File("./junit/pondero/model/foundation/man.xlsx");
 
     @BeforeClass
     public static void initContext() throws Exception {
@@ -24,74 +25,133 @@ public class PTypesTest {
 
     @AfterClass
     public static void cleanup() throws Exception {
-        // GEN_FILE.deleteOnExit();
+        GEN_FILE.deleteOnExit();
     }
 
     @Test
     public void testWrite() throws Exception {
-        final TestModel model = new TestModel(GEN_FILE.getName());
+        final TestModel source = new TestModel(GEN_FILE.getName());
+        TestSheet testSheet = source.getSheet();
 
-        model.getSheet().addRow().setString(null);
-        model.getSheet().addRow().setString("Lorem ipsum...");
+        testSheet.addRow().setString(null);
+        testSheet.addRow().setString("Lorem ipsum...");
 
-        model.getSheet().addRow().setBoolean(null);
-        model.getSheet().addRow().setBoolean(false);
-        model.getSheet().addRow().setBoolean(true);
-        model.getSheet().addRow().setBoolean(Boolean.FALSE);
-        model.getSheet().addRow().setBoolean(Boolean.TRUE);
-        model.getSheet().addRow().setBoolean("");
-        model.getSheet().addRow().setBoolean("false");
-        model.getSheet().addRow().setBoolean("true");
-        model.getSheet().addRow().setBoolean(0);
-        model.getSheet().addRow().setBoolean(1);
+        testSheet.addRow().setBoolean(null);
+        testSheet.addRow().setBoolean(false);
+        testSheet.addRow().setBoolean(true);
+        testSheet.addRow().setBoolean(Boolean.FALSE);
+        testSheet.addRow().setBoolean(Boolean.TRUE);
+        testSheet.addRow().setBoolean("");
+        testSheet.addRow().setBoolean("false");
+        testSheet.addRow().setBoolean("true");
+        testSheet.addRow().setBoolean(0);
+        testSheet.addRow().setBoolean(1);
 
-        model.getSheet().addRow().setDecimal(null);
-        model.getSheet().addRow().setDecimal((byte) 123.45);
-        model.getSheet().addRow().setDecimal((short) 123.45);
-        model.getSheet().addRow().setDecimal((int) 123.45);
-        model.getSheet().addRow().setDecimal((long) 123.45);
-        model.getSheet().addRow().setDecimal((float) 123.45);
-        model.getSheet().addRow().setDecimal(123.45);
-        model.getSheet().addRow().setDecimal(Byte.valueOf((byte) 123));
-        model.getSheet().addRow().setDecimal(Short.valueOf((short) 123.45));
-        model.getSheet().addRow().setDecimal(Integer.valueOf(123));
-        model.getSheet().addRow().setDecimal(Long.valueOf(123));
-        model.getSheet().addRow().setDecimal(Float.valueOf(123.45f));
-        model.getSheet().addRow().setDecimal(Double.valueOf(123.45));
-        model.getSheet().addRow().setDecimal(BigInteger.valueOf(123));
-        model.getSheet().addRow().setDecimal(BigDecimal.valueOf(123.45));
-        model.getSheet().addRow().setDecimal("123.45");
+        testSheet.addRow().setDecimal(null);
+        testSheet.addRow().setDecimal((byte) 123.45);
+        testSheet.addRow().setDecimal((short) 123.45);
+        testSheet.addRow().setDecimal((int) 123.45);
+        testSheet.addRow().setDecimal((long) 123.45);
+        testSheet.addRow().setDecimal((float) 123.45);
+        testSheet.addRow().setDecimal(123.45);
+        testSheet.addRow().setDecimal(Byte.valueOf((byte) 123));
+        testSheet.addRow().setDecimal(Short.valueOf((short) 123.45));
+        testSheet.addRow().setDecimal(Integer.valueOf(123));
+        testSheet.addRow().setDecimal(Long.valueOf(123));
+        testSheet.addRow().setDecimal(Float.valueOf(123.45f));
+        testSheet.addRow().setDecimal(Double.valueOf(123.45));
+        testSheet.addRow().setDecimal(BigInteger.valueOf(123));
+        testSheet.addRow().setDecimal(BigDecimal.valueOf(123.45));
+        testSheet.addRow().setDecimal("123.45");
 
-        final long now = System.currentTimeMillis();
+        final long now = 1404990564189L;
         final Calendar nowCal = Calendar.getInstance();
         nowCal.setTimeInMillis(now);
 
-        model.getSheet().addRow().setDate(null);
-        model.getSheet().addRow().setDate(now);
-        model.getSheet().addRow().setDate(new Date(now));
-        model.getSheet().addRow().setDate(new java.sql.Date(now));
-        model.getSheet().addRow().setDate(nowCal);
-        model.getSheet().addRow().setDate(DateUtil.toIsoDate(now));
+        testSheet.addRow().setDate(null);
+        testSheet.addRow().setDate(now);
+        testSheet.addRow().setDate(new Date(now));
+        testSheet.addRow().setDate(new java.sql.Date(now));
+        testSheet.addRow().setDate(nowCal);
+        testSheet.addRow().setDate(DateUtil.toIsoDate(now));
 
-        model.getSheet().addRow().setTime(null);
-        model.getSheet().addRow().setTime(now);
-        model.getSheet().addRow().setTime(new Date(now));
-        model.getSheet().addRow().setTime(new java.sql.Time(now));
-        model.getSheet().addRow().setTime(nowCal);
-        model.getSheet().addRow().setTime(DateUtil.toIsoTime(now));
+        testSheet.addRow().setTime(null);
+        testSheet.addRow().setTime(now);
+        testSheet.addRow().setTime(new Date(now));
+        testSheet.addRow().setTime(new java.sql.Time(now));
+        testSheet.addRow().setTime(nowCal);
+        testSheet.addRow().setTime(DateUtil.toIsoTime(now));
 
-        model.getSheet().addRow().setTimestamp(null);
-        model.getSheet().addRow().setTimestamp(now);
-        model.getSheet().addRow().setTimestamp(new Date(now));
-        model.getSheet().addRow().setTimestamp(new java.sql.Timestamp(now));
-        model.getSheet().addRow().setTimestamp(nowCal);
-        model.getSheet().addRow().setTimestamp(DateUtil.toIsoTimestamp(now));
+        testSheet.addRow().setTimestamp(null);
+        testSheet.addRow().setTimestamp(now);
+        testSheet.addRow().setTimestamp(new Date(now));
+        testSheet.addRow().setTimestamp(new java.sql.Timestamp(now));
+        testSheet.addRow().setTimestamp(nowCal);
+        testSheet.addRow().setTimestamp(DateUtil.toIsoTimestamp(now));
 
-        System.out.println(model.getSheet());
+        // System.out.println(testSheet);
 
         final TestTemplate template = new TestTemplate(GEN_FILE);
         template.open();
-        template.pushModel(model);
+        template.pushModel(source);
+
+        final TestModel model = template.fetchModel();
+        testSheet = model.getSheet();
+
+        // System.out.println(testSheet);
+
+        assertNull(testSheet.getRow(0).getString());
+        assertEquals("Lorem ipsum...", testSheet.getRow(1).getString());
+
+        assertNull(testSheet.getRow(2).getBoolean());
+        assertEquals(false, testSheet.getRow(3).getBoolean());
+        assertEquals(true, testSheet.getRow(4).getBoolean());
+        assertEquals(false, testSheet.getRow(5).getBoolean());
+        assertEquals(true, testSheet.getRow(6).getBoolean());
+        assertNull(testSheet.getRow(7).getBoolean());
+        assertEquals(false, testSheet.getRow(8).getBoolean());
+        assertEquals(true, testSheet.getRow(9).getBoolean());
+        assertEquals(false, testSheet.getRow(10).getBoolean());
+        assertEquals(true, testSheet.getRow(11).getBoolean());
+
+        assertNull(testSheet.getRow(12).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(13).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(14).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(15).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(16).getDecimal());
+        assertEquals(BigDecimal.valueOf(123.45f), testSheet.getRow(17).getDecimal());
+        assertEquals(BigDecimal.valueOf(123.45), testSheet.getRow(18).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(19).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(20).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(21).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(22).getDecimal());
+        assertEquals(BigDecimal.valueOf(123.45f), testSheet.getRow(23).getDecimal());
+        assertEquals(BigDecimal.valueOf(123.45), testSheet.getRow(24).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(25).getDecimal());
+        assertEquals(BigDecimal.valueOf(123.45), testSheet.getRow(26).getDecimal());
+        assertEquals(BigDecimal.valueOf(123.45), testSheet.getRow(27).getDecimal());
+
+        assertNull(testSheet.getRow(28).getDate());
+        assertEquals(1404939600000L, testSheet.getRow(29).getDate().getTime());
+        assertEquals(1404939600000L, testSheet.getRow(30).getDate().getTime());
+        assertEquals(1404939600000L, testSheet.getRow(31).getDate().getTime());
+        assertEquals(1404939600000L, testSheet.getRow(32).getDate().getTime());
+        assertEquals(1404939600000L, testSheet.getRow(33).getDate().getTime());
+
+        assertNull(testSheet.getRow(34).getDate());
+        assertEquals(-2208936328000L, testSheet.getRow(35).getTime().getTime());
+        assertEquals(-2208936328000L, testSheet.getRow(36).getTime().getTime());
+        assertEquals(-2208936328000L, testSheet.getRow(37).getTime().getTime());
+        assertEquals(-2208936328000L, testSheet.getRow(38).getTime().getTime());
+        assertEquals(-2208936328000L, testSheet.getRow(39).getTime().getTime());
+
+        assertNull(testSheet.getRow(40).getDate());
+        assertEquals(1405001364000L, testSheet.getRow(41).getTimestamp().getTime());
+        assertEquals(1405001364000L, testSheet.getRow(42).getTimestamp().getTime());
+        assertEquals(1405001364000L, testSheet.getRow(43).getTimestamp().getTime());
+        assertEquals(1405001364000L, testSheet.getRow(44).getTimestamp().getTime());
+        assertEquals(1405001364000L, testSheet.getRow(45).getTimestamp().getTime());
+
         template.close();
     }
 }

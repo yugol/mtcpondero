@@ -4,6 +4,7 @@ import java.io.File;
 import pondero.model.drivers.excel.ExcelDriver;
 import pondero.model.foundation.PModel;
 import pondero.model.foundation.TestModel;
+import pondero.model.foundation.TestSheet;
 
 public class TestTemplate extends ExcelDriver {
 
@@ -12,9 +13,11 @@ public class TestTemplate extends ExcelDriver {
     }
 
     @Override
-    public PModel fetchModel() throws Exception {
-        // TODO Auto-generated method stub
-        return null;
+    public TestModel fetchModel() throws Exception {
+        final TestModel model = new TestModel(new File(getConnectionString()).getName());
+        readSheet(model.getSheet(), getSheet(TestSheet.NAME));
+        model.setDirty(false);
+        return model;
     }
 
     @Override
