@@ -41,7 +41,7 @@ import javax.swing.event.ListSelectionListener;
 import pondero.Context;
 import pondero.L10n;
 import pondero.engine.test.Test;
-import pondero.model.ModelListener;
+import pondero.model.PModelListener;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
 import pondero.model.foundation.basic.Participant;
@@ -61,7 +61,7 @@ import pondero.ui.actions.UpdateAction;
 import pondero.util.MsgUtil;
 import pondero.util.UiUtil;
 
-public class Pondero implements Ponderable, ModelListener {
+public class Pondero implements Ponderable, PModelListener {
 
     public static final String BUTTON_ADD_NAME         = "addButton";
     public static final String BUTTON_BACK_NAME        = "backButton";
@@ -150,6 +150,8 @@ public class Pondero implements Ponderable, ModelListener {
     private JMenuItem               mntmView;
     private JPanel                  stage;
     private StatusBar               statusBar;
+    private JMenuItem               mntmParticipant;
+    private JMenuItem               mntmTest;
 
     /**
      * Create the application.
@@ -253,7 +255,7 @@ public class Pondero implements Ponderable, ModelListener {
         final int maxParticipantCount = 30;
         try {
             currentWorkbook = workbook;
-            currentWorkbook.addWorkbookListener(this);
+            currentWorkbook.addModelListener(this);
             currentParticipant = null;
             currentTask = null;
             if (currentWorkbook.getParticipantCount() <= 0) {
@@ -367,6 +369,14 @@ public class Pondero implements Ponderable, ModelListener {
 
         mnAnalysis = new JMenu(" " + L10n.getString("lbl.analysis") + " ");
         menuBar.add(mnAnalysis);
+
+        mntmParticipant = new JMenuItem(L10n.getString("lbl.participant")); //$NON-NLS-1$
+        mnAnalysis.add(mntmParticipant);
+
+        mnAnalysis.addSeparator();
+
+        mntmTest = new JMenuItem(L10n.getString("lbl.test")); //$NON-NLS-1$
+        mnAnalysis.add(mntmTest);
 
         final JMenu mnHelp = new JMenu(" " + L10n.getString("lbl.help") + " ");
         menuBar.add(mnHelp);

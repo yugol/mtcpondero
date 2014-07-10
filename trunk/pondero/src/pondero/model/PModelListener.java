@@ -1,6 +1,6 @@
 package pondero.model;
 
-public interface ModelListener {
+public interface PModelListener {
 
     void onDirtyFlagChanged(boolean dirty) throws Exception;
 

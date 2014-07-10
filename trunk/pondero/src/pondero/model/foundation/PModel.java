@@ -5,21 +5,21 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import pondero.model.ModelListener;
+import pondero.model.PModelListener;
 
 public abstract class PModel implements Iterable<PSheet> {
 
     private final String                        name;
     private final List<PSheet>                  sheets     = new ArrayList<PSheet>();
     private transient boolean                   dirty      = false;
-    private transient final List<ModelListener> listeners  = new ArrayList<ModelListener>();
+    private transient final List<PModelListener> listeners  = new ArrayList<PModelListener>();
     private transient Map<String, Integer>      name2index = null;
 
     public PModel(final String name) {
         this.name = name;
     }
 
-    public void addModelListener(final ModelListener listener) {
+    public void addModelListener(final PModelListener listener) {
         listeners.add(listener);
     }
 
@@ -59,7 +59,7 @@ public abstract class PModel implements Iterable<PSheet> {
     public void setDirty(final boolean flag) throws Exception {
         if (dirty != flag) {
             dirty = flag;
-            for (final ModelListener listener : listeners) {
+            for (final PModelListener listener : listeners) {
                 listener.onDirtyFlagChanged(dirty);
             }
         }
