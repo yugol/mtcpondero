@@ -30,7 +30,7 @@ public class NumberUtil {
             } catch (final Exception e) {
                 error(e);
             }
-            throw new UnsupportedOperationException("toFixed for " + value.getClass().getName());
+            throw new UnsupportedOperationException("toDecimal for " + value.getClass().getName());
         }
         return null;
     }

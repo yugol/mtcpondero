@@ -7,7 +7,7 @@ import pondero.ui.Ponderable;
 import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
-public class StartDocumentAction extends PonderoAction {
+public class StartDocumentAction extends PonderableAction {
 
     public StartDocumentAction(final Ponderable app) {
         super(app);

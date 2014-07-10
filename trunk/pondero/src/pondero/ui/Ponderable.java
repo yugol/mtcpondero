@@ -23,7 +23,7 @@ public interface Ponderable {
 
     void setCurrentTask(Test task) throws Exception;
 
-    void setCurrentWorkbook(Workbook workbook);
+    void setCurrentWorkbook(Workbook workbook) throws Exception;
 
     void updateCurrentState() throws Exception;
 

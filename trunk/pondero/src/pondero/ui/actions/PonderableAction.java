@@ -8,11 +8,11 @@ import pondero.tests.test.Test;
 import pondero.ui.Ponderable;
 
 @SuppressWarnings("serial")
-public abstract class PonderoAction extends AbstractAction {
+public abstract class PonderableAction extends AbstractAction {
 
     private final Ponderable app;
 
-    public PonderoAction(final Ponderable app) {
+    public PonderableAction(final Ponderable app) {
         this.app = app;
     }
 

@@ -11,7 +11,7 @@ import pondero.util.MsgUtil;
 import pondero.util.WebUtil;
 
 @SuppressWarnings("serial")
-public class HomePageAction extends PonderoAction {
+public class HomePageAction extends PonderableAction {
 
     public HomePageAction(final Ponderable app) {
         super(app);

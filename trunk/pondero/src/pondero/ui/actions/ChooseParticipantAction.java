@@ -12,7 +12,7 @@ import pondero.ui.participants.ParticipantSelectionDialog;
 import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
-public class ChooseParticipantAction extends PonderoAction {
+public class ChooseParticipantAction extends PonderableAction {
 
     public ChooseParticipantAction(final Ponderable app) {
         super(app);

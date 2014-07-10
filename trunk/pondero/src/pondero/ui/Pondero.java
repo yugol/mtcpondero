@@ -3,7 +3,6 @@ package pondero.ui;
 import static pondero.Logger.error;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -29,7 +28,6 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -47,6 +45,7 @@ import pondero.data.model.basic.Participant;
 import pondero.tests.TestLoader;
 import pondero.tests.test.Test;
 import pondero.ui.actions.AddParticipantAction;
+import pondero.ui.actions.AnalyseParticipantAction;
 import pondero.ui.actions.ChooseParticipantAction;
 import pondero.ui.actions.HomePageAction;
 import pondero.ui.actions.ModifyParticipantAction;
@@ -100,7 +99,7 @@ public class Pondero implements Ponderable, PModelListener {
                 try {
                     app.mainFrame.setLocationRelativeTo(null);
                     app.mainFrame.setVisible(true);
-                    app.setCurrentWorkbook(WorkbookFactory.openWorkbook(Context.getLastWorkbookFile()));
+                    app.openDocumentAction.openWorkbook(WorkbookFactory.openWorkbook(Context.getLastWorkbookFile()));
                 } catch (final Exception e) {
                     error(e);
                     MsgUtil.showExceptionMessage(null, e);
@@ -111,49 +110,50 @@ public class Pondero implements Ponderable, PModelListener {
         return app;
     }
 
-    private static final List<Test> REGISTERED_TESTS        = new ArrayList<Test>();
+    private static final List<Test>  REGISTERED_TESTS         = new ArrayList<Test>();
 
     // Essentials
-    private PonderoState            currentState;
-    private Workbook                currentWorkbook;
-    private Participant             currentParticipant;
-    private Test                    currentTask;
+    private PonderoState             currentState;
+    private Workbook                 currentWorkbook;
+    private Participant              currentParticipant;
+    private Test                     currentTask;
 
     // Actions
-    private final Action            addParticipantAction    = new AddParticipantAction(this);
-    private final Action            chooseParticipantAction = new ChooseParticipantAction(this);
-    private final Action            homePageAction          = new HomePageAction(this);
-    private final Action            modifyParticipantAction = new ModifyParticipantAction(this);
-    private final Action            openDocumentAction      = new OpenDocumentAction(this);
-    private final Action            quitAction              = new QuitAction(this);
-    private final Action            saveAsDocument          = new SaveAsDocumentAction(this);
-    private final Action            saveDocument            = new SaveDocumentAction(this);
-    private final Action            setPreferencesAction    = new SetPreferencesAction(this);
-    private final Action            startDocument           = new StartDocumentAction(this);
-    private final Action            startTaskAction         = new RunTaskAction(this);
-    private final Action            updateAction            = new UpdateAction(this);
+    private final Action             addParticipantAction     = new AddParticipantAction(this);
+    private final Action             analyseParticipantAction = new AnalyseParticipantAction(this);
+    private final Action             chooseParticipantAction  = new ChooseParticipantAction(this);
+    private final Action             homePageAction           = new HomePageAction(this);
+    private final Action             modifyParticipantAction  = new ModifyParticipantAction(this);
+    private final OpenDocumentAction openDocumentAction       = new OpenDocumentAction(this);
+    private final Action             quitAction               = new QuitAction(this);
+    private final Action             saveAsDocument           = new SaveAsDocumentAction(this);
+    private final Action             saveDocument             = new SaveDocumentAction(this);
+    private final Action             setPreferencesAction     = new SetPreferencesAction(this);
+    private final Action             startDocument            = new StartDocumentAction(this);
+    private final Action             startTaskAction          = new RunTaskAction(this);
+    private final Action             updateAction             = new UpdateAction(this);
 
     // Widgets
-    private JFrame                  mainFrame;
-    private JButton                 btnAddParticipant;
-    private JButton                 btnBack;
-    private JButton                 btnModifyParticipant;
-    private JButton                 btnNext;
-    private JButton                 btnSelectParticipant;
-    private JButton                 btnStart;
-    private JEditorPane             epParticipantDescription;
-    private JLabel                  lblPageHint;
-    private JLabel                  lblPageTitle;
-    private JList<Test>             lstTests;
-    private JMenu                   mnAnalysis;
-    private JMenuItem               mntmPreferences;
-    private JMenuItem               mntmSave;
-    private JMenuItem               mntmSaveas;
-    private JMenuItem               mntmView;
-    private JPanel                  stage;
-    private StatusBar               statusBar;
-    private JMenuItem               mntmParticipant;
-    private JMenuItem               mntmTest;
+    private JFrame                   mainFrame;
+    private JButton                  btnAddParticipant;
+    private JButton                  btnBack;
+    private JButton                  btnModifyParticipant;
+    private JButton                  btnNext;
+    private JButton                  btnSelectParticipant;
+    private JButton                  btnStart;
+    private JEditorPane              epParticipantDescription;
+    private JLabel                   lblPageHint;
+    private JLabel                   lblPageTitle;
+    private JList<Test>              lstTests;
+    private JMenu                    mnAnalysis;
+    private JMenuItem                mntmPreferences;
+    private JMenuItem                mntmSave;
+    private JMenuItem                mntmSaveas;
+    private JMenuItem                mntmView;
+    private JPanel                   stage;
+    private StatusBar                statusBar;
+    private JMenuItem                mntmParticipant;
+    private JMenuItem                mntmTest;
 
     /**
      * Create the application.
@@ -240,8 +240,8 @@ public class Pondero implements Ponderable, PModelListener {
             }
             statusBar.setMessage(StatusBar.DEFAULT,
                     L10n.getString("lbl.data-register")
-                            + ": " + currentWorkbook.getName()
-                            + (currentWorkbook.isDirty() ? " *" : ""));
+                    + ": " + currentWorkbook.getName()
+                    + (currentWorkbook.isDirty() ? " *" : ""));
         }
         currentState = state;
     }
@@ -253,41 +253,12 @@ public class Pondero implements Ponderable, PModelListener {
     }
 
     @Override
-    public void setCurrentWorkbook(final Workbook workbook) {
-        final int maxParticipantCount = 30;
-        try {
-            currentWorkbook = workbook;
-            currentWorkbook.addModelListener(this);
-            currentParticipant = null;
-            currentTask = null;
-            if (currentWorkbook.getParticipantCount() <= 0) {
-                final String decision = JOptionPane.showInputDialog(mainFrame, L10n.getString("msg.how-many-random-participants", maxParticipantCount), "0");
-                try {
-                    int count = Integer.parseInt(decision);
-                    if (count < 0) {
-                        count = 0;
-                    }
-                    if (count > maxParticipantCount) {
-                        count = maxParticipantCount;
-                    }
-                    if (count > 0) {
-                        mainFrame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-                        for (int i = 1; i <= count; ++i) {
-                            final Participant p = currentWorkbook.addParticipant();
-                            p.randomize();
-                            p.setId(i);
-                        }
-                    }
-                } catch (final NumberFormatException e) {
-                } finally {
-                    mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                }
-            }
-            setCurrentState(PonderoState.PARTICIPANT_SELECTION);
-        } catch (final Exception e) {
-            error(e);
-            MsgUtil.showExceptionMessage(mainFrame, e);
-        }
+    public void setCurrentWorkbook(final Workbook workbook) throws Exception {
+        currentWorkbook = workbook;
+        currentWorkbook.addModelListener(this);
+        currentParticipant = null;
+        currentTask = null;
+        setCurrentState(PonderoState.PARTICIPANT_SELECTION);
     }
 
     @Override
@@ -372,7 +343,8 @@ public class Pondero implements Ponderable, PModelListener {
         mnAnalysis = new JMenu(" " + L10n.getString("lbl.analysis") + " ");
         menuBar.add(mnAnalysis);
 
-        mntmParticipant = new JMenuItem(L10n.getString("lbl.participant")); //$NON-NLS-1$
+        mntmParticipant = new JMenuItem(""); //$NON-NLS-1$
+        mntmParticipant.setAction(analyseParticipantAction);
         mnAnalysis.add(mntmParticipant);
 
         mnAnalysis.addSeparator();

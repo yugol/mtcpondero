@@ -17,10 +17,10 @@ public class BasicModel extends PModel {
         return participants;
     }
 
-    public Records getRecords(final String name) throws Exception {
-        Records records = (Records) getSheet(name);
+    public TestRecords getRecords(final String name) throws Exception {
+        TestRecords records = (TestRecords) getSheet(name);
         if (records == null) {
-            records = (Records) addSheet(new Records(this, name));
+            records = (TestRecords) addSheet(new TestRecords(this, name));
         }
         return records;
     }

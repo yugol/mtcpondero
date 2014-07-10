@@ -12,7 +12,7 @@ import pondero.ui.Ponderable;
 import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
-public class RunTaskAction extends PonderoAction implements TaskLauncher {
+public class RunTaskAction extends PonderableAction implements TaskLauncher {
 
     public RunTaskAction(final Ponderable app) {
         super(app);

@@ -13,7 +13,7 @@ import pondero.ui.participants.ParticipantManagementListener;
 import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
-public class ModifyParticipantAction extends PonderoAction implements ParticipantManagementListener {
+public class ModifyParticipantAction extends PonderableAction implements ParticipantManagementListener {
 
     private ParticipantManagementDialog dlg;
 
