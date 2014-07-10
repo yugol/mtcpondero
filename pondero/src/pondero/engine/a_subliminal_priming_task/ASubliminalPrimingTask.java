@@ -1,4 +1,4 @@
-package pondero.tests.a_subliminal_priming_task;
+package pondero.engine.a_subliminal_priming_task;
 
 import java.awt.Color;
 import pondero.engine.elements.interfaces.HasBlockfeedback;
