@@ -2,7 +2,7 @@ package pondero.engine.test.launch;
 
 import java.util.ArrayList;
 import java.util.List;
-import pondero.data.foundation.basic.TrialRecord;
+import pondero.data.model.basic.TrialRecord;
 
 public class TaskMonitor {
 

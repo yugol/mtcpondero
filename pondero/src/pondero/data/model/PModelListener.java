@@ -1,4 +1,4 @@
-package pondero.data;
+package pondero.data.model;
 
 public interface PModelListener {
 

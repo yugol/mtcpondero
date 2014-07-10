@@ -1,4 +1,4 @@
-package pondero.data.foundation;
+package pondero.data.model;
 
 import java.math.BigDecimal;
 import java.sql.Date;

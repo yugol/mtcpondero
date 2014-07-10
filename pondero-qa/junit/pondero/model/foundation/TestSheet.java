@@ -1,8 +1,8 @@
 package pondero.model.foundation;
 
-import pondero.data.foundation.PModel;
-import pondero.data.foundation.PSheet;
-import pondero.data.foundation.PType;
+import pondero.data.model.PModel;
+import pondero.data.model.PSheet;
+import pondero.data.model.PType;
 
 public class TestSheet extends PSheet {
 

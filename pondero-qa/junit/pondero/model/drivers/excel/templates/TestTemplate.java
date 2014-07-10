@@ -2,7 +2,7 @@ package pondero.model.drivers.excel.templates;
 
 import java.io.File;
 import pondero.data.drivers.excel.ExcelDriver;
-import pondero.data.foundation.PModel;
+import pondero.data.model.PModel;
 import pondero.model.foundation.TestModel;
 import pondero.model.foundation.TestSheet;
 

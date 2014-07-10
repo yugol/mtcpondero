@@ -40,7 +40,7 @@ import pondero.Context;
 import pondero.L10n;
 import pondero.data.domains.Education;
 import pondero.data.domains.Gender;
-import pondero.data.foundation.basic.Participant;
+import pondero.data.model.basic.Participant;
 import pondero.util.MsgUtil;
 import pondero.util.StringUtil;
 import com.toedter.calendar.JDateChooser;

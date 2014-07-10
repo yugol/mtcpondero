@@ -16,7 +16,7 @@ import javax.swing.event.ListSelectionEvent;
 import pondero.Context;
 import pondero.L10n;
 import pondero.data.Workbook;
-import pondero.data.foundation.basic.Participant;
+import pondero.data.model.basic.Participant;
 
 @SuppressWarnings("serial")
 public class ParticipantSelectionDialog extends JDialog implements ParticipantSelectionListener, ActionListener {
