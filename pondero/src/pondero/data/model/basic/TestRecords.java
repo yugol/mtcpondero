@@ -6,23 +6,19 @@ import pondero.data.model.PType;
 
 public class TestRecords extends PSheet {
 
-    public static final String ATTR_PARTICIPANT_SURNAME = "PART_SURNAME";
-    public static final String ATTR_PARTICIPANT_NAME    = "PART_NAME";
-    public static final String ATTR_PARTICIPANT_ID      = "PART_ID";
-    public static final String ATTR_EXPERIMNT_ID        = "PROBE_ID";
     public static final String ATTR_BLOCK_ID            = "BLOCK_ID";
+    public static final String ATTR_EXPERIMNT_TIMESTAMP = "PROBE_TIMESTAMP";
+    public static final String ATTR_PARTICIPANT_ID      = "PART_ID";
+    public static final String ATTR_RESPONSE            = "RESPONSE";
+    public static final String ATTR_RESPONSE_CORRECT    = "RESPONSE_CORRECT";
+    public static final String ATTR_RESPONSE_TIME       = "RESPONSE_TIME";
     public static final String ATTR_TRIAL_ID            = "TRIAL_ID";
     public static final String ATTR_TRIAL_TIMESTAMP     = "TRIAL_DATETIME";
-    public static final String ATTR_RESPONSE            = "RESPONSE";
-    public static final String ATTR_RESPONSE_TIME       = "RESPONSE_TIME";
-    public static final String ATTR_RESPONSE_CORRECT    = "RESPONSE_CORRECT";
 
     TestRecords(final PModel model, final String name) throws Exception {
         super(model, name);
-        addColumn(ATTR_EXPERIMNT_ID, PType.STRING);
+        addColumn(ATTR_EXPERIMNT_TIMESTAMP, PType.DECIMAL);
         addColumn(ATTR_PARTICIPANT_ID, PType.STRING);
-        addColumn(ATTR_PARTICIPANT_SURNAME, PType.STRING);
-        addColumn(ATTR_PARTICIPANT_NAME, PType.STRING);
         addColumn(ATTR_BLOCK_ID, PType.STRING);
         addColumn(ATTR_TRIAL_ID, PType.STRING);
         addColumn(ATTR_TRIAL_TIMESTAMP, PType.TIMESTAMP);

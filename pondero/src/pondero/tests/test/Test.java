@@ -7,9 +7,9 @@ import java.util.Stack;
 import pondero.data.Workbook;
 import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.TrialRecord;
+import pondero.tests.elements.interfaces.HasFeedback.FeedbackStimulus;
 import pondero.tests.elements.interfaces.HasScreencolor;
 import pondero.tests.elements.interfaces.IsController;
-import pondero.tests.elements.interfaces.HasFeedback.FeedbackStimulus;
 import pondero.tests.elements.other.Block;
 import pondero.tests.elements.trial.Trial;
 import pondero.tests.test.launch.DefaultLauncher;
@@ -36,7 +36,7 @@ public abstract class Test extends TestRenderer implements IsController {
         }
     }
 
-    public TrialRecord createRecord(final String runId) throws Exception {
+    public TrialRecord createRecord(final long runId) throws Exception {
         final TrialRecord record = workbook.addTrialRecord(getTestId());
         record.setExperimentId(runId);
         return record;
@@ -44,7 +44,7 @@ public abstract class Test extends TestRenderer implements IsController {
 
     @Override
     public void doBegin() throws Exception {
-        monitor = new TaskMonitor(String.valueOf(System.currentTimeMillis()));
+        monitor = new TaskMonitor(System.currentTimeMillis());
         monitor.markStartTime();
         launcher.onTaskStarted(this);
         if (getExperiment() != null) {

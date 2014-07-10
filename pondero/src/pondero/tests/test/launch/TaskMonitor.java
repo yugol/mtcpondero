@@ -9,13 +9,13 @@ public class TaskMonitor {
     public static final int         END_SUCCESS = 0;
     public static final int         END_KILL    = -9;
 
-    private final String            runId;
+    private final long              runId;
     private long                    startTime;
     private long                    stopTime;
     private int                     stopCode;
     private final List<TrialRecord> records     = new ArrayList<TrialRecord>();
 
-    public TaskMonitor(final String runId) {
+    public TaskMonitor(final long runId) {
         this.runId = runId;
     }
 
@@ -31,7 +31,7 @@ public class TaskMonitor {
         return records;
     }
 
-    public String getRunId() {
+    public long getRunId() {
         return runId;
     }
 
