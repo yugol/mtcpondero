@@ -8,7 +8,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
-import pondero.Globals;
+import pondero.Context;
 import pondero.engine.test.Test;
 import pondero.update.Artifact;
 
@@ -18,7 +18,7 @@ public class TestLoader {
 
     public static List<Test> loadTests() {
         try {
-            final File pluginFolder = Globals.getFolderTests();
+            final File pluginFolder = Context.getFolderTests();
             final List<Artifact> artifacts = new ArrayList<Artifact>();
             final List<URL> jarUrls = new ArrayList<URL>();
             for (final File jarFile : pluginFolder.listFiles()) {
@@ -31,7 +31,7 @@ public class TestLoader {
                 }
             }
 
-            if (Globals.isRunningFromIde()) {
+            if (Context.isRunningFromIde()) {
                 testClassLoader = new URLClassLoader(jarUrls.toArray(new URL[] {}));
             } else {
                 testClassLoader = TestLoader.class.getClassLoader();
@@ -43,7 +43,7 @@ public class TestLoader {
                     final Class<? extends Test> testClass = testClassLoader.loadClass(candidate.getTestClassName()).asSubclass(Test.class);
                     tests.add(testClass.newInstance());
                     info("registered test: ", testClass.getCanonicalName());
-                    Globals.registerArtifact(candidate);
+                    Context.registerArtifact(candidate);
                 } catch (final ClassCastException e) {
                     warning(candidate.getFileName(), " is not a test");
                 }

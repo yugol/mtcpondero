@@ -4,6 +4,7 @@ import static pondero.Logger.info;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.Collections;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,7 +13,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import pondero.Globals;
+import pondero.Context;
 import pondero.util.DateUtil;
 import pondero.util.StringUtil;
 
@@ -20,20 +21,20 @@ public class UpdateUtil {
 
     public static final String UPDATE_EXTENSION = ".update";
 
-    public static void download(Artifact update) throws Exception {
+    public static void download(final Artifact update) throws Exception {
         final URL url = new URL(update.getUrl());
         File destination = null;
         switch (update.getType()) {
             case APPLICATION:
-                destination = new File(Globals.getFolderBin(), update.getFileName());
+                destination = new File(Context.getFolderBin(), update.getFileName());
                 break;
             case TEST:
-                destination = new File(Globals.getFolderTests(), update.getFileName());
+                destination = new File(Context.getFolderTests(), update.getFileName());
                 break;
             default:
                 return;
         }
-        File downloaded = new File(destination.getAbsolutePath() + UPDATE_EXTENSION);
+        final File downloaded = new File(destination.getAbsolutePath() + UPDATE_EXTENSION);
         if (destination != null) {
             info("downloading: ", url, " -> ", downloaded.getCanonicalPath());
             FileUtils.copyURLToFile(url, downloaded);
@@ -50,11 +51,11 @@ public class UpdateUtil {
         }
     }
 
-    public static Updates getApplicableUpdates(Updates availableUpdates) {
-        Updates applicableUpdates = new Updates();
-        for (Artifact update : availableUpdates) {
+    public static Updates getApplicableUpdates(final Updates availableUpdates) {
+        final Updates applicableUpdates = new Updates();
+        for (final Artifact update : availableUpdates) {
             boolean found = false;
-            for (Artifact installed : Globals.getArtifacts()) {
+            for (final Artifact installed : Context.getArtifacts()) {
                 if (installed.equals(update)) {
                     found = true;
                     if (installed.compareTo(update) < 0) {
@@ -72,26 +73,26 @@ public class UpdateUtil {
     public static Updates getAvailableUpdates() throws Exception {
         InputStream registryStream = null;
         try {
-            registryStream = UrlUtil.openCloudStream(Globals.UPDATE_REGISTRY_ADDRESS);
-            Updates availableArtifacts = new Updates();
+            registryStream = UrlUtil.openCloudStream(Context.UPDATE_REGISTRY_ADDRESS);
+            final Updates availableArtifacts = new Updates();
 
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(registryStream);
+            final DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            final DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            final Document doc = dBuilder.parse(registryStream);
             doc.getDocumentElement().normalize();
 
             NodeList nList = doc.getElementsByTagName("application");
             for (int foo = 0; foo < nList.getLength(); ++foo) {
-                Element applicationElement = (Element) nList.item(foo);
-                Artifact descriptor = readArtifactDescriptor(ArtifactType.APPLICATION, applicationElement);
+                final Element applicationElement = (Element) nList.item(foo);
+                final Artifact descriptor = readArtifactDescriptor(ArtifactType.APPLICATION, applicationElement);
                 if (descriptor != null) {
                     availableArtifacts.add(descriptor);
                 }
             }
             nList = doc.getElementsByTagName("test");
             for (int foo = 0; foo < nList.getLength(); ++foo) {
-                Element testElement = (Element) nList.item(foo);
-                Artifact descriptor = readArtifactDescriptor(ArtifactType.TEST, testElement);
+                final Element testElement = (Element) nList.item(foo);
+                final Artifact descriptor = readArtifactDescriptor(ArtifactType.TEST, testElement);
                 if (descriptor != null) {
                     availableArtifacts.add(descriptor);
                 }
@@ -112,11 +113,11 @@ public class UpdateUtil {
         return "true".equals(str);
     }
 
-    private static Artifact readArtifactDescriptor(ArtifactType artifactType, Element artifactElement) {
-        boolean valid = parseBoolean(artifactElement.getAttribute("valid"));
+    private static Artifact readArtifactDescriptor(final ArtifactType artifactType, final Element artifactElement) throws ParseException {
+        final boolean valid = parseBoolean(artifactElement.getAttribute("valid"));
         if (valid) {
-            String id = artifactElement.getAttribute("id");
-            boolean mandatory = parseBoolean(artifactElement.getAttribute("mandatory"));
+            final String id = artifactElement.getAttribute("id");
+            final boolean mandatory = parseBoolean(artifactElement.getAttribute("mandatory"));
             String releaseDate = null;
             String major = null;
             String minor = null;
@@ -124,11 +125,11 @@ public class UpdateUtil {
             boolean isProtected = false;
             String passwordHash = null;
             String url = null;
-            NodeList cList = artifactElement.getChildNodes();
+            final NodeList cList = artifactElement.getChildNodes();
             for (int bar = 0; bar < cList.getLength(); bar++) {
-                Node cNode = cList.item(bar);
+                final Node cNode = cList.item(bar);
                 if (cNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element cElement = (Element) cNode;
+                    final Element cElement = (Element) cNode;
                     if ("releaseDate".equalsIgnoreCase(cElement.getTagName())) {
                         releaseDate = cElement.getTextContent();
                     } else if ("major".equalsIgnoreCase(cElement.getTagName())) {
@@ -146,7 +147,7 @@ public class UpdateUtil {
                     }
                 }
             }
-            Artifact aDesc = new Artifact(artifactType, id, Integer.parseInt(major), Integer.parseInt(minor), maturity);
+            final Artifact aDesc = new Artifact(artifactType, id, Integer.parseInt(major), Integer.parseInt(minor), maturity);
             aDesc.setProtected(isProtected);
             aDesc.setMandatory(mandatory);
             aDesc.setReleaseDate(DateUtil.parseIsoCalendar(releaseDate));

@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import pondero.Globals;
+import pondero.Context;
 import pondero.L10n;
 import pondero.model.Workbook;
 import pondero.model.WorkbookFactory;
@@ -41,7 +41,7 @@ public class OpenDocumentAction extends PonderoAction {
             }
             final JFileChooser dialog = new JFileChooser(".");
             dialog.setDialogTitle(L10n.getString("lbl.open-workbook"));
-            dialog.setCurrentDirectory(Globals.getFolderResults());
+            dialog.setCurrentDirectory(Context.getFolderResults());
             dialog.setFileFilter(new ExcelFileFilter());
             if (JFileChooser.APPROVE_OPTION == dialog.showOpenDialog(getMainFrame())) {
                 getApp().setCurrentWorkbook(WorkbookFactory.openWorkbook(dialog.getSelectedFile()));

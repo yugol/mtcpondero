@@ -55,11 +55,12 @@ public class StringUtil {
         return foo;
     }
 
-    public static String toString(final Object value) {
-        return String.valueOf(value);
+    public static String toCellString(final Object value) {
+        if (value != null) { return String.valueOf(value); }
+        return null;
     }
 
-    public static String toString(final Object value, final PType type) {
+    public static String toConsoleString(final Object value, final PType type) {
         switch (type) {
             case STRING:
                 return (String) value;
@@ -71,7 +72,7 @@ public class StringUtil {
                 return DateUtil.toIsoTimestamp(value);
             case DECIMAL:
             case BOOLEAN:
-                return toString(value);
+                return String.valueOf(value);
             default:
                 throw new UnsupportedOperationException("toString for PType " + type);
         }

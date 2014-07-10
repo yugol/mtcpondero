@@ -9,7 +9,7 @@ import java.awt.SystemColor;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import pondero.Globals;
+import pondero.Context;
 
 @SuppressWarnings("serial")
 public class StatusBar extends JPanel {
@@ -29,7 +29,7 @@ public class StatusBar extends JPanel {
     public StatusBar() {
         setBackground(SystemColor.control);
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(10, (int) (18 * Globals.getUiFontScaleFactor())));
+        setPreferredSize(new Dimension(10, (int) (18 * Context.getUiFontScaleFactor())));
 
         lblMessage = new JLabel("");
         add(lblMessage, BorderLayout.CENTER);

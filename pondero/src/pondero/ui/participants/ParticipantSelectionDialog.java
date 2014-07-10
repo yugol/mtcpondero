@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
-import pondero.Globals;
+import pondero.Context;
 import pondero.L10n;
 import pondero.model.Workbook;
 import pondero.model.foundation.basic.Participant;
@@ -24,7 +24,7 @@ public class ParticipantSelectionDialog extends JDialog implements ParticipantSe
     public static final String DIALOG_NAME = "participantSelectionDialor";
 
     public static void main(final String[] args) throws Exception {
-        final ParticipantSelectionDialog dialog = new ParticipantSelectionDialog(null, Globals.getDefaultWorkbook());
+        final ParticipantSelectionDialog dialog = new ParticipantSelectionDialog(null, Context.getDefaultWorkbook());
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         dialog.setVisible(true);
     }
@@ -43,7 +43,7 @@ public class ParticipantSelectionDialog extends JDialog implements ParticipantSe
         setResizable(false);
         setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantSelectionDialog.class.getResource("/com/famfamfam/silk/user_go.png")));
         setTitle(L10n.getString("lbl.select-participant")); //$NON-NLS-1$
-        setBounds(100, 100, (int) (400 * Globals.getUiFontScaleFactor()), (int) (450 * Globals.getUiFontScaleFactor()));
+        setBounds(100, 100, (int) (400 * Context.getUiFontScaleFactor()), (int) (450 * Context.getUiFontScaleFactor()));
         getContentPane().setLayout(new BorderLayout());
 
         final JPanel contentPanel = new JPanel();

@@ -17,32 +17,36 @@ public abstract class PRow {
         data = new Object[sheet.getColumnCount()];
     }
 
-    public void randomize() {
+    public void randomize() throws Exception {
         for (int i = 0; i < data.length; ++i) {
             final PType type = sheet.getColumn(i).getType();
             data[i] = type.next();
         }
     }
 
-    public Object set(final int index, final Object value) {
+    public Object set(final int index, final Object value) throws Exception {
         final PType type = sheet.getColumn(index).getType();
         if (value == null) {
             data[index] = value;
         } else {
             switch (type) {
                 case STRING:
-                    data[index] = StringUtil.toString(value);
-                    break;
-                case DATE:
-                case TIME:
-                case TIMESTAMP:
-                    data[index] = DateUtil.toMillis(value);
+                    data[index] = StringUtil.toCellString(value);
                     break;
                 case DECIMAL:
                     data[index] = NumberUtil.toDecimal(value);
                     break;
                 case BOOLEAN:
                     data[index] = BooleanUtil.toBoolean(value);
+                    break;
+                case DATE:
+                    data[index] = DateUtil.toDateMillis(value);
+                    break;
+                case TIME:
+                    data[index] = DateUtil.toTimeMillis(value);
+                    break;
+                case TIMESTAMP:
+                    data[index] = DateUtil.toTimestampMillis(value);
                     break;
                 default:
                     throw new IllegalArgumentException("Unsupported type " + value.getClass().getName());
@@ -52,11 +56,11 @@ public abstract class PRow {
         return data[index];
     }
 
-    public Object set(final String name, final Object value) {
+    public Object set(final String name, final Object value) throws Exception {
         return set(sheet.index(name), value);
     }
 
-    public String toCsv() {
+    public String toCsv() throws Exception {
         return toString();
     }
 
@@ -68,11 +72,11 @@ public abstract class PRow {
         return data[sheet.index(name)];
     }
 
-    protected Calendar getCalendar(final int index) {
+    protected Calendar getCalendar(final int index) throws Exception {
         return DateUtil.toCalendar(get(index));
     }
 
-    protected Calendar getCalendar(final String name) {
+    protected Calendar getCalendar(final String name) throws Exception {
         return getCalendar(sheet.index(name));
     }
 

@@ -6,7 +6,7 @@ import pondero.model.foundation.PSheet;
 
 public class TrialRecord extends PRow {
 
-    TrialRecord(final PSheet sheet) {
+    TrialRecord(final PSheet sheet) throws Exception {
         super(sheet);
         set(Records.ATTR_TRIAL_TIMESTAMP, System.currentTimeMillis());
     }
@@ -51,33 +51,33 @@ public class TrialRecord extends PRow {
         return (Boolean) get(Records.ATTR_RESPONSE_CORRECT);
     }
 
-    public void setBlockId(final String value) {
+    public void setBlockId(final String value) throws Exception {
         set(Records.ATTR_BLOCK_ID, value);
     }
 
-    public void setExperimentId(final String id) {
+    public void setExperimentId(final String id) throws Exception {
         set(Records.ATTR_EXPERIMNT_ID, id);
     }
 
-    public void setParticipant(final Participant participant) {
+    public void setParticipant(final Participant participant) throws Exception {
         set(Records.ATTR_PARTICIPANT_SURNAME, participant.getSurname());
         set(Records.ATTR_PARTICIPANT_NAME, participant.getName());
         set(Records.ATTR_PARTICIPANT_ID, participant.getId());
     }
 
-    public void setResponse(final String value) {
+    public void setResponse(final String value) throws Exception {
         set(Records.ATTR_RESPONSE, value);
     }
 
-    public void setResponseCorrect(final boolean value) {
+    public void setResponseCorrect(final boolean value) throws Exception {
         set(Records.ATTR_RESPONSE_CORRECT, value);
     }
 
-    public void setResponseTimestamp(final long responseTimestamp) {
+    public void setResponseTimestamp(final long responseTimestamp) throws Exception {
         set(Records.ATTR_RESPONSE_TIME, responseTimestamp - (Long) get(Records.ATTR_TRIAL_TIMESTAMP));
     }
 
-    public void setTrialId(final String value) {
+    public void setTrialId(final String value) throws Exception {
         set(Records.ATTR_TRIAL_ID, value);
     }
 

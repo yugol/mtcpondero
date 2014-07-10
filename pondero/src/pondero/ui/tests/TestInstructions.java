@@ -1,5 +1,6 @@
 package pondero.ui.tests;
 
+import static pondero.Logger.error;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
@@ -40,8 +41,12 @@ public class TestInstructions extends JPanel {
         pnlCenter.addKeyListener(new KeyAdapter() {
 
             @Override
-            public void keyPressed(final KeyEvent e) {
-                handleKeyEvent(e);
+            public void keyPressed(final KeyEvent evt) {
+                try {
+                    handleKeyEvent(evt);
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
 
         });
@@ -53,8 +58,12 @@ public class TestInstructions extends JPanel {
         pnlNavigation.addKeyListener(new KeyAdapter() {
 
             @Override
-            public void keyPressed(final KeyEvent e) {
-                handleKeyEvent(e);
+            public void keyPressed(final KeyEvent evt) {
+                try {
+                    handleKeyEvent(evt);
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
 
         });
@@ -66,18 +75,26 @@ public class TestInstructions extends JPanel {
         btnLeft.addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mouseClicked(final MouseEvent e) {
+            public void mouseClicked(final MouseEvent evt) {
                 final PrevNextResponse input = new PrevNextResponse();
                 input.setPrev(true);
-                test.doStep(input);
+                try {
+                    test.doStep(input);
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
 
         });
         btnLeft.addKeyListener(new KeyAdapter() {
 
             @Override
-            public void keyPressed(final KeyEvent e) {
-                handleKeyEvent(e);
+            public void keyPressed(final KeyEvent evt) {
+                try {
+                    handleKeyEvent(evt);
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
 
         });
@@ -87,18 +104,26 @@ public class TestInstructions extends JPanel {
         btnRight.addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mouseClicked(final MouseEvent e) {
+            public void mouseClicked(final MouseEvent evt) {
                 final PrevNextResponse input = new PrevNextResponse();
                 input.setNext(true);
-                test.doStep(input);
+                try {
+                    test.doStep(input);
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
 
         });
         btnRight.addKeyListener(new KeyAdapter() {
 
             @Override
-            public void keyPressed(final KeyEvent e) {
-                handleKeyEvent(e);
+            public void keyPressed(final KeyEvent evt) {
+                try {
+                    handleKeyEvent(evt);
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
         });
         pnlNavigation.add(btnRight);
@@ -107,8 +132,12 @@ public class TestInstructions extends JPanel {
         message.addKeyListener(new KeyAdapter() {
 
             @Override
-            public void keyPressed(final KeyEvent e) {
-                handleKeyEvent(e);
+            public void keyPressed(final KeyEvent evt) {
+                try {
+                    handleKeyEvent(evt);
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
 
         });
@@ -144,10 +173,10 @@ public class TestInstructions extends JPanel {
         message.requestFocus();
     }
 
-    private void handleKeyEvent(final KeyEvent e) {
+    private void handleKeyEvent(final KeyEvent evt) throws Exception {
         final PrevNextResponse input = new PrevNextResponse();
-        input.setNext(e.getKeyChar() == test.getInstructions()._getNextkey());
-        input.setPrev(e.getKeyChar() == test.getInstructions()._getPrevkey());
+        input.setNext(evt.getKeyChar() == test.getInstructions()._getNextkey());
+        input.setPrev(evt.getKeyChar() == test.getInstructions()._getPrevkey());
         test.doStep(input);
     }
 

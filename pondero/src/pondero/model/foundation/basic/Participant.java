@@ -31,7 +31,7 @@ public class Participant extends PRow {
         SNAMES = readNames("/pondero/res/snames.txt");
     }
 
-    public static String getHtml(final Participant participant) {
+    public static String getHtml(final Participant participant) throws Exception {
         final StringBuilder html = new StringBuilder("<html>");
         if (participant == null) {
             html.append(L10n.getString("msg.no-participant-selected"));
@@ -81,12 +81,12 @@ public class Participant extends PRow {
         return names;
     }
 
-    Participant(final PSheet sheet) {
+    Participant(final PSheet sheet) throws Exception {
         super(sheet);
         setId(UUID.randomUUID().toString());
     }
 
-    public Integer getAge() {
+    public Integer getAge() throws Exception {
         final Calendar dob = getDob();
         if (dob != null) {
             final int dobYear = dob.get(Calendar.YEAR);
@@ -95,7 +95,7 @@ public class Participant extends PRow {
         return null;
     }
 
-    public Calendar getDob() {
+    public Calendar getDob() throws Exception {
         return getCalendar(Participants.ATTR_DOB);
     }
 
@@ -130,7 +130,7 @@ public class Participant extends PRow {
     }
 
     @Override
-    public void randomize() {
+    public void randomize() throws Exception {
         // gender
         setGender(RND.nextBoolean() ? Gender.MASCULINE : Gender.FEMININE);
 
@@ -189,48 +189,48 @@ public class Participant extends PRow {
         setMileage(mileage);
     }
 
-    public void setAge(final Integer value) {
+    public void setAge(final Integer value) throws Exception {
         setDob(new GregorianCalendar(DateUtil.getCurrentYear() - value, Calendar.JANUARY, 1));
     }
 
-    public void setDob(final Calendar value) {
+    public void setDob(final Calendar value) throws Exception {
         set(Participants.ATTR_DOB, value);
     }
 
-    public void setDrivingAge(final Integer value) {
+    public void setDrivingAge(final Integer value) throws Exception {
         set(Participants.ATTR_DRIVING_AGE, value);
     }
 
-    public void setEducation(final Education value) {
+    public void setEducation(final Education value) throws Exception {
         set(Participants.ATTR_EDUCATION, value.code);
     }
 
-    public void setGender(final Gender value) {
+    public void setGender(final Gender value) throws Exception {
         set(Participants.ATTR_GENDER, value.code);
     }
 
-    public void setId(final int id) {
+    public void setId(final int id) throws Exception {
         setId(String.valueOf(id));
     }
 
-    public void setId(final String value) {
+    public void setId(final String value) throws Exception {
         set(Participants.ATTR_ID, value);
     }
 
-    public void setMileage(final Integer value) {
+    public void setMileage(final Integer value) throws Exception {
         set(Participants.ATTR_MILEAGE, value);
     }
 
-    public void setName(final String value) {
+    public void setName(final String value) throws Exception {
         set(Participants.ATTR_NAME, value);
     }
 
-    public void setSurname(final String value) {
+    public void setSurname(final String value) throws Exception {
         set(Participants.ATTR_SURNAME, value);
     }
 
     @Override
-    public String toCsv() {
+    public String toCsv() throws Exception {
         final StringBuilder csv = new StringBuilder();
         csv.append(getId()).append(", ");
         csv.append(getSurname()).append(", ");

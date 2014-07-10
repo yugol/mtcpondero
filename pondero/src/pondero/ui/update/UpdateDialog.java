@@ -28,7 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
-import pondero.Globals;
+import pondero.Context;
 import pondero.L10n;
 import pondero.update.Artifact;
 import pondero.update.UpdateEngine;
@@ -47,7 +47,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
      */
     public static void main(final String[] args) {
         try {
-            Globals.loadPreferences(null);
+            Context.init(null);
             final UpdateDialog dialog = new UpdateDialog();
             dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
@@ -81,7 +81,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         setTitle(L10n.getString("lbl.pondero-update"));
         setResizable(false);
 
-        setBounds(100, 100, (int) (450 * Globals.getUiFontScaleFactor()), (int) (450 * Globals.getUiFontScaleFactor()));
+        setBounds(100, 100, (int) (450 * Context.getUiFontScaleFactor()), (int) (450 * Context.getUiFontScaleFactor()));
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(15, 15, 0, 15));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -200,7 +200,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         downloading = false;
         progressBar.setVisible(false);
         if (applicableUpdates.size() > 0) {
-            setHeight((int) (450 * Globals.getUiFontScaleFactor()));
+            setHeight((int) (450 * Context.getUiFontScaleFactor()));
             if (!isVisible()) {
                 setVisible(true);
             }
@@ -228,7 +228,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         debug("reading update registry: started");
         downloading = true;
         setTopStatusMessage(L10n.getString("msg.downloading-update-list"));
-        setHeight((int) (150 * Globals.getUiFontScaleFactor()));
+        setHeight((int) (150 * Context.getUiFontScaleFactor()));
         progressBar.setVisible(true);
         scrollPane.setVisible(false);
         btnStart.setVisible(false);

@@ -1,7 +1,9 @@
 package pondero.engine.elements.trial;
 
+import static pondero.Logger.error;
 import java.util.HashSet;
 import java.util.Set;
+import pondero.Context;
 import pondero.engine.elements.Element;
 import pondero.engine.elements.interfaces.HasFeedback;
 import pondero.engine.elements.interfaces.IsController;
@@ -16,7 +18,6 @@ import pondero.engine.test.stimuli.Stimulus;
 import pondero.engine.test.stimuli.VisualStimulus;
 import pondero.ui.tests.TestCanvas;
 import pondero.ui.tests.TestScene;
-import pondero.util.SystemUtil;
 
 public class Trial extends Element implements HasFeedback, IsController {
 
@@ -43,7 +44,7 @@ public class Trial extends Element implements HasFeedback, IsController {
     }
 
     @Override
-    public void doBegin() {
+    public void doBegin() throws Exception {
         configureScene();
         test.resetStimuli();
         test.showScene();
@@ -53,7 +54,7 @@ public class Trial extends Element implements HasFeedback, IsController {
     }
 
     @Override
-    public void doEnd() {
+    public void doEnd() throws Exception {
         doStatus = null;
         test.closeRecord();
         test.popController();
@@ -85,29 +86,33 @@ public class Trial extends Element implements HasFeedback, IsController {
                     if (input instanceof KeyPressResponse) {
                         final String keyResponse = ((KeyPressResponse) input).getCharAsString();
                         if (validresponse.contains(keyResponse)) {
-                            HasFeedback.FeedbackStimulus fb = null;
-                            if (correctresponse.contains(keyResponse)) {
-                                test.recordCorrectResponse(input.getTime());
-                                fb = test.getCorrectmessage();
-                            } else {
-                                test.recordErrorResponse(input.getTime());
-                                fb = test.getErrormessage();
-                            }
-                            test.recordResponse(keyResponse);
-                            passed = true;
-                            if (fb != null) {
-                                final IsStimulus eltStimulus = test.getStimulus(fb.getStimulusName());
-                                Stimulus actualStimulus = null;
-                                if (eltStimulus instanceof IsVisualStimulus) {
-                                    actualStimulus = ((IsVisualStimulus) eltStimulus)._getStimulus();
-                                    test.addVisualStimulus((VisualStimulus) actualStimulus);
+                            try {
+                                HasFeedback.FeedbackStimulus fb = null;
+                                if (correctresponse.contains(keyResponse)) {
+                                    test.recordCorrectResponse(input.getTime());
+                                    fb = test.getCorrectmessage();
+                                } else {
+                                    test.recordErrorResponse(input.getTime());
+                                    fb = test.getErrormessage();
                                 }
-                                test.presentStimuli();
-                                Timing.pause(fb.getDuration());
-                                if (eltStimulus instanceof IsVisualStimulus) {
-                                    test.removeVisualStimulus((VisualStimulus) actualStimulus);
+                                test.recordResponse(keyResponse);
+                                passed = true;
+                                if (fb != null) {
+                                    final IsStimulus eltStimulus = test.getStimulus(fb.getStimulusName());
+                                    Stimulus actualStimulus = null;
+                                    if (eltStimulus instanceof IsVisualStimulus) {
+                                        actualStimulus = ((IsVisualStimulus) eltStimulus)._getStimulus();
+                                        test.addVisualStimulus((VisualStimulus) actualStimulus);
+                                    }
+                                    test.presentStimuli();
+                                    Timing.pause(fb.getDuration());
+                                    if (eltStimulus instanceof IsVisualStimulus) {
+                                        test.removeVisualStimulus((VisualStimulus) actualStimulus);
+                                    }
+                                    test.presentStimuli();
                                 }
-                                test.presentStimuli();
+                            } catch (final Exception e) {
+                                error(e);
                             }
                         }
                     }
@@ -115,7 +120,11 @@ public class Trial extends Element implements HasFeedback, IsController {
 
                 if (passed) {
                     Timing.pause(posttrialpause);
-                    doEnd();
+                    try {
+                        doEnd();
+                    } catch (final Exception e) {
+                        error(e);
+                    }
                 }
             }
 
@@ -182,7 +191,7 @@ public class Trial extends Element implements HasFeedback, IsController {
     public void stimulusframes(final String expr) {
         stimulustimes = new FrameSequence(expr);
         for (final Frame frame : stimulustimes) {
-            frame.setIndex(frame.getIndex() * SystemUtil.getFrameRate());
+            frame.setIndex(frame.getIndex() * Context.getFrameRate());
         }
     }
 

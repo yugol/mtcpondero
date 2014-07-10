@@ -1,5 +1,6 @@
 package pondero.ui.tests;
 
+import static pondero.Logger.error;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -171,9 +172,14 @@ public class TestLikertComponent extends TestVisualComponent {
         btn1.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                test.doStep(new KeyPressResponse("1"));
+            public void actionPerformed(final ActionEvent evt) {
+                try {
+                    test.doStep(new KeyPressResponse("1"));
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
+
         });
         final GridBagConstraints gbc_btn1 = new GridBagConstraints();
         gbc_btn1.weighty = 1.0;
@@ -187,9 +193,14 @@ public class TestLikertComponent extends TestVisualComponent {
         btn2.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                test.doStep(new KeyPressResponse("2"));
+            public void actionPerformed(final ActionEvent evt) {
+                try {
+                    test.doStep(new KeyPressResponse("2"));
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
+
         });
         final GridBagConstraints gbc_btn2 = new GridBagConstraints();
         gbc_btn2.weighty = 1.0;
@@ -203,8 +214,12 @@ public class TestLikertComponent extends TestVisualComponent {
         btn3.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                test.doStep(new KeyPressResponse("3"));
+            public void actionPerformed(final ActionEvent evt) {
+                try {
+                    test.doStep(new KeyPressResponse("3"));
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
         });
         final GridBagConstraints gbc_btn3 = new GridBagConstraints();
@@ -219,8 +234,12 @@ public class TestLikertComponent extends TestVisualComponent {
         btn4.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                test.doStep(new KeyPressResponse("4"));
+            public void actionPerformed(final ActionEvent evt) {
+                try {
+                    test.doStep(new KeyPressResponse("4"));
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
         });
         final GridBagConstraints gbc_btn4 = new GridBagConstraints();
@@ -235,9 +254,14 @@ public class TestLikertComponent extends TestVisualComponent {
         btn5.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                test.doStep(new KeyPressResponse("5"));
+            public void actionPerformed(final ActionEvent evt) {
+                try {
+                    test.doStep(new KeyPressResponse("5"));
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
+
         });
         final GridBagConstraints gbc_btn5 = new GridBagConstraints();
         gbc_btn5.weighty = 1.0;
@@ -251,9 +275,14 @@ public class TestLikertComponent extends TestVisualComponent {
         btn6.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                test.doStep(new KeyPressResponse("6"));
+            public void actionPerformed(final ActionEvent evt) {
+                try {
+                    test.doStep(new KeyPressResponse("6"));
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
+
         });
         final GridBagConstraints gbc_btn6 = new GridBagConstraints();
         gbc_btn6.weighty = 1.0;
@@ -267,9 +296,14 @@ public class TestLikertComponent extends TestVisualComponent {
         btn7.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                test.doStep(new KeyPressResponse("7"));
+            public void actionPerformed(final ActionEvent evt) {
+                try {
+                    test.doStep(new KeyPressResponse("7"));
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
+
         });
         final GridBagConstraints gbc_btn7 = new GridBagConstraints();
         gbc_btn7.weighty = 1.0;
@@ -283,9 +317,14 @@ public class TestLikertComponent extends TestVisualComponent {
         btn8.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                test.doStep(new KeyPressResponse("8"));
+            public void actionPerformed(final ActionEvent evt) {
+                try {
+                    test.doStep(new KeyPressResponse("8"));
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
+
         });
         final GridBagConstraints gbc_btn8 = new GridBagConstraints();
         gbc_btn8.weightx = 1.0;
@@ -298,9 +337,14 @@ public class TestLikertComponent extends TestVisualComponent {
         btn9.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                test.doStep(new KeyPressResponse("9"));
+            public void actionPerformed(final ActionEvent evt) {
+                try {
+                    test.doStep(new KeyPressResponse("9"));
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
+
         });
         final GridBagConstraints gbc_btn9 = new GridBagConstraints();
         gbc_btn9.weighty = 1.0;

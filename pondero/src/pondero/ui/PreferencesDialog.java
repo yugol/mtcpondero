@@ -21,7 +21,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
-import pondero.Globals;
+import pondero.Context;
 import pondero.L10n;
 import pondero.util.MsgUtil;
 import pondero.util.UiUtil;
@@ -37,7 +37,7 @@ public class PreferencesDialog extends JDialog {
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
-        Globals.loadPreferences(null);
+        Context.init(null);
         try {
             final PreferencesDialog dialog = new PreferencesDialog(null);
             dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -61,7 +61,7 @@ public class PreferencesDialog extends JDialog {
         setType(Type.UTILITY);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, (int) (320 * Globals.getUiFontScaleFactor()), (int) (240 * Globals.getUiFontScaleFactor()));
+        setBounds(100, 100, (int) (320 * Context.getUiFontScaleFactor()), (int) (240 * Context.getUiFontScaleFactor()));
         setTitle(L10n.getString("lbl.preferences"));
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(10, 10, 5, 10));
@@ -207,7 +207,7 @@ public class PreferencesDialog extends JDialog {
         localeModel.addElement(new Locale("en"));
         localeModel.addElement(new Locale("ro"));
         cbLanguage.setModel(localeModel);
-        cbLanguage.setSelectedItem(Globals.getLocale());
+        cbLanguage.setSelectedItem(Context.getLocale());
 
         final DefaultComboBoxModel<String> themeModel = new DefaultComboBoxModel<String>();
         themeModel.addElement("");
@@ -215,7 +215,7 @@ public class PreferencesDialog extends JDialog {
             themeModel.addElement(theme);
         }
         cbTheme.setModel(themeModel);
-        cbTheme.setSelectedItem(Globals.getThemeString());
+        cbTheme.setSelectedItem(Context.getThemeString());
 
         final DefaultComboBoxModel<Double> scaleModel = new DefaultComboBoxModel<Double>();
         scaleModel.addElement(new Double(1.00));
@@ -224,15 +224,15 @@ public class PreferencesDialog extends JDialog {
         scaleModel.addElement(new Double(1.75));
         scaleModel.addElement(new Double(2.00));
         cbScale.setModel(scaleModel);
-        cbScale.setSelectedItem(Globals.getUiFontScaleFactor());
+        cbScale.setSelectedItem(Context.getUiFontScaleFactor());
     }
 
     private boolean savePreferences() {
         try {
-            Globals.setLocale((Locale) cbLanguage.getSelectedItem());
-            Globals.setUiThemeString((String) cbTheme.getSelectedItem());
-            Globals.setUiFontScaleFactor((Double) cbScale.getSelectedItem());
-            Globals.savePreferences();
+            Context.setLocale((Locale) cbLanguage.getSelectedItem());
+            Context.setUiThemeString((String) cbTheme.getSelectedItem());
+            Context.setUiFontScaleFactor((Double) cbScale.getSelectedItem());
+            Context.savePreferences();
             return true;
         } catch (final Exception e) {
             error(e);

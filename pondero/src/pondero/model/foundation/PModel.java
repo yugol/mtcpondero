@@ -23,7 +23,7 @@ public abstract class PModel implements Iterable<PSheet> {
         listeners.add(listener);
     }
 
-    public PSheet addSheet(final PSheet sheet) {
+    public PSheet addSheet(final PSheet sheet) throws Exception {
         name2index = null;
         sheets.add(sheet);
         setDirty(true);
@@ -56,7 +56,7 @@ public abstract class PModel implements Iterable<PSheet> {
         return sheets.iterator();
     }
 
-    public void setDirty(final boolean flag) {
+    public void setDirty(final boolean flag) throws Exception {
         if (dirty != flag) {
             dirty = flag;
             for (final ModelListener listener : listeners) {

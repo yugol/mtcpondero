@@ -23,12 +23,12 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.plaf.FontUIResource;
-import pondero.Globals;
+import pondero.Context;
 
 public class UiUtil {
 
     public static void enableFullScreenMode(final JFrame window) {
-        if (SystemUtil.isMacOSX()) {
+        if (Context.isMacOSX()) {
             final String className = "com.apple.eawt.FullScreenUtilities";
             final String methodName = "setWindowCanFullScreen";
             try {
@@ -110,7 +110,7 @@ public class UiUtil {
     }
 
     public static void setLaf() {
-        final String themeHint = Globals.getThemeString().trim().toLowerCase();
+        final String themeHint = Context.getThemeString().trim().toLowerCase();
         try {
             for (final LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if (info.getName().toLowerCase().indexOf(themeHint) >= 0) {

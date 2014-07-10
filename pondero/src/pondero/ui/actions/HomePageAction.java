@@ -3,7 +3,7 @@ package pondero.ui.actions;
 import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
-import pondero.Globals;
+import pondero.Context;
 import pondero.L10n;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
@@ -22,7 +22,7 @@ public class HomePageAction extends PonderoAction {
     @Override
     public void actionPerformed(final ActionEvent arg0) {
         try {
-            WebUtil.browse(Globals.HOME_PAGE_ADDRESS);
+            WebUtil.browse(Context.HOME_PAGE_ADDRESS);
         } catch (final Exception e) {
             error(e);
             MsgUtil.showExceptionMessage(getMainFrame(), e);
