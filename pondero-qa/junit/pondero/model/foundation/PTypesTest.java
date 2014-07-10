@@ -89,6 +89,9 @@ public class PTypesTest {
         testSheet.addRow().setTimestamp(nowCal);
         testSheet.addRow().setTimestamp(DateUtil.toIsoTimestamp(now));
 
+        testSheet.addRow().setFormula(null);
+        testSheet.addRow().setFormula("SUM(1 + 1)");
+
         // System.out.println(testSheet);
 
         final TestTemplate template = new TestTemplate(GEN_FILE);
@@ -151,6 +154,9 @@ public class PTypesTest {
         assertEquals(1405001364000L, testSheet.getRow(43).getTimestamp().getTime());
         assertEquals(1405001364000L, testSheet.getRow(44).getTimestamp().getTime());
         assertEquals(1405001364000L, testSheet.getRow(45).getTimestamp().getTime());
+
+        assertNull(testSheet.getRow(46).getFormula());
+        assertEquals("SUM(1 + 1)", testSheet.getRow(47).getFormula());
 
         template.close();
     }

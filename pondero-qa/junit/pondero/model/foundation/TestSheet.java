@@ -10,6 +10,7 @@ public class TestSheet extends PSheet {
     public static final String ATTR_STRING    = "STRING";
     public static final String ATTR_TIME      = "TIME";
     public static final String ATTR_TIMESTAMP = "TIMESTAMP";
+    public static final String ATTR_FORMULA   = "FORMULA";
 
     TestSheet(final PModel model) throws Exception {
         super(model, NAME);
@@ -19,6 +20,7 @@ public class TestSheet extends PSheet {
         addColumn(ATTR_DATE, PType.DATE);
         addColumn(ATTR_TIME, PType.TIME);
         addColumn(ATTR_TIMESTAMP, PType.TIMESTAMP);
+        addColumn(ATTR_FORMULA, PType.FORMULA);
         lock();
     }
 

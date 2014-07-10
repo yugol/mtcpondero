@@ -20,6 +20,57 @@ public abstract class PRow {
         data = new Object[sheet.getColumnCount()];
     }
 
+    public Boolean getBoolean(final int index) {
+        return (Boolean) data[index];
+    }
+
+    public Boolean getBoolean(final String name) {
+        return getBoolean(sheet.index(name));
+    }
+
+    public Date getDate(final int index) {
+        if (data[index] == null) { return null; }
+        return new Date((long) data[index]);
+    }
+
+    public Date getDate(final String name) {
+        return getDate(sheet.index(name));
+    }
+
+    public BigDecimal getDecimal(final int index) {
+        return (BigDecimal) data[index];
+    }
+
+    public BigDecimal getDecimal(final String name) {
+        return getDecimal(sheet.index(name));
+    }
+
+    public String getString(final int index) {
+        return (String) data[index];
+    }
+
+    public String getString(final String name) {
+        return getString(sheet.index(name));
+    }
+
+    public Time getTime(final int index) {
+        if (data[index] == null) { return null; }
+        return new Time((long) data[index]);
+    }
+
+    public Time getTime(final String name) {
+        return getTime(sheet.index(name));
+    }
+
+    public Timestamp getTimestamp(final int index) {
+        if (data[index] == null) { return null; }
+        return new Timestamp((long) data[index]);
+    }
+
+    public Timestamp getTimestamp(final String name) {
+        return getTimestamp(sheet.index(name));
+    }
+
     public void randomize() throws Exception {
         for (int i = 0; i < data.length; ++i) {
             final PType type = sheet.getColumn(i).getType();
@@ -28,10 +79,10 @@ public abstract class PRow {
     }
 
     public Object set(final int index, final Object value) throws Exception {
-        final PType type = sheet.getColumn(index).getType();
         if (value == null) {
-            data[index] = value;
+            data[index] = null;
         } else {
+            final PType type = sheet.getColumn(index).getType();
             switch (type) {
                 case STRING:
                     data[index] = StringUtil.toCellString(value);
@@ -50,6 +101,9 @@ public abstract class PRow {
                     break;
                 case TIMESTAMP:
                     data[index] = DateUtil.toTimestampMillis(value);
+                    break;
+                case FORMULA:
+                    data[index] = StringUtil.toCellString(value);
                     break;
                 default:
                     throw new IllegalArgumentException("Unsupported type " + value.getClass().getName());
@@ -75,37 +129,12 @@ public abstract class PRow {
         return data[sheet.index(name)];
     }
 
-    protected Boolean getBoolean(final int index) {
-        return (Boolean) data[index];
-    }
-
-    protected Boolean getBoolean(final String name) {
-        return getBoolean(sheet.index(name));
-    }
-
     protected Calendar getCalendar(final int index) throws Exception {
         return DateUtil.toCalendar(get(index));
     }
 
     protected Calendar getCalendar(final String name) throws Exception {
         return getCalendar(sheet.index(name));
-    }
-
-    protected Date getDate(final int index) {
-        if (data[index] == null) { return null; }
-        return new Date((long) data[index]);
-    }
-
-    protected Date getDate(final String name) {
-        return getDate(sheet.index(name));
-    }
-
-    protected BigDecimal getDecimal(final int index) {
-        return (BigDecimal) data[index];
-    }
-
-    protected BigDecimal getDecimal(final String name) {
-        return getDecimal(sheet.index(name));
     }
 
     protected Integer getInteger(final int index) {
@@ -118,32 +147,6 @@ public abstract class PRow {
 
     protected PSheet getSheet() {
         return sheet;
-    }
-
-    protected String getString(final int index) {
-        return (String) data[index];
-    }
-
-    protected String getString(final String name) {
-        return getString(sheet.index(name));
-    }
-
-    protected Time getTime(final int index) {
-        if (data[index] == null) { return null; }
-        return new Time((long) data[index]);
-    }
-
-    protected Time getTime(final String name) {
-        return getTime(sheet.index(name));
-    }
-
-    protected Timestamp getTimestamp(final int index) {
-        if (data[index] == null) { return null; }
-        return new Timestamp((long) data[index]);
-    }
-
-    protected Timestamp getTimestamp(final String name) {
-        return getTimestamp(sheet.index(name));
     }
 
 }

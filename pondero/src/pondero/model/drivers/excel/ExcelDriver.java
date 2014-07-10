@@ -273,6 +273,9 @@ public abstract class ExcelDriver extends Driver {
             if (Cell.CELL_TYPE_NUMERIC == xType) { return DateUtil.toTimestampMillis(cell.getNumericCellValue()); }
             if (Cell.CELL_TYPE_STRING == xType) { return DateUtil.toTimestampMillis(cell.getStringCellValue()); }
             if (Cell.CELL_TYPE_BLANK == xType) { return null; }
+        } else if (PType.FORMULA == pType) {
+            if (Cell.CELL_TYPE_FORMULA == xType) { return cell.getCellFormula(); }
+            if (Cell.CELL_TYPE_BLANK == xType) { return null; }
         }
         warning("getCellValue could not match ", pType, " with ", xType);
         return null;
@@ -291,12 +294,16 @@ public abstract class ExcelDriver extends Driver {
                 case DATE:
                 case TIME:
                 case TIMESTAMP:
-                    cell.setCellValue(new Date((Long) value));
+                    cell.setCellValue(new Date((long) value));
                     break;
                 case BOOLEAN:
                     cell.setCellValue((Boolean) value);
                     break;
+                case FORMULA:
+                    cell.setCellFormula((String) value);
+                    break;
                 default:
+                    warning("setCellValue could not match ", pType, " with ", value);
                     break;
             }
         }
