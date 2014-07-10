@@ -5,7 +5,7 @@ import org.junit.Test;
 public class BasicModelTest {
 
     @Test
-    public void testParticipants() {
+    public void testParticipants() throws Exception {
         final BasicModel wb = new BasicModel("My Workbook");
 
         final Participants ps = wb.getParticipants();

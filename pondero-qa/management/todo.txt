@@ -32,6 +32,7 @@ CURRENT VERSION: 2014-07-27
 FUTURE VERSIONS
 =====================================================================
 
+- refactor oadate in DateUtil
 - proper error message for trying to save over an opened xlsx file
 - warn replace existing file
 - uniform spacing between for dialog elements

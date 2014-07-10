@@ -1,7 +1,7 @@
 package pondero.model.drivers.excel.templates;
 
 import org.junit.Test;
-import pondero.Globals;
+import pondero.Context;
 import pondero.model.foundation.PSheet;
 import pondero.model.foundation.basic.BasicModel;
 import pondero.model.foundation.basic.Participant;
@@ -11,7 +11,7 @@ public class BasicTemplateTest {
 
     // @Test
     public void testGetModel() throws Exception {
-        final BasicTemplate xlsx = new BasicTemplate(Globals.getDefaultWorkbookFile().getCanonicalPath());
+        final BasicTemplate xlsx = new BasicTemplate(Context.getDefaultWorkbookFile());
         xlsx.open();
         final BasicModel model = xlsx.fetchModel();
         xlsx.close();
@@ -22,7 +22,7 @@ public class BasicTemplateTest {
 
     @Test
     public void testPutModel() throws Exception {
-        final BasicTemplate xlsx = new BasicTemplate(Globals.getFolderResults().getCanonicalPath() + "/tesx.xlsx");
+        final BasicTemplate xlsx = new BasicTemplate(Context.getFolderResults().getCanonicalPath() + "/tesx.xlsx");
         xlsx.open();
         final BasicModel model = new BasicModel("abc");
         final Participants ps = model.getParticipants();
@@ -34,7 +34,7 @@ public class BasicTemplateTest {
         for (final PSheet sheet : model) {
             System.out.println(sheet);
         }
-        xlsx.commitModel(model);
+        xlsx.pushModel(model);
         xlsx.close();
     }
 

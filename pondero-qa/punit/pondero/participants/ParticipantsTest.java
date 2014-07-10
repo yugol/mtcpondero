@@ -13,7 +13,7 @@ import javax.swing.SwingUtilities;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import pondero.Globals;
+import pondero.Context;
 import pondero.PonderoTest;
 import pondero.ui.Pondero;
 import pondero.ui.participants.ParticipantManagementDialog;
@@ -31,7 +31,7 @@ public class ParticipantsTest extends PonderoTest {
             TEST_XLSX.delete();
         }
         assertFalse(TEST_XLSX.exists());
-        Globals.setLastWorkbookFile(TEST_XLSX);
+        Context.setLastWorkbookFile(TEST_XLSX);
         app = getAppWithoutParticipants();
         assertTrue(app.getMainFrame().isVisible());
     }
