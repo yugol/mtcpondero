@@ -3,8 +3,7 @@ CURRENT VERSION: 2014-07-27
 =====================================================================
 
 * tests
-- collecting user data
-- test all combinations (PType, CellType)
+- collecting user datas
 
 
 * Export / Analysis / Reports
