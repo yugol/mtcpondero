@@ -1,4 +1,4 @@
-package pondero.model.entities.base;
+package pondero.data.entities.base;
 
 import java.util.Random;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package pondero.model.foundation.basic;
+package pondero.data.foundation.basic;
 
 import org.junit.Test;
 import pondero.data.model.basic.BasicModel;

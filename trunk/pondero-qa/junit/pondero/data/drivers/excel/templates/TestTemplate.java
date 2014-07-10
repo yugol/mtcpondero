@@ -1,10 +1,10 @@
-package pondero.model.drivers.excel.templates;
+package pondero.data.drivers.excel.templates;
 
 import java.io.File;
 import pondero.data.drivers.excel.ExcelDriver;
+import pondero.data.foundation.TestModel;
+import pondero.data.foundation.TestSheet;
 import pondero.data.model.PModel;
-import pondero.model.foundation.TestModel;
-import pondero.model.foundation.TestSheet;
 
 public class TestTemplate extends ExcelDriver {
 

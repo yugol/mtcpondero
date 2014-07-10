@@ -1,4 +1,4 @@
-package pondero.model.entities.base;
+package pondero.data.entities.base;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;

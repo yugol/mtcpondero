@@ -1,4 +1,4 @@
-package pondero.model.foundation;
+package pondero.data.foundation;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -11,7 +11,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import pondero.Context;
-import pondero.model.drivers.excel.templates.TestTemplate;
+import pondero.data.drivers.excel.templates.TestTemplate;
 import pondero.util.DateUtil;
 
 public class PTypesTest {
