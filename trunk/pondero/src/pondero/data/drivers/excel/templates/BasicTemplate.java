@@ -3,10 +3,10 @@ package pondero.data.drivers.excel.templates;
 import java.io.File;
 import org.apache.poi.ss.usermodel.Sheet;
 import pondero.data.drivers.excel.ExcelDriver;
-import pondero.data.foundation.PModel;
-import pondero.data.foundation.PSheet;
-import pondero.data.foundation.basic.BasicModel;
-import pondero.data.foundation.basic.Participants;
+import pondero.data.model.PModel;
+import pondero.data.model.PSheet;
+import pondero.data.model.basic.BasicModel;
+import pondero.data.model.basic.Participants;
 
 public class BasicTemplate extends ExcelDriver {
 

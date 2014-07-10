@@ -1,4 +1,4 @@
-package pondero.data.foundation.basic;
+package pondero.data.model.basic;
 
 import static pondero.Logger.error;
 import java.io.BufferedReader;
@@ -13,8 +13,8 @@ import java.util.UUID;
 import pondero.L10n;
 import pondero.data.domains.Education;
 import pondero.data.domains.Gender;
-import pondero.data.foundation.PRow;
-import pondero.data.foundation.PSheet;
+import pondero.data.model.PRow;
+import pondero.data.model.PSheet;
 import pondero.util.DateUtil;
 import pondero.util.StringUtil;
 

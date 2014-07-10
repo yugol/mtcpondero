@@ -6,10 +6,11 @@ import java.util.Collection;
 import pondero.Context;
 import pondero.data.drivers.excel.ExcelFileFilter;
 import pondero.data.drivers.excel.templates.BasicTemplate;
-import pondero.data.foundation.basic.BasicModel;
-import pondero.data.foundation.basic.Participant;
-import pondero.data.foundation.basic.Participants;
-import pondero.data.foundation.basic.TrialRecord;
+import pondero.data.model.PModelListener;
+import pondero.data.model.basic.BasicModel;
+import pondero.data.model.basic.Participant;
+import pondero.data.model.basic.Participants;
+import pondero.data.model.basic.TrialRecord;
 
 public class BasicWorkbook implements Workbook {
 

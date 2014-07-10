@@ -1,6 +1,6 @@
 package pondero.model.foundation;
 
-import pondero.data.foundation.PModel;
+import pondero.data.model.PModel;
 
 public class TestModel extends PModel {
 

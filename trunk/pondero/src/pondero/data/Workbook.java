@@ -2,9 +2,10 @@ package pondero.data;
 
 import java.io.File;
 import java.util.Collection;
-import pondero.data.foundation.basic.Participant;
-import pondero.data.foundation.basic.Participants;
-import pondero.data.foundation.basic.TrialRecord;
+import pondero.data.model.PModelListener;
+import pondero.data.model.basic.Participant;
+import pondero.data.model.basic.Participants;
+import pondero.data.model.basic.TrialRecord;
 
 public interface Workbook {
 

@@ -2,7 +2,7 @@ package pondero.ui;
 
 import javax.swing.JFrame;
 import pondero.data.Workbook;
-import pondero.data.foundation.basic.Participant;
+import pondero.data.model.basic.Participant;
 import pondero.engine.test.Test;
 
 public interface Ponderable {

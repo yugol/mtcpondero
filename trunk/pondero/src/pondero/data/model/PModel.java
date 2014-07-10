@@ -1,11 +1,10 @@
-package pondero.data.foundation;
+package pondero.data.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import pondero.data.PModelListener;
 
 public abstract class PModel implements Iterable<PSheet> {
 
