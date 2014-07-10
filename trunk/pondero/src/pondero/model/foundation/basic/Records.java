@@ -19,10 +19,10 @@ public class Records extends PSheet {
 
     Records(final PModel model, final String name) throws Exception {
         super(model, name);
+        addColumn(ATTR_EXPERIMNT_ID, PType.STRING);
+        addColumn(ATTR_PARTICIPANT_ID, PType.STRING);
         addColumn(ATTR_PARTICIPANT_SURNAME, PType.STRING);
         addColumn(ATTR_PARTICIPANT_NAME, PType.STRING);
-        addColumn(ATTR_PARTICIPANT_ID, PType.STRING);
-        addColumn(ATTR_EXPERIMNT_ID, PType.STRING);
         addColumn(ATTR_BLOCK_ID, PType.STRING);
         addColumn(ATTR_TRIAL_ID, PType.STRING);
         addColumn(ATTR_TRIAL_TIMESTAMP, PType.TIMESTAMP);

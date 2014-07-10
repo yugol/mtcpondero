@@ -74,7 +74,8 @@ public class TrialRecord extends PRow {
     }
 
     public void setResponseTimestamp(final long responseTimestamp) throws Exception {
-        set(Records.ATTR_RESPONSE_TIME, responseTimestamp - (Long) get(Records.ATTR_TRIAL_TIMESTAMP));
+        final double delta = responseTimestamp - (Long) get(Records.ATTR_TRIAL_TIMESTAMP);
+        set(Records.ATTR_RESPONSE_TIME, delta / 1000);
     }
 
     public void setTrialId(final String value) throws Exception {
