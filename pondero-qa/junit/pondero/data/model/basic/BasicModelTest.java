@@ -4,7 +4,7 @@ import org.junit.Test;
 import pondero.data.model.basic.BasicModel;
 import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.Participants;
-import pondero.data.model.basic.Records;
+import pondero.data.model.basic.TestRecords;
 import pondero.data.model.basic.TrialRecord;
 
 public class BasicModelTest {
@@ -22,7 +22,7 @@ public class BasicModelTest {
         }
         System.out.println(ps);
 
-        final Records rs = wb.getRecords("IC");
+        final TestRecords rs = wb.getRecords("IC");
         for (int i = 0; i < 10; ++i) {
             final TrialRecord tr = rs.addRow();
             tr.randomize();

@@ -9,7 +9,7 @@ import pondero.ui.Pondero;
 import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
-public class SaveDocumentAction extends PonderoAction {
+public class SaveDocumentAction extends PonderableAction {
 
     public SaveDocumentAction(final Ponderable app) {
         super(app);

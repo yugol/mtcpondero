@@ -4,7 +4,7 @@ import pondero.data.model.PModel;
 import pondero.data.model.PSheet;
 import pondero.data.model.PType;
 
-public class Records extends PSheet {
+public class TestRecords extends PSheet {
 
     public static final String ATTR_PARTICIPANT_SURNAME = "PART_SURNAME";
     public static final String ATTR_PARTICIPANT_NAME    = "PART_NAME";
@@ -17,7 +17,7 @@ public class Records extends PSheet {
     public static final String ATTR_RESPONSE_TIME       = "RESPONSE_TIME";
     public static final String ATTR_RESPONSE_CORRECT    = "RESPONSE_CORRECT";
 
-    Records(final PModel model, final String name) throws Exception {
+    TestRecords(final PModel model, final String name) throws Exception {
         super(model, name);
         addColumn(ATTR_EXPERIMNT_ID, PType.STRING);
         addColumn(ATTR_PARTICIPANT_ID, PType.STRING);

@@ -13,7 +13,7 @@ import pondero.util.FileUtil;
 import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
-public class QuitAction extends PonderoAction {
+public class QuitAction extends PonderableAction {
 
     public QuitAction(final Ponderable app) {
         super(app);

@@ -6,6 +6,8 @@ import pondero.data.model.PType;
 
 public class Participants extends PSheet {
 
+    public static final String HASH             = "#";
+
     public static final String NAME             = "PARTICIPANTS";
 
     public static final String ATTR_ID          = "ID";
@@ -34,7 +36,11 @@ public class Participants extends PSheet {
         int maxIdx = 100;
         for (int rowIdx = 0; rowIdx < getRowCount(); ++rowIdx) {
             try {
-                final int id = Integer.parseInt((String) get(rowIdx, ATTR_ID));
+                String idStr = getRow(rowIdx).getString(ATTR_ID);
+                if (idStr.startsWith(HASH)) {
+                    idStr = idStr.substring(1);
+                }
+                final int id = Integer.parseInt(idStr);
                 if (id > maxIdx) {
                     maxIdx = id;
                 }
@@ -42,7 +48,7 @@ public class Participants extends PSheet {
                 // ignore: if cell content is not a number then no number will duplicate it
             }
         }
-        return String.valueOf(maxIdx + 1);
+        return HASH + String.valueOf(maxIdx + 1);
     }
 
     @Override

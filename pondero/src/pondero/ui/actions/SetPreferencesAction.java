@@ -8,7 +8,7 @@ import pondero.ui.Pondero;
 import pondero.ui.preferences.PreferencesDialog;
 
 @SuppressWarnings("serial")
-public class SetPreferencesAction extends PonderoAction {
+public class SetPreferencesAction extends PonderableAction {
 
     public SetPreferencesAction(final Ponderable app) {
         super(app);

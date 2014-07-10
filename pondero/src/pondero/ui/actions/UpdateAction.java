@@ -8,7 +8,7 @@ import pondero.ui.Pondero;
 import pondero.ui.update.UpdateDialog;
 
 @SuppressWarnings("serial")
-public class UpdateAction extends PonderoAction {
+public class UpdateAction extends PonderableAction {
 
     public UpdateAction(final Ponderable app) {
         super(app);
