@@ -3,7 +3,7 @@ package pondero.ui.actions;
 import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
-import pondero.Globals;
+import pondero.Context;
 import pondero.L10n;
 import pondero.model.Workbook;
 import pondero.model.drivers.excel.ExcelFileFilter;
@@ -22,7 +22,7 @@ public class SaveAsDocumentAction extends PonderoAction {
     public void actionPerformed(final ActionEvent evt) {
         final JFileChooser dialog = new JFileChooser(".");
         dialog.setDialogTitle(L10n.getString("lbl.save-as-workbook"));
-        dialog.setCurrentDirectory(Globals.getFolderResults());
+        dialog.setCurrentDirectory(Context.getFolderResults());
         dialog.setFileFilter(new ExcelFileFilter());
         if (JFileChooser.APPROVE_OPTION == dialog.showSaveDialog(getMainFrame())) {
             try {

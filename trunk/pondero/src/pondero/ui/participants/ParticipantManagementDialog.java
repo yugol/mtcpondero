@@ -36,7 +36,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import pondero.Globals;
+import pondero.Context;
 import pondero.L10n;
 import pondero.model.domains.Education;
 import pondero.model.domains.Gender;
@@ -124,7 +124,7 @@ public class ParticipantManagementDialog extends JDialog {
         setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantManagementDialog.class.getResource("/com/famfamfam/silk/group.png")));
 
         setTitle(L10n.getString("lbl.manage-participants"));
-        setBounds(100, 100, (int) (400 * Globals.getUiFontScaleFactor()), (int) (400 * Globals.getUiFontScaleFactor()));
+        setBounds(100, 100, (int) (400 * Context.getUiFontScaleFactor()), (int) (400 * Context.getUiFontScaleFactor()));
 
         final JPanel background = new JPanel();
         background.setBorder(new EmptyBorder(15, 15, 15, 15));
@@ -262,7 +262,7 @@ public class ParticipantManagementDialog extends JDialog {
 
         valDob = new JDateChooser();
         valDob.setVisible(false);
-        valDob.setLocale(Globals.getLocale());
+        valDob.setLocale(Context.getLocale());
         final GridBagConstraints gbc_valDob = new GridBagConstraints();
         gbc_valDob.anchor = GridBagConstraints.WEST;
         gbc_valDob.insets = new Insets(0, 0, 5, 0);
@@ -449,7 +449,7 @@ public class ParticipantManagementDialog extends JDialog {
         }
     }
 
-    public void getParticipant(final Participant participant) {
+    public void getParticipant(final Participant participant) throws Exception {
         participant.setId(valId.getText());
         participant.setSurname(valSurname.getText());
         participant.setName(valName.getText());
@@ -460,7 +460,7 @@ public class ParticipantManagementDialog extends JDialog {
         participant.setMileage((int) valMileage.getValue());
     }
 
-    public void setParticipant(final Object p) {
+    public void setParticipant(final Object p) throws Exception {
         if (p instanceof Participant) {
             final Participant participant = (Participant) p;
             trace("set participant: ", participant.getId());

@@ -17,7 +17,7 @@ public class Records extends PSheet {
     public static final String ATTR_RESPONSE_TIME       = "RESPONSE_TIME";
     public static final String ATTR_RESPONSE_CORRECT    = "RESPONSE_CORRECT";
 
-    Records(final PModel model, final String name) {
+    Records(final PModel model, final String name) throws Exception {
         super(model, name);
         addColumn(ATTR_PARTICIPANT_SURNAME, PType.STRING);
         addColumn(ATTR_PARTICIPANT_NAME, PType.STRING);
@@ -33,7 +33,7 @@ public class Records extends PSheet {
     }
 
     @Override
-    public TrialRecord addRow() {
+    public TrialRecord addRow() throws Exception {
         return (TrialRecord) addRow(new TrialRecord(this));
     }
 

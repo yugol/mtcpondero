@@ -3,33 +3,32 @@ package pondero.model;
 import static pondero.Logger.info;
 import java.io.File;
 import java.util.Collection;
-import pondero.Globals;
+import pondero.Context;
 import pondero.model.drivers.excel.ExcelFileFilter;
 import pondero.model.drivers.excel.templates.BasicTemplate;
 import pondero.model.foundation.basic.BasicModel;
 import pondero.model.foundation.basic.Participant;
 import pondero.model.foundation.basic.Participants;
 import pondero.model.foundation.basic.TrialRecord;
-import pondero.util.SystemUtil;
 
 public class BasicWorkbook implements Workbook {
 
     private BasicModel    model;
-    private BasicTemplate driver;
+    private BasicTemplate template;
 
     public BasicWorkbook(final File file) throws Exception {
-        driver = new BasicTemplate(file);
-        driver.open();
-        model = driver.fetchModel();
+        template = new BasicTemplate(file);
+        template.open();
+        model = template.fetchModel();
     }
 
     @Override
-    public Participant addParticipant() {
+    public Participant addParticipant() throws Exception {
         return model.getParticipants().addRow();
     }
 
     @Override
-    public TrialRecord addTrialRecord(final String testId) {
+    public TrialRecord addTrialRecord(final String testId) throws Exception {
         return model.getRecords(testId).addRow();
     }
 
@@ -40,21 +39,21 @@ public class BasicWorkbook implements Workbook {
 
     @Override
     public void close() throws Exception {
-        driver.close();
+        template.close();
     }
 
     @Override
-    public Participants getAllParticipants() {
+    public Participants getAllParticipants() throws Exception {
         return model.getParticipants();
     }
 
     @Override
-    public String getNextPariciantId() {
+    public String getNextPariciantId() throws Exception {
         return model.getParticipants().getNextPariciantId();
     }
 
     @Override
-    public int getParticipantCount() {
+    public int getParticipantCount() throws Exception {
         return model.getParticipants().getRowCount();
     }
 
@@ -69,27 +68,27 @@ public class BasicWorkbook implements Workbook {
     }
 
     @Override
-    public void removeRecords(final String testId, final Collection<TrialRecord> records) {
+    public void removeRecords(final String testId, final Collection<TrialRecord> records) throws Exception {
         model.getRecords(testId).removeRows(records);
     }
 
     @Override
     public void save() throws Exception {
-        driver.commitModel(model);
+        template.pushModel(model);
     }
 
     @Override
     public void saveAs(final File selectedFile) throws Exception {
-        driver.close();
-        driver = new BasicTemplate(selectedFile.getCanonicalPath());
-        driver.open();
-        driver.commitModel(model);
-        model = driver.fetchModel();
+        template.close();
+        template = new BasicTemplate(selectedFile.getCanonicalPath());
+        template.open();
+        template.pushModel(model);
+        model = template.fetchModel();
     }
 
     @Override
     public void view() throws Exception {
-        final File tempFolder = Globals.getFolderResultsTemp();
+        final File tempFolder = Context.getFolderResultsTemp();
         String fileName = model.getName();
         final int dotIndex = fileName.indexOf(".");
         if (dotIndex >= 0) {
@@ -101,13 +100,13 @@ public class BasicWorkbook implements Workbook {
 
         final BasicTemplate viewDriver = new BasicTemplate(tempFile);
         viewDriver.open();
-        viewDriver.commitModel(model);
+        viewDriver.pushModel(model);
         viewDriver.close();
 
         String[] cmd = null;
-        if (SystemUtil.isWindows()) {
+        if (Context.isWindows()) {
             cmd = new String[] { "cmd.exe", "/c", tempFile.getCanonicalPath() };
-        } else if (SystemUtil.isMacOSX()) {
+        } else if (Context.isMacOSX()) {
             cmd = new String[] { "open", tempFile.getCanonicalPath() };
         } else {
             throw new UnsupportedOperationException("Your OS is not supported for view");

@@ -17,7 +17,7 @@ public class Participants extends PSheet {
     public static final String ATTR_DRIVING_AGE = "DRIVING_AGE";
     public static final String ATTR_MILEAGE     = "MILEAGE";
 
-    Participants(final PModel model) {
+    Participants(final PModel model) throws Exception {
         super(model, NAME);
         addColumn(ATTR_ID, PType.STRING);
         addColumn(ATTR_SURNAME, PType.STRING);
@@ -46,7 +46,7 @@ public class Participants extends PSheet {
     }
 
     @Override
-    public Participant addRow() {
+    public Participant addRow() throws Exception {
         return (Participant) addRow(new Participant(this));
     }
 

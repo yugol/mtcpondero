@@ -4,10 +4,10 @@ import pondero.engine.test.responses.Response;
 
 public interface IsController {
 
-    public void doBegin();
+    public void doBegin() throws Exception;
 
-    public void doEnd();
+    public void doEnd() throws Exception;
 
-    public void doStep(Response input);
+    public void doStep(Response input) throws Exception;
 
 }

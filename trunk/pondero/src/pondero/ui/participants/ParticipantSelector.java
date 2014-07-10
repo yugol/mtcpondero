@@ -18,7 +18,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumnModel;
-import pondero.Globals;
+import pondero.Context;
 import pondero.L10n;
 import pondero.model.Workbook;
 import pondero.model.foundation.basic.Participant;
@@ -101,7 +101,7 @@ public class ParticipantSelector extends JComponent {
         add(scrollPane, gbc_scrollPane);
 
         tblParticipants = new JTable();
-        tblParticipants.setRowHeight((int) (18 * Globals.getUiFontScaleFactor()));
+        tblParticipants.setRowHeight((int) (18 * Context.getUiFontScaleFactor()));
         tblParticipants.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -181,7 +181,7 @@ public class ParticipantSelector extends JComponent {
     }
 
     private void updateParticipants() {
-        final int idColWidth = (int) (60 * Globals.getUiFontScaleFactor());
+        final int idColWidth = (int) (60 * Context.getUiFontScaleFactor());
         final List<Participant> data = select(textPattern.getText());
         final ParticipantsTableModel dataModel = new ParticipantsTableModel(data);
         tblParticipants.setModel(dataModel);

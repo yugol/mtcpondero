@@ -17,14 +17,14 @@ public interface Ponderable {
 
     JFrame getTestFrame();
 
-    void setCurrentParticipant(Participant participant);
+    void setCurrentParticipant(Participant participant) throws Exception;
 
-    void setCurrentState(PonderoState state);
+    void setCurrentState(PonderoState state) throws Exception;
 
-    void setCurrentTask(Test task);
+    void setCurrentTask(Test task) throws Exception;
 
     void setCurrentWorkbook(Workbook workbook);
 
-    void updateCurrentState();
+    void updateCurrentState() throws Exception;
 
 }

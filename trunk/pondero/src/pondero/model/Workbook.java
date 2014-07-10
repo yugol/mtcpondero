@@ -8,25 +8,25 @@ import pondero.model.foundation.basic.TrialRecord;
 
 public interface Workbook {
 
-    Participant addParticipant();
+    Participant addParticipant() throws Exception;
 
-    TrialRecord addTrialRecord(String experimentId);
+    TrialRecord addTrialRecord(String experimentId) throws Exception;
 
     void addWorkbookListener(ModelListener listener);
 
     void close() throws Exception;
 
-    Participants getAllParticipants();
+    Participants getAllParticipants() throws Exception;
 
-    String getNextPariciantId();
+    String getNextPariciantId() throws Exception;
 
-    int getParticipantCount();
+    int getParticipantCount() throws Exception;
 
     String getName();
 
     boolean isDirty();
 
-    void removeRecords(String testId, Collection<TrialRecord> records);
+    void removeRecords(String testId, Collection<TrialRecord> records) throws Exception;
 
     void save() throws Exception;
 

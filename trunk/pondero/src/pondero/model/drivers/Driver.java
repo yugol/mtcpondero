@@ -10,20 +10,20 @@ public abstract class Driver {
         this.connectionString = connectionString;
     }
 
-    public abstract void close() throws Exception;
-
     public String getConnectionString() {
         return connectionString;
     }
 
-    public abstract PModel fetchModel() throws Exception;
-
-    public abstract void open() throws Exception;
-
-    public abstract void commitModel(PModel model) throws Exception;
-
     protected void setConnectionString(final String connectionString) {
         this.connectionString = connectionString;
     }
+
+    public abstract void open() throws Exception;
+
+    public abstract PModel fetchModel() throws Exception;
+
+    public abstract void pushModel(PModel model) throws Exception;
+
+    public abstract void close() throws Exception;
 
 }

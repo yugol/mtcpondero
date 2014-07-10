@@ -54,13 +54,13 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
     }
 
     @Override
-    public void doEnd() {
+    public void doEnd() throws Exception {
         doStatus = null;
         test.popController();
     }
 
     @Override
-    public void doStep(final Response input) {
+    public void doStep(final Response input) throws Exception {
         if (doStatus != null) {
             if (preinstructions != null) {
                 if (input != null && input instanceof PrevNextResponse) {

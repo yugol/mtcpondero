@@ -36,14 +36,14 @@ public abstract class Test extends TestRenderer implements IsController {
         }
     }
 
-    public TrialRecord createRecord(final String runId) {
+    public TrialRecord createRecord(final String runId) throws Exception {
         final TrialRecord record = workbook.addTrialRecord(getTestId());
         record.setExperimentId(runId);
         return record;
     }
 
     @Override
-    public void doBegin() {
+    public void doBegin() throws Exception {
         monitor = new TaskMonitor(String.valueOf(System.currentTimeMillis()));
         monitor.markStartTime();
         launcher.onTaskStarted(this);
@@ -64,7 +64,7 @@ public abstract class Test extends TestRenderer implements IsController {
     }
 
     @Override
-    public void doStep(final Response input) {
+    public void doStep(final Response input) throws Exception {
         final IsController controller = peekController();
         if (controller == null) {
             doEnd();
@@ -93,7 +93,7 @@ public abstract class Test extends TestRenderer implements IsController {
         launcher.onTaskEnded(this, monitor);
     }
 
-    public void openRecord(final Trial trial) {
+    public void openRecord(final Trial trial) throws Exception {
         record = createRecord(monitor.getRunId());
         if (participant != null) {
             record.setParticipant(participant);
@@ -114,7 +114,7 @@ public abstract class Test extends TestRenderer implements IsController {
         return controller;
     }
 
-    public void popController() {
+    public void popController() throws Exception {
         final IsController controller = controllerStack.pop();
         if (controller instanceof Block) {
             currentBlock = null;
@@ -135,21 +135,21 @@ public abstract class Test extends TestRenderer implements IsController {
         }
     }
 
-    public void recordCorrectResponse(final long time) {
+    public void recordCorrectResponse(final long time) throws Exception {
         if (record != null) {
             record.setResponseTimestamp(time);
             record.setResponseCorrect(true);
         }
     }
 
-    public void recordErrorResponse(final long time) {
+    public void recordErrorResponse(final long time) throws Exception {
         if (record != null) {
             record.setResponseTimestamp(time);
             record.setResponseCorrect(false);
         }
     }
 
-    public void recordResponse(final String keyResponse) {
+    public void recordResponse(final String keyResponse) throws Exception {
         if (record != null) {
             record.setResponse(keyResponse);
         }

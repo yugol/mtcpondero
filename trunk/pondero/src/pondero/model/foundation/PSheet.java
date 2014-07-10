@@ -21,7 +21,7 @@ public abstract class PSheet {
         this.name = name;
     }
 
-    public PColumn addColumn(final PColumn column) {
+    public PColumn addColumn(final PColumn column) throws Exception {
         if (!locked) {
             name2index = null;
             columns.add(column);
@@ -31,11 +31,11 @@ public abstract class PSheet {
         throw new IndexOutOfBoundsException("sheet is locked for adding/removing columns");
     }
 
-    public PColumn addColumn(final String name, final PType type) {
+    public PColumn addColumn(final String name, final PType type) throws Exception {
         return addColumn(new PColumn(this, columns.size(), name, type));
     }
 
-    public abstract PRow addRow();
+    public abstract PRow addRow() throws Exception;
 
     public Object get(final int rowIdx, final int colIdx) {
         return rows.get(rowIdx).get(colIdx);
@@ -91,11 +91,11 @@ public abstract class PSheet {
         return name2index.get(name);
     }
 
-    public void set(final int rowIdx, final int colIdx, final Object value) {
+    public void set(final int rowIdx, final int colIdx, final Object value) throws Exception {
         rows.get(rowIdx).set(colIdx, value);
     }
 
-    public void set(final int rowIdx, final String colId, final Object value) {
+    public void set(final int rowIdx, final String colId, final Object value) throws Exception {
         set(rowIdx, index(colId), value);
     }
 
@@ -116,9 +116,9 @@ public abstract class PSheet {
             data[rowIdx] = new String[getColumnCount()];
             for (int colIdx = 0; colIdx < getColumnCount(); ++colIdx) {
                 final Object value = get(rowIdx, colIdx);
-                String valueString = "-";
+                String valueString = "";
                 if (value != null) {
-                    valueString = StringUtil.toString(value, getColumn(colIdx).getType());
+                    valueString = StringUtil.toConsoleString(value, getColumn(colIdx).getType());
                 }
                 data[rowIdx][colIdx] = valueString;
                 if (valueString.length() > columnLenghts[colIdx + 1]) {
@@ -226,7 +226,7 @@ public abstract class PSheet {
         return txt.toString();
     }
 
-    protected PRow addRow(final PRow row) {
+    protected PRow addRow(final PRow row) throws Exception {
         lock();
         rows.add(row);
         setDirty(true);
@@ -237,7 +237,7 @@ public abstract class PSheet {
         locked = true;
     }
 
-    void setDirty(final boolean flag) {
+    void setDirty(final boolean flag) throws Exception {
         model.setDirty(flag);
     }
 

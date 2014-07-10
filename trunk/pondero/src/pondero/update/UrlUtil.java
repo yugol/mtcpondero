@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import pondero.Globals;
+import pondero.Context;
 
 public class UrlUtil {
 
     public static InputStream openCloudStream(String urlString) throws IOException {
-        if (urlString.startsWith(Globals.PURL_HOME)) {
+        if (urlString.startsWith(Context.PURL_HOME)) {
             urlString = purlToUrl(urlString);
         }
         return openUrlStream(urlString);

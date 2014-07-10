@@ -6,14 +6,20 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.Date;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFCreationHelper;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import pondero.model.drivers.Driver;
 import pondero.model.foundation.PRow;
 import pondero.model.foundation.PSheet;
 import pondero.model.foundation.PType;
+import pondero.util.BooleanUtil;
 import pondero.util.DateUtil;
 import pondero.util.NumberUtil;
 import pondero.util.StringUtil;
@@ -25,19 +31,18 @@ public abstract class ExcelDriver extends Driver {
     private File         dataFile;
     private XSSFWorkbook workbook;
 
+    private CellStyle    evenDateStyle;
+    private CellStyle    evenStyle;
+    private CellStyle    headerStyle;
+    private CellStyle    oddDateStyle;
+    private CellStyle    oddStyle;
+
+    public ExcelDriver(final File dataFile) throws Exception {
+        super(dataFile.getCanonicalPath());
+    }
+
     public ExcelDriver(final String connectionString) {
         super(connectionString);
-    }
-
-    @Override
-    public void close() throws Exception {
-        info("closing data file: ", getConnectionString());
-        workbook = null;
-        dataFile = null;
-    }
-
-    public XSSFWorkbook getWorkbook() {
-        return workbook;
     }
 
     @Override
@@ -58,28 +63,50 @@ public abstract class ExcelDriver extends Driver {
             workbook = new XSSFWorkbook();
         }
         setConnectionString(dataFile.getCanonicalPath());
+
+        final Font headerFont = getWorkbook().createFont();
+        headerFont.setColor(IndexedColors.WHITE.getIndex());
+        final XSSFCreationHelper createHelper = getWorkbook().getCreationHelper();
+
+        headerStyle = getWorkbook().createCellStyle();
+        headerStyle.setWrapText(false);
+        headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+        headerStyle.setFillForegroundColor(IndexedColors.DARK_RED.getIndex());
+        headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        headerStyle.setFont(headerFont);
+
+        oddStyle = getWorkbook().createCellStyle();
+        oddStyle.setBorderRight(CellStyle.BORDER_THIN);
+        oddStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+        oddStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
+        evenStyle = getWorkbook().createCellStyle();
+        evenStyle.setBorderRight(CellStyle.BORDER_THIN);
+        evenStyle.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+        evenStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
+        oddDateStyle = getWorkbook().createCellStyle();
+        oddDateStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd"));
+        oddDateStyle.setBorderRight(CellStyle.BORDER_THIN);
+        oddDateStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+        oddDateStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
+        evenDateStyle = getWorkbook().createCellStyle();
+        evenDateStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd"));
+        evenDateStyle.setBorderRight(CellStyle.BORDER_THIN);
+        evenDateStyle.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+        evenDateStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
     }
 
-    protected void save() throws Exception {
-        info("saving data file: ", getConnectionString());
-        try (FileOutputStream fileOut = new FileOutputStream(dataFile)) {
-            workbook.write(fileOut);
-        }
+    @Override
+    public void close() throws Exception {
+        info("closing data file: ", getConnectionString());
+        workbook = null;
+        dataFile = null;
     }
 
-    protected Object getCellValue(final Cell cell, final PType pType) {
-        final int xType = cell.getCellType();
-        if (PType.STRING == pType) {
-            if (Cell.CELL_TYPE_STRING == xType) { return StringUtil.toString(cell.getStringCellValue()); }
-        } else if (PType.DECIMAL == pType) {
-            if (Cell.CELL_TYPE_NUMERIC == xType) { return NumberUtil.toDecimal(cell.getNumericCellValue()); }
-            if (Cell.CELL_TYPE_STRING == xType) { return NumberUtil.toDecimal(cell.getStringCellValue()); }
-        } else if (PType.DATE == pType || PType.TIME == pType || PType.TIMESTAMP == pType) {
-            if (Cell.CELL_TYPE_NUMERIC == xType) { return DateUtil.toMillis(cell.getNumericCellValue()); }
-            if (Cell.CELL_TYPE_STRING == xType) { return DateUtil.toMillis(cell.getStringCellValue()); }
-        }
-        warning("getCellValue could not match ", pType, " with ", xType);
-        return null;
+    protected XSSFWorkbook getWorkbook() {
+        return workbook;
     }
 
     protected Sheet getSheet(final String name) {
@@ -88,6 +115,13 @@ public abstract class ExcelDriver extends Driver {
             sheet = workbook.createSheet(name);
         }
         return sheet;
+    }
+
+    protected void saveWorkbook() throws Exception {
+        info("saving data file: ", getConnectionString());
+        try (FileOutputStream fileOut = new FileOutputStream(dataFile)) {
+            workbook.write(fileOut);
+        }
     }
 
     protected boolean isHeadRow(final Row row, final PSheet pSheet) {
@@ -106,7 +140,7 @@ public abstract class ExcelDriver extends Driver {
         return false;
     }
 
-    protected void readSheet(final PSheet pSheet, final Sheet xSheet) {
+    protected void readSheet(final PSheet pSheet, final Sheet xSheet) throws Exception {
         Row headRow = null;
         PRow pRow = null;
         for (int rowIdx = xSheet.getFirstRowNum(); rowIdx <= xSheet.getLastRowNum(); ++rowIdx) {
@@ -138,6 +172,90 @@ public abstract class ExcelDriver extends Driver {
                 }
             }
             pRow = null;
+        }
+    }
+
+    protected void commitSheet(final PSheet pSheet) {
+        final int idx = getWorkbook().getSheetIndex(pSheet.getName());
+        if (idx >= 0) {
+            getWorkbook().removeSheetAt(idx);
+        }
+        final Sheet xSheet = getWorkbook().createSheet(pSheet.getName());
+        for (final Row xRow : xSheet) {
+            xSheet.removeRow(xRow);
+        }
+        Row xRow = xSheet.createRow(0);
+        for (int colIdx = 0; colIdx < pSheet.getColumnCount(); ++colIdx) {
+            final Cell cell = xRow.createCell(colIdx);
+            cell.setCellType(Cell.CELL_TYPE_STRING);
+            cell.setCellValue(pSheet.getColumn(colIdx).getName());
+            cell.setCellStyle(headerStyle);
+        }
+        for (int rowIdx = 0; rowIdx < pSheet.getRowCount(); ++rowIdx) {
+            xRow = xSheet.createRow(1 + rowIdx);
+            for (int colIdx = 0; colIdx < pSheet.getColumnCount(); ++colIdx) {
+                final PType pType = pSheet.getColumn(colIdx).getType();
+                final Cell cell = xRow.createCell(colIdx);
+                setCellValue(cell, pSheet.get(rowIdx, colIdx), pType);
+                if (PType.DATE == pType) {
+                    cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? evenDateStyle : oddDateStyle);
+                } else {
+                    cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? evenStyle : oddStyle);
+                }
+            }
+        }
+        if (pSheet.getRowCount() <= 1000) {
+            for (int colIdx = 0; colIdx < pSheet.getColumnCount(); ++colIdx) {
+                xSheet.autoSizeColumn(colIdx);
+            }
+        }
+    }
+
+    protected Object getCellValue(final Cell cell, final PType pType) throws Exception {
+        final int xType = cell.getCellType();
+        if (PType.STRING == pType) {
+            if (Cell.CELL_TYPE_STRING == xType) { return StringUtil.toCellString(cell.getStringCellValue()); }
+        } else if (PType.BOOLEAN == pType) {
+            if (Cell.CELL_TYPE_STRING == xType) { return BooleanUtil.toBoolean(cell.getStringCellValue()); }
+            if (Cell.CELL_TYPE_NUMERIC == xType) { return BooleanUtil.toBoolean(cell.getNumericCellValue()); }
+        } else if (PType.DECIMAL == pType) {
+            if (Cell.CELL_TYPE_NUMERIC == xType) { return NumberUtil.toDecimal(cell.getNumericCellValue()); }
+            if (Cell.CELL_TYPE_STRING == xType) { return NumberUtil.toDecimal(cell.getStringCellValue()); }
+        } else if (PType.DATE == pType) {
+            if (Cell.CELL_TYPE_NUMERIC == xType) { return DateUtil.toDateMillis(cell.getNumericCellValue()); }
+            if (Cell.CELL_TYPE_STRING == xType) { return DateUtil.toDateMillis(cell.getStringCellValue()); }
+        } else if (PType.TIME == pType) {
+            if (Cell.CELL_TYPE_NUMERIC == xType) { return DateUtil.toTimeMillis(cell.getNumericCellValue()); }
+            if (Cell.CELL_TYPE_STRING == xType) { return DateUtil.toTimeMillis(cell.getStringCellValue()); }
+        } else if (PType.TIMESTAMP == pType) {
+            if (Cell.CELL_TYPE_NUMERIC == xType) { return DateUtil.toTimestampMillis(cell.getNumericCellValue()); }
+            if (Cell.CELL_TYPE_STRING == xType) { return DateUtil.toTimestampMillis(cell.getStringCellValue()); }
+        }
+        warning("getCellValue could not match ", pType, " with ", xType);
+        return null;
+    }
+
+    protected void setCellValue(final Cell cell, final Object value, final PType pType) {
+        if (value != null) {
+            switch (pType) {
+                case STRING:
+                    cell.setCellType(Cell.CELL_TYPE_STRING);
+                    cell.setCellValue((String) value);
+                    break;
+                case DECIMAL:
+                    cell.setCellValue(((Number) value).doubleValue());
+                    break;
+                case DATE:
+                case TIME:
+                case TIMESTAMP:
+                    cell.setCellValue(new Date((Long) value));
+                    break;
+                case BOOLEAN:
+                    cell.setCellValue((Boolean) value);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

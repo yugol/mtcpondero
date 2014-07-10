@@ -38,7 +38,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import pondero.Globals;
+import pondero.Context;
 import pondero.L10n;
 import pondero.engine.test.Test;
 import pondero.model.ModelListener;
@@ -52,14 +52,13 @@ import pondero.ui.actions.HomePageAction;
 import pondero.ui.actions.ModifyParticipantAction;
 import pondero.ui.actions.OpenDocumentAction;
 import pondero.ui.actions.QuitAction;
+import pondero.ui.actions.RunTaskAction;
 import pondero.ui.actions.SaveAsDocumentAction;
 import pondero.ui.actions.SaveDocumentAction;
 import pondero.ui.actions.SetPreferencesAction;
 import pondero.ui.actions.StartDocumentAction;
-import pondero.ui.actions.RunTaskAction;
 import pondero.ui.actions.UpdateAction;
 import pondero.util.MsgUtil;
-import pondero.util.SystemUtil;
 import pondero.util.UiUtil;
 
 public class Pondero implements Ponderable, ModelListener {
@@ -84,13 +83,11 @@ public class Pondero implements Ponderable, ModelListener {
     }
 
     public static Pondero start(final String[] args) throws Exception {
-        // initialize context
-        Globals.loadPreferences(args.length >= 1 ? args[0] : null);
-        SystemUtil.configure();
+        Context.init(args.length >= 1 ? args[0] : null);
         REGISTERED_TESTS.addAll(TestLoader.loadTests());
         UiUtil.getAvailableLafs();
         UiUtil.setLaf();
-        UiUtil.scaleUi(Globals.getUiFontScaleFactor());
+        UiUtil.scaleUi(Context.getUiFontScaleFactor());
 
         // start application
         final Pondero app = new Pondero();
@@ -101,7 +98,7 @@ public class Pondero implements Ponderable, ModelListener {
                 try {
                     app.mainFrame.setLocationRelativeTo(null);
                     app.mainFrame.setVisible(true);
-                    app.setCurrentWorkbook(WorkbookFactory.openWorkbook(Globals.getLastWorkbookFile()));
+                    app.setCurrentWorkbook(WorkbookFactory.openWorkbook(Context.getLastWorkbookFile()));
                 } catch (final Exception e) {
                     error(e);
                     MsgUtil.showExceptionMessage(null, e);
@@ -156,11 +153,13 @@ public class Pondero implements Ponderable, ModelListener {
 
     /**
      * Create the application.
+     *
+     * @throws Exception
      */
-    public Pondero() {
+    public Pondero() throws Exception {
         initialize();
         mainFrame.setMinimumSize(new Dimension(640, 480));
-        mainFrame.setSize((int) (640 * Globals.getUiFontScaleFactor()), (int) (480 * Globals.getUiFontScaleFactor()));
+        mainFrame.setSize((int) (640 * Context.getUiFontScaleFactor()), (int) (480 * Context.getUiFontScaleFactor()));
         configureNavigationButton(btnNext);
         configureNavigationButton(btnBack);
         configureNavigationButton(btnStart);
@@ -196,18 +195,18 @@ public class Pondero implements Ponderable, ModelListener {
     }
 
     @Override
-    public void onDirtyFlagChanged(final boolean dirty) {
+    public void onDirtyFlagChanged(final boolean dirty) throws Exception {
         updateCurrentState();
     }
 
     @Override
-    public void setCurrentParticipant(final Participant participant) {
+    public void setCurrentParticipant(final Participant participant) throws Exception {
         currentParticipant = participant;
         updateCurrentState();
     }
 
     @Override
-    public void setCurrentState(final PonderoState state) {
+    public void setCurrentState(final PonderoState state) throws Exception {
         mntmView.setEnabled(currentWorkbook != null);
         mntmSave.setEnabled(currentWorkbook != null);
         mntmSaveas.setEnabled(currentWorkbook != null);
@@ -227,24 +226,24 @@ public class Pondero implements Ponderable, ModelListener {
                 btnSelectParticipant.setEnabled(currentWorkbook != null && currentWorkbook.getParticipantCount() > 0);
                 btnAddParticipant.setEnabled(currentWorkbook != null);
                 btnModifyParticipant.setEnabled(currentWorkbook != null && currentParticipant != null);
-                btnNext.setEnabled(currentWorkbook != null && (currentParticipant != null || Globals.isParticipantOptional()));
+                btnNext.setEnabled(currentWorkbook != null && (currentParticipant != null || Context.isParticipantOptional()));
             } else if (PonderoState.TEST_SELECTION == state) {
                 final CardLayout cl = (CardLayout) stage.getLayout();
                 cl.show(stage, "pnlTestSelection");
                 lblPageTitle.setText(L10n.getString("lbl.CHOOSE-TEST"));
                 lblPageHint.setText(L10n.getString("msg.CHOOSE-TEST"));
-                btnStart.setEnabled(currentWorkbook != null && (currentParticipant != null || Globals.isParticipantOptional()) && currentTask != null);
+                btnStart.setEnabled(currentWorkbook != null && (currentParticipant != null || Context.isParticipantOptional()) && currentTask != null);
             }
             statusBar.setMessage(StatusBar.DEFAULT,
                     L10n.getString("lbl.data-register")
-                    + ": " + currentWorkbook.getName()
-                    + (currentWorkbook.isDirty() ? " *" : ""));
+                            + ": " + currentWorkbook.getName()
+                            + (currentWorkbook.isDirty() ? " *" : ""));
         }
         currentState = state;
     }
 
     @Override
-    public void setCurrentTask(final Test task) {
+    public void setCurrentTask(final Test task) throws Exception {
         currentTask = task;
         updateCurrentState();
     }
@@ -288,7 +287,7 @@ public class Pondero implements Ponderable, ModelListener {
     }
 
     @Override
-    public void updateCurrentState() {
+    public void updateCurrentState() throws Exception {
         setCurrentState(currentState);
     }
 
@@ -465,8 +464,12 @@ public class Pondero implements Ponderable, ModelListener {
         btnNext.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(final ActionEvent arg0) {
-                setCurrentState(PonderoState.TEST_SELECTION);
+            public void actionPerformed(final ActionEvent evt) {
+                try {
+                    setCurrentState(PonderoState.TEST_SELECTION);
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
 
         });
@@ -502,10 +505,14 @@ public class Pondero implements Ponderable, ModelListener {
         lstTests.addListSelectionListener(new ListSelectionListener() {
 
             @Override
-            public void valueChanged(final ListSelectionEvent arg0) {
+            public void valueChanged(final ListSelectionEvent evt) {
                 final Test newTask = lstTests.getSelectedValue();
                 if (newTask != currentTask) {
-                    setCurrentTask(newTask);
+                    try {
+                        setCurrentTask(newTask);
+                    } catch (final Exception e) {
+                        error(e);
+                    }
                 }
             }
 
@@ -523,8 +530,12 @@ public class Pondero implements Ponderable, ModelListener {
         btnBack.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                setCurrentState(PonderoState.PARTICIPANT_SELECTION);
+            public void actionPerformed(final ActionEvent evt) {
+                try {
+                    setCurrentState(PonderoState.PARTICIPANT_SELECTION);
+                } catch (final Exception e) {
+                    error(e);
+                }
             }
 
         });

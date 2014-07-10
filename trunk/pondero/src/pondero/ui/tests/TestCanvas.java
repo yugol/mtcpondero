@@ -1,5 +1,6 @@
 package pondero.ui.tests;
 
+import static pondero.Logger.error;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyAdapter;
@@ -19,9 +20,13 @@ public class TestCanvas extends TestVisualComponent {
         addKeyListener(new KeyAdapter() {
 
             @Override
-            public void keyPressed(final KeyEvent e) {
+            public void keyPressed(final KeyEvent evt) {
                 if (test != null) {
-                    test.doStep(new KeyPressResponse(e));
+                    try {
+                        test.doStep(new KeyPressResponse(evt));
+                    } catch (final Exception e) {
+                        error(e);
+                    }
                 }
             }
 
@@ -30,9 +35,13 @@ public class TestCanvas extends TestVisualComponent {
         addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mouseClicked(final MouseEvent e) {
+            public void mouseClicked(final MouseEvent evt) {
                 if (test != null) {
-                    test.doStep(new MouseClickResponse(e));
+                    try {
+                        test.doStep(new MouseClickResponse(evt));
+                    } catch (final Exception e) {
+                        error(e);
+                    }
                 }
             }
 
