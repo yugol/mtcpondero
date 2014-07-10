@@ -14,8 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import pondero.engine.test.Test;
-import pondero.engine.test.responses.KeyPressResponse;
+import pondero.tests.test.Test;
+import pondero.tests.test.responses.KeyPressResponse;
 
 @SuppressWarnings("serial")
 public class TestLikertComponent extends TestVisualComponent {

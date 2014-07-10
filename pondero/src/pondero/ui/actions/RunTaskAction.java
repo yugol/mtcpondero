@@ -5,9 +5,9 @@ import static pondero.Logger.trace;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import pondero.L10n;
-import pondero.engine.test.Test;
-import pondero.engine.test.launch.TaskLauncher;
-import pondero.engine.test.launch.TaskMonitor;
+import pondero.tests.test.Test;
+import pondero.tests.test.launch.TaskLauncher;
+import pondero.tests.test.launch.TaskMonitor;
 import pondero.ui.Ponderable;
 import pondero.util.MsgUtil;
 

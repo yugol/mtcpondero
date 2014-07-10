@@ -4,7 +4,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import pondero.data.Workbook;
 import pondero.data.model.basic.Participant;
-import pondero.engine.test.Test;
+import pondero.tests.test.Test;
 import pondero.ui.Ponderable;
 
 @SuppressWarnings("serial")

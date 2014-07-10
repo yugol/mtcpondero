@@ -1,7 +1,7 @@
 package pondero.engine.staples;
 
 import org.junit.Test;
-import pondero.engine.staples.ItemSequence;
+import pondero.tests.staples.ItemSequence;
 
 public class ItemSequenceTest {
 
