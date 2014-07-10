@@ -4,6 +4,7 @@ import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import pondero.Context;
 import pondero.L10n;
 import pondero.model.Workbook;
 import pondero.ui.Ponderable;
@@ -41,7 +42,11 @@ public class QuitAction extends PonderoAction {
             }
             FileUtil.deleteTempFiles();
             getMainFrame().setVisible(false);
-            getMainFrame().dispose();
+            if (Context.isRunningFromIde()) {
+                getMainFrame().dispose();
+            } else {
+                System.exit(0);
+            }
         } catch (final Exception e) {
             error(e);
             MsgUtil.showExceptionMessage(getMainFrame(), e);
