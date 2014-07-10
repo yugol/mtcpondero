@@ -1,4 +1,4 @@
-package pondero.ui;
+package pondero.ui.status;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
