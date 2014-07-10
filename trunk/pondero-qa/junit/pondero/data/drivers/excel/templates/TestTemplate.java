@@ -2,9 +2,9 @@ package pondero.data.drivers.excel.templates;
 
 import java.io.File;
 import pondero.data.drivers.excel.ExcelDriver;
-import pondero.data.foundation.TestModel;
-import pondero.data.foundation.TestSheet;
 import pondero.data.model.PModel;
+import pondero.data.model.TestModel;
+import pondero.data.model.TestSheet;
 
 public class TestTemplate extends ExcelDriver {
 
