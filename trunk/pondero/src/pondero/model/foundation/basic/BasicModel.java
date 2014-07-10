@@ -20,9 +20,8 @@ public class BasicModel extends PModel {
     public Records getRecords(final String name) {
         Records records = (Records) getSheet(name);
         if (records == null) {
-            records = new Records(this, name);
+            records = (Records) addSheet(new Records(this, name));
         }
         return records;
     }
-
 }

@@ -10,9 +10,9 @@ import pondero.engine.test.launch.TaskMonitor;
 import pondero.ui.Ponderable;
 
 @SuppressWarnings("serial")
-public class StartTaskAction extends PonderoAction implements TaskLauncher {
+public class RunTaskAction extends PonderoAction implements TaskLauncher {
 
-    public StartTaskAction(final Ponderable app) {
+    public RunTaskAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.start"));
         putValue(SHORT_DESCRIPTION, L10n.getString("msg.start-test"));

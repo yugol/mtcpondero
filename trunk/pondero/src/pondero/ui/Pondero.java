@@ -56,7 +56,7 @@ import pondero.ui.actions.SaveAsDocumentAction;
 import pondero.ui.actions.SaveDocumentAction;
 import pondero.ui.actions.SetPreferencesAction;
 import pondero.ui.actions.StartDocumentAction;
-import pondero.ui.actions.StartTaskAction;
+import pondero.ui.actions.RunTaskAction;
 import pondero.ui.actions.UpdateAction;
 import pondero.util.MsgUtil;
 import pondero.util.SystemUtil;
@@ -131,7 +131,7 @@ public class Pondero implements Ponderable, ModelListener {
     private final Action            saveDocument            = new SaveDocumentAction(this);
     private final Action            setPreferencesAction    = new SetPreferencesAction(this);
     private final Action            startDocument           = new StartDocumentAction(this);
-    private final Action            startTaskAction         = new StartTaskAction(this);
+    private final Action            startTaskAction         = new RunTaskAction(this);
     private final Action            updateAction            = new UpdateAction(this);
 
     // Widgets

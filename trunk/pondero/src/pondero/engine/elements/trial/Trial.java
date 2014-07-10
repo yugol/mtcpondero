@@ -49,7 +49,7 @@ public class Trial extends Element implements HasFeedback, IsController {
         test.showScene();
         doStatus = new DoStatus();
         test.pushController(this);
-        test._recordOpen(this);
+        test.openRecord(this);
     }
 
     @Override
