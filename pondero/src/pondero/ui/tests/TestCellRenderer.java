@@ -1,4 +1,4 @@
-package pondero.ui;
+package pondero.ui.tests;
 
 import java.awt.Component;
 import java.awt.Font;

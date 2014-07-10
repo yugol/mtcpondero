@@ -58,6 +58,8 @@ import pondero.ui.actions.SaveDocumentAction;
 import pondero.ui.actions.SetPreferencesAction;
 import pondero.ui.actions.StartDocumentAction;
 import pondero.ui.actions.UpdateAction;
+import pondero.ui.status.StatusBar;
+import pondero.ui.tests.TestCellRenderer;
 import pondero.util.MsgUtil;
 import pondero.util.UiUtil;
 
