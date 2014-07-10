@@ -1,4 +1,4 @@
-package pondero.model.foundation;
+package pondero.data.foundation;
 
 import pondero.data.model.PModel;
 import pondero.data.model.PSheet;
