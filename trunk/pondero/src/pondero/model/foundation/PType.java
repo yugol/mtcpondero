@@ -8,6 +8,7 @@ public enum PType {
     BOOLEAN (Boolean.class),
     DATE (Long.class),
     DECIMAL (BigDecimal.class),
+    FORMULA (String.class),
     STRING (String.class),
     TIME (Long.class),
     TIMESTAMP (Long.class),

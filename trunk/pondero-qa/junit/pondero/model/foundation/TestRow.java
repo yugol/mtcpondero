@@ -27,6 +27,10 @@ public class TestRow extends PRow {
         return getDecimal(TestSheet.ATTR_DECIMAL);
     }
 
+    public String getFormula() {
+        return getString(TestSheet.ATTR_FORMULA);
+    }
+
     public String getString() {
         return getString(TestSheet.ATTR_STRING);
     }
@@ -49,6 +53,10 @@ public class TestRow extends PRow {
 
     public void setDecimal(final Object value) throws Exception {
         set(TestSheet.ATTR_DECIMAL, NumberUtil.toDecimal(value));
+    }
+
+    public void setFormula(final String value) throws Exception {
+        set(TestSheet.ATTR_FORMULA, value);
     }
 
     public void setString(final Object value) throws Exception {
