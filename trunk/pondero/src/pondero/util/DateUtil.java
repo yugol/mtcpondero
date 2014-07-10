@@ -72,9 +72,9 @@ public final class DateUtil {
 
     public static Calendar toCalendar(final Object value) throws Exception {
         if (value != null) {
-            Calendar cal = Calendar.getInstance();
+            final Calendar cal = Calendar.getInstance();
             if (value instanceof Calendar) {
-                cal = (Calendar) value;
+                cal.setTimeInMillis(((Calendar) value).getTimeInMillis());
             } else if (value instanceof String) {
                 final String str = (String) value;
                 if (str.length() == 10) {
@@ -143,9 +143,9 @@ public final class DateUtil {
     public static Long toTimeMillis(final Object value) throws Exception {
         final Calendar cal = toCalendar(value);
         if (cal != null) {
-            cal.set(Calendar.YEAR, 1);
-            cal.set(Calendar.MONTH, 0);
-            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.YEAR, 1900);
+            cal.set(Calendar.MONTH, Calendar.JANUARY);
+            cal.set(Calendar.DAY_OF_MONTH, 1);
             return cal.getTimeInMillis();
         }
         return null;
