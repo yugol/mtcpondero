@@ -18,7 +18,7 @@ public final class Logger {
     public static int          maxConsoleLevel = INFO;
     public static int          maxFileLevel    = TRACE;
 
-    private static final File  LOG_FILE         = new File(Globals.getFolderLogs(), buildLogFileName());
+    private static final File  LOG_FILE        = new File(Globals.getFolderLogs(), buildLogFileName());
     private static PrintStream logFileOut;
 
     public static void critical(final Object... obj) {
@@ -78,12 +78,12 @@ public final class Logger {
         return Math.max(maxConsoleLevel, maxFileLevel);
     }
 
-    private static void justPrintTheDamnThing(final PrintStream out, final String message, final Throwable t) {
+    private static void justPrintTheDamnThing(final PrintStream destination, final String message, final Throwable t) {
         if (t == null) {
-            out.println(message);
+            destination.println(message);
         } else {
-            out.print(message);
-            t.printStackTrace(out);
+            destination.print(message);
+            t.printStackTrace(destination);
         }
     }
 
@@ -98,18 +98,19 @@ public final class Logger {
         return logFileOut;
     }
 
-    private static void log(final int level, final Throwable t, final Object... obj) {
+    private static void log(final int level, final Throwable t, final Object... objs) {
         if (level <= getMaxLoggableLevel()) {
-            if (obj == null) {
+            if (objs == null) {
                 println(level, "null", t);
-            } else if (obj instanceof Object[]) {
+            } else if (objs instanceof Object[]) {
                 final StringBuilder msg = new StringBuilder();
-                for (final Object item : obj) {
-                    msg.append(item == null ? "null" : String.valueOf(item));
+                for (int i = 0; i < objs.length; ++i) {
+                    final Object item = objs[i];
+                    msg.append(item);
                 }
                 println(level, msg.toString(), t);
             } else {
-                println(level, String.valueOf(obj), t);
+                println(level, String.valueOf(objs), t);
             }
         }
     }
@@ -149,8 +150,7 @@ public final class Logger {
         logEntry.append(element.getFileName());
         logEntry.append(":");
         logEntry.append(element.getLineNumber());
-        logEntry.append(")");
-        logEntry.append(" ");
+        logEntry.append(") ");
         logEntry.append(msg);
         if (maxConsoleLevel > NONE) {
             switch (level) {

@@ -9,7 +9,7 @@ public class BasicModel extends PModel {
         getParticipants(); // this must be the first sheet
     }
 
-    public Participants getParticipants() {
+    public final Participants getParticipants() {
         Participants participants = (Participants) getSheet(Participants.NAME);
         if (participants == null) {
             participants = (Participants) addSheet(new Participants(this));

@@ -43,7 +43,7 @@ public class Trial extends Element implements HasFeedback, IsController {
     }
 
     @Override
-    public void _doBegin() {
+    public void doBegin() {
         configureScene();
         test.resetStimuli();
         test.showScene();
@@ -53,14 +53,14 @@ public class Trial extends Element implements HasFeedback, IsController {
     }
 
     @Override
-    public void _doEnd() {
+    public void doEnd() {
         doStatus = null;
-        test._recordClose();
+        test.closeRecord();
         test.popController();
     }
 
     @Override
-    public void _doStep(final Response input) {
+    public void doStep(final Response input) {
         new Thread(new Runnable() {
 
             @Override
@@ -115,7 +115,7 @@ public class Trial extends Element implements HasFeedback, IsController {
 
                 if (passed) {
                     Timing.pause(posttrialpause);
-                    _doEnd();
+                    doEnd();
                 }
             }
 
@@ -164,13 +164,11 @@ public class Trial extends Element implements HasFeedback, IsController {
     @Override
     public void errormessage(final boolean flag) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
     public void errormessage(final String stimulusName, final long duration) {
         // TODO Auto-generated method stub
-
     }
 
     public void posttrialpause(final long posttrialpause) {
