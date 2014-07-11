@@ -46,7 +46,7 @@ import pondero.tests.TestLoader;
 import pondero.tests.test.Test;
 import pondero.ui.actions.AddParticipantAction;
 import pondero.ui.actions.AnalyseParticipantAction;
-import pondero.ui.actions.ChooseParticipantAction;
+import pondero.ui.actions.SelectParticipantAction;
 import pondero.ui.actions.HomePageAction;
 import pondero.ui.actions.ModifyParticipantAction;
 import pondero.ui.actions.OpenDocumentAction;
@@ -55,7 +55,7 @@ import pondero.ui.actions.RunTaskAction;
 import pondero.ui.actions.SaveAsDocumentAction;
 import pondero.ui.actions.SaveDocumentAction;
 import pondero.ui.actions.SetPreferencesAction;
-import pondero.ui.actions.StartDocumentAction;
+import pondero.ui.actions.ViewDocumentAction;
 import pondero.ui.actions.UpdateAction;
 import pondero.ui.status.StatusBar;
 import pondero.ui.tests.TestCellRenderer;
@@ -121,7 +121,7 @@ public class Pondero implements Ponderable, PModelListener {
     // Actions
     private final Action             addParticipantAction     = new AddParticipantAction(this);
     private final Action             analyseParticipantAction = new AnalyseParticipantAction(this);
-    private final Action             chooseParticipantAction  = new ChooseParticipantAction(this);
+    private final Action             chooseParticipantAction  = new SelectParticipantAction(this);
     private final Action             homePageAction           = new HomePageAction(this);
     private final Action             modifyParticipantAction  = new ModifyParticipantAction(this);
     private final OpenDocumentAction openDocumentAction       = new OpenDocumentAction(this);
@@ -129,7 +129,7 @@ public class Pondero implements Ponderable, PModelListener {
     private final Action             saveAsDocument           = new SaveAsDocumentAction(this);
     private final Action             saveDocument             = new SaveDocumentAction(this);
     private final Action             setPreferencesAction     = new SetPreferencesAction(this);
-    private final Action             startDocument            = new StartDocumentAction(this);
+    private final Action             startDocument            = new ViewDocumentAction(this);
     private final Action             startTaskAction          = new RunTaskAction(this);
     private final Action             updateAction             = new UpdateAction(this);
 

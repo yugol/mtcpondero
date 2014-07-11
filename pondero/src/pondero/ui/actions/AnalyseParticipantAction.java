@@ -1,14 +1,19 @@
 package pondero.ui.actions;
 
 import static pondero.Logger.error;
-import static pondero.Logger.info;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import javax.swing.JOptionPane;
+import pondero.Context;
 import pondero.L10n;
+import pondero.data.analysis.FillParticipantReport;
+import pondero.data.drivers.excel.ExcelFileFilter;
+import pondero.data.drivers.excel.templates.participant.ParticipantTemplate;
 import pondero.data.model.basic.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.participants.ParticipantSelectionDialog;
 import pondero.util.MsgUtil;
+import pondero.util.OsUtil;
 
 @SuppressWarnings("serial")
 public class AnalyseParticipantAction extends PonderableAction {
@@ -28,7 +33,12 @@ public class AnalyseParticipantAction extends PonderableAction {
             if (dlg.getCloseOperation() == JOptionPane.YES_OPTION) {
                 final Participant p = dlg.getSelection();
                 if (p != null) {
-                    info("Perform analysis for ", p.toString());
+                    final ParticipantTemplate pTemplate = new ParticipantTemplate();
+                    FillParticipantReport.fill(pTemplate, p, getCurrentWorkbook().getModel());
+                    final String reportFileName = ParticipantTemplate.BASE_NAME + "-" + System.currentTimeMillis() + ExcelFileFilter.DEFAULT_EXTENSION;
+                    final File reportFile = new File(Context.getFolderResultsReports(), reportFileName);
+                    pTemplate.save(reportFile);
+                    OsUtil.openFile(reportFile);
                 }
             }
         } catch (final Exception e) {

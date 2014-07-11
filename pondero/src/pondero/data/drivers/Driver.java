@@ -18,8 +18,6 @@ public abstract class Driver {
         this.connectionString = connectionString;
     }
 
-    public abstract void open() throws Exception;
-
     public abstract PModel fetchModel() throws Exception;
 
     public abstract void pushModel(PModel model) throws Exception;

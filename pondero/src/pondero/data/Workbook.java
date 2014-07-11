@@ -3,6 +3,7 @@ package pondero.data;
 import java.io.File;
 import java.util.Collection;
 import pondero.data.model.PModelListener;
+import pondero.data.model.basic.BasicModel;
 import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.Participants;
 import pondero.data.model.basic.TrialRecord;
@@ -19,6 +20,8 @@ public interface Workbook {
 
     Participants getAllParticipants() throws Exception;
 
+    BasicModel getModel();
+
     String getName();
 
     String getNextPariciantId() throws Exception;
@@ -32,7 +35,5 @@ public interface Workbook {
     void save() throws Exception;
 
     void saveAs(File selectedFile) throws Exception;
-
-    void view() throws Exception;
 
 }
