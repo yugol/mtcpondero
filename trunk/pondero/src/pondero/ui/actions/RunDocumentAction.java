@@ -14,9 +14,9 @@ import pondero.util.MsgUtil;
 import pondero.util.OsUtil;
 
 @SuppressWarnings("serial")
-public class ViewDocumentAction extends PonderableAction {
+public class RunDocumentAction extends PonderableAction {
 
-    public ViewDocumentAction(final Ponderable app) {
+    public RunDocumentAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.open-externally"));
     }

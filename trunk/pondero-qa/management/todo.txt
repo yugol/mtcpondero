@@ -29,6 +29,7 @@ FUTURE VERSIONS
 - sistem de raportare a erorilor/exceptiilor prin e-mail
 - culegerea de informatii despre utilizator
 - servicii de inregistrarea a utilizatorilor
+- SQL backend
 
 - error reporting tool
 
