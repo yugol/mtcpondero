@@ -1,5 +1,6 @@
 2014-07-27
 ==========
+- Analysis -> reports (for participant and for test)
 - refactored data model
 - automated acceptance testing framework
 - workbook = model + driver
@@ -13,7 +14,7 @@
 - build full Participant report
 - DOB only support in database for participants
 - double click on participant selection dialog selects participant
-- open utility windows centered on parent
+- open utility windows centred on parent
 - added Analysis menu
 - building new interface...
 - translated JFileChooser dialogs
@@ -24,10 +25,9 @@
 2014-06-28
 ==========
 - developed application site
-- Pondeo setup application
+- Pondero setup application
 - open preview Excel files directly from application menu
 - Save As... implementation
 - Help -> Home Page entry
 - logging
 - backup data files on open
-
