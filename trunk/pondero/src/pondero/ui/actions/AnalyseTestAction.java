@@ -1,14 +1,19 @@
 package pondero.ui.actions;
 
 import static pondero.Logger.error;
-import static pondero.Logger.info;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import javax.swing.JOptionPane;
+import pondero.Context;
 import pondero.L10n;
+import pondero.data.analysis.FillTestReport;
+import pondero.data.drivers.excel.ExcelFileFilter;
+import pondero.data.drivers.excel.templates.test.TestTemplate;
 import pondero.tests.test.Test;
 import pondero.ui.Ponderable;
 import pondero.ui.tests.TestSelectionDialog;
 import pondero.util.MsgUtil;
+import pondero.util.OsUtil;
 
 @SuppressWarnings("serial")
 public class AnalyseTestAction extends PonderableAction {
@@ -28,7 +33,12 @@ public class AnalyseTestAction extends PonderableAction {
             if (dlg.getCloseOperation() == JOptionPane.YES_OPTION) {
                 final Test test = dlg.getSelection();
                 if (test != null) {
-                    info(test.getCodeName());
+                    final TestTemplate template = new TestTemplate();
+                    new FillTestReport().fill(template, test, getCurrentWorkbook().getModel());
+                    final String reportFileName = TestTemplate.BASE_NAME + "-" + System.currentTimeMillis() + ExcelFileFilter.DEFAULT_EXTENSION;
+                    final File reportFile = new File(Context.getFolderResultsTemp(), reportFileName);
+                    template.save(reportFile);
+                    OsUtil.openFile(reportFile);
                 }
             }
         } catch (final Exception e) {
