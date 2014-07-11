@@ -2,6 +2,7 @@ package pondero.data.analysis;
 
 import pondero.data.model.PRow;
 import pondero.data.model.PSheet;
+import pondero.data.model.PType;
 
 public class PMatrix extends PSheet {
 
@@ -18,8 +19,17 @@ public class PMatrix extends PSheet {
     }
 
     @Override
-    public PRow addRow() throws Exception {
-        return addRow(new MRow());
+    public MRow addRow() throws Exception {
+        return (MRow) addRow(new MRow());
+    }
+
+    public int index(final String name, final PType type) throws Exception {
+        Integer colIdx = index(name);
+        if (colIdx == null) {
+            addColumn(name, type);
+            colIdx = index(name);
+        }
+        return colIdx;
     }
 
 }
