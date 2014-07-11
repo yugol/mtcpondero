@@ -176,7 +176,9 @@ public abstract class PSheet {
             case STRING:
                 return -1;
             case DECIMAL:
+            case INT:
                 return 1;
+            case BOOLEAN:
             case DATE:
             case TIME:
             case TIMESTAMP:

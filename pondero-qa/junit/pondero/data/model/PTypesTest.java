@@ -16,7 +16,7 @@ import pondero.util.DateUtil;
 
 public class PTypesTest {
 
-    private static final File GEN_FILE = new File("./junit/pondero/model/foundation/gen.xlsx");
+    private static final File GEN_FILE = new File("./junit/pondero/data/model/gen.xlsx");
 
     @BeforeClass
     public static void initContext() throws Exception {
@@ -30,6 +30,10 @@ public class PTypesTest {
 
     @Test
     public void testWrite() throws Exception {
+        final long now = 1404990564189L;
+        final Calendar nowCal = Calendar.getInstance();
+        nowCal.setTimeInMillis(now);
+
         final TestModel source = new TestModel(GEN_FILE.getName());
         TestSheet testSheet = source.getSheet();
 
@@ -47,6 +51,9 @@ public class PTypesTest {
         testSheet.addRow().setBoolean(0);
         testSheet.addRow().setBoolean(1);
 
+        testSheet.addRow().setInt(null);
+        testSheet.addRow().setInt(now);
+
         testSheet.addRow().setDecimal(null);
         testSheet.addRow().setDecimal((byte) 123.45);
         testSheet.addRow().setDecimal((short) 123.45);
@@ -63,10 +70,6 @@ public class PTypesTest {
         testSheet.addRow().setDecimal(BigInteger.valueOf(123));
         testSheet.addRow().setDecimal(BigDecimal.valueOf(123.45));
         testSheet.addRow().setDecimal("123.45");
-
-        final long now = 1404990564189L;
-        final Calendar nowCal = Calendar.getInstance();
-        nowCal.setTimeInMillis(now);
 
         testSheet.addRow().setDate(null);
         testSheet.addRow().setDate(now);
@@ -103,61 +106,66 @@ public class PTypesTest {
 
         // System.out.println(testSheet);
 
-        assertNull(testSheet.getRow(0).getString());
-        assertEquals("Lorem ipsum...", testSheet.getRow(1).getString());
+        int rowIdx = 0;
+        assertNull(testSheet.getRow(rowIdx++).getString());
+        assertEquals("Lorem ipsum...", testSheet.getRow(rowIdx++).getString());
 
-        assertNull(testSheet.getRow(2).getBoolean());
-        assertEquals(false, testSheet.getRow(3).getBoolean());
-        assertEquals(true, testSheet.getRow(4).getBoolean());
-        assertEquals(false, testSheet.getRow(5).getBoolean());
-        assertEquals(true, testSheet.getRow(6).getBoolean());
-        assertNull(testSheet.getRow(7).getBoolean());
-        assertEquals(false, testSheet.getRow(8).getBoolean());
-        assertEquals(true, testSheet.getRow(9).getBoolean());
-        assertEquals(false, testSheet.getRow(10).getBoolean());
-        assertEquals(true, testSheet.getRow(11).getBoolean());
+        assertNull(testSheet.getRow(rowIdx++).getBoolean());
+        assertEquals(false, testSheet.getRow(rowIdx++).getBoolean());
+        assertEquals(true, testSheet.getRow(rowIdx++).getBoolean());
+        assertEquals(false, testSheet.getRow(rowIdx++).getBoolean());
+        assertEquals(true, testSheet.getRow(rowIdx++).getBoolean());
+        assertNull(testSheet.getRow(rowIdx++).getBoolean());
+        assertEquals(false, testSheet.getRow(rowIdx++).getBoolean());
+        assertEquals(true, testSheet.getRow(rowIdx++).getBoolean());
+        assertEquals(false, testSheet.getRow(rowIdx++).getBoolean());
+        assertEquals(true, testSheet.getRow(rowIdx++).getBoolean());
 
-        assertNull(testSheet.getRow(12).getDecimal());
-        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(13).getDecimal());
-        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(14).getDecimal());
-        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(15).getDecimal());
-        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(16).getDecimal());
-        assertEquals(BigDecimal.valueOf(123.45f), testSheet.getRow(17).getDecimal());
-        assertEquals(BigDecimal.valueOf(123.45), testSheet.getRow(18).getDecimal());
-        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(19).getDecimal());
-        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(20).getDecimal());
-        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(21).getDecimal());
-        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(22).getDecimal());
-        assertEquals(BigDecimal.valueOf(123.45f), testSheet.getRow(23).getDecimal());
-        assertEquals(BigDecimal.valueOf(123.45), testSheet.getRow(24).getDecimal());
-        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(25).getDecimal());
-        assertEquals(BigDecimal.valueOf(123.45), testSheet.getRow(26).getDecimal());
-        assertEquals(BigDecimal.valueOf(123.45), testSheet.getRow(27).getDecimal());
+        assertNull(testSheet.getRow(rowIdx++).getInt());
+        assertEquals(BigDecimal.valueOf(1404990564189L), testSheet.getRow(rowIdx++).getInt());
 
-        assertNull(testSheet.getRow(28).getDate());
-        assertEquals(1404939600000L, testSheet.getRow(29).getDate().getTime());
-        assertEquals(1404939600000L, testSheet.getRow(30).getDate().getTime());
-        assertEquals(1404939600000L, testSheet.getRow(31).getDate().getTime());
-        assertEquals(1404939600000L, testSheet.getRow(32).getDate().getTime());
-        assertEquals(1404939600000L, testSheet.getRow(33).getDate().getTime());
+        assertNull(testSheet.getRow(rowIdx++).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(rowIdx++).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(rowIdx++).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(rowIdx++).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(rowIdx++).getDecimal());
+        assertEquals(BigDecimal.valueOf(123.45f), testSheet.getRow(rowIdx++).getDecimal());
+        assertEquals(BigDecimal.valueOf(123.45), testSheet.getRow(rowIdx++).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(rowIdx++).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(rowIdx++).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(rowIdx++).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(rowIdx++).getDecimal());
+        assertEquals(BigDecimal.valueOf(123.45f), testSheet.getRow(rowIdx++).getDecimal());
+        assertEquals(BigDecimal.valueOf(123.45), testSheet.getRow(rowIdx++).getDecimal());
+        assertEquals(BigDecimal.valueOf(123), testSheet.getRow(rowIdx++).getDecimal());
+        assertEquals(BigDecimal.valueOf(123.45), testSheet.getRow(rowIdx++).getDecimal());
+        assertEquals(BigDecimal.valueOf(123.45), testSheet.getRow(rowIdx++).getDecimal());
 
-        assertNull(testSheet.getRow(34).getDate());
-        assertEquals(-2208936328000L, testSheet.getRow(35).getTime().getTime());
-        assertEquals(-2208936328000L, testSheet.getRow(36).getTime().getTime());
-        assertEquals(-2208936328000L, testSheet.getRow(37).getTime().getTime());
-        assertEquals(-2208936328000L, testSheet.getRow(38).getTime().getTime());
-        assertEquals(-2208936328000L, testSheet.getRow(39).getTime().getTime());
+        assertNull(testSheet.getRow(rowIdx++).getDate());
+        assertEquals(1404939600000L, testSheet.getRow(rowIdx++).getDate().getTime());
+        assertEquals(1404939600000L, testSheet.getRow(rowIdx++).getDate().getTime());
+        assertEquals(1404939600000L, testSheet.getRow(rowIdx++).getDate().getTime());
+        assertEquals(1404939600000L, testSheet.getRow(rowIdx++).getDate().getTime());
+        assertEquals(1404939600000L, testSheet.getRow(rowIdx++).getDate().getTime());
 
-        assertNull(testSheet.getRow(40).getDate());
-        assertEquals(1405001364000L, testSheet.getRow(41).getTimestamp().getTime());
-        assertEquals(1405001364000L, testSheet.getRow(42).getTimestamp().getTime());
-        assertEquals(1405001364000L, testSheet.getRow(43).getTimestamp().getTime());
-        assertEquals(1405001364000L, testSheet.getRow(44).getTimestamp().getTime());
-        assertEquals(1405001364000L, testSheet.getRow(45).getTimestamp().getTime());
+        assertNull(testSheet.getRow(rowIdx++).getDate());
+        assertEquals(-2208936328000L, testSheet.getRow(rowIdx++).getTime().getTime());
+        assertEquals(-2208936328000L, testSheet.getRow(rowIdx++).getTime().getTime());
+        assertEquals(-2208936328000L, testSheet.getRow(rowIdx++).getTime().getTime());
+        assertEquals(-2208936328000L, testSheet.getRow(rowIdx++).getTime().getTime());
+        assertEquals(-2208936328000L, testSheet.getRow(rowIdx++).getTime().getTime());
 
-        assertNull(testSheet.getRow(46).getFormula());
-        assertEquals("SUM(1 + 1)", testSheet.getRow(47).getFormula());
+        assertNull(testSheet.getRow(rowIdx++).getDate());
+        assertEquals(1405001364000L, testSheet.getRow(rowIdx++).getTimestamp().getTime());
+        assertEquals(1405001364000L, testSheet.getRow(rowIdx++).getTimestamp().getTime());
+        assertEquals(1405001364000L, testSheet.getRow(rowIdx++).getTimestamp().getTime());
+        assertEquals(1405001364000L, testSheet.getRow(rowIdx++).getTimestamp().getTime());
+        assertEquals(1405001364000L, testSheet.getRow(rowIdx++).getTimestamp().getTime());
+
+        assertNull(testSheet.getRow(rowIdx++).getFormula());
+        assertEquals("SUM(1 + 1)", testSheet.getRow(rowIdx++).getFormula());
 
         template.close();
     }
+
 }

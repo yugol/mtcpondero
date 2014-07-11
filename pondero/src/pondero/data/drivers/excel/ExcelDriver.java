@@ -13,7 +13,6 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFCreationHelper;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import pondero.data.drivers.Driver;
 import pondero.data.model.PRow;
@@ -28,25 +27,43 @@ import pondero.util.StringUtil;
 
 public abstract class ExcelDriver extends Driver {
 
-    private File         dataFile;
-    private XSSFWorkbook workbook;
+    private static final String DATE_FORMAT      = "yyyy-MM-dd";
+    private static final String DEFAULT_FORMAT   = "General";
+    private static final String HEADER_FORMAT    = "General";
+    private static final String INT_FORMAT       = "0";
+    private static final String TIME_FORMAT      = "HH:mm:ss";
+    private static final String TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    private CellStyle    evenDateStyle;
-    private CellStyle    evenStyle;
-    private CellStyle    evenTimeStyle;
-    private CellStyle    evenTimestampStyle;
-    private CellStyle    headerStyle;
-    private CellStyle    oddDateStyle;
-    private CellStyle    oddStyle;
-    private CellStyle    oddTimeStyle;
-    private CellStyle    oddTimestampStyle;
+    private File                dataFile;
+    private XSSFWorkbook        workbook;
+
+    private CellStyle           dateEvenStyle;
+    private CellStyle           dateOddStyle;
+    private CellStyle           defaultEvenStyle;
+    private CellStyle           defaultOddStyle;
+    private CellStyle           headerStyle;
+    private CellStyle           intEvenStyle;
+    private CellStyle           intOddStyle;
+    private CellStyle           timeEvenStyle;
+    private CellStyle           timeOddStyle;
+    private CellStyle           timestampEvenStyle;
+    private CellStyle           timestampOddStyle;
 
     public ExcelDriver(final File dataFile) throws Exception {
-        super(dataFile.getCanonicalPath());
+        this(dataFile.getCanonicalPath());
     }
 
     public ExcelDriver(final String connectionString) {
         super(connectionString);
+    }
+
+    private CellStyle createCellStyle(final String format, final boolean odd) {
+        final CellStyle cellStyle = workbook.createCellStyle();
+        cellStyle.setBorderRight(CellStyle.BORDER_THIN);
+        cellStyle.setDataFormat(workbook.getCreationHelper().createDataFormat().getFormat(format));
+        cellStyle.setFillForegroundColor((odd ? IndexedColors.WHITE : IndexedColors.LIGHT_GREEN).getIndex());
+        cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        return cellStyle;
     }
 
     @Override
@@ -68,62 +85,26 @@ public abstract class ExcelDriver extends Driver {
         }
         setConnectionString(dataFile.getCanonicalPath());
 
-        final Font headerFont = getWorkbook().createFont();
+        final Font headerFont = workbook.createFont();
         headerFont.setColor(IndexedColors.WHITE.getIndex());
-        final XSSFCreationHelper createHelper = getWorkbook().getCreationHelper();
-
-        headerStyle = getWorkbook().createCellStyle();
-        headerStyle.setWrapText(false);
+        headerStyle = workbook.createCellStyle();
         headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+        headerStyle.setDataFormat(workbook.getCreationHelper().createDataFormat().getFormat(HEADER_FORMAT));
         headerStyle.setFillForegroundColor(IndexedColors.DARK_RED.getIndex());
         headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
         headerStyle.setFont(headerFont);
+        headerStyle.setWrapText(false);
 
-        oddStyle = getWorkbook().createCellStyle();
-        oddStyle.setBorderRight(CellStyle.BORDER_THIN);
-        oddStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
-        oddStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-
-        evenStyle = getWorkbook().createCellStyle();
-        evenStyle.setBorderRight(CellStyle.BORDER_THIN);
-        evenStyle.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
-        evenStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-
-        oddDateStyle = getWorkbook().createCellStyle();
-        oddDateStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd"));
-        oddDateStyle.setBorderRight(CellStyle.BORDER_THIN);
-        oddDateStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
-        oddDateStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-
-        evenDateStyle = getWorkbook().createCellStyle();
-        evenDateStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd"));
-        evenDateStyle.setBorderRight(CellStyle.BORDER_THIN);
-        evenDateStyle.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
-        evenDateStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-
-        oddTimeStyle = getWorkbook().createCellStyle();
-        oddTimeStyle.setDataFormat(createHelper.createDataFormat().getFormat("HH:mm:ss"));
-        oddTimeStyle.setBorderRight(CellStyle.BORDER_THIN);
-        oddTimeStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
-        oddTimeStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-
-        evenTimeStyle = getWorkbook().createCellStyle();
-        evenTimeStyle.setDataFormat(createHelper.createDataFormat().getFormat("HH:mm:ss"));
-        evenTimeStyle.setBorderRight(CellStyle.BORDER_THIN);
-        evenTimeStyle.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
-        evenTimeStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-
-        oddTimestampStyle = getWorkbook().createCellStyle();
-        oddTimestampStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
-        oddTimestampStyle.setBorderRight(CellStyle.BORDER_THIN);
-        oddTimestampStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
-        oddTimestampStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-
-        evenTimestampStyle = getWorkbook().createCellStyle();
-        evenTimestampStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
-        evenTimestampStyle.setBorderRight(CellStyle.BORDER_THIN);
-        evenTimestampStyle.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
-        evenTimestampStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        dateEvenStyle = createCellStyle(DATE_FORMAT, false);
+        dateOddStyle = createCellStyle(DATE_FORMAT, true);
+        defaultEvenStyle = createCellStyle(DEFAULT_FORMAT, false);
+        defaultOddStyle = createCellStyle(DEFAULT_FORMAT, true);
+        intEvenStyle = createCellStyle(INT_FORMAT, false);
+        intOddStyle = createCellStyle(INT_FORMAT, true);
+        timeEvenStyle = createCellStyle(TIME_FORMAT, false);
+        timeOddStyle = createCellStyle(TIME_FORMAT, true);
+        timestampEvenStyle = createCellStyle(TIMESTAMP_FORMAT, false);
+        timestampOddStyle = createCellStyle(TIMESTAMP_FORMAT, true);
     }
 
     @Override
@@ -204,11 +185,11 @@ public abstract class ExcelDriver extends Driver {
     }
 
     protected void commitSheet(final PSheet pSheet) {
-        final int idx = getWorkbook().getSheetIndex(pSheet.getName());
+        final int idx = workbook.getSheetIndex(pSheet.getName());
         if (idx >= 0) {
-            getWorkbook().removeSheetAt(idx);
+            workbook.removeSheetAt(idx);
         }
-        final Sheet xSheet = getWorkbook().createSheet(pSheet.getName());
+        final Sheet xSheet = workbook.createSheet(pSheet.getName());
         for (final Row xRow : xSheet) {
             xSheet.removeRow(xRow);
         }
@@ -226,17 +207,20 @@ public abstract class ExcelDriver extends Driver {
                 final Cell cell = xRow.createCell(colIdx);
                 setCellValue(cell, pSheet.get(rowIdx, colIdx), pType);
                 switch (pType) {
+                    case INT:
+                        cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? intEvenStyle : intOddStyle);
+                        break;
                     case DATE:
-                        cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? evenDateStyle : oddDateStyle);
+                        cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? dateEvenStyle : dateOddStyle);
                         break;
                     case TIME:
-                        cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? evenTimeStyle : oddTimeStyle);
+                        cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? timeEvenStyle : timeOddStyle);
                         break;
                     case TIMESTAMP:
-                        cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? evenTimestampStyle : oddTimestampStyle);
+                        cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? timestampEvenStyle : timestampOddStyle);
                         break;
                     default:
-                        cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? evenStyle : oddStyle);
+                        cell.setCellStyle(NumberUtil.isOdd(rowIdx) ? defaultEvenStyle : defaultOddStyle);
                 }
             }
         }
@@ -257,7 +241,7 @@ public abstract class ExcelDriver extends Driver {
             if (Cell.CELL_TYPE_NUMERIC == xType) { return BooleanUtil.toBoolean(cell.getNumericCellValue()); }
             if (Cell.CELL_TYPE_STRING == xType) { return BooleanUtil.toBoolean(cell.getStringCellValue()); }
             if (Cell.CELL_TYPE_BLANK == xType) { return null; }
-        } else if (PType.DECIMAL == pType) {
+        } else if (PType.DECIMAL == pType || PType.INT == pType) {
             if (Cell.CELL_TYPE_NUMERIC == xType) { return NumberUtil.toDecimal(cell.getNumericCellValue()); }
             if (Cell.CELL_TYPE_STRING == xType) { return NumberUtil.toDecimal(cell.getStringCellValue()); }
             if (Cell.CELL_TYPE_BLANK == xType) { return null; }
@@ -289,6 +273,7 @@ public abstract class ExcelDriver extends Driver {
                     cell.setCellValue((String) value);
                     break;
                 case DECIMAL:
+                case INT:
                     cell.setCellValue(((Number) value).doubleValue());
                     break;
                 case DATE:

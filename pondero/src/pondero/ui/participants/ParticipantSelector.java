@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -101,6 +102,7 @@ public class ParticipantSelector extends JComponent {
         add(scrollPane, gbc_scrollPane);
 
         tblParticipants = new JTable();
+        tblParticipants.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblParticipants.setRowHeight((int) (18 * Context.getUiFontScaleFactor()));
         tblParticipants.addMouseListener(new MouseAdapter() {
 

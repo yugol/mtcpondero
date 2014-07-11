@@ -17,7 +17,7 @@ public class TestRecords extends PSheet {
 
     TestRecords(final PModel model, final String name) throws Exception {
         super(model, name);
-        addColumn(ATTR_EXPERIMNT_TIMESTAMP, PType.DECIMAL);
+        addColumn(ATTR_EXPERIMNT_TIMESTAMP, PType.INT);
         addColumn(ATTR_PARTICIPANT_ID, PType.STRING);
         addColumn(ATTR_BLOCK_ID, PType.STRING);
         addColumn(ATTR_TRIAL_ID, PType.STRING);

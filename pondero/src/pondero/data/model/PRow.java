@@ -88,6 +88,7 @@ public abstract class PRow {
                     data[index] = StringUtil.toCellString(value);
                     break;
                 case DECIMAL:
+                case INT:
                     data[index] = NumberUtil.toDecimal(value);
                     break;
                 case BOOLEAN:
