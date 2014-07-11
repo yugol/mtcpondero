@@ -30,7 +30,6 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import pondero.Context;
 import pondero.L10n;
 import pondero.data.Workbook;
@@ -72,7 +71,7 @@ public class Pondero implements Ponderable, PModelListener {
 
     /**
      * Launch the application.
-     *
+     * 
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
@@ -151,7 +150,7 @@ public class Pondero implements Ponderable, PModelListener {
 
     /**
      * Create the application.
-     *
+     * 
      * @throws Exception
      */
     public Pondero() throws Exception {
@@ -461,7 +460,7 @@ public class Pondero implements Ponderable, PModelListener {
         pnlTestContent.setLayout(gbl_pnlTestContent);
 
         final TestSelector lstTests = new TestSelector();
-        lstTests.addListSelectionListener(new ListSelectionListener() {
+        lstTests.addListSelectionListener(new DialogSelectionListener() {
 
             @Override
             public void valueChanged(final ListSelectionEvent evt) {
@@ -473,6 +472,10 @@ public class Pondero implements Ponderable, PModelListener {
                         error(e);
                     }
                 }
+            }
+
+            @Override
+            public void valueChosen(final ListSelectionEvent evt) {
             }
 
         });
