@@ -70,8 +70,9 @@ public class StringUtil {
                 return DateUtil.toIsoTime(value);
             case TIMESTAMP:
                 return DateUtil.toIsoTimestamp(value);
-            case DECIMAL:
             case BOOLEAN:
+            case DECIMAL:
+            case INT:
                 return String.valueOf(value);
             default:
                 throw new UnsupportedOperationException("toString for PType " + type);

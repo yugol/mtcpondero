@@ -5,21 +5,16 @@ import java.util.Random;
 
 public enum PType {
 
-    BOOLEAN (Boolean.class),
-    DATE (Long.class),
-    DECIMAL (BigDecimal.class),
-    FORMULA (String.class),
-    STRING (String.class),
-    TIME (Long.class),
-    TIMESTAMP (Long.class),
+    BOOLEAN,
+    DATE,
+    DECIMAL,
+    FORMULA,
+    INT,
+    STRING,
+    TIME,
+    TIMESTAMP,
 
     ;
-
-    public final Class<?> jType;
-
-    private PType(final Class<?> jType) {
-        this.jType = jType;
-    }
 
     public Object next() {
         final Random r = new Random();
@@ -27,6 +22,7 @@ public enum PType {
             case BOOLEAN:
                 return r.nextBoolean();
             case DECIMAL:
+            case INT:
                 return BigDecimal.valueOf(r.nextInt());
             case STRING:
                 final StringBuilder sb = new StringBuilder();

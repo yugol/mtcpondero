@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
-import pondero.data.model.PRow;
 import pondero.util.BooleanUtil;
 import pondero.util.DateUtil;
 import pondero.util.NumberUtil;
@@ -30,6 +29,10 @@ public class TestRow extends PRow {
 
     public String getFormula() {
         return getString(TestSheet.ATTR_FORMULA);
+    }
+
+    public BigDecimal getInt() {
+        return getDecimal(TestSheet.ATTR_INT);
     }
 
     public String getString() {
@@ -58,6 +61,10 @@ public class TestRow extends PRow {
 
     public void setFormula(final String value) throws Exception {
         set(TestSheet.ATTR_FORMULA, value);
+    }
+
+    public void setInt(final Object value) throws Exception {
+        set(TestSheet.ATTR_INT, NumberUtil.toDecimal(value));
     }
 
     public void setString(final Object value) throws Exception {
