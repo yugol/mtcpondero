@@ -63,6 +63,7 @@ public class StringUtil {
     public static String toConsoleString(final Object value, final PType type) {
         switch (type) {
             case STRING:
+            case FORMULA:
                 return (String) value;
             case DATE:
                 return DateUtil.toIsoDate(value);

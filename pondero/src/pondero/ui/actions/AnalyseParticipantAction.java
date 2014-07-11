@@ -34,7 +34,7 @@ public class AnalyseParticipantAction extends PonderableAction {
                 final Participant p = dlg.getSelection();
                 if (p != null) {
                     final ParticipantTemplate pTemplate = new ParticipantTemplate();
-                    FillParticipantReport.fill(pTemplate, p, getCurrentWorkbook().getModel());
+                    new FillParticipantReport().fill(pTemplate, p, getCurrentWorkbook().getModel());
                     final String reportFileName = ParticipantTemplate.BASE_NAME + "-" + System.currentTimeMillis() + ExcelFileFilter.DEFAULT_EXTENSION;
                     final File reportFile = new File(Context.getFolderResultsReports(), reportFileName);
                     pTemplate.save(reportFile);

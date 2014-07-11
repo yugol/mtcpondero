@@ -146,6 +146,7 @@ public abstract class ExcelDriver extends Driver {
     }
 
     protected void readSheet(final PSheet pSheet, final Sheet xSheet) throws Exception {
+        if (!pSheet.isLocked()) { throw new UnsupportedOperationException("Reading unlocked sheets is not yet supported"); }
         Row headRow = null;
         PRow pRow = null;
         for (int rowIdx = xSheet.getFirstRowNum(); rowIdx <= xSheet.getLastRowNum(); ++rowIdx) {
