@@ -3,7 +3,6 @@ package pondero.ui.participants;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Frame;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -17,17 +16,18 @@ import pondero.Context;
 import pondero.L10n;
 import pondero.data.Workbook;
 import pondero.data.model.basic.Participant;
+import pondero.ui.DialogSelectionListener;
 
 @SuppressWarnings("serial")
-public class ParticipantSelectionDialog extends JDialog implements ParticipantSelectionListener, ActionListener {
-
-    public static final String DIALOG_NAME = "participantSelectionDialor";
+public class ParticipantSelectionDialog extends JDialog implements DialogSelectionListener, ActionListener {
 
     public static void main(final String[] args) throws Exception {
         final ParticipantSelectionDialog dialog = new ParticipantSelectionDialog(null, Context.getDefaultWorkbook());
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         dialog.setVisible(true);
     }
+
+    public static final String DIALOG_NAME = "participantSelectionDialor";
 
     private Participant               selection;
     private int                       closeOperation = JOptionPane.CANCEL_OPTION;
@@ -41,8 +41,7 @@ public class ParticipantSelectionDialog extends JDialog implements ParticipantSe
         setName(DIALOG_NAME);
         setType(Type.UTILITY);
         setResizable(false);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(ParticipantSelectionDialog.class.getResource("/com/famfamfam/silk/user_go.png")));
-        setTitle(L10n.getString("lbl.select-participant")); //$NON-NLS-1$
+        setTitle(L10n.getString("lbl.select-participant"));
         setBounds(100, 100, (int) (400 * Context.getUiFontScaleFactor()), (int) (450 * Context.getUiFontScaleFactor()));
         getContentPane().setLayout(new BorderLayout());
 
@@ -60,15 +59,14 @@ public class ParticipantSelectionDialog extends JDialog implements ParticipantSe
             buttonPane.setBorder(new EmptyBorder(6, 0, 5, 0));
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             {
-                selectButton = new JButton(L10n.getString("lbl.choose")); //$NON-NLS-1$
+                selectButton = new JButton(L10n.getString("lbl.choose"));
                 selectButton.setEnabled(false);
                 selectButton.addActionListener(this);
-                selectButton.setActionCommand("Ok"); //$NON-NLS-1$
                 buttonPane.add(selectButton);
                 getRootPane().setDefaultButton(selectButton);
             }
             {
-                cancelButton = new JButton(L10n.getString("lbl.cancel")); //$NON-NLS-1$
+                cancelButton = new JButton(L10n.getString("lbl.cancel"));
                 cancelButton.addActionListener(new ActionListener() {
 
                     @Override
@@ -82,14 +80,13 @@ public class ParticipantSelectionDialog extends JDialog implements ParticipantSe
             }
             contentPanel.add(buttonPane, BorderLayout.SOUTH);
         }
-
         getContentPane().add(contentPanel, BorderLayout.CENTER);
     }
 
     @Override
     public void actionPerformed(final ActionEvent evt) {
         closeOperation = JOptionPane.OK_OPTION;
-        ParticipantSelectionDialog.this.setVisible(false);
+        setVisible(false);
     }
 
     public int getCloseOperation() {
