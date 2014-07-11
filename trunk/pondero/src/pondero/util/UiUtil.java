@@ -27,6 +27,17 @@ import pondero.Context;
 
 public class UiUtil {
 
+    static {
+        final String seaglassLafClass = "com.seaglasslookandfeel.SeaGlassLookAndFeel";
+        try {
+            // Class.forName(seaglassLafClass);
+            // UIManager.installLookAndFeel("Seaglass", seaglassLafClass);
+        } catch (final Exception e) {
+            warning("could not install: ", seaglassLafClass);
+            error(e);
+        }
+    }
+
     public static void enableFullScreenMode(final JFrame window) {
         if (OsUtil.isMacOSX()) {
             final String className = "com.apple.eawt.FullScreenUtilities";
@@ -179,17 +190,6 @@ public class UiUtil {
     public static void showMaximized(final JFrame window) {
         final Rectangle usableArea = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
         window.setBounds(usableArea);
-    }
-
-    static {
-        final String seaglassLafClass = "com.seaglasslookandfeel.SeaGlassLookAndFeel";
-        try {
-            // Class.forName(seaglassLafClass);
-            // UIManager.installLookAndFeel("Seaglass", seaglassLafClass);
-        } catch (final Exception e) {
-            warning("could not install: ", seaglassLafClass);
-            error(e);
-        }
     }
 
 }

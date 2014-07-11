@@ -31,13 +31,13 @@ import pondero.util.UiUtil;
 @SuppressWarnings("serial")
 public class ParticipantSelector extends JComponent {
 
-    private final ParticipantCellRenderer            participantRenderer = new ParticipantCellRenderer();
+    private final ParticipantCellRenderer       participantRenderer = new ParticipantCellRenderer();
 
-    private Participants                             participants;
-    private final JTextField                         textPattern;
-    private final JTable                             tblParticipants;
+    private Participants                        participants;
+    private final JTextField                    textPattern;
+    private final JTable                        tblParticipants;
     private final List<DialogSelectionListener> selectionListeners  = new ArrayList<DialogSelectionListener>();
-    private Participant                              selectedParticipant;
+    private Participant                         selectedParticipant;
 
     public ParticipantSelector(final Workbook wb) throws Exception {
 
@@ -153,8 +153,10 @@ public class ParticipantSelector extends JComponent {
     private String getFootprint(final Participant participant) {
         final StringBuilder fp = new StringBuilder();
         fp.append(participant.getId().toLowerCase());
-        fp.append(participant.getName().toLowerCase());
+        fp.append(" ");
         fp.append(participant.getSurname().toLowerCase());
+        fp.append(" ");
+        fp.append(participant.getName().toLowerCase());
         return StringUtil.normalizeForSearch(fp.toString());
     }
 
