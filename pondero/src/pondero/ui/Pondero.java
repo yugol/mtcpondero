@@ -15,22 +15,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -46,19 +41,19 @@ import pondero.tests.TestLoader;
 import pondero.tests.test.Test;
 import pondero.ui.actions.AddParticipantAction;
 import pondero.ui.actions.AnalyseParticipantAction;
-import pondero.ui.actions.SelectParticipantAction;
 import pondero.ui.actions.HomePageAction;
 import pondero.ui.actions.ModifyParticipantAction;
 import pondero.ui.actions.OpenDocumentAction;
 import pondero.ui.actions.QuitAction;
+import pondero.ui.actions.RunDocumentAction;
 import pondero.ui.actions.RunTaskAction;
 import pondero.ui.actions.SaveAsDocumentAction;
 import pondero.ui.actions.SaveDocumentAction;
+import pondero.ui.actions.SelectParticipantAction;
 import pondero.ui.actions.SetPreferencesAction;
-import pondero.ui.actions.ViewDocumentAction;
 import pondero.ui.actions.UpdateAction;
 import pondero.ui.status.StatusBar;
-import pondero.ui.tests.TestCellRenderer;
+import pondero.ui.tests.TestSelector;
 import pondero.util.MsgUtil;
 import pondero.util.UiUtil;
 
@@ -85,7 +80,7 @@ public class Pondero implements Ponderable, PModelListener {
 
     public static Pondero start(final String[] args) throws Exception {
         Context.init(args.length >= 1 ? args[0] : null);
-        REGISTERED_TESTS.addAll(TestLoader.loadTests());
+        TestSelector.REGISTERED_TESTS.addAll(TestLoader.loadTests());
         UiUtil.getAvailableLafs();
         UiUtil.setLaf();
         UiUtil.scaleUi(Context.getUiFontScaleFactor());
@@ -110,8 +105,6 @@ public class Pondero implements Ponderable, PModelListener {
         return app;
     }
 
-    private static final List<Test>  REGISTERED_TESTS         = new ArrayList<Test>();
-
     // Essentials
     private PonderoState             currentState;
     private Workbook                 currentWorkbook;
@@ -121,17 +114,17 @@ public class Pondero implements Ponderable, PModelListener {
     // Actions
     private final Action             addParticipantAction     = new AddParticipantAction(this);
     private final Action             analyseParticipantAction = new AnalyseParticipantAction(this);
-    private final Action             chooseParticipantAction  = new SelectParticipantAction(this);
     private final Action             homePageAction           = new HomePageAction(this);
     private final Action             modifyParticipantAction  = new ModifyParticipantAction(this);
-    private final OpenDocumentAction openDocumentAction       = new OpenDocumentAction(this);
     private final Action             quitAction               = new QuitAction(this);
+    private final Action             runDocument              = new RunDocumentAction(this);
     private final Action             saveAsDocument           = new SaveAsDocumentAction(this);
     private final Action             saveDocument             = new SaveDocumentAction(this);
+    private final Action             selectParticipantAction  = new SelectParticipantAction(this);
     private final Action             setPreferencesAction     = new SetPreferencesAction(this);
-    private final Action             startDocument            = new ViewDocumentAction(this);
     private final Action             startTaskAction          = new RunTaskAction(this);
     private final Action             updateAction             = new UpdateAction(this);
+    private final OpenDocumentAction openDocumentAction       = new OpenDocumentAction(this);
 
     // Widgets
     private JFrame                   mainFrame;
@@ -144,16 +137,15 @@ public class Pondero implements Ponderable, PModelListener {
     private JEditorPane              epParticipantDescription;
     private JLabel                   lblPageHint;
     private JLabel                   lblPageTitle;
-    private JList<Test>              lstTests;
     private JMenu                    mnAnalysis;
+    private JMenuItem                mntmParticipant;
     private JMenuItem                mntmPreferences;
     private JMenuItem                mntmSave;
     private JMenuItem                mntmSaveas;
+    private JMenuItem                mntmTest;
     private JMenuItem                mntmView;
     private JPanel                   stage;
     private StatusBar                statusBar;
-    private JMenuItem                mntmParticipant;
-    private JMenuItem                mntmTest;
 
     /**
      * Create the application.
@@ -168,7 +160,6 @@ public class Pondero implements Ponderable, PModelListener {
         configureNavigationButton(btnBack);
         configureNavigationButton(btnStart);
         lblPageTitle.setFont(lblPageTitle.getFont().deriveFont(Font.BOLD, 2 * lblPageTitle.getFont().getSize()));
-        addTests();
         setCurrentState(PonderoState.PARTICIPANT_SELECTION);
     }
 
@@ -266,13 +257,6 @@ public class Pondero implements Ponderable, PModelListener {
         setCurrentState(currentState);
     }
 
-    private void addTests() {
-        final DefaultListModel<Test> model = (DefaultListModel<Test>) lstTests.getModel();
-        for (final Test test : REGISTERED_TESTS) {
-            model.addElement(test);
-        }
-    }
-
     private void configureNavigationButton(final JButton btn) {
         btn.setMinimumSize(new Dimension(150, 40));
     }
@@ -327,7 +311,7 @@ public class Pondero implements Ponderable, PModelListener {
         mnData.add(mntmOpen);
 
         mntmView = new JMenuItem("view");
-        mntmView.setAction(startDocument);
+        mntmView.setAction(runDocument);
         mnData.add(mntmView);
 
         mnData.addSeparator();
@@ -409,7 +393,7 @@ public class Pondero implements Ponderable, PModelListener {
 
         btnSelectParticipant = new JButton("");
         btnSelectParticipant.setName(BUTTON_SELECT_NAME);
-        btnSelectParticipant.setAction(chooseParticipantAction);
+        btnSelectParticipant.setAction(selectParticipantAction);
         final GridBagConstraints gbc_btnSelectParticipant = new GridBagConstraints();
         gbc_btnSelectParticipant.insets = new Insets(0, 0, 20, 0);
         gbc_btnSelectParticipant.fill = GridBagConstraints.HORIZONTAL;
@@ -473,19 +457,7 @@ public class Pondero implements Ponderable, PModelListener {
         gbl_pnlTestContent.rowWeights = new double[] { 1.0 };
         pnlTestContent.setLayout(gbl_pnlTestContent);
 
-        final JScrollPane pnlTestList = new JScrollPane();
-        pnlTestList.setViewportBorder(new TitledBorder(null, L10n.getString("lbl.choose-test") + ":", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        final GridBagConstraints gbc_pnlTestList = new GridBagConstraints();
-        gbc_pnlTestList.fill = GridBagConstraints.BOTH;
-        gbc_pnlTestList.gridx = 0;
-        gbc_pnlTestList.gridy = 0;
-        pnlTestContent.add(pnlTestList, gbc_pnlTestList);
-
-        lstTests = new JList<Test>();
-        lstTests.setBackground(UiUtil.getListBackgroundColor());
-        lstTests.setCellRenderer(new TestCellRenderer());
-        lstTests.setModel(new DefaultListModel<Test>());
-        lstTests.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        final TestSelector lstTests = new TestSelector();
         lstTests.addListSelectionListener(new ListSelectionListener() {
 
             @Override
@@ -501,7 +473,11 @@ public class Pondero implements Ponderable, PModelListener {
             }
 
         });
-        pnlTestList.setViewportView(lstTests);
+        final GridBagConstraints gbc_pnlTestList = new GridBagConstraints();
+        gbc_pnlTestList.fill = GridBagConstraints.BOTH;
+        gbc_pnlTestList.gridx = 0;
+        gbc_pnlTestList.gridy = 0;
+        pnlTestContent.add(lstTests, gbc_pnlTestList);
 
         final JPanel pnlTestNavigation = new JPanel();
         pnlTestNavigation.setBackground(SystemColor.controlShadow);
