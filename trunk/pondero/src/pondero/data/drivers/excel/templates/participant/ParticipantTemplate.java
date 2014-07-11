@@ -3,6 +3,7 @@ package pondero.data.drivers.excel.templates.participant;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.Date;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Name;
 import org.apache.poi.ss.usermodel.Row;
@@ -10,13 +11,12 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.AreaReference;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import pondero.Context;
 
 public class ParticipantTemplate {
 
-    private static final String BASE_NAME = "participant-data";
+    public static final String BASE_NAME = "participant-data";
 
-    private final XSSFWorkbook  template;
+    private final XSSFWorkbook template;
 
     public ParticipantTemplate() throws Exception {
         try (InputStream templateStream = ParticipantTemplate.class.getResourceAsStream("/pondero/data/drivers/excel/templates/participant/participant-data.xlsx")) {
@@ -24,9 +24,7 @@ public class ParticipantTemplate {
         }
     }
 
-    public void save() throws Exception {
-        final String reportFileName = BASE_NAME + "-" + System.currentTimeMillis() + ".xlsx";
-        final File reportFile = new File(Context.getFolderResultsReports(), reportFileName);
+    public void save(final File reportFile) throws Exception {
         try (FileOutputStream fileOut = new FileOutputStream(reportFile)) {
             template.write(fileOut);
         }
@@ -34,6 +32,10 @@ public class ParticipantTemplate {
 
     public void setParticipantAge(final int value) {
         setFieldValue("participantAge", value);
+    }
+
+    public void setReportDate(final Date value) {
+        setFieldValue("reportDate", value);
     }
 
     public void setParticipantDrivingAge(final int value) {
@@ -75,6 +77,8 @@ public class ParticipantTemplate {
             cell.setCellValue((String) fieldValue);
         } else if (fieldValue instanceof Number) {
             cell.setCellValue(((Number) fieldValue).doubleValue());
+        } else if (fieldValue instanceof Date) {
+            cell.setCellValue((Date) fieldValue);
         }
     }
 

@@ -28,7 +28,7 @@ import pondero.Context;
 public class UiUtil {
 
     public static void enableFullScreenMode(final JFrame window) {
-        if (Context.isMacOSX()) {
+        if (OsUtil.isMacOSX()) {
             final String className = "com.apple.eawt.FullScreenUtilities";
             final String methodName = "setWindowCanFullScreen";
             try {

@@ -22,6 +22,7 @@ import pondero.data.WorkbookFactory;
 import pondero.tests.test.CodeNameComparator;
 import pondero.tests.test.Test;
 import pondero.tests.update.Artifact;
+import pondero.util.OsUtil;
 import pondero.util.StringUtil;
 
 public final class Context {
@@ -63,7 +64,7 @@ public final class Context {
 
     public static synchronized void init(String homeFolderName) throws Exception {
         if (homeFolder == null) {
-            if (isMacOSX()) {
+            if (OsUtil.isMacOSX()) {
                 try {
                     System.setProperty("com.apple.mrj.application.apple.menu.about.name", L10n.getString("lbl.pondero"));
                     System.setProperty("com.apple.macos.useScreenMenuBar", "true");
@@ -72,7 +73,7 @@ public final class Context {
                     /* probably running via webstart, do nothing */
                 }
             }
-            if (isWindows()) {
+            if (OsUtil.isWindows()) {
                 // System.setProperty("awt.useSystemAAFontSettings", "on");
                 System.setProperty("swing.aatext", "true");
             }
@@ -288,18 +289,6 @@ public final class Context {
 
     public static int getFrameRate() {
         return FRAME_RATE;
-    }
-
-    public static boolean isLinux() {
-        return System.getProperty("os.name").indexOf("Linux") >= 0;
-    }
-
-    public static boolean isMacOSX() {
-        return System.getProperty("os.name").indexOf("Mac OS X") >= 0;
-    }
-
-    public static boolean isWindows() {
-        return System.getProperty("os.name").indexOf("Windows") >= 0;
     }
 
     private Context() {

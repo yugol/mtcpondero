@@ -37,37 +37,24 @@ public abstract class ExcelDriver extends Driver {
     private File                dataFile;
     private XSSFWorkbook        workbook;
 
-    private CellStyle           dateEvenStyle;
-    private CellStyle           dateOddStyle;
-    private CellStyle           defaultEvenStyle;
-    private CellStyle           defaultOddStyle;
-    private CellStyle           headerStyle;
-    private CellStyle           intEvenStyle;
-    private CellStyle           intOddStyle;
-    private CellStyle           timeEvenStyle;
-    private CellStyle           timeOddStyle;
-    private CellStyle           timestampEvenStyle;
-    private CellStyle           timestampOddStyle;
+    private final CellStyle     dateEvenStyle;
+    private final CellStyle     dateOddStyle;
+    private final CellStyle     defaultEvenStyle;
+    private final CellStyle     defaultOddStyle;
+    private final CellStyle     headerStyle;
+    private final CellStyle     intEvenStyle;
+    private final CellStyle     intOddStyle;
+    private final CellStyle     timeEvenStyle;
+    private final CellStyle     timeOddStyle;
+    private final CellStyle     timestampEvenStyle;
+    private final CellStyle     timestampOddStyle;
 
     public ExcelDriver(final File dataFile) throws Exception {
         this(dataFile.getCanonicalPath());
     }
 
-    public ExcelDriver(final String connectionString) {
+    public ExcelDriver(final String connectionString) throws Exception {
         super(connectionString);
-    }
-
-    private CellStyle createCellStyle(final String format, final boolean odd) {
-        final CellStyle cellStyle = workbook.createCellStyle();
-        cellStyle.setBorderRight(CellStyle.BORDER_THIN);
-        cellStyle.setDataFormat(workbook.getCreationHelper().createDataFormat().getFormat(format));
-        cellStyle.setFillForegroundColor((odd ? IndexedColors.WHITE : IndexedColors.LIGHT_GREEN).getIndex());
-        cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-        return cellStyle;
-    }
-
-    @Override
-    public void open() throws Exception {
         dataFile = new File(getConnectionString());
         if (dataFile.exists()) {
             info("opening existing data file: ", getConnectionString());
@@ -105,6 +92,15 @@ public abstract class ExcelDriver extends Driver {
         timeOddStyle = createCellStyle(TIME_FORMAT, true);
         timestampEvenStyle = createCellStyle(TIMESTAMP_FORMAT, false);
         timestampOddStyle = createCellStyle(TIMESTAMP_FORMAT, true);
+    }
+
+    private CellStyle createCellStyle(final String format, final boolean odd) {
+        final CellStyle cellStyle = workbook.createCellStyle();
+        cellStyle.setBorderRight(CellStyle.BORDER_THIN);
+        cellStyle.setDataFormat(workbook.getCreationHelper().createDataFormat().getFormat(format));
+        cellStyle.setFillForegroundColor((odd ? IndexedColors.WHITE : IndexedColors.LIGHT_GREEN).getIndex());
+        cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        return cellStyle;
     }
 
     @Override

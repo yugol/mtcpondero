@@ -14,7 +14,7 @@ public class BasicTemplate extends ExcelDriver {
         super(dataFile);
     }
 
-    public BasicTemplate(final String connectionString) {
+    public BasicTemplate(final String connectionString) throws Exception {
         super(connectionString);
     }
 

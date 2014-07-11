@@ -98,11 +98,10 @@ public class PTypesTest {
         // System.out.println(testSheet);
 
         final TestTemplate template = new TestTemplate(GEN_FILE);
-        template.open();
         template.pushModel(source);
-
         final TestModel model = template.fetchModel();
         testSheet = model.getSheet();
+        template.close();
 
         // System.out.println(testSheet);
 
@@ -164,8 +163,6 @@ public class PTypesTest {
 
         assertNull(testSheet.getRow(rowIdx++).getFormula());
         assertEquals("SUM(1 + 1)", testSheet.getRow(rowIdx++).getFormula());
-
-        template.close();
     }
 
 }
