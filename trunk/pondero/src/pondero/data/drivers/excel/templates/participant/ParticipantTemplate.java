@@ -1,59 +1,52 @@
 package pondero.data.drivers.excel.templates.participant;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import pondero.data.analysis.PMatrix;
-import pondero.data.drivers.excel.ExcelDriver;
 import pondero.data.drivers.excel.ExcelFileFilter;
+import pondero.data.drivers.excel.templates.AbstractTemplate;
 import pondero.data.model.PColumn;
 import pondero.data.model.PType;
 
-public class ParticipantTemplate {
+public class ParticipantTemplate extends AbstractTemplate {
 
     public static final String BASE_NAME = "participant-data";
 
-    private final XSSFWorkbook template;
-    private final CellStyle    headerStyle;
-    private final CellStyle    labelStyle;
-    private final CellStyle    keyStyle;
-
-    private WorkbookLocation   responsesLocation;
-    private WorkbookLocation   timesLocation;
-
-    public ParticipantTemplate() throws Exception {
+    private static XSSFWorkbook createTemplate() throws IOException {
         final String path = "/" + ParticipantTemplate.class.getPackage().getName().replace(".", "/") + "/participant-data" + ExcelFileFilter.DEFAULT_EXTENSION;
         try (InputStream templateStream = ParticipantTemplate.class.getResourceAsStream(path)) {
-            template = new XSSFWorkbook(templateStream);
+            return new XSSFWorkbook(templateStream);
         }
-
-        final Font headerFont = template.createFont();
-        headerFont.setItalic(true);
-        headerStyle = template.createCellStyle();
-        headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
-        headerStyle.setFont(headerFont);
-        headerStyle.setWrapText(false);
-
-        final Font labelFont = template.createFont();
-        labelFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
-        labelStyle = template.createCellStyle();
-        labelStyle.setFillPattern(CellStyle.THIN_FORWARD_DIAG);
-        labelStyle.setFont(labelFont);
-        labelStyle.setWrapText(false);
-
-        keyStyle = template.createCellStyle();
-        keyStyle.setBorderLeft(CellStyle.BORDER_THIN);
-        keyStyle.setDataFormat(template.getCreationHelper().createDataFormat().getFormat("0"));
-        keyStyle.setWrapText(false);
     }
 
+    private WorkbookLocation responsesLocation;
+    private WorkbookLocation timesLocation;
+
+    public ParticipantTemplate() throws Exception {
+        super(createTemplate());
+    }
+
+    public void addResponses(final PMatrix responseMatrix) {
+        if (responsesLocation == null) {
+            responsesLocation = new WorkbookLocation(template, "participantResponses");
+        }
+        renderTable(responsesLocation, responseMatrix);
+    }
+
+    public void addTimes(final PMatrix timeMatrix) {
+        if (timesLocation == null) {
+            timesLocation = new WorkbookLocation(template, "participantTimes");
+        }
+        renderTable(timesLocation, timeMatrix);
+    }
+
+    @Override
     public void save(final File reportFile) throws Exception {
         if (responsesLocation != null) {
             responsesLocation.getSheet().autoSizeColumn(responsesLocation.getColIdx() + 1);
@@ -61,17 +54,11 @@ public class ParticipantTemplate {
         if (timesLocation != null) {
             timesLocation.getSheet().autoSizeColumn(timesLocation.getColIdx() + 1);
         }
-        try (FileOutputStream fileOut = new FileOutputStream(reportFile)) {
-            template.write(fileOut);
-        }
+        super.save(reportFile);
     }
 
     public void setParticipantAge(final int value) {
         setFieldValue("participantAge", value);
-    }
-
-    public void setReportDate(final Date value) {
-        setFieldValue("reportDate", value);
     }
 
     public void setParticipantDrivingAge(final int value) {
@@ -94,39 +81,8 @@ public class ParticipantTemplate {
         setFieldValue("participantSurname", value);
     }
 
-    protected void setFieldValue(final String fieldName, final Object fieldValue) {
-        final WorkbookLocation loc = new WorkbookLocation(template, fieldName);
-        Row row = loc.getSheet().getRow(loc.getRowIdx());
-        if (row == null) {
-            row = loc.getSheet().createRow(loc.getRowIdx());
-        }
-        Cell cell = row.getCell(loc.getColIdx());
-        if (cell == null) {
-            cell = row.createCell(loc.getColIdx());
-        }
-        if (fieldValue == null) {
-            cell.setCellValue("");
-        } else if (fieldValue instanceof String) {
-            cell.setCellValue((String) fieldValue);
-        } else if (fieldValue instanceof Number) {
-            cell.setCellValue(((Number) fieldValue).doubleValue());
-        } else if (fieldValue instanceof Date) {
-            cell.setCellValue((Date) fieldValue);
-        }
-    }
-
-    public void addResponses(final PMatrix responseMatrix) {
-        if (responsesLocation == null) {
-            responsesLocation = new WorkbookLocation(template, "participantResponses");
-        }
-        renderTable(responsesLocation, responseMatrix);
-    }
-
-    public void addTimes(final PMatrix timeMatrix) {
-        if (timesLocation == null) {
-            timesLocation = new WorkbookLocation(template, "participantTimes");
-        }
-        renderTable(timesLocation, timeMatrix);
+    public void setReportDate(final Date value) {
+        setFieldValue("reportDate", value);
     }
 
     private void renderTable(final WorkbookLocation loc, final PMatrix matrix) {
@@ -144,7 +100,7 @@ public class ParticipantTemplate {
             cell = sRow.createCell(dx);
         }
         cell.setCellStyle(headerStyle);
-        ExcelDriver.setCellValue(cell, "", PType.STRING);
+        setCellValue(cell, "", PType.STRING);
         for (int colIdx = 0; colIdx < matrix.getColumnCount(); ++colIdx) {
             final PColumn col = matrix.getColumn(colIdx);
             final int cellIdx = dx + 1 + colIdx;
@@ -153,7 +109,7 @@ public class ParticipantTemplate {
                 cell = sRow.createCell(cellIdx);
             }
             cell.setCellStyle(headerStyle);
-            ExcelDriver.setCellValue(cell, col.getName(), PType.STRING);
+            setCellValue(cell, col.getName(), PType.STRING);
         }
 
         // render table/test name
@@ -167,7 +123,7 @@ public class ParticipantTemplate {
             cell = sRow.createCell(dx);
         }
         cell.setCellStyle(labelStyle);
-        ExcelDriver.setCellValue(cell, matrix.getName(), PType.STRING);
+        setCellValue(cell, matrix.getName(), PType.STRING);
 
         // render responses
         for (int rowIdx = 0; rowIdx < matrix.getRowCount(); ++rowIdx) {
@@ -185,7 +141,7 @@ public class ParticipantTemplate {
                 if (colIdx == 0) {
                     cell.setCellStyle(keyStyle);
                 }
-                ExcelDriver.setCellValue(cell, matrix.get(rowIdx, colIdx), col.getType());
+                setCellValue(cell, matrix.get(rowIdx, colIdx), col.getType());
             }
             dy++;
         }

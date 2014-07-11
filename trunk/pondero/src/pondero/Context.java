@@ -58,8 +58,72 @@ public final class Context {
     private static boolean             updateOnStartup          = false;
     private static double              uiFontScaleFactor        = 1.25;
 
-    public static synchronized void initForTesting() throws Exception {
-        init(null);
+    public static Set<Artifact> getArtifacts() {
+        return ARTIFACTS;
+    }
+
+    public static Workbook getDefaultWorkbook() throws Exception {
+        return WorkbookFactory.openWorkbook(Context.getDefaultWorkbookFile());
+    }
+
+    public static File getDefaultWorkbookFile() {
+        return new File(getFolderResults(), DEFAULT_WORKBOOK_NAME);
+    }
+
+    public static File getFolderBin() {
+        return getFolder("bin");
+    }
+
+    public static File getFolderLogs() {
+        return getFolder("logs");
+    }
+
+    public static File getFolderRes() {
+        return getFolder("res");
+    }
+
+    public static File getFolderResults() {
+        return getFolder("results");
+    }
+
+    public static File getFolderResultsTemp() {
+        return getFolder("results/temp");
+    }
+
+    public static File getFolderTests() {
+        return getFolder("tests");
+    }
+
+    public static int getFrameRate() {
+        return FRAME_RATE;
+    }
+
+    public static File getLastWorkbookFile() {
+        if (lastWorkbookFile != null) { return lastWorkbookFile; }
+        return getDefaultWorkbookFile();
+    }
+
+    public static Locale getLocale() {
+        return new Locale(uiLocaleString);
+    }
+
+    public static List<Test> getRegisteredTests() {
+        final List<Test> tests = new ArrayList<Test>();
+        for (final Object artifact : ARTIFACTS) {
+            if (artifact instanceof Test) {
+                tests.add((Test) artifact);
+            }
+        }
+        Collections.sort(tests, new CodeNameComparator());
+        return tests;
+    }
+
+    public static String getThemeString() {
+        return uiThemeString;
+    }
+
+    public static double getUiFontScaleFactor() {
+        return uiFontScaleFactor;
     }
 
     public static synchronized void init(String homeFolderName) throws Exception {
@@ -143,76 +207,8 @@ public final class Context {
         }
     }
 
-    public static Set<Artifact> getArtifacts() {
-        return ARTIFACTS;
-    }
-
-    public static Workbook getDefaultWorkbook() throws Exception {
-        return WorkbookFactory.openWorkbook(Context.getDefaultWorkbookFile());
-    }
-
-    public static File getDefaultWorkbookFile() {
-        return new File(getFolderResults(), DEFAULT_WORKBOOK_NAME);
-    }
-
-    public static File getFolderBin() {
-        return getFolder("bin");
-    }
-
-    public static File getFolderLogs() {
-        return getFolder("logs");
-    }
-
-    public static File getFolderRes() {
-        return getFolder("res");
-    }
-
-    public static File getFolderResults() {
-        return getFolder("results");
-    }
-
-    public static File getFolderResultsBackup() {
-        return getFolder("results/backup");
-    }
-
-    public static File getFolderResultsReports() {
-        return getFolder("results/reports");
-    }
-
-    public static File getFolderResultsTemp() {
-        return getFolder("results/temp");
-    }
-
-    public static File getFolderTests() {
-        return getFolder("tests");
-    }
-
-    public static File getLastWorkbookFile() {
-        if (lastWorkbookFile != null) { return lastWorkbookFile; }
-        return getDefaultWorkbookFile();
-    }
-
-    public static Locale getLocale() {
-        return new Locale(uiLocaleString);
-    }
-
-    public static List<Test> getRegisteredTests() {
-        final List<Test> tests = new ArrayList<Test>();
-        for (final Object artifact : ARTIFACTS) {
-            if (artifact instanceof Test) {
-                tests.add((Test) artifact);
-            }
-        }
-        Collections.sort(tests, new CodeNameComparator());
-        return tests;
-    }
-
-    public static String getThemeString() {
-        return uiThemeString;
-    }
-
-    public static double getUiFontScaleFactor() {
-        return uiFontScaleFactor;
+    public static synchronized void initForTesting() throws Exception {
+        init(null);
     }
 
     public static boolean isBackupWorkbookOnOpen() {
@@ -285,10 +281,6 @@ public final class Context {
             error(e);
             return null;
         }
-    }
-
-    public static int getFrameRate() {
-        return FRAME_RATE;
     }
 
     private Context() {
