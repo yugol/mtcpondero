@@ -36,7 +36,7 @@ public class AnalyseParticipantAction extends PonderableAction {
                     final ParticipantTemplate pTemplate = new ParticipantTemplate();
                     new FillParticipantReport().fill(pTemplate, p, getCurrentWorkbook().getModel());
                     final String reportFileName = ParticipantTemplate.BASE_NAME + "-" + System.currentTimeMillis() + ExcelFileFilter.DEFAULT_EXTENSION;
-                    final File reportFile = new File(Context.getFolderResultsReports(), reportFileName);
+                    final File reportFile = new File(Context.getFolderResultsTemp(), reportFileName);
                     pTemplate.save(reportFile);
                     OsUtil.openFile(reportFile);
                 }
