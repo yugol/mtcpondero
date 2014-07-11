@@ -2,28 +2,17 @@
 CURRENT VERSION: 2014-07-27
 =====================================================================
 
-* tests
-
-
-* Export / Analysis / Reports
-
-
-* online catalogue
-- Actualizare... -> Catalog online...
-
-
-* packaging
-- primul caracter din textul licentei in programul de instalare este []
-- do not package tests with main application
-- setup: add location key in registry
-
-
-* documentation
-- replace Vuze picture from setup tutorial
-
-
-* MS Office integration
-
+Features still to be implemented:
+- Experiment type related reporting
+- About dialog
+- Online test catalogue support
+- Testing
+- Packaging
+    + primul caracter din textul licentei in programul de instalare este []
+    + do not package tests with main application
+    + setup: add location key in registry
+- Update documentation
+    + replace picture from setup tutorial
 
 
 =====================================================================
