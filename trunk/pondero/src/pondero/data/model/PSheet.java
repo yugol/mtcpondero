@@ -73,10 +73,6 @@ public abstract class PSheet {
         return rows.size();
     }
 
-    public void removeRows(final Collection<? extends PRow> records) {
-        rows.removeAll(records);
-    }
-
     public PColumn getSheet(final String name) {
         return getColumn(index(name));
     }
@@ -89,6 +85,14 @@ public abstract class PSheet {
             }
         }
         return name2index.get(name);
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void removeRows(final Collection<? extends PRow> records) {
+        rows.removeAll(records);
     }
 
     public void set(final int rowIdx, final int colIdx, final Object value) throws Exception {
@@ -229,7 +233,6 @@ public abstract class PSheet {
     }
 
     protected PRow addRow(final PRow row) throws Exception {
-        lock();
         rows.add(row);
         setDirty(true);
         return row;

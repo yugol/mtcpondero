@@ -11,12 +11,13 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import pondero.Context;
+import pondero.data.drivers.excel.ExcelFileFilter;
 import pondero.data.drivers.excel.templates.TestTemplate;
 import pondero.util.DateUtil;
 
 public class PTypesTest {
 
-    private static final File GEN_FILE = new File("./junit/pondero/data/model/gen.xlsx");
+    private static final File GEN_FILE = new File(PTypesTest.class.getSimpleName() + ExcelFileFilter.DEFAULT_EXTENSION);
 
     @BeforeClass
     public static void initContext() throws Exception {
@@ -35,11 +36,13 @@ public class PTypesTest {
         nowCal.setTimeInMillis(now);
 
         final TestModel source = new TestModel(GEN_FILE.getName());
-        TestSheet testSheet = source.getSheet();
+        TestSheet testSheet = source.getUnlockedSheet();
 
+        testSheet.addColumn(TestSheet.ATTR_STRING, PType.STRING);
         testSheet.addRow().setString(null);
         testSheet.addRow().setString("Lorem ipsum...");
 
+        testSheet.addColumn(TestSheet.ATTR_BOOLEAN, PType.BOOLEAN);
         testSheet.addRow().setBoolean(null);
         testSheet.addRow().setBoolean(false);
         testSheet.addRow().setBoolean(true);
@@ -51,9 +54,11 @@ public class PTypesTest {
         testSheet.addRow().setBoolean(0);
         testSheet.addRow().setBoolean(1);
 
+        testSheet.addColumn(TestSheet.ATTR_INT, PType.INT);
         testSheet.addRow().setInt(null);
         testSheet.addRow().setInt(now);
 
+        testSheet.addColumn(TestSheet.ATTR_DECIMAL, PType.DECIMAL);
         testSheet.addRow().setDecimal(null);
         testSheet.addRow().setDecimal((byte) 123.45);
         testSheet.addRow().setDecimal((short) 123.45);
@@ -71,6 +76,7 @@ public class PTypesTest {
         testSheet.addRow().setDecimal(BigDecimal.valueOf(123.45));
         testSheet.addRow().setDecimal("123.45");
 
+        testSheet.addColumn(TestSheet.ATTR_DATE, PType.DATE);
         testSheet.addRow().setDate(null);
         testSheet.addRow().setDate(now);
         testSheet.addRow().setDate(new Date(now));
@@ -78,6 +84,7 @@ public class PTypesTest {
         testSheet.addRow().setDate(nowCal);
         testSheet.addRow().setDate(DateUtil.toIsoDate(now));
 
+        testSheet.addColumn(TestSheet.ATTR_TIME, PType.TIME);
         testSheet.addRow().setTime(null);
         testSheet.addRow().setTime(now);
         testSheet.addRow().setTime(new Date(now));
@@ -85,6 +92,7 @@ public class PTypesTest {
         testSheet.addRow().setTime(nowCal);
         testSheet.addRow().setTime(DateUtil.toIsoTime(now));
 
+        testSheet.addColumn(TestSheet.ATTR_TIMESTAMP, PType.TIMESTAMP);
         testSheet.addRow().setTimestamp(null);
         testSheet.addRow().setTimestamp(now);
         testSheet.addRow().setTimestamp(new Date(now));
@@ -92,6 +100,7 @@ public class PTypesTest {
         testSheet.addRow().setTimestamp(nowCal);
         testSheet.addRow().setTimestamp(DateUtil.toIsoTimestamp(now));
 
+        testSheet.addColumn(TestSheet.ATTR_FORMULA, PType.FORMULA);
         testSheet.addRow().setFormula(null);
         testSheet.addRow().setFormula("SUM(1 + 1)");
 
@@ -103,7 +112,7 @@ public class PTypesTest {
         testSheet = model.getSheet();
         template.close();
 
-        // System.out.println(testSheet);
+        System.out.println(testSheet);
 
         int rowIdx = 0;
         assertNull(testSheet.getRow(rowIdx++).getString());

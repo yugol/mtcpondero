@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import pondero.util.BooleanUtil;
 import pondero.util.DateUtil;
 import pondero.util.NumberUtil;
@@ -12,16 +14,16 @@ import pondero.util.StringUtil;
 
 public abstract class PRow {
 
-    private final PSheet   sheet;
-    private final Object[] data;
+    private final PSheet       sheet;
+    private final List<Object> data;
 
     protected PRow(final PSheet sheet) {
         this.sheet = sheet;
-        data = new Object[sheet.getColumnCount()];
+        data = new ArrayList<Object>(sheet.getColumnCount());
     }
 
     public Boolean getBoolean(final int index) {
-        return (Boolean) data[index];
+        return (Boolean) data.get(index);
     }
 
     public Boolean getBoolean(final String name) {
@@ -29,8 +31,8 @@ public abstract class PRow {
     }
 
     public Date getDate(final int index) {
-        if (data[index] == null) { return null; }
-        return new Date((long) data[index]);
+        if (data.get(index) == null) { return null; }
+        return new Date((long) data.get(index));
     }
 
     public Date getDate(final String name) {
@@ -38,7 +40,7 @@ public abstract class PRow {
     }
 
     public BigDecimal getDecimal(final int index) {
-        return (BigDecimal) data[index];
+        return (BigDecimal) data.get(index);
     }
 
     public BigDecimal getDecimal(final String name) {
@@ -46,7 +48,7 @@ public abstract class PRow {
     }
 
     public String getString(final int index) {
-        return (String) data[index];
+        return (String) data.get(index);
     }
 
     public String getString(final String name) {
@@ -54,8 +56,8 @@ public abstract class PRow {
     }
 
     public Time getTime(final int index) {
-        if (data[index] == null) { return null; }
-        return new Time((long) data[index]);
+        if (data.get(index) == null) { return null; }
+        return new Time((long) data.get(index));
     }
 
     public Time getTime(final String name) {
@@ -63,8 +65,8 @@ public abstract class PRow {
     }
 
     public Timestamp getTimestamp(final int index) {
-        if (data[index] == null) { return null; }
-        return new Timestamp((long) data[index]);
+        if (data.get(index) == null) { return null; }
+        return new Timestamp((long) data.get(index));
     }
 
     public Timestamp getTimestamp(final String name) {
@@ -72,46 +74,46 @@ public abstract class PRow {
     }
 
     public void randomize() throws Exception {
-        for (int i = 0; i < data.length; ++i) {
+        for (int i = 0; i < sheet.getColumnCount(); ++i) {
             final PType type = sheet.getColumn(i).getType();
-            data[i] = type.next();
+            data.set(i, type.next());
         }
     }
 
     public Object set(final int index, final Object value) throws Exception {
         if (value == null) {
-            data[index] = null;
+            setRaw(index, null);
         } else {
             final PType type = sheet.getColumn(index).getType();
             switch (type) {
                 case STRING:
-                    data[index] = StringUtil.toCellString(value);
+                    setRaw(index, StringUtil.toCellString(value));
                     break;
                 case DECIMAL:
                 case INT:
-                    data[index] = NumberUtil.toDecimal(value);
+                    setRaw(index, NumberUtil.toDecimal(value));
                     break;
                 case BOOLEAN:
-                    data[index] = BooleanUtil.toBoolean(value);
+                    setRaw(index, BooleanUtil.toBoolean(value));
                     break;
                 case DATE:
-                    data[index] = DateUtil.toDateMillis(value);
+                    setRaw(index, DateUtil.toDateMillis(value));
                     break;
                 case TIME:
-                    data[index] = DateUtil.toTimeMillis(value);
+                    setRaw(index, DateUtil.toTimeMillis(value));
                     break;
                 case TIMESTAMP:
-                    data[index] = DateUtil.toTimestampMillis(value);
+                    setRaw(index, DateUtil.toTimestampMillis(value));
                     break;
                 case FORMULA:
-                    data[index] = StringUtil.toCellString(value);
+                    setRaw(index, StringUtil.toCellString(value));
                     break;
                 default:
                     throw new IllegalArgumentException("Unsupported type " + value.getClass().getName());
             }
         }
         sheet.setDirty(true);
-        return data[index];
+        return get(index);
     }
 
     public Object set(final String name, final Object value) throws Exception {
@@ -122,12 +124,24 @@ public abstract class PRow {
         return toString();
     }
 
+    private void ensureIndex(final int index) {
+        while (data.size() <= index) {
+            data.add(null);
+        }
+    }
+
+    private void setRaw(final int index, final Object value) {
+        ensureIndex(index);
+        data.set(index, value);
+    }
+
     protected Object get(final int index) {
-        return data[index];
+        ensureIndex(index);
+        return data.get(index);
     }
 
     protected Object get(final String name) {
-        return data[sheet.index(name)];
+        return get(sheet.index(name));
     }
 
     protected Calendar getCalendar(final int index) throws Exception {
