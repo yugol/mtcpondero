@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Date;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -19,6 +21,10 @@ public class ParticipantTemplate {
     public static final String BASE_NAME = "participant-data";
 
     private final XSSFWorkbook template;
+    private final CellStyle    headerStyle;
+    private final CellStyle    labelStyle;
+    private final CellStyle    keyStyle;
+
     private WorkbookLocation   responsesLocation;
     private WorkbookLocation   timesLocation;
 
@@ -27,9 +33,34 @@ public class ParticipantTemplate {
         try (InputStream templateStream = ParticipantTemplate.class.getResourceAsStream(path)) {
             template = new XSSFWorkbook(templateStream);
         }
+
+        final Font headerFont = template.createFont();
+        headerFont.setItalic(true);
+        headerStyle = template.createCellStyle();
+        headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+        headerStyle.setFont(headerFont);
+        headerStyle.setWrapText(false);
+
+        final Font labelFont = template.createFont();
+        labelFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        labelStyle = template.createCellStyle();
+        labelStyle.setFillPattern(CellStyle.THIN_FORWARD_DIAG);
+        labelStyle.setFont(labelFont);
+        labelStyle.setWrapText(false);
+
+        keyStyle = template.createCellStyle();
+        keyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+        keyStyle.setDataFormat(template.getCreationHelper().createDataFormat().getFormat("0"));
+        keyStyle.setWrapText(false);
     }
 
     public void save(final File reportFile) throws Exception {
+        if (responsesLocation != null) {
+            responsesLocation.getSheet().autoSizeColumn(responsesLocation.getColIdx() + 1);
+        }
+        if (timesLocation != null) {
+            timesLocation.getSheet().autoSizeColumn(timesLocation.getColIdx() + 1);
+        }
         try (FileOutputStream fileOut = new FileOutputStream(reportFile)) {
             template.write(fileOut);
         }
@@ -108,13 +139,20 @@ public class ParticipantTemplate {
         if (sRow == null) {
             sRow = sheet.createRow(dy);
         }
+        Cell cell = sRow.getCell(dx);
+        if (cell == null) {
+            cell = sRow.createCell(dx);
+        }
+        cell.setCellStyle(headerStyle);
+        ExcelDriver.setCellValue(cell, "", PType.STRING);
         for (int colIdx = 0; colIdx < matrix.getColumnCount(); ++colIdx) {
             final PColumn col = matrix.getColumn(colIdx);
             final int cellIdx = dx + 1 + colIdx;
-            Cell cell = sRow.getCell(cellIdx);
+            cell = sRow.getCell(cellIdx);
             if (cell == null) {
                 cell = sRow.createCell(cellIdx);
             }
+            cell.setCellStyle(headerStyle);
             ExcelDriver.setCellValue(cell, col.getName(), PType.STRING);
         }
 
@@ -124,10 +162,11 @@ public class ParticipantTemplate {
         if (sRow == null) {
             sRow = sheet.createRow(dy);
         }
-        Cell cell = sRow.getCell(dx);
+        cell = sRow.getCell(dx);
         if (cell == null) {
             cell = sRow.createCell(dx);
         }
+        cell.setCellStyle(labelStyle);
         ExcelDriver.setCellValue(cell, matrix.getName(), PType.STRING);
 
         // render responses
@@ -142,6 +181,9 @@ public class ParticipantTemplate {
                 cell = sRow.getCell(cellIdx);
                 if (cell == null) {
                     cell = sRow.createCell(cellIdx);
+                }
+                if (colIdx == 0) {
+                    cell.setCellStyle(keyStyle);
                 }
                 ExcelDriver.setCellValue(cell, matrix.get(rowIdx, colIdx), col.getType());
             }

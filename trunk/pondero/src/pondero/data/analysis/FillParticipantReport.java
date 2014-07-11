@@ -41,7 +41,6 @@ public class FillParticipantReport {
                     }
                 }
                 template.addResponses(responseMatrix);
-                template.addResponses(responseMatrix);
                 template.addTimes(timeMatrix);
             }
         }
