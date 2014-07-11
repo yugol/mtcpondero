@@ -1,5 +1,6 @@
 2014-07-27
 ==========
+- refactored data model
 - automated acceptance testing framework
 - workbook = model + driver
 - added application preferences dialog

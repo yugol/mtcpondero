@@ -3,7 +3,6 @@ CURRENT VERSION: 2014-07-27
 =====================================================================
 
 * tests
-- collecting user datas
 
 
 * Export / Analysis / Reports
