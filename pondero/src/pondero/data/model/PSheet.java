@@ -243,7 +243,9 @@ public abstract class PSheet {
     }
 
     void setDirty(final boolean flag) throws Exception {
-        model.setDirty(flag);
+        if (model != null) {
+            model.setDirty(flag);
+        }
     }
 
 }
