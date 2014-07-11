@@ -18,7 +18,6 @@ public final class Logger {
     public static int          maxConsoleLevel = INFO;
     public static int          maxFileLevel    = TRACE;
 
-    private static final File  LOG_FILE        = new File(Context.getFolderLogs(), buildLogFileName());
     private static PrintStream logFileOut;
 
     public static void critical(final Object... obj) {
@@ -90,6 +89,7 @@ public final class Logger {
     private static PrintStream log() {
         if (logFileOut == null) {
             try {
+                final File LOG_FILE = new File(Context.getFolderLogs(), buildLogFileName());
                 logFileOut = new PrintStream(LOG_FILE);
             } catch (final FileNotFoundException e) {
                 e.printStackTrace();
@@ -164,8 +164,10 @@ public final class Logger {
         }
         if (maxFileLevel > NONE) {
             final PrintStream out = log();
-            justPrintTheDamnThing(out, logEntry.toString(), t);
-            out.flush();
+            if (out != null) {
+                justPrintTheDamnThing(out, logEntry.toString(), t);
+                out.flush();
+            }
         }
     }
 

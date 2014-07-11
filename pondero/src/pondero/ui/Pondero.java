@@ -41,6 +41,7 @@ import pondero.tests.TestLoader;
 import pondero.tests.test.Test;
 import pondero.ui.actions.AddParticipantAction;
 import pondero.ui.actions.AnalyseParticipantAction;
+import pondero.ui.actions.AnalyseTestAction;
 import pondero.ui.actions.HomePageAction;
 import pondero.ui.actions.ModifyParticipantAction;
 import pondero.ui.actions.OpenDocumentAction;
@@ -114,6 +115,7 @@ public class Pondero implements Ponderable, PModelListener {
     // Actions
     private final Action             addParticipantAction     = new AddParticipantAction(this);
     private final Action             analyseParticipantAction = new AnalyseParticipantAction(this);
+    private final Action             analyseTestAction        = new AnalyseTestAction(this);
     private final Action             homePageAction           = new HomePageAction(this);
     private final Action             modifyParticipantAction  = new ModifyParticipantAction(this);
     private final Action             quitAction               = new QuitAction(this);
@@ -231,8 +233,8 @@ public class Pondero implements Ponderable, PModelListener {
             }
             statusBar.setMessage(StatusBar.DEFAULT,
                     L10n.getString("lbl.data-register")
-                    + ": " + currentWorkbook.getName()
-                    + (currentWorkbook.isDirty() ? " *" : ""));
+                            + ": " + currentWorkbook.getName()
+                            + (currentWorkbook.isDirty() ? " *" : ""));
         }
         currentState = state;
     }
@@ -286,19 +288,19 @@ public class Pondero implements Ponderable, PModelListener {
         final JMenu mnApplication = new JMenu(" " + L10n.getString("lbl.application") + " ");
         menuBar.add(mnApplication);
 
-        mntmPreferences = new JMenuItem("preferences");
+        mntmPreferences = new JMenuItem();
         mntmPreferences.setAction(setPreferencesAction);
         mnApplication.add(mntmPreferences);
 
         mnApplication.addSeparator();
 
-        final JMenuItem mntmUpdate = new JMenuItem("update");
+        final JMenuItem mntmUpdate = new JMenuItem();
         mntmUpdate.setAction(updateAction);
         mnApplication.add(mntmUpdate);
 
         mnApplication.addSeparator();
 
-        final JMenuItem mntmQuit = new JMenuItem("quit");
+        final JMenuItem mntmQuit = new JMenuItem();
         mntmQuit.setName(MENU_ITEM_QUIT_NAME);
         mntmQuit.setAction(quitAction);
         mnApplication.add(mntmQuit);
@@ -306,40 +308,41 @@ public class Pondero implements Ponderable, PModelListener {
         final JMenu mnData = new JMenu(" " + L10n.getString("lbl.registers") + " ");
         menuBar.add(mnData);
 
-        final JMenuItem mntmOpen = new JMenuItem("open");
+        final JMenuItem mntmOpen = new JMenuItem();
         mntmOpen.setAction(openDocumentAction);
         mnData.add(mntmOpen);
 
-        mntmView = new JMenuItem("view");
+        mntmView = new JMenuItem();
         mntmView.setAction(runDocument);
         mnData.add(mntmView);
 
         mnData.addSeparator();
 
-        mntmSave = new JMenuItem("save");
+        mntmSave = new JMenuItem();
         mntmSave.setAction(saveDocument);
         mnData.add(mntmSave);
 
-        mntmSaveas = new JMenuItem("saveAs");
+        mntmSaveas = new JMenuItem();
         mntmSaveas.setAction(saveAsDocument);
         mnData.add(mntmSaveas);
 
         mnAnalysis = new JMenu(" " + L10n.getString("lbl.analysis") + " ");
         menuBar.add(mnAnalysis);
 
-        mntmParticipant = new JMenuItem(""); //$NON-NLS-1$
+        mntmParticipant = new JMenuItem();
         mntmParticipant.setAction(analyseParticipantAction);
         mnAnalysis.add(mntmParticipant);
 
         mnAnalysis.addSeparator();
 
-        mntmTest = new JMenuItem(L10n.getString("lbl.test")); //$NON-NLS-1$
+        mntmTest = new JMenuItem();
+        mntmTest.setAction(analyseTestAction);
         mnAnalysis.add(mntmTest);
 
         final JMenu mnHelp = new JMenu(" " + L10n.getString("lbl.help") + " ");
         menuBar.add(mnHelp);
 
-        final JMenuItem mntmHomepage = new JMenuItem("homePage");
+        final JMenuItem mntmHomepage = new JMenuItem();
         mntmHomepage.setAction(homePageAction);
         mnHelp.add(mntmHomepage);
 

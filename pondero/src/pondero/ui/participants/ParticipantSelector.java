@@ -24,6 +24,7 @@ import pondero.L10n;
 import pondero.data.Workbook;
 import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.Participants;
+import pondero.ui.DialogSelectionListener;
 import pondero.util.StringUtil;
 import pondero.util.UiUtil;
 
@@ -35,7 +36,7 @@ public class ParticipantSelector extends JComponent {
     private Participants                             participants;
     private final JTextField                         textPattern;
     private final JTable                             tblParticipants;
-    private final List<ParticipantSelectionListener> selectionListeners  = new ArrayList<ParticipantSelectionListener>();
+    private final List<DialogSelectionListener> selectionListeners  = new ArrayList<DialogSelectionListener>();
     private Participant                              selectedParticipant;
 
     public ParticipantSelector(final Workbook wb) throws Exception {
@@ -112,7 +113,7 @@ public class ParticipantSelector extends JComponent {
                     final int index = tblParticipants.getSelectedRow();
                     setSelectedIndex(index);
                     final ListSelectionEvent listEvet = new ListSelectionEvent(ParticipantSelector.this, index, index, false);
-                    for (final ParticipantSelectionListener listener : selectionListeners) {
+                    for (final DialogSelectionListener listener : selectionListeners) {
                         listener.valueChosen(listEvet);
                     }
                 }
@@ -132,7 +133,7 @@ public class ParticipantSelector extends JComponent {
         setWorkbook(wb);
     }
 
-    public void addListSelectionListener(final ParticipantSelectionListener listSelectionListener) {
+    public void addListSelectionListener(final DialogSelectionListener listSelectionListener) {
         selectionListeners.add(listSelectionListener);
     }
 
