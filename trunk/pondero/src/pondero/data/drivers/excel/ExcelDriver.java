@@ -262,7 +262,7 @@ public abstract class ExcelDriver extends Driver {
         return null;
     }
 
-    protected void setCellValue(final Cell cell, final Object value, final PType pType) {
+    public static void setCellValue(final Cell cell, final Object value, final PType pType) {
         if (value != null) {
             switch (pType) {
                 case STRING:

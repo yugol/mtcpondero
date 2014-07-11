@@ -5,21 +5,26 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Date;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Name;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.util.AreaReference;
-import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import pondero.data.analysis.PMatrix;
+import pondero.data.drivers.excel.ExcelDriver;
+import pondero.data.drivers.excel.ExcelFileFilter;
+import pondero.data.model.PColumn;
+import pondero.data.model.PType;
 
 public class ParticipantTemplate {
 
     public static final String BASE_NAME = "participant-data";
 
     private final XSSFWorkbook template;
+    private WorkbookLocation   responsesLocation;
+    private WorkbookLocation   timesLocation;
 
     public ParticipantTemplate() throws Exception {
-        try (InputStream templateStream = ParticipantTemplate.class.getResourceAsStream("/pondero/data/drivers/excel/templates/participant/participant-data.xlsx")) {
+        final String path = "/" + ParticipantTemplate.class.getPackage().getName().replace(".", "/") + "/participant-data" + ExcelFileFilter.DEFAULT_EXTENSION;
+        try (InputStream templateStream = ParticipantTemplate.class.getResourceAsStream(path)) {
             template = new XSSFWorkbook(templateStream);
         }
     }
@@ -59,17 +64,14 @@ public class ParticipantTemplate {
     }
 
     protected void setFieldValue(final String fieldName, final Object fieldValue) {
-        final Name namedCell = template.getNameAt(template.getNameIndex(fieldName));
-        final AreaReference aref = new AreaReference(namedCell.getRefersToFormula());
-        final CellReference cellReference = aref.getFirstCell();
-        final Sheet sheet = template.getSheet(cellReference.getSheetName());
-        Row row = sheet.getRow(cellReference.getRow());
+        final WorkbookLocation loc = new WorkbookLocation(template, fieldName);
+        Row row = loc.getSheet().getRow(loc.getRowIdx());
         if (row == null) {
-            row = sheet.createRow(cellReference.getRow());
+            row = loc.getSheet().createRow(loc.getRowIdx());
         }
-        Cell cell = row.getCell(cellReference.getCol());
+        Cell cell = row.getCell(loc.getColIdx());
         if (cell == null) {
-            cell = row.createCell(cellReference.getCol());
+            cell = row.createCell(loc.getColIdx());
         }
         if (fieldValue == null) {
             cell.setCellValue("");
@@ -80,6 +82,74 @@ public class ParticipantTemplate {
         } else if (fieldValue instanceof Date) {
             cell.setCellValue((Date) fieldValue);
         }
+    }
+
+    public void addResponses(final PMatrix responseMatrix) {
+        if (responsesLocation == null) {
+            responsesLocation = new WorkbookLocation(template, "participantResponses");
+        }
+        renderTable(responsesLocation, responseMatrix);
+    }
+
+    public void addTimes(final PMatrix timeMatrix) {
+        if (timesLocation == null) {
+            timesLocation = new WorkbookLocation(template, "participantTimes");
+        }
+        renderTable(timesLocation, timeMatrix);
+    }
+
+    private void renderTable(final WorkbookLocation loc, final PMatrix matrix) {
+        final Sheet sheet = loc.getSheet();
+        final int dx = loc.getColIdx();
+        int dy = loc.getRowIdx();
+
+        // render heading
+        Row sRow = sheet.getRow(dy);
+        if (sRow == null) {
+            sRow = sheet.createRow(dy);
+        }
+        for (int colIdx = 0; colIdx < matrix.getColumnCount(); ++colIdx) {
+            final PColumn col = matrix.getColumn(colIdx);
+            final int cellIdx = dx + 1 + colIdx;
+            Cell cell = sRow.getCell(cellIdx);
+            if (cell == null) {
+                cell = sRow.createCell(cellIdx);
+            }
+            ExcelDriver.setCellValue(cell, col.getName(), PType.STRING);
+        }
+
+        // render table/test name
+        dy++;
+        sRow = sheet.getRow(dy);
+        if (sRow == null) {
+            sRow = sheet.createRow(dy);
+        }
+        Cell cell = sRow.getCell(dx);
+        if (cell == null) {
+            cell = sRow.createCell(dx);
+        }
+        ExcelDriver.setCellValue(cell, matrix.getName(), PType.STRING);
+
+        // render responses
+        for (int rowIdx = 0; rowIdx < matrix.getRowCount(); ++rowIdx) {
+            sRow = sheet.getRow(dy);
+            if (sRow == null) {
+                sRow = sheet.createRow(dy);
+            }
+            for (int colIdx = 0; colIdx < matrix.getColumnCount(); ++colIdx) {
+                final PColumn col = matrix.getColumn(colIdx);
+                final int cellIdx = dx + 1 + colIdx;
+                cell = sRow.getCell(cellIdx);
+                if (cell == null) {
+                    cell = sRow.createCell(cellIdx);
+                }
+                ExcelDriver.setCellValue(cell, matrix.get(rowIdx, colIdx), col.getType());
+            }
+            dy++;
+        }
+
+        // set location for the next table
+        loc.setRowIdx(dy + 1);
     }
 
 }
