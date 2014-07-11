@@ -40,8 +40,9 @@ public class FillParticipantReport {
                         reportRow.set(colIdx, record.getResponseTime());
                     }
                 }
-                System.out.println(responseMatrix);
-                System.out.println(timeMatrix);
+                template.addResponses(responseMatrix);
+                template.addResponses(responseMatrix);
+                template.addTimes(timeMatrix);
             }
         }
     }
