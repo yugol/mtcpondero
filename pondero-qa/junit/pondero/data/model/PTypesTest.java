@@ -8,26 +8,20 @@ import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import pondero.Context;
+import pondero.PonderoTest;
 import pondero.data.drivers.excel.ExcelFileFilter;
 import pondero.data.drivers.excel.templates.TestTemplate;
 import pondero.util.DateUtil;
 
-public class PTypesTest {
-
-    private static final File GEN_FILE = new File(PTypesTest.class.getSimpleName() + ExcelFileFilter.DEFAULT_EXTENSION);
-
-    @BeforeClass
-    public static void initContext() throws Exception {
-        Context.initForTesting();
-    }
+public class PTypesTest extends PonderoTest {
 
     @AfterClass
     public static void cleanup() throws Exception {
         GEN_FILE.deleteOnExit();
     }
+
+    private static final File GEN_FILE = new File(PTypesTest.class.getSimpleName() + ExcelFileFilter.DEFAULT_EXTENSION);
 
     @Test
     public void testWrite() throws Exception {

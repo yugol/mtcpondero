@@ -7,19 +7,6 @@ import pondero.util.DateUtil;
 
 public final class Logger {
 
-    public static final int    NONE            = 0;
-    public static final int    CRITICAL        = 10;
-    public static final int    ERROR           = 20;
-    public static final int    WARNING         = 30;
-    public static final int    INFO            = 40;
-    public static final int    DEBUG           = 50;
-    public static final int    TRACE           = 60;
-
-    public static int          maxConsoleLevel = INFO;
-    public static int          maxFileLevel    = TRACE;
-
-    private static PrintStream logFileOut;
-
     public static void critical(final Object... obj) {
         log(CRITICAL, null, obj);
     }
@@ -170,6 +157,19 @@ public final class Logger {
             }
         }
     }
+
+    public static final int    NONE            = 0;
+    public static final int    CRITICAL        = 10;
+    public static final int    ERROR           = 20;
+    public static final int    WARNING         = 30;
+    public static final int    INFO            = 40;
+    public static final int    DEBUG           = 50;
+    public static final int    TRACE           = 60;
+
+    public static int          maxConsoleLevel = INFO;
+    public static int          maxFileLevel    = NONE;
+
+    private static PrintStream logFileOut;
 
     private Logger() {
     }

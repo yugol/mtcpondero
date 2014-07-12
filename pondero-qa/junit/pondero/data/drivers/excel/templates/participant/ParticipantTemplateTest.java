@@ -2,25 +2,19 @@ package pondero.data.drivers.excel.templates.participant;
 
 import java.io.File;
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import pondero.Context;
+import pondero.PonderoTest;
 import pondero.data.domains.Gender;
 import pondero.data.drivers.excel.ExcelFileFilter;
 
-public class ParticipantTemplateTest {
-
-    private static final File REPORT_FILE = new File(ParticipantTemplateTest.class.getSimpleName() + ExcelFileFilter.DEFAULT_EXTENSION);
-
-    @BeforeClass
-    public static void initContext() throws Exception {
-        Context.initForTesting();
-    }
+public class ParticipantTemplateTest extends PonderoTest {
 
     @AfterClass
     public static void cleanupContext() {
         REPORT_FILE.deleteOnExit();
     }
+
+    private static final File REPORT_FILE = new File(ParticipantTemplateTest.class.getSimpleName() + ExcelFileFilter.DEFAULT_EXTENSION);
 
     @Test
     public void testSetParticipantName() throws Exception {

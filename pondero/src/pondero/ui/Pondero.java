@@ -38,6 +38,7 @@ import pondero.data.model.PModelListener;
 import pondero.data.model.basic.Participant;
 import pondero.tests.TestLoader;
 import pondero.tests.test.Test;
+import pondero.ui.actions.AboutAction;
 import pondero.ui.actions.AddParticipantAction;
 import pondero.ui.actions.AnalyseParticipantAction;
 import pondero.ui.actions.AnalyseTestAction;
@@ -59,19 +60,9 @@ import pondero.util.UiUtil;
 
 public class Pondero implements Ponderable, PModelListener {
 
-    public static final String BUTTON_ADD_NAME         = "addButton";
-    public static final String BUTTON_BACK_NAME        = "backButton";
-    public static final String BUTTON_MODIFY_NAME      = "modifyButton";
-    public static final String BUTTON_NEXT_NAME        = "nextButton";
-    public static final String BUTTON_SELECT_NAME      = "selectButton";
-    public static final String BUTTON_START_NAME       = "startButton";
-    public static final String MAIN_FRAME_NAME         = "ponderoMainFrame";
-    public static final String MENU_ITEM_QUIT_NAME     = "quitMenuItem";
-    public static final String REPORT_PARTICIPANT_NAME = "participantReport";
-
     /**
      * Launch the application.
-     * 
+     *
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
@@ -105,6 +96,16 @@ public class Pondero implements Ponderable, PModelListener {
         return app;
     }
 
+    public static final String       BUTTON_ADD_NAME          = "addButton";
+    public static final String       BUTTON_BACK_NAME         = "backButton";
+    public static final String       BUTTON_MODIFY_NAME       = "modifyButton";
+    public static final String       BUTTON_NEXT_NAME         = "nextButton";
+    public static final String       BUTTON_SELECT_NAME       = "selectButton";
+    public static final String       BUTTON_START_NAME        = "startButton";
+    public static final String       MAIN_FRAME_NAME          = "ponderoMainFrame";
+    public static final String       MENU_ITEM_QUIT_NAME      = "quitMenuItem";
+    public static final String       REPORT_PARTICIPANT_NAME  = "participantReport";
+
     // Essentials
     private PonderoState             currentState;
     private Workbook                 currentWorkbook;
@@ -112,6 +113,7 @@ public class Pondero implements Ponderable, PModelListener {
     private Test                     currentTask;
 
     // Actions
+    private final Action             aboutAction              = new AboutAction(this);
     private final Action             addParticipantAction     = new AddParticipantAction(this);
     private final Action             analyseParticipantAction = new AnalyseParticipantAction(this);
     private final Action             analyseTestAction        = new AnalyseTestAction(this);
@@ -139,6 +141,7 @@ public class Pondero implements Ponderable, PModelListener {
     private JLabel                   lblPageHint;
     private JLabel                   lblPageTitle;
     private JMenu                    mnAnalysis;
+    private JMenuItem                mntmAbout;
     private JMenuItem                mntmParticipant;
     private JMenuItem                mntmPreferences;
     private JMenuItem                mntmSave;
@@ -150,7 +153,7 @@ public class Pondero implements Ponderable, PModelListener {
 
     /**
      * Create the application.
-     * 
+     *
      * @throws Exception
      */
     public Pondero() throws Exception {
@@ -232,8 +235,8 @@ public class Pondero implements Ponderable, PModelListener {
             }
             statusBar.setMessage(StatusBar.DEFAULT,
                     L10n.getString("lbl.data-register")
-                            + ": " + currentWorkbook.getName()
-                            + (currentWorkbook.isDirty() ? " *" : ""));
+                    + ": " + currentWorkbook.getName()
+                    + (currentWorkbook.isDirty() ? " *" : ""));
         }
         currentState = state;
     }
@@ -286,6 +289,10 @@ public class Pondero implements Ponderable, PModelListener {
 
         final JMenu mnApplication = new JMenu(" " + L10n.getString("lbl.application") + " ");
         menuBar.add(mnApplication);
+
+        mntmAbout = new JMenuItem(L10n.getString("Pondero.mntmAbout.text")); //$NON-NLS-1$
+        mntmAbout.setAction(aboutAction);
+        mnApplication.add(mntmAbout);
 
         mntmPreferences = new JMenuItem();
         mntmPreferences.setAction(setPreferencesAction);
@@ -515,5 +522,4 @@ public class Pondero implements Ponderable, PModelListener {
         statusBar = new StatusBar();
         mainFrame.getContentPane().add(statusBar, BorderLayout.SOUTH);
     }
-
 }
