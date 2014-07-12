@@ -1,23 +1,25 @@
 package pondero.tests.update;
 
 import static pondero.Logger.error;
-import pondero.tests.update.Artifact;
-import pondero.tests.update.UpdateEngine;
-import pondero.tests.update.UpdateListener;
-import pondero.tests.update.Updates;
+import pondero.PonderoTest;
 
-public class UpdaterTest {
+public class UpdaterTest extends PonderoTest {
+
+    public static void main(final String... args) {
+        updater.addListener(new UpdaterTest().new UpdateLogger());
+        updater.readUpdates();
+    }
 
     class UpdateLogger implements UpdateListener {
 
         @Override
-        public void readRegistryEnded(Updates applicableUpdates) {
+        public void readRegistryEnded(final Updates applicableUpdates) {
             System.out.println("readRegistryEnded " + applicableUpdates.size());
             updater.downloadUpdates(applicableUpdates);
         }
 
         @Override
-        public void readRegistryFailed(Exception e) {
+        public void readRegistryFailed(final Exception e) {
             System.out.println("readRegistryFailed");
             error(e);
         }
@@ -28,18 +30,18 @@ public class UpdaterTest {
         }
 
         @Override
-        public void updateArtifactEnded(Artifact update) {
+        public void updateArtifactEnded(final Artifact update) {
             System.out.println("updateArtifactEnded " + update.getCodeName());
         }
 
         @Override
-        public void updateArtifactFailed(Artifact update, Exception e) {
+        public void updateArtifactFailed(final Artifact update, final Exception e) {
             System.out.println("updateArtifactFailed");
             error(e);
         }
 
         @Override
-        public void updateArtifactStarted(Artifact update) {
+        public void updateArtifactStarted(final Artifact update) {
             System.out.println("updateArtifactStarted " + update.getCodeName());
         }
 
@@ -49,17 +51,12 @@ public class UpdaterTest {
         }
 
         @Override
-        public void updateProcessStarted(int updateCount) {
+        public void updateProcessStarted(final int updateCount) {
             System.out.println("updateProcessStarted " + updateCount);
         }
 
     }
 
     static UpdateEngine updater = new UpdateEngine();
-
-    public static void main(String... args) {
-        updater.addListener(new UpdaterTest().new UpdateLogger());
-        updater.readUpdates();
-    }
 
 }

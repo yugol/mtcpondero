@@ -1,8 +1,9 @@
 package pondero.data.model.basic;
 
 import org.junit.Test;
+import pondero.PonderoTest;
 
-public class BasicModelTest {
+public class BasicModelTest extends PonderoTest {
 
     @Test
     public void testParticipants() throws Exception {

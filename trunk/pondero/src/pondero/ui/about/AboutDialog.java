@@ -4,9 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -20,19 +26,20 @@ import javax.swing.border.TitledBorder;
 import pondero.Context;
 import pondero.L10n;
 import pondero.util.OsUtil;
+import pondero.util.WebUtil;
 
 @SuppressWarnings("serial")
 public class AboutDialog extends JDialog {
 
     /**
      * Launch the application.
-     * 
+     *
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
         Context.initForTesting();
         try {
-            final AboutDialog dialog = new AboutDialog();
+            final AboutDialog dialog = new AboutDialog(null);
             dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
         } catch (final Exception e) {
@@ -49,12 +56,15 @@ public class AboutDialog extends JDialog {
     /**
      * Create the dialog.
      */
-    public AboutDialog() {
+    public AboutDialog(final Frame owner) {
+        super(owner);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(AboutDialog.class.getResource("/pondero/res/pondero-48x48.png")));
         setTitle(L10n.getString("lbl.about")); //$NON-NLS-1$
         setResizable(false);
         setBounds(100, 100, (int) (450 * Context.getUiFontScaleFactor()), (int) (400 * Context.getUiFontScaleFactor()));
         getContentPane().setLayout(new BorderLayout());
-        contentPanel.setBorder(new EmptyBorder(20, 20, 5, 20));
+        contentPanel.setBorder(new EmptyBorder(20, 20, 0, 20));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(new BorderLayout(0, 0));
         {
@@ -111,6 +121,14 @@ public class AboutDialog extends JDialog {
             }
             {
                 final JLabel lblMail = new JLabel(getMailLink());
+                lblMail.addMouseListener(new MouseAdapter() {
+
+                    @Override
+                    public void mouseClicked(final MouseEvent e) {
+                        WebUtil.sendAboutMail();
+                    }
+
+                });
                 lblMail.setFont(lblMail.getFont().deriveFont(1.1f * lblMail.getFont().getSize()));
                 lblMail.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 final GridBagConstraints gbc_lblMail = new GridBagConstraints();
@@ -140,13 +158,23 @@ public class AboutDialog extends JDialog {
         }
         {
             final JPanel buttonPane = new JPanel();
+            buttonPane.setBorder(new EmptyBorder(5, 0, 10, 15));
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
                 final JButton okButton = new JButton(L10n.getString("lbl.close"));
+                okButton.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(final ActionEvent e) {
+                        AboutDialog.this.dispose();
+                    }
+
+                });
                 buttonPane.add(okButton);
                 getRootPane().setDefaultButton(okButton);
             }
         }
     }
+
 }

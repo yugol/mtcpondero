@@ -6,9 +6,15 @@ import java.awt.Window;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JTextField;
+import org.junit.BeforeClass;
 import pondero.ui.Pondero;
 
 public class PonderoTest {
+
+    @BeforeClass
+    public static void initContext() throws Exception {
+        Context.initForTesting();
+    }
 
     private int counter = 0;
 

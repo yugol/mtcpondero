@@ -28,37 +28,6 @@ import pondero.util.StringUtil;
 
 public final class Context {
 
-    public static final String                 PURL_HOME                = "http://www.purl.org";
-    public static final String                 HOME_PAGE_ADDRESS        = PURL_HOME + "/net/pondero/home";
-    public static final String                 UPDATE_REGISTRY_ADDRESS  = PURL_HOME + "/net/pondero/update/registry.xml";
-    public static final String                 CONTACT_MAIL_ADDRESS     = "mindtrips.communications@gmail.com";
-
-    private static final String                CONSOLE_LOG_LEVEL_KEY    = "consoleLogLevel";
-    private static final String                FILE_LOG_LEVEL_KEY       = "fileLogLevel";
-    private static final String                LAST_WORKBOOK_FILE_KEY   = "lastWorkbookFile";
-    private static final String                UI_LOCALE_STRING_KEY     = "uilocaleString";
-    private static final String                UI_THEME_STRING_KEY      = "uiThemeString";
-    private static final String                UI_SCALE_FACTOR_KEY      = "uiFontScaleFactor";
-    private static final String                UPDATE_ON_STARTUP_KEY    = "updateOnStartup";
-    private static final String                PROPERTIES_FILE_NAME     = "pondero.properties";
-
-    private static final String                DEFAULT_HOME_FOLDER_NAME = "../../Pondero";
-    private static final String                DEFAULT_WORKBOOK_NAME    = "default.xlsx";
-
-    private static final int                   FRAME_RATE               = 15;
-
-    private static final Map<String, Artifact> ARTIFACTS                = new LinkedHashMap<String, Artifact>();
-
-    private static boolean                     runningFromIde;
-    private static File                        homeFolder;
-    private static File                        propertiesFile;
-    private static File                        lastWorkbookFile;
-
-    private static String                      uiLocaleString           = "ro";
-    private static String                      uiThemeString            = "Nimbus";
-    private static boolean                     updateOnStartup          = false;
-    private static double                      uiFontScaleFactor        = 1.25;
-
     public static Collection<Artifact> getArtifacts() {
         return ARTIFACTS.values();
     }
@@ -288,6 +257,37 @@ public final class Context {
             return null;
         }
     }
+
+    public static final String                 PURL_HOME                = "http://www.purl.org";
+    public static final String                 HOME_PAGE_ADDRESS        = PURL_HOME + "/net/pondero/home";
+    public static final String                 UPDATE_REGISTRY_ADDRESS  = PURL_HOME + "/net/pondero/update/registry.xml";
+    public static final String                 CONTACT_MAIL_ADDRESS     = "mindtrips.communications@gmail.com";
+
+    private static final String                CONSOLE_LOG_LEVEL_KEY    = "consoleLogLevel";
+    private static final String                FILE_LOG_LEVEL_KEY       = "fileLogLevel";
+    private static final String                LAST_WORKBOOK_FILE_KEY   = "lastWorkbookFile";
+    private static final String                UI_LOCALE_STRING_KEY     = "uilocaleString";
+    private static final String                UI_THEME_STRING_KEY      = "uiThemeString";
+    private static final String                UI_SCALE_FACTOR_KEY      = "uiFontScaleFactor";
+    private static final String                UPDATE_ON_STARTUP_KEY    = "updateOnStartup";
+    private static final String                PROPERTIES_FILE_NAME     = "pondero.properties";
+
+    private static final String                DEFAULT_HOME_FOLDER_NAME = "../../Pondero";
+    private static final String                DEFAULT_WORKBOOK_NAME    = "default.xlsx";
+
+    private static final int                   FRAME_RATE               = 15;
+
+    private static final Map<String, Artifact> ARTIFACTS                = new LinkedHashMap<String, Artifact>();
+
+    private static boolean                     runningFromIde;
+    private static File                        homeFolder;
+    private static File                        propertiesFile;
+    private static File                        lastWorkbookFile;
+
+    private static String                      uiLocaleString           = "ro";
+    private static String                      uiThemeString            = "Nimbus";
+    private static boolean                     updateOnStartup          = false;
+    private static double                      uiFontScaleFactor        = 1.25;
 
     private Context() {
     }

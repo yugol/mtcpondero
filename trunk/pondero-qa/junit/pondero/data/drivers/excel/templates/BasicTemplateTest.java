@@ -2,12 +2,13 @@ package pondero.data.drivers.excel.templates;
 
 import org.junit.Test;
 import pondero.Context;
+import pondero.PonderoTest;
 import pondero.data.model.PSheet;
 import pondero.data.model.basic.BasicModel;
 import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.Participants;
 
-public class BasicTemplateTest {
+public class BasicTemplateTest extends PonderoTest {
 
     // @Test
     public void testGetModel() throws Exception {
