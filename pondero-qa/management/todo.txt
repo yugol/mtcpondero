@@ -34,7 +34,6 @@ FUTURE VERSIONS
 - error reporting tool
 
 - config: check for installed java versions before installing
-- menu: Help -> About page
 
 - test-ic: extensive test
 - testing: extract a subliminal priming task in a separate project
@@ -43,5 +42,6 @@ FUTURE VERSIONS
 - l10n for valMileage = new JSpinner();
 - sign tests
 
-- config: make it run on Linux
 - config: make it run on OSX
+- config: make it run on Linux
+
