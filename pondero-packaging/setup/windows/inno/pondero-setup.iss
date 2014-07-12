@@ -40,7 +40,6 @@ Source:   "{#PonderoRoot}\bin\pondero.jar";            DestDir: "{app}\bin";   F
 Source:   "{#PonderoRoot}\bin\pondero-libs.jar";       DestDir: "{app}\bin";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\bin\pondero-install.jar";    DestDir: "{app}\bin";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\res\pondero-48x48.ico";      DestDir: "{app}\res";   Flags: ignoreversion
-Source:   "{#PonderoRoot}\res\pondero-license.txt";    DestDir: "{app}\res";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\jre\*";                      DestDir: "{app}\jre";   Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
