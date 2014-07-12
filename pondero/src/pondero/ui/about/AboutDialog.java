@@ -69,7 +69,7 @@ public class AboutDialog extends JDialog {
         setIconImage(Toolkit.getDefaultToolkit().getImage(AboutDialog.class.getResource("/pondero/res/pondero-48x48.png")));
         setTitle(L10n.getString("lbl.about")); //$NON-NLS-1$
         setResizable(false);
-        setBounds(100, 100, (int) (450 * Context.getUiFontScaleFactor()), (int) (400 * Context.getUiFontScaleFactor()));
+        setBounds(100, 100, (int) (500 * Context.getUiFontScaleFactor()), (int) (400 * Context.getUiFontScaleFactor()));
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(20, 20, 0, 20));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -196,7 +196,7 @@ public class AboutDialog extends JDialog {
         message.setEditable(false);
         message.setContentType("text/html");
         message.setText(content);
-        // message.select(0, 0);
+        message.select(0, 0);
 
         final JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(message);
