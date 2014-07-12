@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.action;
 import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -22,6 +23,7 @@ public class HomePageAction extends PonderableAction {
     @Override
     public void actionPerformed(final ActionEvent arg0) {
         try {
+            action("opening home page");
             WebUtil.browse(Context.HOME_PAGE_ADDRESS);
         } catch (final Exception e) {
             error(e);

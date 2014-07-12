@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.action;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.L10n;
@@ -18,6 +19,7 @@ public class SetPreferencesAction extends PonderableAction {
 
     @Override
     public void actionPerformed(final ActionEvent arg0) {
+        action("opening preferences dialog");
         final PreferencesDialog dlg = new PreferencesDialog(getMainFrame());
         dlg.setLocationRelativeTo(getMainFrame());
         dlg.setModal(true);

@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.action;
 import static pondero.Logger.error;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
@@ -41,6 +42,7 @@ public class OpenDocumentAction extends PonderableAction {
                             L10n.getString("msg.save-workbook", wb.getName()),
                             L10n.getString("lbl.pondero"),
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        action("saving workbook: ", wb.getName());
                         wb.save();
                     }
                 }
@@ -64,6 +66,7 @@ public class OpenDocumentAction extends PonderableAction {
     }
 
     public void openWorkbook(final Workbook workbook) throws Exception {
+        action("opening workbook: ", workbook.getName());
         if (workbook.getParticipantCount() <= 0) {
             final String decision = JOptionPane.showInputDialog(getMainFrame(), L10n.getString("msg.how-many-random-participants", MAX_PARTICIPANT_COUNT), "0");
             try {
@@ -82,6 +85,7 @@ public class OpenDocumentAction extends PonderableAction {
                         p.setId(Participants.HASH + i);
                     }
                 }
+                action("adding ", count, " random participants");
             } catch (final NumberFormatException e) {
             } finally {
                 getMainFrame().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

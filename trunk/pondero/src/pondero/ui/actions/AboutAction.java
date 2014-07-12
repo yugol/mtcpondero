@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.action;
 import java.awt.event.ActionEvent;
 import pondero.L10n;
 import pondero.ui.Ponderable;
@@ -15,6 +16,7 @@ public class AboutAction extends PonderableAction {
 
     @Override
     public void actionPerformed(final ActionEvent e) {
+        action("opening about dialog");
         final AboutDialog dlg = new AboutDialog(getMainFrame());
         dlg.setLocationRelativeTo(getMainFrame());
         dlg.setModal(true);

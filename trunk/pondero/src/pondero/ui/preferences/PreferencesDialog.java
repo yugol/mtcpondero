@@ -9,6 +9,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Locale;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -23,17 +25,16 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import pondero.Context;
 import pondero.L10n;
+import pondero.Logger;
 import pondero.util.MsgUtil;
 import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
 public class PreferencesDialog extends JDialog {
 
-    public static final String DIALOG_NAME = "preferencesDialog";
-
     /**
      * Launch the application.
-     *
+     * 
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
@@ -47,16 +48,26 @@ public class PreferencesDialog extends JDialog {
         }
     }
 
-    private final JPanel      contentPanel = new JPanel();
-    private JComboBox<Locale> cbLanguage;
-    private JComboBox<String> cbTheme;
-    private JComboBox<Double> cbScale;
+    public static final String DIALOG_NAME  = "preferencesDialog";
+
+    private final JPanel       contentPanel = new JPanel();
+    private JComboBox<Locale>  cbLanguage;
+    private JComboBox<String>  cbTheme;
+    private JComboBox<Double>  cbScale;
 
     /**
      * Create the dialog.
      */
     public PreferencesDialog(final Frame owner) {
         super(owner);
+        addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosed(final WindowEvent e) {
+                Logger.action("closing preferences dialog");
+            }
+
+        });
         setName(DIALOG_NAME);
         setType(Type.UTILITY);
         setResizable(false);
@@ -175,6 +186,7 @@ public class PreferencesDialog extends JDialog {
                     @Override
                     public void actionPerformed(final ActionEvent e) {
                         if (savePreferences()) {
+                            Logger.action("saving preferences");
                             JOptionPane.showMessageDialog(PreferencesDialog.this,
                                     L10n.getString("msg.preferences-restart"),
                                     L10n.getString("lbl.pondero"),

@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.action;
 import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -23,6 +24,7 @@ public class SelectParticipantAction extends PonderableAction {
     @Override
     public void actionPerformed(final ActionEvent evt) {
         try {
+            action("opening participant selection dialog");
             final ParticipantSelectionDialog dlg = new ParticipantSelectionDialog(getMainFrame(), getCurrentWorkbook());
             dlg.setLocationRelativeTo(getMainFrame());
             dlg.setModal(true);
@@ -30,6 +32,7 @@ public class SelectParticipantAction extends PonderableAction {
             if (dlg.getCloseOperation() == JOptionPane.YES_OPTION) {
                 final Participant selection = dlg.getSelection();
                 if (selection != null) {
+                    action("selecting participant ", selection.getId());
                     getApp().setCurrentParticipant(selection);
                 }
             }

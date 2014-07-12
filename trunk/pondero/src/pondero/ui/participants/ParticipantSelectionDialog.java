@@ -5,6 +5,8 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -14,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import pondero.Context;
 import pondero.L10n;
+import pondero.Logger;
 import pondero.data.Workbook;
 import pondero.data.model.basic.Participant;
 import pondero.ui.DialogSelectionListener;
@@ -27,7 +30,7 @@ public class ParticipantSelectionDialog extends JDialog implements DialogSelecti
         dialog.setVisible(true);
     }
 
-    public static final String DIALOG_NAME = "participantSelectionDialor";
+    public static final String        DIALOG_NAME    = "participantSelectionDialor";
 
     private Participant               selection;
     private int                       closeOperation = JOptionPane.CANCEL_OPTION;
@@ -38,6 +41,15 @@ public class ParticipantSelectionDialog extends JDialog implements DialogSelecti
 
     public ParticipantSelectionDialog(final Frame owner, final Workbook wb) throws Exception {
         super(owner);
+        addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosed(final WindowEvent e) {
+                Logger.action("closing participant selection dilaog");
+            }
+
+        });
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setName(DIALOG_NAME);
         setType(Type.UTILITY);
         setResizable(false);
@@ -72,7 +84,7 @@ public class ParticipantSelectionDialog extends JDialog implements DialogSelecti
                     @Override
                     public void actionPerformed(final ActionEvent e) {
                         closeOperation = JOptionPane.CANCEL_OPTION;
-                        ParticipantSelectionDialog.this.setVisible(false);
+                        ParticipantSelectionDialog.this.dispose();
                     }
 
                 });
@@ -86,7 +98,7 @@ public class ParticipantSelectionDialog extends JDialog implements DialogSelecti
     @Override
     public void actionPerformed(final ActionEvent evt) {
         closeOperation = JOptionPane.OK_OPTION;
-        setVisible(false);
+        dispose();
     }
 
     public int getCloseOperation() {
