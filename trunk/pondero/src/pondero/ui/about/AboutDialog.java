@@ -13,11 +13,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -25,6 +30,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import pondero.Context;
 import pondero.L10n;
+import pondero.util.MsgUtil;
 import pondero.util.OsUtil;
 import pondero.util.WebUtil;
 
@@ -51,7 +57,8 @@ public class AboutDialog extends JDialog {
         return "<html><a href='mailto:" + Context.CONTACT_MAIL_ADDRESS + "'>" + Context.CONTACT_MAIL_ADDRESS + "</a></html>";
     }
 
-    private final JPanel contentPanel = new JPanel();
+    private final JPanel      contentPanel = new JPanel();
+    private final JTabbedPane tabbedPane;
 
     /**
      * Create the dialog.
@@ -142,7 +149,7 @@ public class AboutDialog extends JDialog {
             contentPanel.add(pnlCenter, BorderLayout.CENTER);
             pnlCenter.setLayout(new BorderLayout(0, 0));
             {
-                final JTabbedPane tabbedPane = new JTabbedPane();
+                tabbedPane = new JTabbedPane();
                 tabbedPane.setBorder(new TitledBorder(null, L10n.getString("lbl.credits-and-licenses") + ":", TitledBorder.LEADING, TitledBorder.TOP, null, null));
                 if (OsUtil.isMacOSX()) {
                     tabbedPane.setTabPlacement(SwingConstants.TOP);
@@ -151,8 +158,7 @@ public class AboutDialog extends JDialog {
                 }
                 pnlCenter.add(tabbedPane);
                 {
-                    final JPanel pnlPondero = new JPanel();
-                    tabbedPane.addTab(L10n.getString("lbl.pondero"), null, pnlPondero, null);
+                    addTab(L10n.getString("lbl.pondero"), "pondero-license.html");
                 }
             }
         }
@@ -175,6 +181,31 @@ public class AboutDialog extends JDialog {
                 getRootPane().setDefaultButton(okButton);
             }
         }
+    }
+
+    private void addTab(final String tabName, final String resource) {
+        String content = "N/A";
+        try (InputStream stream = AboutDialog.class.getResourceAsStream("/pondero/res/" + resource)) {
+            content = new Scanner(stream, "UTF-8").useDelimiter("\\Z").next();
+        } catch (final IOException e) {
+            MsgUtil.showExceptionMessage(this, e);
+        }
+
+        final JEditorPane message = new JEditorPane();
+        message.setFont(new Font("Courier New", Font.PLAIN, 12));
+        message.setEditable(false);
+        message.setContentType("text/html");
+        message.setText(content);
+        // message.select(0, 0);
+
+        final JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setViewportView(message);
+
+        final JPanel pnlPondero = new JPanel();
+        pnlPondero.setLayout(new BorderLayout(0, 0));
+        pnlPondero.add(scrollPane);
+
+        tabbedPane.addTab(tabName, null, pnlPondero, null);
     }
 
 }
