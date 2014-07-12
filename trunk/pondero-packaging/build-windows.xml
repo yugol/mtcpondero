@@ -32,7 +32,6 @@
 		<delete file="${pkgdir}/pondero-setup.exe" failonerror="false" />
 		<!-- delete file="${pkgdir}/res/pondero.properties" / -->
 
-		<copy file="${soldir}/pondero/src/pondero/res/pondero-license.txt" todir="${pkgdir}/res" overwrite="true" />
 		<copy file="${soldir}/pondero-packaging/license/lgpl-brief.ro.txt" todir="${pkgdir}/res" overwrite="true" />
 		<copy file="${soldir}/pondero-packaging/resources/pondero-48x48.ico" todir="${pkgdir}/res" overwrite="true" />
 		<copy file="${soldir}/pondero-packaging/setup/windows/pondero.bat" todir="${pkgdir}" overwrite="true" />

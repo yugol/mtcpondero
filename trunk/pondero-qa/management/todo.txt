@@ -3,7 +3,8 @@ CURRENT VERSION: 2014-07-27
 =====================================================================
 
 Features still to be implemented:
-- About dialog
+- exception reporting
+- fix pondero-libs version in about dialog
 - Online test catalogue support
 - Testing
 - Packaging
