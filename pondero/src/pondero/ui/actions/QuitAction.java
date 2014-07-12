@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.action;
 import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -35,11 +36,13 @@ public class QuitAction extends PonderableAction {
                         return;
                     }
                     else if (decision == JOptionPane.YES_OPTION) {
+                        action("saving workbook: ", wb.getName());
                         wb.save();
                     }
                 }
                 wb.close();
             }
+            action("quitting application");
             FileUtil.deleteTempFiles();
             getMainFrame().setVisible(false);
             if (Context.isRunningFromIde()) {

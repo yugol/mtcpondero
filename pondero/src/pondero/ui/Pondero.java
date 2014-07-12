@@ -1,5 +1,6 @@
 package pondero.ui;
 
+import static pondero.Logger.action;
 import static pondero.Logger.error;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -62,7 +63,7 @@ public class Pondero implements Ponderable, PModelListener {
 
     /**
      * Launch the application.
-     *
+     * 
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
@@ -71,6 +72,8 @@ public class Pondero implements Ponderable, PModelListener {
 
     public static Pondero start(final String[] args) throws Exception {
         Context.init(args.length >= 1 ? args[0] : null);
+        action("starting application");
+
         TestSelector.REGISTERED_TESTS.addAll(TestLoader.loadTests());
         UiUtil.getAvailableLafs();
         UiUtil.setLaf();
@@ -153,7 +156,7 @@ public class Pondero implements Ponderable, PModelListener {
 
     /**
      * Create the application.
-     *
+     * 
      * @throws Exception
      */
     public Pondero() throws Exception {
@@ -235,8 +238,8 @@ public class Pondero implements Ponderable, PModelListener {
             }
             statusBar.setMessage(StatusBar.DEFAULT,
                     L10n.getString("lbl.data-register")
-                    + ": " + currentWorkbook.getName()
-                    + (currentWorkbook.isDirty() ? " *" : ""));
+                            + ": " + currentWorkbook.getName()
+                            + (currentWorkbook.isDirty() ? " *" : ""));
         }
         currentState = state;
     }

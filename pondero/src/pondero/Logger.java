@@ -3,9 +3,15 @@ package pondero;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import pondero.util.DateUtil;
 
 public final class Logger {
+
+    public static void action(final Object... obj) {
+        log(ACTION, null, obj);
+    }
 
     public static void critical(final Object... obj) {
         log(CRITICAL, null, obj);
@@ -118,6 +124,9 @@ public final class Logger {
             case INFO:
                 levelHint = "INFO  ";
                 break;
+            case ACTION:
+                levelHint = "ACTION";
+                break;
             case DEBUG:
                 levelHint = "DEBUG ";
                 break;
@@ -142,12 +151,14 @@ public final class Logger {
         if (maxConsoleLevel > NONE) {
             switch (level) {
                 case ERROR:
-                case CRITICAL:
                     justPrintTheDamnThing(System.err, logEntry.toString(), t);
                     break;
                 default:
                     justPrintTheDamnThing(System.out, logEntry.toString(), t);
             }
+        }
+        if (maxBufferLevel > NONE) {
+            buffer.add(logEntry.toString());
         }
         if (maxFileLevel > NONE) {
             final PrintStream out = log();
@@ -158,18 +169,21 @@ public final class Logger {
         }
     }
 
-    public static final int    NONE            = 0;
-    public static final int    CRITICAL        = 10;
-    public static final int    ERROR           = 20;
-    public static final int    WARNING         = 30;
-    public static final int    INFO            = 40;
-    public static final int    DEBUG           = 50;
-    public static final int    TRACE           = 60;
+    public static final int           NONE            = 0;
+    public static final int           ACTION          = 10;
+    public static final int           CRITICAL        = 20;
+    public static final int           ERROR           = 30;
+    public static final int           WARNING         = 40;
+    public static final int           INFO            = 50;
+    public static final int           DEBUG           = 60;
+    public static final int           TRACE           = 70;
 
-    public static int          maxConsoleLevel = INFO;
-    public static int          maxFileLevel    = NONE;
+    public static int                 maxConsoleLevel = ERROR;
+    public static int                 maxBufferLevel  = CRITICAL;
+    public static int                 maxFileLevel    = NONE;
 
-    private static PrintStream logFileOut;
+    private static PrintStream        logFileOut;
+    private static final List<String> buffer          = new ArrayList<String>();
 
     private Logger() {
     }

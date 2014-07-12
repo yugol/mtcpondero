@@ -1,5 +1,6 @@
 package pondero;
 
+import static pondero.Logger.critical;
 import static pondero.Logger.debug;
 import static pondero.Logger.error;
 import static pondero.Logger.info;
@@ -204,7 +205,7 @@ public final class Context {
     public static void registerArtifact(final Artifact artifact) {
         if (artifact != null && !ARTIFACTS.containsKey(artifact.getId())) {
             ARTIFACTS.put(artifact.getId(), artifact);
-            info("registered artifact: " + artifact.getCodeName());
+            critical("registering artifact: " + artifact.getCodeName());
         }
     }
 

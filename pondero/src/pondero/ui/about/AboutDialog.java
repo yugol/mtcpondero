@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
@@ -30,6 +32,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import pondero.Context;
 import pondero.L10n;
+import pondero.Logger;
 import pondero.util.MsgUtil;
 import pondero.util.OsUtil;
 import pondero.util.WebUtil;
@@ -39,7 +42,7 @@ public class AboutDialog extends JDialog {
 
     /**
      * Launch the application.
-     *
+     * 
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
@@ -65,6 +68,14 @@ public class AboutDialog extends JDialog {
      */
     public AboutDialog(final Frame owner) {
         super(owner);
+        addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosed(final WindowEvent e) {
+                Logger.action("closing about dialog");
+            }
+
+        });
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setIconImage(Toolkit.getDefaultToolkit().getImage(AboutDialog.class.getResource("/pondero/res/pondero-48x48.png")));
         setTitle(L10n.getString("lbl.about")); //$NON-NLS-1$
@@ -132,6 +143,7 @@ public class AboutDialog extends JDialog {
 
                     @Override
                     public void mouseClicked(final MouseEvent e) {
+                        Logger.action("sending about mail");
                         WebUtil.sendAboutMail();
                     }
 
