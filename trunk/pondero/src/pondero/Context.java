@@ -11,12 +11,13 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import pondero.data.Workbook;
 import pondero.data.WorkbookFactory;
 import pondero.tests.test.CodeNameComparator;
@@ -27,39 +28,39 @@ import pondero.util.StringUtil;
 
 public final class Context {
 
-    public static final String         PURL_HOME                = "http://www.purl.org";
-    public static final String         HOME_PAGE_ADDRESS        = PURL_HOME + "/net/pondero/home";
-    public static final String         UPDATE_REGISTRY_ADDRESS  = PURL_HOME + "/net/pondero/update/registry.xml";
-    public static final String         CONTACT_MAIL_ADDRESS     = "mindtrips.communications@gmail.com";
+    public static final String                 PURL_HOME                = "http://www.purl.org";
+    public static final String                 HOME_PAGE_ADDRESS        = PURL_HOME + "/net/pondero/home";
+    public static final String                 UPDATE_REGISTRY_ADDRESS  = PURL_HOME + "/net/pondero/update/registry.xml";
+    public static final String                 CONTACT_MAIL_ADDRESS     = "mindtrips.communications@gmail.com";
 
-    private static final String        CONSOLE_LOG_LEVEL_KEY    = "consoleLogLevel";
-    private static final String        FILE_LOG_LEVEL_KEY       = "fileLogLevel";
-    private static final String        LAST_WORKBOOK_FILE_KEY   = "lastWorkbookFile";
-    private static final String        UI_LOCALE_STRING_KEY     = "uilocaleString";
-    private static final String        UI_THEME_STRING_KEY      = "uiThemeString";
-    private static final String        UI_SCALE_FACTOR_KEY      = "uiFontScaleFactor";
-    private static final String        UPDATE_ON_STARTUP_KEY    = "updateOnStartup";
-    private static final String        PROPERTIES_FILE_NAME     = "pondero.properties";
+    private static final String                CONSOLE_LOG_LEVEL_KEY    = "consoleLogLevel";
+    private static final String                FILE_LOG_LEVEL_KEY       = "fileLogLevel";
+    private static final String                LAST_WORKBOOK_FILE_KEY   = "lastWorkbookFile";
+    private static final String                UI_LOCALE_STRING_KEY     = "uilocaleString";
+    private static final String                UI_THEME_STRING_KEY      = "uiThemeString";
+    private static final String                UI_SCALE_FACTOR_KEY      = "uiFontScaleFactor";
+    private static final String                UPDATE_ON_STARTUP_KEY    = "updateOnStartup";
+    private static final String                PROPERTIES_FILE_NAME     = "pondero.properties";
 
-    private static final String        DEFAULT_HOME_FOLDER_NAME = "../../Pondero";
-    private static final String        DEFAULT_WORKBOOK_NAME    = "default.xlsx";
+    private static final String                DEFAULT_HOME_FOLDER_NAME = "../../Pondero";
+    private static final String                DEFAULT_WORKBOOK_NAME    = "default.xlsx";
 
-    private static final int           FRAME_RATE               = 15;
+    private static final int                   FRAME_RATE               = 15;
 
-    private static final Set<Artifact> ARTIFACTS                = new HashSet<Artifact>();
+    private static final Map<String, Artifact> ARTIFACTS                = new LinkedHashMap<String, Artifact>();
 
-    private static boolean             runningFromIde;
-    private static File                homeFolder;
-    private static File                propertiesFile;
-    private static File                lastWorkbookFile;
+    private static boolean                     runningFromIde;
+    private static File                        homeFolder;
+    private static File                        propertiesFile;
+    private static File                        lastWorkbookFile;
 
-    private static String              uiLocaleString           = "ro";
-    private static String              uiThemeString            = "Nimbus";
-    private static boolean             updateOnStartup          = false;
-    private static double              uiFontScaleFactor        = 1.25;
+    private static String                      uiLocaleString           = "ro";
+    private static String                      uiThemeString            = "Nimbus";
+    private static boolean                     updateOnStartup          = false;
+    private static double                      uiFontScaleFactor        = 1.25;
 
-    public static Set<Artifact> getArtifacts() {
-        return ARTIFACTS;
+    public static Collection<Artifact> getArtifacts() {
+        return ARTIFACTS.values();
     }
 
     public static Workbook getDefaultWorkbook() throws Exception {
@@ -107,9 +108,13 @@ public final class Context {
         return new Locale(uiLocaleString);
     }
 
+    public static Artifact getPonderoArtifact() {
+        return ARTIFACTS.get("PONDERO");
+    }
+
     public static List<Test> getRegisteredTests() {
         final List<Test> tests = new ArrayList<Test>();
-        for (final Object artifact : ARTIFACTS) {
+        for (final Object artifact : ARTIFACTS.values()) {
             if (artifact instanceof Test) {
                 tests.add((Test) artifact);
             }
@@ -228,7 +233,8 @@ public final class Context {
     }
 
     public static void registerArtifact(final Artifact artifact) {
-        if (artifact != null && ARTIFACTS.add(artifact)) {
+        if (artifact != null && !ARTIFACTS.containsKey(artifact.getId())) {
+            ARTIFACTS.put(artifact.getId(), artifact);
             info("registered artifact: " + artifact.getCodeName());
         }
     }

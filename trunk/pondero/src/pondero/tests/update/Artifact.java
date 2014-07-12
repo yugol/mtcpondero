@@ -12,7 +12,7 @@ import pondero.security.PasswordHash;
 
 public class Artifact implements Comparable<Artifact> {
 
-    public static Artifact fromJarFile(File jarFile) {
+    public static Artifact fromJarFile(final File jarFile) {
         try {
             trace(jarFile.getCanonicalPath());
             final JarInputStream jarStream = new JarInputStream(new FileInputStream(jarFile));
@@ -24,12 +24,12 @@ public class Artifact implements Comparable<Artifact> {
             final int major = Integer.parseInt(attrs.getValue("Pondero-Artifact-Major"));
             final int minor = Integer.parseInt(attrs.getValue("Pondero-Artifact-Minor"));
             final String maturity = attrs.getValue("Pondero-Artifact-Maturity");
-            Artifact artifact = new Artifact(type, id, major, minor, maturity);
+            final Artifact artifact = new Artifact(type, id, major, minor, maturity);
             if (ArtifactType.TEST.equals(type)) {
                 artifact.setTestClassName(attrs.getValue("Main-Class"));
             }
             return artifact;
-        } catch (Exception e) {
+        } catch (final Exception e) {
             return null;
         }
     }
@@ -47,7 +47,7 @@ public class Artifact implements Comparable<Artifact> {
 
     private String             passwordHash;
 
-    public Artifact(ArtifactType type, String id, int major, int minor, String maturity) {
+    public Artifact(final ArtifactType type, final String id, final int major, final int minor, final String maturity) {
         this.type = type;
         this.id = id;
         this.major = major;
@@ -56,7 +56,7 @@ public class Artifact implements Comparable<Artifact> {
     }
 
     @Override
-    public int compareTo(Artifact other) {
+    public int compareTo(final Artifact other) {
         int cmp = type.compareTo(other.type);
         if (cmp == 0) {
             cmp = id.compareTo(other.id);
@@ -71,16 +71,16 @@ public class Artifact implements Comparable<Artifact> {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj instanceof Artifact) {
-            Artifact other = (Artifact) obj;
+            final Artifact other = (Artifact) obj;
             return type.equals(other.type) && id.equals(other.id);
         }
         return false;
     }
 
     public String getCodeName() {
-        return getId() + "-v" + getMajor() + "." + getMinor() + "-" + getMaturity();
+        return getId() + "-v" + getVersion();
     }
 
     public String getFileName() {
@@ -130,6 +130,10 @@ public class Artifact implements Comparable<Artifact> {
         return url;
     }
 
+    public String getVersion() {
+        return getMajor() + "." + getMinor() + "-" + getMaturity();
+    }
+
     @Override
     public int hashCode() {
         return (id + type).hashCode();
@@ -143,27 +147,27 @@ public class Artifact implements Comparable<Artifact> {
         return isProtected;
     }
 
-    public void setMandatory(boolean mandatory) {
+    public void setMandatory(final boolean mandatory) {
         this.mandatory = mandatory;
     }
 
-    public void setPasswordHash(String passwordHash) {
+    public void setPasswordHash(final String passwordHash) {
         this.passwordHash = passwordHash;
     }
 
-    public void setProtected(boolean isProtected) {
+    public void setProtected(final boolean isProtected) {
         this.isProtected = isProtected;
     }
 
-    public void setReleaseDate(Calendar releaseDate) {
+    public void setReleaseDate(final Calendar releaseDate) {
         this.releaseDate = releaseDate;
     }
 
-    public void setTestClassName(String testClassName) {
+    public void setTestClassName(final String testClassName) {
         this.testClassName = testClassName;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(final String url) {
         this.url = url;
     }
 
@@ -172,11 +176,11 @@ public class Artifact implements Comparable<Artifact> {
         return "ArtifactDescriptor [type=" + type + ", id=" + id + ", major=" + major + ", minor=" + minor + "]";
     }
 
-    public boolean validatePassword(String password) {
+    public boolean validatePassword(final String password) {
         try {
             if (password == null) { return false; }
             return PasswordHash.validatePassword(password, passwordHash);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             error(e);
             return false;
         }
