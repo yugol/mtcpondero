@@ -7,8 +7,10 @@
 	<property name="pkgdir" location="F:/Workspace/Pondero" />
 	<property name="iscc" value='"C:/Program Files (x86)/Inno Setup 5/iscc.exe"' />
 
-	<target name="full" depends="pondero-libs, pondero, pondero-test-ic" />
-	<target name="quick" depends="pondero, pondero-test-ic" />
+	<target name="quick" depends="pondero" />
+    <target name="tests" depends="pondero-test-ic" />
+	<target name="full" depends="pondero, pondero-libs" />
+	
 
 	<target name="publish" depends="pondero-libs, pondero, pack">
 		<copy file="${pkgdir}/pondero-setup.exe" todir="F:\Dropbox\Public\Pondero\releases\2014-07-27" overwrite="true" />
@@ -49,19 +51,16 @@
 		</copy>
 	</target>
 
-	<target name="pondero-install" depends="create-context">
-		<ant antfile="${soldir}/pondero-install/make-jar-pondero-install.xml" />
-	</target>
+    <target name="pondero" depends="create-context">
+        <ant antfile="${soldir}/pondero/make-jar-pondero.xml" />
+        <ant antfile="${soldir}/pondero-install/make-jar-pondero-install.xml" />
+    </target>
 
-	<target name="pondero-libs" depends="create-context">
+	<target name="pondero-libs" depends="pondero">
 		<ant antfile="${soldir}/pondero-libs/make-jar-pondero-libs.xml" />
 	</target>
 
-	<target name="pondero" depends="create-context, pondero-install">
-		<ant antfile="${soldir}/pondero/make-jar-pondero.xml" />
-	</target>
-
-	<target name="pondero-test-ic" depends="create-context, pondero">
+	<target name="pondero-test-ic" depends="pondero">
 		<ant antfile="${soldir}/pondero-test-ic/make-jar-pondero-test-ic.xml" />
 	</target>
 
