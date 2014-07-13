@@ -1,5 +1,6 @@
 package pondero.tests.update;
 
+import static pondero.Logger.action;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -12,7 +13,7 @@ public class UpdateEngine implements PasswordReader {
     private boolean                    cancelled;
     private PasswordReader             passwordReader = this;
 
-    public void addListener(UpdateListener listener) {
+    public void addListener(final UpdateListener listener) {
         listeners.add(listener);
     }
 
@@ -23,28 +24,29 @@ public class UpdateEngine implements PasswordReader {
             @Override
             public void run() {
                 if (updates != null && updates.size() > 0) {
-                    for (UpdateListener listener : listeners) {
+                    for (final UpdateListener listener : listeners) {
                         listener.updateProcessStarted(updates.size());
                     }
-                    for (Artifact update : updates) {
+                    for (final Artifact update : updates) {
                         if (!cancelled && validatePassword(update)) {
-                            for (UpdateListener listener : listeners) {
+                            for (final UpdateListener listener : listeners) {
                                 listener.updateArtifactStarted(update);
                             }
                             try {
+                                action("downloading ", update.getCodeName());
                                 UpdateUtil.download(update);
-                                for (UpdateListener listener : listeners) {
+                                for (final UpdateListener listener : listeners) {
                                     listener.updateArtifactEnded(update);
                                 }
-                            } catch (Exception e) {
-                                for (UpdateListener listener : listeners) {
+                            } catch (final Exception e) {
+                                for (final UpdateListener listener : listeners) {
                                     listener.updateArtifactFailed(update, e);
                                 }
                             }
                         }
                     }
                 }
-                for (UpdateListener listener : listeners) {
+                for (final UpdateListener listener : listeners) {
                     listener.updateProcessEnded();
                 }
             }
@@ -53,9 +55,9 @@ public class UpdateEngine implements PasswordReader {
     }
 
     @Override
-    public String readPassword(Artifact update) {
-        JPasswordField pf = new JPasswordField();
-        int okCxl = JOptionPane.showConfirmDialog(null, pf,
+    public String readPassword(final Artifact update) {
+        final JPasswordField pf = new JPasswordField();
+        final int okCxl = JOptionPane.showConfirmDialog(null, pf,
                 // Messages.getString("lbl.enter-password-for", update.getCodeName()),
                 update.getCodeName(),
                 JOptionPane.OK_CANCEL_OPTION,
@@ -69,17 +71,17 @@ public class UpdateEngine implements PasswordReader {
 
             @Override
             public void run() {
-                for (UpdateListener listener : listeners) {
+                for (final UpdateListener listener : listeners) {
                     listener.readRegistryStarted();
                 }
                 try {
-                    Updates availableUpdates = UpdateUtil.getAvailableUpdates();
-                    Updates applicableUpdates = UpdateUtil.getApplicableUpdates(availableUpdates);
-                    for (UpdateListener listener : listeners) {
+                    final Updates availableUpdates = UpdateUtil.getAvailableUpdates();
+                    final Updates applicableUpdates = UpdateUtil.getApplicableUpdates(availableUpdates);
+                    for (final UpdateListener listener : listeners) {
                         listener.readRegistryEnded(applicableUpdates);
                     }
-                } catch (Exception e) {
-                    for (UpdateListener listener : listeners) {
+                } catch (final Exception e) {
+                    for (final UpdateListener listener : listeners) {
                         listener.readRegistryFailed(e);
                     }
                 }
@@ -88,11 +90,11 @@ public class UpdateEngine implements PasswordReader {
         }.start();
     }
 
-    public void setPasswordReader(PasswordReader passwordReader) {
+    public void setPasswordReader(final PasswordReader passwordReader) {
         this.passwordReader = passwordReader;
     }
 
-    private boolean validatePassword(Artifact update) {
+    private boolean validatePassword(final Artifact update) {
         if (update.isProtected()) {
             while (!update.validatePassword(password)) {
                 password = passwordReader.readPassword(update);
