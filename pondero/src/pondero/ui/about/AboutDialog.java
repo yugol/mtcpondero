@@ -42,7 +42,7 @@ public class AboutDialog extends JDialog {
 
     /**
      * Launch the application.
-     * 
+     *
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
@@ -171,6 +171,8 @@ public class AboutDialog extends JDialog {
                 pnlCenter.add(tabbedPane);
                 {
                     addTab(L10n.getString("lbl.pondero"), "pondero-license.html");
+                    addTab("Apache", "apache-license.html");
+                    addTab("Silk icons", "silk-license.html");
                 }
             }
         }
