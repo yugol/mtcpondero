@@ -16,7 +16,6 @@ import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -43,7 +42,6 @@ import pondero.data.domains.Gender;
 import pondero.data.model.basic.Participant;
 import pondero.util.MsgUtil;
 import pondero.util.StringUtil;
-import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")
 public class ParticipantManagementDialog extends JDialog {
@@ -99,7 +97,7 @@ public class ParticipantManagementDialog extends JDialog {
     private final JButton                             btnSave             = new JButton(L10n.getString("lbl.save"));        ;
     private final JComboBox<Education>                valEducation;
     private final JComboBox<Gender>                   valGender;
-    private final JDateChooser                        valDob;
+    private final JTextField                          valDob;
     private final JSpinner                            valAge;
     private final JSpinner                            valDrivingAge;
     private final JSpinner                            valMileage;
@@ -260,7 +258,7 @@ public class ParticipantManagementDialog extends JDialog {
         gbc_lblColumn_04.gridy = 0;
         tabPersonal.add(lblColumn_04, gbc_lblColumn_04);
 
-        valDob = new JDateChooser();
+        valDob = new JTextField();
         valDob.setVisible(false);
         valDob.setLocale(Context.getLocale());
         final GridBagConstraints gbc_valDob = new GridBagConstraints();
@@ -467,7 +465,7 @@ public class ParticipantManagementDialog extends JDialog {
             valId.setText(participant.getId());
             valSurname.setText(participant.getSurname());
             valName.setText(participant.getName());
-            valDob.setDate(participant.getDob().getTime());
+            // valDob.setDate(participant.getDob().getTime());
             valAge.setValue(participant.getAge());
             valGender.setSelectedItem(participant.getGender());
             valEducation.setSelectedItem(participant.getEducation());
@@ -479,7 +477,7 @@ public class ParticipantManagementDialog extends JDialog {
             valId.setText(participantId);
             valSurname.setText("");
             valName.setText("");
-            valDob.setDate(new Date());
+            // valDob.setDate(new Date());
             valAge.setValue(0);
             valGender.setSelectedItem(Gender.UNSPECIFIED);
             valEducation.setSelectedItem(Education.UNKNOWN);
