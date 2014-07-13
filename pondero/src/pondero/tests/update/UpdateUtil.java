@@ -16,10 +16,9 @@ import org.w3c.dom.NodeList;
 import pondero.Context;
 import pondero.util.DateUtil;
 import pondero.util.StringUtil;
+import pondero.util.WebUtil;
 
 public class UpdateUtil {
-
-    public static final String UPDATE_EXTENSION = ".update";
 
     public static void download(final Artifact update) throws Exception {
         final URL url = new URL(update.getUrl());
@@ -73,7 +72,7 @@ public class UpdateUtil {
     public static Updates getAvailableUpdates() throws Exception {
         InputStream registryStream = null;
         try {
-            registryStream = UrlUtil.openCloudStream(Context.UPDATE_REGISTRY_ADDRESS);
+            registryStream = WebUtil.openCloudStream(Context.UPDATE_REGISTRY_ADDRESS);
             final Updates availableArtifacts = new Updates();
 
             final DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -157,5 +156,7 @@ public class UpdateUtil {
         }
         return null;
     }
+
+    public static final String UPDATE_EXTENSION = ".update";
 
 }

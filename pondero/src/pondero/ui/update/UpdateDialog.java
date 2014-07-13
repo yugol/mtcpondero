@@ -30,6 +30,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import pondero.Context;
 import pondero.L10n;
+import pondero.Logger;
 import pondero.tests.update.Artifact;
 import pondero.tests.update.UpdateEngine;
 import pondero.tests.update.UpdateListener;
@@ -39,8 +40,6 @@ import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
 public class UpdateDialog extends JDialog implements UpdateListener {
-
-    public static final String DIALOG_NAME = "updateDialog";
 
     /**
      * Launch the application.
@@ -57,6 +56,8 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         }
     }
 
+    public static final String         DIALOG_NAME  = "updateDialog";
+
     private final UpdateEngine         engine       = new UpdateEngine();
     private final ArtifactCellRenderer cellRenderer = new ArtifactCellRenderer();
     private boolean                    downloading  = false;
@@ -65,8 +66,9 @@ public class UpdateDialog extends JDialog implements UpdateListener {
     private JLabel                     lblTopStatus;
     private JProgressBar               progressBar;
     private JList<Artifact>            listUpdates;
-    private JButton                    btnStart;
+    private JButton                    btnDownload;
     private JScrollPane                scrollPane;
+    private JButton                    btnClose;
 
     public UpdateDialog() {
         this(null);
@@ -154,8 +156,8 @@ public class UpdateDialog extends JDialog implements UpdateListener {
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
-                btnStart = new JButton(L10n.getString("lbl.start-update"));
-                btnStart.addActionListener(new ActionListener() {
+                btnDownload = new JButton(L10n.getString("lbl.download"));
+                btnDownload.addActionListener(new ActionListener() {
 
                     @Override
                     public void actionPerformed(final ActionEvent evt) {
@@ -163,15 +165,15 @@ public class UpdateDialog extends JDialog implements UpdateListener {
                     }
 
                 });
-                buttonPane.add(btnStart);
-                getRootPane().setDefaultButton(btnStart);
+                buttonPane.add(btnDownload);
+                getRootPane().setDefaultButton(btnDownload);
             }
             {
                 final Component horizontalStrut = Box.createHorizontalStrut(1);
                 buttonPane.add(horizontalStrut);
             }
             {
-                final JButton btnClose = new JButton(L10n.getString("lbl.close"));
+                btnClose = new JButton(L10n.getString("lbl.close"));
                 btnClose.addActionListener(new ActionListener() {
 
                     @Override
@@ -188,6 +190,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
     }
 
     public void beginUpdate() {
+        Logger.action("retrieving online catalogue");
         engine.readUpdates();
     }
 
@@ -207,7 +210,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
             scrollPane.setVisible(true);
             listUpdates.setEnabled(true);
             populateList(applicableUpdates);
-            btnStart.setVisible(true);
+            btnDownload.setVisible(true);
         }
         setUpdatesStatus();
         if (!isVisible()) {
@@ -231,7 +234,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         setHeight((int) (150 * Context.getUiFontScaleFactor()));
         progressBar.setVisible(true);
         scrollPane.setVisible(false);
-        btnStart.setVisible(false);
+        btnDownload.setVisible(false);
     }
 
     @Override
@@ -259,7 +262,6 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         downloading = false;
         setTopStatusMessage(L10n.getString("msg.downloading-updates-finished"));
         progressBar.setVisible(false);
-        btnStart.setVisible(false);
         JOptionPane.showMessageDialog(this, L10n.getString("msg.update-process-finished"), getTitle(), JOptionPane.INFORMATION_MESSAGE);
         dispose();
     }
@@ -267,8 +269,10 @@ public class UpdateDialog extends JDialog implements UpdateListener {
     @Override
     public void updateProcessStarted(final int updateCount) {
         downloading = true;
-        listUpdates.setEnabled(false);
         progressBar.setVisible(true);
+        listUpdates.setEnabled(false);
+        btnDownload.setVisible(false);
+        btnClose.setEnabled(false);
     }
 
     private void beginDownload() {
@@ -312,7 +316,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
         } else {
             setTopStatusMessage(L10n.getString("msg.application-is-up-to-date"));
         }
-        btnStart.setEnabled(cellRenderer.getSelectedCount() > 0);
+        btnDownload.setEnabled(cellRenderer.getSelectedCount() > 0);
     }
 
 }

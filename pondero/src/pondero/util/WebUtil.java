@@ -2,8 +2,13 @@ package pondero.util;
 
 import static pondero.Logger.trace;
 import java.awt.Desktop;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URL;
 import java.net.URLEncoder;
 import pondero.Context;
 import pondero.tests.update.Artifact;
@@ -47,6 +52,13 @@ public class WebUtil {
         }
     }
 
+    public static InputStream openCloudStream(String urlString) throws IOException {
+        if (urlString.startsWith(Context.PURL_HOME)) {
+            urlString = purlToUrl(urlString);
+        }
+        return openUrlStream(urlString);
+    }
+
     public static void sendAboutMail() {
         WebUtil.mail(Context.CONTACT_MAIL_ADDRESS, "[PONDERO][ABOUT]: ", getContextDescription());
     }
@@ -63,8 +75,31 @@ public class WebUtil {
         return context.toString();
     }
 
+    private static InputStream openUrlStream(final String urlString) throws IOException {
+        final URL url = new URL(urlString);
+        trace("opening:", url);
+        final InputStream urlStream = url.openStream();
+        return urlStream;
+    }
+
     private static final String urlEncode(final String str) throws UnsupportedEncodingException {
         return URLEncoder.encode(str, "UTF-8").replace("+", "%20");
+    }
+
+    static String purlToUrl(final String purlString) throws IOException {
+        try (InputStream urlStream = openUrlStream(purlString)) {
+            final BufferedReader urlReader = new BufferedReader(new InputStreamReader(urlStream));
+            String line = null;
+            while ((line = urlReader.readLine()) != null) {
+                int beginIndex = line.indexOf("HREF=");
+                if (beginIndex >= 0) {
+                    beginIndex += 6;
+                    final int endIndex = line.indexOf(">", beginIndex) - 1;
+                    return line.substring(beginIndex, endIndex);
+                }
+            }
+        }
+        return null;
     }
 
 }
