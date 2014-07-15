@@ -40,7 +40,7 @@ import pondero.L10n;
 import pondero.data.domains.Education;
 import pondero.data.domains.Gender;
 import pondero.data.model.basic.Participant;
-import pondero.util.MsgUtil;
+import pondero.ui.exceptions.ExceptionReporting;
 import pondero.util.StringUtil;
 
 @SuppressWarnings("serial")
@@ -548,11 +548,11 @@ public class ParticipantManagementDialog extends JDialog {
     private boolean validateParticipant() {
         trace("validating participant: ", valSurname.getText(), " / ", valName.getText());
         if (StringUtil.isNullOrBlank(valSurname.getText())) {
-            MsgUtil.showValidationMessage(null, L10n.getString("msg.surname-cannot-be-empty"));
+            ExceptionReporting.showValidationMessage(null, L10n.getString("msg.surname-cannot-be-empty"));
             return false;
         }
         if (StringUtil.isNullOrBlank(valName.getText())) {
-            MsgUtil.showValidationMessage(null, L10n.getString("msg.name-cannot-be-empty"));
+            ExceptionReporting.showValidationMessage(null, L10n.getString("msg.name-cannot-be-empty"));
             return false;
         }
         return true;

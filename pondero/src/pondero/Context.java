@@ -2,7 +2,6 @@ package pondero;
 
 import static pondero.Logger.critical;
 import static pondero.Logger.debug;
-import static pondero.Logger.error;
 import static pondero.Logger.info;
 import static pondero.Logger.trace;
 import java.io.File;
@@ -24,6 +23,7 @@ import pondero.data.WorkbookFactory;
 import pondero.tests.test.CodeNameComparator;
 import pondero.tests.test.Test;
 import pondero.tests.update.Artifact;
+import pondero.ui.exceptions.ExceptionReporting;
 import pondero.util.OsUtil;
 import pondero.util.StringUtil;
 
@@ -230,7 +230,7 @@ public final class Context {
         try {
             savePreferences();
         } catch (final Exception e) {
-            error(e);
+            ExceptionReporting.showExceptionMessage(null, e);
         }
     }
 
@@ -254,7 +254,7 @@ public final class Context {
             }
             return folder;
         } catch (final IOException e) {
-            error(e);
+            ExceptionReporting.showExceptionMessage(null, e);
             return null;
         }
     }

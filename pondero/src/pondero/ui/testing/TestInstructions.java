@@ -1,6 +1,5 @@
 package pondero.ui.testing;
 
-import static pondero.Logger.error;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
@@ -45,7 +44,6 @@ public class TestInstructions extends JPanel {
                 try {
                     handleKeyEvent(evt);
                 } catch (final Exception e) {
-                    error(e);
                 }
             }
 
@@ -62,7 +60,6 @@ public class TestInstructions extends JPanel {
                 try {
                     handleKeyEvent(evt);
                 } catch (final Exception e) {
-                    error(e);
                 }
             }
 
@@ -81,7 +78,6 @@ public class TestInstructions extends JPanel {
                 try {
                     test.doStep(input);
                 } catch (final Exception e) {
-                    error(e);
                 }
             }
 
@@ -93,7 +89,6 @@ public class TestInstructions extends JPanel {
                 try {
                     handleKeyEvent(evt);
                 } catch (final Exception e) {
-                    error(e);
                 }
             }
 
@@ -110,7 +105,6 @@ public class TestInstructions extends JPanel {
                 try {
                     test.doStep(input);
                 } catch (final Exception e) {
-                    error(e);
                 }
             }
 
@@ -122,7 +116,6 @@ public class TestInstructions extends JPanel {
                 try {
                     handleKeyEvent(evt);
                 } catch (final Exception e) {
-                    error(e);
                 }
             }
         });
@@ -136,7 +129,6 @@ public class TestInstructions extends JPanel {
                 try {
                     handleKeyEvent(evt);
                 } catch (final Exception e) {
-                    error(e);
                 }
             }
 

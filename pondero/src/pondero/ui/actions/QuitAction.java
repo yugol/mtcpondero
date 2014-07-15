@@ -1,7 +1,6 @@
 package pondero.ui.actions;
 
 import static pondero.Logger.action;
-import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -10,8 +9,8 @@ import pondero.L10n;
 import pondero.data.Workbook;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
+import pondero.ui.exceptions.ExceptionReporting;
 import pondero.util.FileUtil;
-import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
 public class QuitAction extends PonderableAction {
@@ -51,8 +50,7 @@ public class QuitAction extends PonderableAction {
                 System.exit(0);
             }
         } catch (final Exception e) {
-            error(e);
-            MsgUtil.showExceptionMessage(getMainFrame(), e);
+            ExceptionReporting.showExceptionMessage(getMainFrame(), e);
         }
     }
 

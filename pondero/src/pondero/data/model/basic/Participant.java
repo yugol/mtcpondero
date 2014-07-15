@@ -1,6 +1,5 @@
 package pondero.data.model.basic;
 
-import static pondero.Logger.error;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,21 +14,11 @@ import pondero.data.domains.Education;
 import pondero.data.domains.Gender;
 import pondero.data.model.PRow;
 import pondero.data.model.PSheet;
+import pondero.ui.exceptions.ExceptionReporting;
 import pondero.util.DateUtil;
 import pondero.util.StringUtil;
 
 public class Participant extends PRow {
-
-    private static final Random       RND = new Random();
-    private static final List<String> FNAMES;
-    private static final List<String> MNAMES;
-    private static final List<String> SNAMES;
-
-    static {
-        FNAMES = readNames("/pondero/res/fnames.txt");
-        MNAMES = readNames("/pondero/res/mnames.txt");
-        SNAMES = readNames("/pondero/res/snames.txt");
-    }
 
     public static String getHtml(final Participant participant) throws Exception {
         final StringBuilder html = new StringBuilder("<html>");
@@ -59,12 +48,6 @@ public class Participant extends PRow {
         return html.toString();
     }
 
-    private static String years(final int age) {
-        if (age == 1) { return "an"; }
-        if (age == 0 || 1 < age && age < 20) { return "ani"; }
-        return "de ani";
-    }
-
     private static List<String> readNames(final String url) {
         final List<String> names = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(Participant.class.getResourceAsStream(url), "UTF-8"))) {
@@ -76,9 +59,26 @@ public class Participant extends PRow {
                 }
             }
         } catch (final IOException e) {
-            error(e);
+            ExceptionReporting.showExceptionMessage(null, e);
         }
         return names;
+    }
+
+    private static String years(final int age) {
+        if (age == 1) { return "an"; }
+        if (age == 0 || 1 < age && age < 20) { return "ani"; }
+        return "de ani";
+    }
+
+    private static final Random       RND = new Random();
+    private static final List<String> FNAMES;
+    private static final List<String> MNAMES;
+    private static final List<String> SNAMES;
+
+    static {
+        FNAMES = readNames("/pondero/res/fnames.txt");
+        MNAMES = readNames("/pondero/res/mnames.txt");
+        SNAMES = readNames("/pondero/res/snames.txt");
     }
 
     Participant(final PSheet sheet) throws Exception {

@@ -1,6 +1,5 @@
 package pondero.ui.preferences;
 
-import static pondero.Logger.error;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -26,7 +25,7 @@ import javax.swing.border.EmptyBorder;
 import pondero.Context;
 import pondero.L10n;
 import pondero.Logger;
-import pondero.util.MsgUtil;
+import pondero.ui.exceptions.ExceptionReporting;
 import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
@@ -34,7 +33,7 @@ public class PreferencesDialog extends JDialog {
 
     /**
      * Launch the application.
-     * 
+     *
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
@@ -247,8 +246,7 @@ public class PreferencesDialog extends JDialog {
             Context.savePreferences();
             return true;
         } catch (final Exception e) {
-            error(e);
-            MsgUtil.showExceptionMessage(this, e);
+            ExceptionReporting.showExceptionMessage(this, e);
             return false;
         }
     }

@@ -1,6 +1,5 @@
 package pondero.tests.elements.trial;
 
-import static pondero.Logger.error;
 import java.util.HashSet;
 import java.util.Set;
 import pondero.Context;
@@ -16,6 +15,7 @@ import pondero.tests.test.responses.KeyPressResponse;
 import pondero.tests.test.responses.Response;
 import pondero.tests.test.stimuli.Stimulus;
 import pondero.tests.test.stimuli.VisualStimulus;
+import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.testing.TestCanvas;
 import pondero.ui.testing.TestScene;
 
@@ -41,6 +41,45 @@ public class Trial extends Element implements HasFeedback, IsController {
     public Trial(final String name) {
         super(name);
         trialcode = name;
+    }
+
+    @Override
+    public FeedbackStimulus _getCorrectmessage() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public FeedbackStimulus _getErrormessage() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public String _getTrialcode() {
+        return trialcode;
+    }
+
+    @Override
+    public String $typename() {
+        return TYPENAME;
+    }
+
+    @Override
+    public void correctmessage(final boolean flag) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void correctmessage(final String stimulusName, final long duration) {
+        // TODO Auto-generated method stub
+
+    }
+
+    public void correctresponse(final String... correctresponse) {
+        for (final String response : correctresponse) {
+            this.correctresponse.add(response);
+        }
     }
 
     @Override
@@ -112,7 +151,7 @@ public class Trial extends Element implements HasFeedback, IsController {
                                     test.presentStimuli();
                                 }
                             } catch (final Exception e) {
-                                error(e);
+                                ExceptionReporting.showExceptionMessage(null, e);
                             }
                         }
                     }
@@ -123,51 +162,12 @@ public class Trial extends Element implements HasFeedback, IsController {
                     try {
                         doEnd();
                     } catch (final Exception e) {
-                        error(e);
+                        ExceptionReporting.showExceptionMessage(null, e);
                     }
                 }
             }
 
         }).start();
-    }
-
-    @Override
-    public FeedbackStimulus _getCorrectmessage() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public FeedbackStimulus _getErrormessage() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public String _getTrialcode() {
-        return trialcode;
-    }
-
-    @Override
-    public String $typename() {
-        return TYPENAME;
-    }
-
-    @Override
-    public void correctmessage(final boolean flag) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void correctmessage(final String stimulusName, final long duration) {
-        // TODO Auto-generated method stub
-
-    }
-
-    public void correctresponse(final String... correctresponse) {
-        for (final String response : correctresponse) {
-            this.correctresponse.add(response);
-        }
     }
 
     @Override

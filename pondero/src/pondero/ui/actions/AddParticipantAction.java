@@ -1,12 +1,11 @@
 package pondero.ui.actions;
 
-import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.L10n;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
-import pondero.util.MsgUtil;
+import pondero.ui.exceptions.ExceptionReporting;
 
 @SuppressWarnings("serial")
 public class AddParticipantAction extends ModifyParticipantAction {
@@ -24,8 +23,7 @@ public class AddParticipantAction extends ModifyParticipantAction {
             participantId = getCurrentWorkbook().getNextPariciantId();
             showParticipantDialog(participantId);
         } catch (final Exception e) {
-            error(e);
-            MsgUtil.showExceptionMessage(getMainFrame(), e);
+            ExceptionReporting.showExceptionMessage(getMainFrame(), e);
         }
 
     }

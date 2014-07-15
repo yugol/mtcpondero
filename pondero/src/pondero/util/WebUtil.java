@@ -11,7 +11,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import pondero.Context;
-import pondero.tests.update.Artifact;
+import pondero.ui.exceptions.ExceptionReporting;
 
 public class WebUtil {
 
@@ -26,7 +26,7 @@ public class WebUtil {
                 runtime.exec("/usr/bin/firefox -new-window " + page);
             }
         } catch (final Exception e) {
-            MsgUtil.showExceptionMessage(null, e);
+            ExceptionReporting.showExceptionMessage(null, e);
         }
     }
 
@@ -48,7 +48,7 @@ public class WebUtil {
                 throw new Exception("Mail is not supported for this platform");
             }
         } catch (final Exception e) {
-            MsgUtil.showExceptionMessage(null, e);
+            ExceptionReporting.showExceptionMessage(null, e);
         }
     }
 
@@ -57,22 +57,6 @@ public class WebUtil {
             urlString = purlToUrl(urlString);
         }
         return openUrlStream(urlString);
-    }
-
-    public static void sendAboutMail() {
-        WebUtil.mail(Context.CONTACT_MAIL_ADDRESS, "[PONDERO][ABOUT]: ", getContextDescription());
-    }
-
-    private static String getContextDescription() {
-        final StringBuilder context = new StringBuilder();
-        context.append("\n\n\nPS: CONTEXT:");
-        context.append("\nos: ").append(System.getProperty("os.name"));
-        context.append("\njava: ").append(System.getProperty("java.version"));
-        context.append("\nmodules:");
-        for (final Artifact artifact : Context.getArtifacts()) {
-            context.append("\n").append("  ").append(artifact.getCodeName());
-        }
-        return context.toString();
     }
 
     private static InputStream openUrlStream(final String urlString) throws IOException {
