@@ -1,8 +1,8 @@
 package pondero.util;
 
+import static pondero.Logger.critical;
 import static pondero.Logger.error;
 import static pondero.Logger.trace;
-import static pondero.Logger.warning;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
@@ -24,19 +24,9 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.plaf.FontUIResource;
 import pondero.Context;
+import pondero.ui.exceptions.ExceptionReporting;
 
 public class UiUtil {
-
-    static {
-        final String seaglassLafClass = "com.seaglasslookandfeel.SeaGlassLookAndFeel";
-        try {
-            // Class.forName(seaglassLafClass);
-            // UIManager.installLookAndFeel("Seaglass", seaglassLafClass);
-        } catch (final Exception e) {
-            warning("could not install: ", seaglassLafClass);
-            error(e);
-        }
-    }
 
     public static void enableFullScreenMode(final JFrame window) {
         if (OsUtil.isMacOSX()) {
@@ -131,7 +121,7 @@ public class UiUtil {
             }
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (final Exception e) {
-            error(e);
+            ExceptionReporting.showExceptionMessage(null, e);
         }
     }
 
@@ -190,6 +180,17 @@ public class UiUtil {
     public static void showMaximized(final JFrame window) {
         final Rectangle usableArea = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
         window.setBounds(usableArea);
+    }
+
+    static {
+        final String seaglassLafClass = "com.seaglasslookandfeel.SeaGlassLookAndFeel";
+        try {
+            // Class.forName(seaglassLafClass);
+            // UIManager.installLookAndFeel("Seaglass", seaglassLafClass);
+        } catch (final Exception e) {
+            critical("could not install: ", seaglassLafClass);
+            ExceptionReporting.showExceptionMessage(null, e);
+        }
     }
 
 }

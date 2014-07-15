@@ -1,7 +1,6 @@
 package pondero.ui.actions;
 
 import static pondero.Logger.action;
-import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -9,8 +8,8 @@ import pondero.L10n;
 import pondero.data.model.basic.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
+import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.participants.ParticipantSelectionDialog;
-import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
 public class SelectParticipantAction extends PonderableAction {
@@ -25,6 +24,7 @@ public class SelectParticipantAction extends PonderableAction {
     public void actionPerformed(final ActionEvent evt) {
         try {
             action("opening participant selection dialog");
+            if (evt != null) { throw new UnsupportedOperationException(); }
             final ParticipantSelectionDialog dlg = new ParticipantSelectionDialog(getMainFrame(), getCurrentWorkbook());
             dlg.setLocationRelativeTo(getMainFrame());
             dlg.setModal(true);
@@ -37,8 +37,7 @@ public class SelectParticipantAction extends PonderableAction {
                 }
             }
         } catch (final Exception e) {
-            error(e);
-            MsgUtil.showExceptionMessage(getMainFrame(), e);
+            ExceptionReporting.showExceptionMessage(getMainFrame(), e);
         }
     }
 

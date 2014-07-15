@@ -2,8 +2,22 @@ package pondero.util;
 
 import java.io.File;
 import java.io.IOException;
+import pondero.Context;
+import pondero.tests.update.Artifact;
 
 public final class OsUtil {
+
+    public static String getContextDescription() {
+        final StringBuilder context = new StringBuilder();
+        context.append("\n\n\nPS: CONTEXT:");
+        context.append("\nos: ").append(System.getProperty("os.name"));
+        context.append("\njava: ").append(System.getProperty("java.version"));
+        context.append("\nmodules:");
+        for (final Artifact artifact : Context.getArtifacts()) {
+            context.append("\n").append("  ").append(artifact.getCodeName());
+        }
+        return context.toString();
+    }
 
     public static boolean isLinux() {
         return System.getProperty("os.name").indexOf("Linux") >= 0;

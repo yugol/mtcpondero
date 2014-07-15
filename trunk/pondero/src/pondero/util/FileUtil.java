@@ -1,8 +1,8 @@
 package pondero.util;
 
-import static pondero.Logger.error;
 import java.io.File;
 import pondero.Context;
+import pondero.ui.exceptions.ExceptionReporting;
 
 public final class FileUtil {
 
@@ -11,7 +11,7 @@ public final class FileUtil {
             try {
                 file.deleteOnExit();
             } catch (final Exception e) {
-                error(e);
+                ExceptionReporting.showExceptionMessage(null, e);
             }
         }
     }

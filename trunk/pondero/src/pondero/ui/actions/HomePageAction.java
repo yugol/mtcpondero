@@ -1,14 +1,13 @@
 package pondero.ui.actions;
 
 import static pondero.Logger.action;
-import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.Context;
 import pondero.L10n;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
-import pondero.util.MsgUtil;
+import pondero.ui.exceptions.ExceptionReporting;
 import pondero.util.WebUtil;
 
 @SuppressWarnings("serial")
@@ -26,8 +25,7 @@ public class HomePageAction extends PonderableAction {
             action("opening home page");
             WebUtil.browse(Context.HOME_PAGE_ADDRESS);
         } catch (final Exception e) {
-            error(e);
-            MsgUtil.showExceptionMessage(getMainFrame(), e);
+            ExceptionReporting.showExceptionMessage(getMainFrame(), e);
         }
     }
 

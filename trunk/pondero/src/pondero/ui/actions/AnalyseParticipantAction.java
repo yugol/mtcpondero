@@ -1,6 +1,5 @@
 package pondero.ui.actions;
 
-import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
@@ -13,8 +12,8 @@ import pondero.data.drivers.excel.templates.participant.ParticipantTemplate;
 import pondero.data.model.basic.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
+import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.participants.ParticipantSelectionDialog;
-import pondero.util.MsgUtil;
 import pondero.util.OsUtil;
 
 @SuppressWarnings("serial")
@@ -45,8 +44,7 @@ public class AnalyseParticipantAction extends PonderableAction {
                 }
             }
         } catch (final Exception e) {
-            error(e);
-            MsgUtil.showExceptionMessage(getMainFrame(), e);
+            ExceptionReporting.showExceptionMessage(getMainFrame(), e);
         }
     }
 

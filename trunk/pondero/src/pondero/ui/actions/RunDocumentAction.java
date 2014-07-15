@@ -1,6 +1,5 @@
 package pondero.ui.actions;
 
-import static pondero.Logger.error;
 import static pondero.Logger.info;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -10,7 +9,7 @@ import pondero.data.drivers.excel.ExcelFileFilter;
 import pondero.data.drivers.excel.templates.BasicTemplate;
 import pondero.data.model.basic.BasicModel;
 import pondero.ui.Ponderable;
-import pondero.util.MsgUtil;
+import pondero.ui.exceptions.ExceptionReporting;
 import pondero.util.OsUtil;
 
 @SuppressWarnings("serial")
@@ -40,8 +39,7 @@ public class RunDocumentAction extends PonderableAction {
 
             OsUtil.openFile(modelFile);
         } catch (final Exception e) {
-            error(e);
-            MsgUtil.showExceptionMessage(getMainFrame(), e);
+            ExceptionReporting.showExceptionMessage(getMainFrame(), e);
         }
     }
 

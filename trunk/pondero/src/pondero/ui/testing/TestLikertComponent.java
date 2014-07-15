@@ -1,6 +1,5 @@
 package pondero.ui.testing;
 
-import static pondero.Logger.error;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -16,6 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import pondero.tests.test.Test;
 import pondero.tests.test.responses.KeyPressResponse;
+import pondero.ui.exceptions.ExceptionReporting;
 
 @SuppressWarnings("serial")
 public class TestLikertComponent extends TestVisualComponent {
@@ -176,7 +176,7 @@ public class TestLikertComponent extends TestVisualComponent {
                 try {
                     test.doStep(new KeyPressResponse("1"));
                 } catch (final Exception e) {
-                    error(e);
+                    ExceptionReporting.showExceptionMessage(null, e);
                 }
             }
 
@@ -197,7 +197,7 @@ public class TestLikertComponent extends TestVisualComponent {
                 try {
                     test.doStep(new KeyPressResponse("2"));
                 } catch (final Exception e) {
-                    error(e);
+                    ExceptionReporting.showExceptionMessage(null, e);
                 }
             }
 
@@ -218,7 +218,7 @@ public class TestLikertComponent extends TestVisualComponent {
                 try {
                     test.doStep(new KeyPressResponse("3"));
                 } catch (final Exception e) {
-                    error(e);
+                    ExceptionReporting.showExceptionMessage(null, e);
                 }
             }
         });
@@ -238,7 +238,7 @@ public class TestLikertComponent extends TestVisualComponent {
                 try {
                     test.doStep(new KeyPressResponse("4"));
                 } catch (final Exception e) {
-                    error(e);
+                    ExceptionReporting.showExceptionMessage(null, e);
                 }
             }
         });
@@ -258,7 +258,7 @@ public class TestLikertComponent extends TestVisualComponent {
                 try {
                     test.doStep(new KeyPressResponse("5"));
                 } catch (final Exception e) {
-                    error(e);
+                    ExceptionReporting.showExceptionMessage(null, e);
                 }
             }
 
@@ -279,7 +279,7 @@ public class TestLikertComponent extends TestVisualComponent {
                 try {
                     test.doStep(new KeyPressResponse("6"));
                 } catch (final Exception e) {
-                    error(e);
+                    ExceptionReporting.showExceptionMessage(null, e);
                 }
             }
 
@@ -300,7 +300,7 @@ public class TestLikertComponent extends TestVisualComponent {
                 try {
                     test.doStep(new KeyPressResponse("7"));
                 } catch (final Exception e) {
-                    error(e);
+                    ExceptionReporting.showExceptionMessage(null, e);
                 }
             }
 
@@ -321,7 +321,7 @@ public class TestLikertComponent extends TestVisualComponent {
                 try {
                     test.doStep(new KeyPressResponse("8"));
                 } catch (final Exception e) {
-                    error(e);
+                    ExceptionReporting.showExceptionMessage(null, e);
                 }
             }
 
@@ -341,7 +341,7 @@ public class TestLikertComponent extends TestVisualComponent {
                 try {
                     test.doStep(new KeyPressResponse("9"));
                 } catch (final Exception e) {
-                    error(e);
+                    ExceptionReporting.showExceptionMessage(null, e);
                 }
             }
 

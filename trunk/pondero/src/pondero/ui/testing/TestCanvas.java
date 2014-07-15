@@ -1,6 +1,5 @@
 package pondero.ui.testing;
 
-import static pondero.Logger.error;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyAdapter;
@@ -10,6 +9,7 @@ import java.awt.event.MouseEvent;
 import pondero.tests.test.Test;
 import pondero.tests.test.responses.KeyPressResponse;
 import pondero.tests.test.responses.MouseClickResponse;
+import pondero.ui.exceptions.ExceptionReporting;
 
 @SuppressWarnings("serial")
 public class TestCanvas extends TestVisualComponent {
@@ -25,7 +25,7 @@ public class TestCanvas extends TestVisualComponent {
                     try {
                         test.doStep(new KeyPressResponse(evt));
                     } catch (final Exception e) {
-                        error(e);
+                        ExceptionReporting.showExceptionMessage(null, e);
                     }
                 }
             }
@@ -40,7 +40,7 @@ public class TestCanvas extends TestVisualComponent {
                     try {
                         test.doStep(new MouseClickResponse(evt));
                     } catch (final Exception e) {
-                        error(e);
+                        ExceptionReporting.showExceptionMessage(null, e);
                     }
                 }
             }

@@ -1,7 +1,6 @@
 package pondero.ui;
 
 import static pondero.Logger.action;
-import static pondero.Logger.error;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -54,16 +53,16 @@ import pondero.ui.actions.SaveDocumentAction;
 import pondero.ui.actions.SelectParticipantAction;
 import pondero.ui.actions.SetPreferencesAction;
 import pondero.ui.actions.UpdateAction;
+import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.status.StatusBar;
 import pondero.ui.tests.TestSelector;
-import pondero.util.MsgUtil;
 import pondero.util.UiUtil;
 
 public class Pondero implements Ponderable, PModelListener {
 
     /**
      * Launch the application.
-     * 
+     *
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
@@ -90,8 +89,7 @@ public class Pondero implements Ponderable, PModelListener {
                     app.mainFrame.setVisible(true);
                     app.openDocumentAction.openWorkbook(WorkbookFactory.openWorkbook(Context.getLastWorkbookFile()));
                 } catch (final Exception e) {
-                    error(e);
-                    MsgUtil.showExceptionMessage(null, e);
+                    ExceptionReporting.showExceptionMessage(null, e);
                 }
             }
 
@@ -156,7 +154,7 @@ public class Pondero implements Ponderable, PModelListener {
 
     /**
      * Create the application.
-     * 
+     *
      * @throws Exception
      */
     public Pondero() throws Exception {
@@ -448,7 +446,7 @@ public class Pondero implements Ponderable, PModelListener {
                 try {
                     setCurrentState(PonderoState.TEST_SELECTION);
                 } catch (final Exception e) {
-                    error(e);
+                    ExceptionReporting.showExceptionMessage(null, e);
                 }
             }
 
@@ -479,7 +477,7 @@ public class Pondero implements Ponderable, PModelListener {
                     try {
                         setCurrentTask(newTask);
                     } catch (final Exception e) {
-                        error(e);
+                        ExceptionReporting.showExceptionMessage(null, e);
                     }
                 }
             }
@@ -510,7 +508,7 @@ public class Pondero implements Ponderable, PModelListener {
                 try {
                     setCurrentState(PonderoState.PARTICIPANT_SELECTION);
                 } catch (final Exception e) {
-                    error(e);
+                    ExceptionReporting.showExceptionMessage(null, e);
                 }
             }
 

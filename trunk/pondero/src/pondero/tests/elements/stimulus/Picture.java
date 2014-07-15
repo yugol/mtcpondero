@@ -1,6 +1,5 @@
 package pondero.tests.elements.stimulus;
 
-import static pondero.Logger.error;
 import java.awt.Color;
 import java.io.IOException;
 import pondero.tests.elements.Element;
@@ -13,6 +12,7 @@ import pondero.tests.staples.Coordinates;
 import pondero.tests.staples.ElementUtil;
 import pondero.tests.staples.ItemSelection;
 import pondero.tests.test.stimuli.PictureStimulus;
+import pondero.ui.exceptions.ExceptionReporting;
 
 public class Picture extends Element implements HasErase, HasItems, IsVisualStimulus {
 
@@ -52,7 +52,7 @@ public class Picture extends Element implements HasErase, HasItems, IsVisualStim
             stimulus.setSize(_getSize());
             stimulus.setPath(_nextItem());
         } catch (final IOException e) {
-            error(e);
+            ExceptionReporting.showExceptionMessage(null, e);
         }
         return stimulus;
     }

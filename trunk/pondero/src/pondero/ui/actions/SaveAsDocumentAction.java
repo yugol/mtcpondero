@@ -1,6 +1,5 @@
 package pondero.ui.actions;
 
-import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import pondero.Context;
@@ -8,7 +7,7 @@ import pondero.L10n;
 import pondero.data.Workbook;
 import pondero.data.drivers.excel.ExcelFileFilter;
 import pondero.ui.Ponderable;
-import pondero.util.MsgUtil;
+import pondero.ui.exceptions.ExceptionReporting;
 
 @SuppressWarnings("serial")
 public class SaveAsDocumentAction extends PonderableAction {
@@ -30,8 +29,7 @@ public class SaveAsDocumentAction extends PonderableAction {
                 wb.saveAs(dialog.getSelectedFile());
                 getApp().setCurrentWorkbook(wb);
             } catch (final Exception e) {
-                error(e);
-                MsgUtil.showExceptionMessage(getMainFrame(), e);
+                ExceptionReporting.showExceptionMessage(getMainFrame(), e);
             }
         }
     }

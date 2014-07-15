@@ -1,6 +1,5 @@
 package pondero.ui.participants;
 
-import static pondero.Logger.error;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -141,13 +140,9 @@ public class ParticipantSelector extends JComponent {
         return selectedParticipant;
     }
 
-    public void setWorkbook(final Workbook wb) {
-        try {
-            participants = wb.getAllParticipants();
-            updateParticipants();
-        } catch (final Exception e) {
-            error(e);
-        }
+    public void setWorkbook(final Workbook wb) throws Exception {
+        participants = wb.getAllParticipants();
+        updateParticipants();
     }
 
     private String getFootprint(final Participant participant) {

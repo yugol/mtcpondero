@@ -1,7 +1,7 @@
 package pondero.util;
 
-import static pondero.Logger.error;
 import java.math.BigDecimal;
+import pondero.ui.exceptions.ExceptionReporting;
 
 public class NumberUtil {
 
@@ -28,7 +28,7 @@ public class NumberUtil {
                 }
                 if (value instanceof Number) { return BigDecimal.valueOf(((Number) value).longValue()); }
             } catch (final Exception e) {
-                error(e);
+                ExceptionReporting.showExceptionMessage(null, e);
             }
             throw new UnsupportedOperationException("toDecimal for " + value.getClass().getName());
         }

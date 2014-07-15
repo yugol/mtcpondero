@@ -1,7 +1,6 @@
 package pondero.ui.actions;
 
 import static pondero.Logger.action;
-import static pondero.Logger.error;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -16,7 +15,7 @@ import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.Participants;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
-import pondero.util.MsgUtil;
+import pondero.ui.exceptions.ExceptionReporting;
 
 @SuppressWarnings("serial")
 public class OpenDocumentAction extends PonderableAction {
@@ -60,8 +59,7 @@ public class OpenDocumentAction extends PonderableAction {
             }
 
         } catch (final Exception e) {
-            error(e);
-            MsgUtil.showExceptionMessage(getMainFrame(), e);
+            ExceptionReporting.showExceptionMessage(getMainFrame(), e);
         }
     }
 

@@ -1,6 +1,5 @@
 package pondero.ui.actions;
 
-import static pondero.Logger.error;
 import static pondero.Logger.trace;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
@@ -9,7 +8,7 @@ import pondero.tests.test.Test;
 import pondero.tests.test.launch.TaskLauncher;
 import pondero.tests.test.launch.TaskMonitor;
 import pondero.ui.Ponderable;
-import pondero.util.MsgUtil;
+import pondero.ui.exceptions.ExceptionReporting;
 
 @SuppressWarnings("serial")
 public class RunTaskAction extends PonderableAction implements TaskLauncher {
@@ -51,8 +50,7 @@ public class RunTaskAction extends PonderableAction implements TaskLauncher {
             }
             getMainFrame().setVisible(true);
         } catch (final Exception e) {
-            error(e);
-            MsgUtil.showExceptionMessage(getMainFrame(), e);
+            ExceptionReporting.showExceptionMessage(getMainFrame(), e);
         }
     }
 

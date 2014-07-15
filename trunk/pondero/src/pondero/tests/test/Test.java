@@ -1,6 +1,5 @@
 package pondero.tests.test;
 
-import static pondero.Logger.error;
 import java.awt.EventQueue;
 import java.util.List;
 import java.util.Stack;
@@ -16,7 +15,7 @@ import pondero.tests.test.launch.DefaultLauncher;
 import pondero.tests.test.launch.TaskLauncher;
 import pondero.tests.test.launch.TaskMonitor;
 import pondero.tests.test.responses.Response;
-import pondero.util.MsgUtil;
+import pondero.ui.exceptions.ExceptionReporting;
 
 public abstract class Test extends TestRenderer implements IsController {
 
@@ -163,9 +162,8 @@ public abstract class Test extends TestRenderer implements IsController {
             doBegin();
             doStep(null);
         } catch (final Exception e) {
-            error(e);
-            MsgUtil.showExceptionMessage(null, e);
             launcher.onTaskEnded(this, monitor);
+            ExceptionReporting.showExceptionMessage(null, e);
         }
     }
 

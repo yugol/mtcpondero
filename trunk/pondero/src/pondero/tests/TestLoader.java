@@ -1,6 +1,5 @@
 package pondero.tests;
 
-import static pondero.Logger.error;
 import static pondero.Logger.info;
 import static pondero.Logger.warning;
 import java.io.File;
@@ -11,10 +10,9 @@ import java.util.List;
 import pondero.Context;
 import pondero.tests.test.Test;
 import pondero.tests.update.Artifact;
+import pondero.ui.exceptions.ExceptionReporting;
 
 public class TestLoader {
-
-    public static ClassLoader testClassLoader;
 
     public static List<Test> loadTests() {
         try {
@@ -50,9 +48,11 @@ public class TestLoader {
             }
             return tests;
         } catch (final Exception e) {
-            error(e);
+            ExceptionReporting.showExceptionMessage(null, e);
         }
         return null;
     }
+
+    public static ClassLoader testClassLoader;
 
 }

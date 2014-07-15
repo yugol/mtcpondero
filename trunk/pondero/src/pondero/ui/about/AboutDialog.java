@@ -33,7 +33,7 @@ import javax.swing.border.TitledBorder;
 import pondero.Context;
 import pondero.L10n;
 import pondero.Logger;
-import pondero.util.MsgUtil;
+import pondero.ui.exceptions.ExceptionReporting;
 import pondero.util.OsUtil;
 import pondero.util.WebUtil;
 
@@ -144,7 +144,7 @@ public class AboutDialog extends JDialog {
                     @Override
                     public void mouseClicked(final MouseEvent e) {
                         Logger.action("sending about mail");
-                        WebUtil.sendAboutMail();
+                        WebUtil.mail(Context.CONTACT_MAIL_ADDRESS, "[PONDERO][ABOUT]: ", OsUtil.getContextDescription());
                     }
 
                 });
@@ -202,7 +202,7 @@ public class AboutDialog extends JDialog {
         try (InputStream stream = AboutDialog.class.getResourceAsStream("/pondero/res/" + resource)) {
             content = new Scanner(stream, "UTF-8").useDelimiter("\\Z").next();
         } catch (final IOException e) {
-            MsgUtil.showExceptionMessage(this, e);
+            ExceptionReporting.showExceptionMessage(this, e);
         }
 
         final JEditorPane message = new JEditorPane();

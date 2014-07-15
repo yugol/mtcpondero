@@ -1,6 +1,5 @@
 package pondero.ui.actions;
 
-import static pondero.Logger.error;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.JOptionPane;
@@ -11,8 +10,8 @@ import pondero.data.drivers.excel.ExcelFileFilter;
 import pondero.data.drivers.excel.templates.test.TestTemplate;
 import pondero.tests.test.Test;
 import pondero.ui.Ponderable;
+import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.tests.TestSelectionDialog;
-import pondero.util.MsgUtil;
 import pondero.util.OsUtil;
 
 @SuppressWarnings("serial")
@@ -42,8 +41,7 @@ public class AnalyseTestAction extends PonderableAction {
                 }
             }
         } catch (final Exception e) {
-            error(e);
-            MsgUtil.showExceptionMessage(getMainFrame(), e);
+            ExceptionReporting.showExceptionMessage(getMainFrame(), e);
         }
     }
 

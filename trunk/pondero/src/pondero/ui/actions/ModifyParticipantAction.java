@@ -1,6 +1,5 @@
 package pondero.ui.actions;
 
-import static pondero.Logger.error;
 import static pondero.Logger.info;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -8,9 +7,9 @@ import pondero.L10n;
 import pondero.data.model.basic.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
+import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.participants.ParticipantManagementDialog;
 import pondero.ui.participants.ParticipantManagementListener;
-import pondero.util.MsgUtil;
 
 @SuppressWarnings("serial")
 public class ModifyParticipantAction extends PonderableAction implements ParticipantManagementListener {
@@ -36,8 +35,7 @@ public class ModifyParticipantAction extends PonderableAction implements Partici
             source.getParticipant(p);
             getApp().setCurrentParticipant(p);
         } catch (final Exception e) {
-            error(e);
-            MsgUtil.showExceptionMessage(getMainFrame(), e);
+            ExceptionReporting.showExceptionMessage(getMainFrame(), e);
         }
     }
 
@@ -50,8 +48,7 @@ public class ModifyParticipantAction extends PonderableAction implements Partici
             dlg.setModal(true);
             dlg.setVisible(true);
         } catch (final Exception e) {
-            error(e);
-            MsgUtil.showExceptionMessage(getMainFrame(), e);
+            ExceptionReporting.showExceptionMessage(getMainFrame(), e);
         }
     }
 

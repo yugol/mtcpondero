@@ -1,7 +1,5 @@
 package pondero.tests.staples;
 
-import static pondero.Logger.error;
-
 public class Timing {
 
     public static void pause(final long millis) {
@@ -9,7 +7,6 @@ public class Timing {
             try {
                 Thread.sleep(millis);
             } catch (final InterruptedException e) {
-                error(e);
             }
         }
     }
