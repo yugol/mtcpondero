@@ -110,6 +110,7 @@ public final class Logger {
 
     private static void println(final int level, final String msg, final Throwable t) {
         final StackTraceElement element = Thread.currentThread().getStackTrace()[4];
+
         String levelHint;
         switch (level) {
             case CRITICAL:
@@ -137,6 +138,7 @@ public final class Logger {
                 levelHint = "      ";
                 break;
         }
+
         final StringBuilder logEntry = new StringBuilder();
         logEntry.append("[");
         logEntry.append(DateUtil.toIsoTime(System.currentTimeMillis()));
@@ -148,7 +150,8 @@ public final class Logger {
         logEntry.append(element.getLineNumber());
         logEntry.append(") ");
         logEntry.append(msg);
-        if (maxConsoleLevel > NONE) {
+
+        if (level <= maxConsoleLevel) {
             switch (level) {
                 case ERROR:
                     justPrintTheDamnThing(System.err, logEntry.toString(), t);
@@ -157,10 +160,12 @@ public final class Logger {
                     justPrintTheDamnThing(System.out, logEntry.toString(), t);
             }
         }
-        if (maxBufferLevel > NONE) {
-            buffer.add(logEntry.toString());
+
+        if (level <= maxBufferLevel) {
+            BUFFER.add(logEntry.toString());
         }
-        if (maxFileLevel > NONE) {
+
+        if (level <= maxFileLevel) {
             final PrintStream out = log();
             if (out != null) {
                 justPrintTheDamnThing(out, logEntry.toString(), t);
@@ -169,21 +174,21 @@ public final class Logger {
         }
     }
 
-    public static final int           NONE            = 0;
-    public static final int           ACTION          = 10;
-    public static final int           CRITICAL        = 20;
-    public static final int           ERROR           = 30;
-    public static final int           WARNING         = 40;
-    public static final int           INFO            = 50;
-    public static final int           DEBUG           = 60;
-    public static final int           TRACE           = 70;
+    public static final int          NONE            = 0;
+    public static final int          ACTION          = 10;
+    public static final int          CRITICAL        = 20;
+    public static final int          ERROR           = 30;
+    public static final int          WARNING         = 40;
+    public static final int          INFO            = 50;
+    public static final int          DEBUG           = 60;
+    public static final int          TRACE           = 70;
 
-    public static int                 maxConsoleLevel = TRACE;
-    public static int                 maxBufferLevel  = CRITICAL;
-    public static int                 maxFileLevel    = NONE;
+    public static int                maxConsoleLevel = TRACE;
+    public static int                maxBufferLevel  = CRITICAL;
+    public static int                maxFileLevel    = NONE;
 
-    private static PrintStream        logFileOut;
-    private static final List<String> buffer          = new ArrayList<String>();
+    public static final List<String> BUFFER          = new ArrayList<String>();
+    private static PrintStream       logFileOut;
 
     private Logger() {
     }

@@ -5,7 +5,10 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.Window;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
@@ -17,7 +20,9 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import pondero.Context;
 import pondero.L10n;
+import pondero.Logger;
 import pondero.util.OsUtil;
+import pondero.util.StringUtil;
 import pondero.util.WebUtil;
 
 @SuppressWarnings("serial")
@@ -114,7 +119,7 @@ public class ExceptionDialog extends JDialog {
 
                     @Override
                     public void actionPerformed(final ActionEvent e) {
-                        WebUtil.mail(Context.CONTACT_MAIL_ADDRESS, "[PONDERO][EXCEPTION]: ", buildMessageBody());
+                        WebUtil.mail(Context.CONTACT_MAIL_ADDRESS, "[PONDERO][EXCEPTION]: ", buildExceptionMailBody());
                         dispose();
                     }
 
@@ -124,15 +129,46 @@ public class ExceptionDialog extends JDialog {
         }
     }
 
-    public void setException(final Throwable e) {
-        t = e;
-        lblMessage.setText("<html>" + t.getClass().getSimpleName() + ":<br/>" + t.getMessage() + "</html>");
+    public void setException(final Throwable tt) {
+        lblMessage.setText("<html>" + tt.getClass().getSimpleName() + ":<br/>" + toString(tt) + "</html>");
+        t = tt;
     }
 
-    protected String buildMessageBody() {
+    private void appendException(final StringBuilder msg, final String info, final Throwable tt) {
+        msg.append("\n").append(info).append(tt.getClass().getName()).append(toString(tt));
+        for (final StackTraceElement elt : tt.getStackTrace()) {
+            msg.append("\n  at ").append(elt.getClassName()).append(".").append(elt.getMethodName());
+            msg.append("(").append(elt.getFileName()).append(":").append(elt.getLineNumber()).append(")");
+        }
+        msg.append("\n");
+        if (tt.getCause() != null) {
+            appendException(msg, "Caused by: ", tt.getCause());
+        }
+    }
+
+    private String toString(final Throwable tt) {
+        String message = tt.getMessage();
+        if (StringUtil.isNullOrBlank(message)) {
+            message = "";
+        }
+        return message;
+    }
+
+    protected String buildExceptionMailBody() {
         final StringBuilder msg = new StringBuilder();
         msg.append(OsUtil.getContextDescription());
-        return msg.toString();
+        msg.append("\n\nTRACE:");
+        for (final String record : Logger.BUFFER) {
+            msg.append("\n").append(record);
+        }
+        msg.append("\n\nEXCEPTION:");
+        appendException(msg, "", t);
+
+        final StringSelection selection = new StringSelection(msg.toString());
+        final Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(selection, selection);
+
+        return "Please click below and paste clipboard content (Ctrl+V) or (Right-Click + Paste) \n\n\n\n\n";
     }
 
 }
