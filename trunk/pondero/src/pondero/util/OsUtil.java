@@ -9,7 +9,7 @@ public final class OsUtil {
 
     public static String getContextDescription() {
         final StringBuilder context = new StringBuilder();
-        context.append("\n\n\nPS: CONTEXT:");
+        context.append("CONTEXT:");
         context.append("\nos: ").append(System.getProperty("os.name"));
         context.append("\njava: ").append(System.getProperty("java.version"));
         context.append("\nmodules:");

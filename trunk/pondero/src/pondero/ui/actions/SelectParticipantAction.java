@@ -24,7 +24,7 @@ public class SelectParticipantAction extends PonderableAction {
     public void actionPerformed(final ActionEvent evt) {
         try {
             action("opening participant selection dialog");
-            if (evt != null) { throw new UnsupportedOperationException(); }
+            // if (this != null) { throw new UnsupportedOperationException(); }
             final ParticipantSelectionDialog dlg = new ParticipantSelectionDialog(getMainFrame(), getCurrentWorkbook());
             dlg.setLocationRelativeTo(getMainFrame());
             dlg.setModal(true);

@@ -144,7 +144,7 @@ public class AboutDialog extends JDialog {
                     @Override
                     public void mouseClicked(final MouseEvent e) {
                         Logger.action("sending about mail");
-                        WebUtil.mail(Context.CONTACT_MAIL_ADDRESS, "[PONDERO][ABOUT]: ", OsUtil.getContextDescription());
+                        WebUtil.mail(Context.CONTACT_MAIL_ADDRESS, "[PONDERO][ABOUT]: ", buildAboutMailBody());
                     }
 
                 });
@@ -220,6 +220,10 @@ public class AboutDialog extends JDialog {
         pnlPondero.add(scrollPane);
 
         tabbedPane.addTab(tabName, null, pnlPondero, null);
+    }
+
+    protected String buildAboutMailBody() {
+        return "\n\n\nPS: " + OsUtil.getContextDescription();
     }
 
 }

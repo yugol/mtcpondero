@@ -43,7 +43,8 @@ public class WebUtil {
                 } else if (!StringUtil.isNullOrBlank(body)) {
                     forUri.append("?body=").append(urlEncode(body));
                 }
-                Desktop.getDesktop().mail(new URI(forUri.toString()));
+                final URI mailUri = new URI(forUri.toString());
+                Desktop.getDesktop().mail(mailUri);
             } else {
                 throw new Exception("Mail is not supported for this platform");
             }
