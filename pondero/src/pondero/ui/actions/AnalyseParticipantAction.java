@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.action;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
@@ -35,6 +36,7 @@ public class AnalyseParticipantAction extends PonderableAction {
             if (dlg.getCloseOperation() == JOptionPane.YES_OPTION) {
                 final Participant participant = dlg.getSelection();
                 if (participant != null) {
+                    action("performing analysis of participant ", participant.getId());
                     final ParticipantTemplate template = new ParticipantTemplate();
                     new FillParticipantReport().fill(template, participant, getCurrentWorkbook().getModel());
                     final String reportFileName = ParticipantTemplate.BASE_NAME + "-" + System.currentTimeMillis() + ExcelFileFilter.DEFAULT_EXTENSION;

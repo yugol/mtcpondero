@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.action;
 import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import pondero.Context;
@@ -19,6 +20,7 @@ public class SaveAsDocumentAction extends PonderableAction {
 
     @Override
     public void actionPerformed(final ActionEvent evt) {
+        action("opening workbook save as dialog");
         final JFileChooser dialog = new JFileChooser(".");
         dialog.setDialogTitle(L10n.getString("lbl.save-as-workbook"));
         dialog.setCurrentDirectory(Context.getFolderResults());

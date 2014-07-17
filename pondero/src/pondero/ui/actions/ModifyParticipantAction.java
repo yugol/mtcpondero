@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.action;
 import static pondero.Logger.info;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -24,6 +25,7 @@ public class ModifyParticipantAction extends PonderableAction implements Partici
 
     @Override
     public void actionPerformed(final ActionEvent evt) {
+        action("modifying participant");
         showParticipantDialog(getCurrentParticipant());
     }
 

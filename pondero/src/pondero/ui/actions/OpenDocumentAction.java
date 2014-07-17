@@ -3,6 +3,7 @@ package pondero.ui.actions;
 import static pondero.Logger.action;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -30,8 +31,8 @@ public class OpenDocumentAction extends PonderableAction {
 
     @Override
     public void actionPerformed(final ActionEvent evt) {
+        action("opening workbook selection dialog");
         try {
-
             // ask user whether to save or not the changes in the register
             final Workbook wb = getCurrentWorkbook();
             if (wb != null) {
@@ -54,7 +55,8 @@ public class OpenDocumentAction extends PonderableAction {
             dialog.setCurrentDirectory(Context.getFolderResults());
             dialog.setFileFilter(new ExcelFileFilter());
             if (JFileChooser.APPROVE_OPTION == dialog.showOpenDialog(getMainFrame())) {
-                final Workbook workbook = WorkbookFactory.openWorkbook(dialog.getSelectedFile());
+                final File wbFile = dialog.getSelectedFile();
+                final Workbook workbook = WorkbookFactory.openWorkbook(wbFile);
                 openWorkbook(workbook);
             }
 

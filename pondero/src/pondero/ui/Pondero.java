@@ -47,7 +47,7 @@ import pondero.ui.actions.ModifyParticipantAction;
 import pondero.ui.actions.OpenDocumentAction;
 import pondero.ui.actions.QuitAction;
 import pondero.ui.actions.RunDocumentAction;
-import pondero.ui.actions.RunTaskAction;
+import pondero.ui.actions.RunTestAction;
 import pondero.ui.actions.SaveAsDocumentAction;
 import pondero.ui.actions.SaveDocumentAction;
 import pondero.ui.actions.SelectParticipantAction;
@@ -62,7 +62,7 @@ public class Pondero implements Ponderable, PModelListener {
 
     /**
      * Launch the application.
-     * 
+     *
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
@@ -129,7 +129,7 @@ public class Pondero implements Ponderable, PModelListener {
     private final Action             saveDocument             = new SaveDocumentAction(this);
     private final Action             selectParticipantAction  = new SelectParticipantAction(this);
     private final Action             setPreferencesAction     = new SetPreferencesAction(this);
-    private final Action             startTaskAction          = new RunTaskAction(this);
+    private final Action             startTaskAction          = new RunTestAction(this);
     private final OpenDocumentAction openDocumentAction       = new OpenDocumentAction(this);
     private final UpdateAction       updateAction             = new UpdateAction(this);
 
@@ -157,7 +157,7 @@ public class Pondero implements Ponderable, PModelListener {
 
     /**
      * Create the application.
-     * 
+     *
      * @throws Exception
      */
     public Pondero() throws Exception {
@@ -239,8 +239,8 @@ public class Pondero implements Ponderable, PModelListener {
             }
             statusBar.setMessage(StatusBar.DEFAULT,
                     L10n.getString("lbl.data-register")
-                            + ": " + currentWorkbook.getName()
-                            + (currentWorkbook.isDirty() ? " *" : ""));
+                    + ": " + currentWorkbook.getName()
+                    + (currentWorkbook.isDirty() ? " *" : ""));
         }
         currentState = state;
     }
@@ -447,6 +447,7 @@ public class Pondero implements Ponderable, PModelListener {
             @Override
             public void actionPerformed(final ActionEvent evt) {
                 try {
+                    action("moving to test selection page");
                     setCurrentState(PonderoState.TEST_SELECTION);
                 } catch (final Exception e) {
                     ExceptionReporting.showExceptionMessage(null, e);
@@ -509,6 +510,7 @@ public class Pondero implements Ponderable, PModelListener {
             @Override
             public void actionPerformed(final ActionEvent evt) {
                 try {
+                    action("moving to participant selection page");
                     setCurrentState(PonderoState.PARTICIPANT_SELECTION);
                 } catch (final Exception e) {
                     ExceptionReporting.showExceptionMessage(null, e);

@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.action;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.L10n;
@@ -30,10 +31,10 @@ public class UpdateAction extends PonderableAction {
     }
 
     private UpdateDialog initUpdateDilaog() {
+        action("initializing update dialog");
         final UpdateDialog dlg = new UpdateDialog(getMainFrame());
         dlg.setLocationRelativeTo(getMainFrame());
         dlg.setModal(false);
-
         return dlg;
     }
 
