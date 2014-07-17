@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.action;
 import static pondero.Logger.trace;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
@@ -11,9 +12,9 @@ import pondero.ui.Ponderable;
 import pondero.ui.exceptions.ExceptionReporting;
 
 @SuppressWarnings("serial")
-public class RunTaskAction extends PonderableAction implements TaskLauncher {
+public class RunTestAction extends PonderableAction implements TaskLauncher {
 
-    public RunTaskAction(final Ponderable app) {
+    public RunTestAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.start"));
         putValue(SHORT_DESCRIPTION, L10n.getString("msg.start-test"));
@@ -21,10 +22,11 @@ public class RunTaskAction extends PonderableAction implements TaskLauncher {
 
     @Override
     public void actionPerformed(final ActionEvent e) {
-        final Test task = getCurrentTask();
-        task.setWorkbook(getCurrentWorkbook());
-        task.setParticipant(getCurrentParticipant());
-        task.start(this);
+        action("running test ", getCurrentTask().getCodeName(), " on ", getCurrentParticipant().getId());
+        final Test test = getCurrentTask();
+        test.setWorkbook(getCurrentWorkbook());
+        test.setParticipant(getCurrentParticipant());
+        test.start(this);
     }
 
     @Override
@@ -46,7 +48,10 @@ public class RunTaskAction extends PonderableAction implements TaskLauncher {
                     JOptionPane.QUESTION_MESSAGE);
 
             if (JOptionPane.NO_OPTION == decision) {
+                action("cancelling test results");
                 getCurrentWorkbook().removeRecords(task.getTestId(), report.getRecords());
+            } else {
+                action("retaining test results");
             }
             getMainFrame().setVisible(true);
         } catch (final Exception e) {

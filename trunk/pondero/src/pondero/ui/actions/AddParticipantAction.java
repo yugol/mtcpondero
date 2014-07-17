@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.action;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.L10n;
@@ -18,9 +19,9 @@ public class AddParticipantAction extends ModifyParticipantAction {
 
     @Override
     public void actionPerformed(final ActionEvent arg0) {
-        String participantId;
+        action("adding participant");
         try {
-            participantId = getCurrentWorkbook().getNextPariciantId();
+            final String participantId = getCurrentWorkbook().getNextPariciantId();
             showParticipantDialog(participantId);
         } catch (final Exception e) {
             ExceptionReporting.showExceptionMessage(getMainFrame(), e);

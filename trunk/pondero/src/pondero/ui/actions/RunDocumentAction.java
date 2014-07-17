@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.action;
 import static pondero.Logger.info;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -22,6 +23,7 @@ public class RunDocumentAction extends PonderableAction {
 
     @Override
     public void actionPerformed(final ActionEvent evt) {
+        action("performing view on current registry");
         try {
             final BasicModel model = getCurrentWorkbook().getModel();
             String modelFileName = model.getName();

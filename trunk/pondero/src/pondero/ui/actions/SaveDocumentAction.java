@@ -1,5 +1,6 @@
 package pondero.ui.actions;
 
+import static pondero.Logger.action;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import pondero.L10n;
@@ -18,6 +19,7 @@ public class SaveDocumentAction extends PonderableAction {
 
     @Override
     public void actionPerformed(final ActionEvent evt) {
+        action("saving workbook");
         try {
             getCurrentWorkbook().save();
         } catch (final Exception e) {

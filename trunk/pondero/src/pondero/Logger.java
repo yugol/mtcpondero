@@ -183,7 +183,7 @@ public final class Logger {
     public static final int          DEBUG           = 60;
     public static final int          TRACE           = 70;
 
-    public static int                maxConsoleLevel = TRACE;
+    public static int                maxConsoleLevel = ERROR;
     public static int                maxBufferLevel  = CRITICAL;
     public static int                maxFileLevel    = NONE;
 

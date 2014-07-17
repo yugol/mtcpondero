@@ -41,7 +41,7 @@ public class QuitAction extends PonderableAction {
                 }
                 wb.close();
             }
-            action("quitting application");
+            action("closing application");
             FileUtil.deleteTempFiles();
             getMainFrame().setVisible(false);
             if (Context.isRunningFromIde()) {

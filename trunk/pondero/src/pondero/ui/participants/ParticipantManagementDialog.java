@@ -37,6 +37,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import pondero.Context;
 import pondero.L10n;
+import pondero.Logger;
 import pondero.data.domains.Education;
 import pondero.data.domains.Gender;
 import pondero.data.model.basic.Participant;
@@ -112,6 +113,11 @@ public class ParticipantManagementDialog extends JDialog {
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosed(final WindowEvent e) {
+                Logger.action("closing participant management dialog");
+            }
 
             @Override
             public void windowClosing(final WindowEvent arg0) {
@@ -418,6 +424,7 @@ public class ParticipantManagementDialog extends JDialog {
             @Override
             public void actionPerformed(final ActionEvent arg0) {
                 if (saveParticipant()) {
+                    Logger.action("saving participant ", valId.getText());
                     dispose();
                 }
             }
@@ -523,7 +530,7 @@ public class ParticipantManagementDialog extends JDialog {
     private void onClosing() {
         trace("user event: close dialog");
         if (checkDirtyAndContinue()) {
-            ParticipantManagementDialog.this.dispose();
+            dispose();
         }
     }
 

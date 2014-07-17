@@ -5,6 +5,8 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -14,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import pondero.Context;
 import pondero.L10n;
+import pondero.Logger;
 import pondero.tests.test.Test;
 import pondero.ui.DialogSelectionListener;
 
@@ -37,6 +40,14 @@ public class TestSelectionDialog extends JDialog implements DialogSelectionListe
 
     public TestSelectionDialog(final Frame owner) {
         super(owner);
+        addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosed(final WindowEvent e) {
+                Logger.action("closing test selection dialog");
+            }
+
+        });
         setName(DIALOG_NAME);
         setType(Type.UTILITY);
         setResizable(false);
@@ -71,7 +82,7 @@ public class TestSelectionDialog extends JDialog implements DialogSelectionListe
                     @Override
                     public void actionPerformed(final ActionEvent e) {
                         closeOperation = JOptionPane.CANCEL_OPTION;
-                        TestSelectionDialog.this.setVisible(false);
+                        TestSelectionDialog.this.dispose();
                     }
 
                 });

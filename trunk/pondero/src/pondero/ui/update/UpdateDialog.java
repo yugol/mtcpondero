@@ -14,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -63,15 +65,23 @@ public class UpdateDialog extends JDialog implements UpdateListener {
     private boolean                    downloading  = false;
 
     private final JPanel               contentPanel = new JPanel();
-    private JLabel                     lblTopStatus;
-    private JProgressBar               progressBar;
-    private JList<Artifact>            listUpdates;
-    private JButton                    btnDownload;
-    private JScrollPane                scrollPane;
     private JButton                    btnClose;
+    private JButton                    btnDownload;
+    private JLabel                     lblTopStatus;
+    private JList<Artifact>            listUpdates;
+    private JProgressBar               progressBar;
+    private JScrollPane                scrollPane;
 
     public UpdateDialog() {
         this(null);
+        addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosed(final WindowEvent e) {
+                Logger.action("closing update dialog");
+            }
+
+        });
     }
 
     public UpdateDialog(final Frame owner) {
@@ -183,6 +193,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
                             UpdateDialog.this.dispose();
                         }
                     }
+
                 });
                 buttonPane.add(btnClose);
             }
