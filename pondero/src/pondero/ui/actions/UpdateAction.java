@@ -18,11 +18,23 @@ public class UpdateAction extends PonderableAction {
 
     @Override
     public void actionPerformed(final ActionEvent e) {
+        final UpdateDialog dlg = initUpdateDilaog();
+        dlg.setVisible(true);
+        dlg.beginUpdate();
+    }
+
+    public void actionPerformedInBackground() {
+        final UpdateDialog dlg = initUpdateDilaog();
+        dlg.setVisible(false);
+        dlg.beginUpdate();
+    }
+
+    private UpdateDialog initUpdateDilaog() {
         final UpdateDialog dlg = new UpdateDialog(getMainFrame());
         dlg.setLocationRelativeTo(getMainFrame());
         dlg.setModal(false);
-        dlg.setVisible(true);
-        dlg.beginUpdate();
+
+        return dlg;
     }
 
 }

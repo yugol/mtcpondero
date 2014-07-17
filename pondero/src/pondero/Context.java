@@ -287,7 +287,7 @@ public final class Context {
 
     private static String                      uiLocaleString           = "ro";
     private static String                      uiThemeString            = "Nimbus";
-    private static boolean                     updateOnStartup          = false;
+    private static boolean                     updateOnStartup          = true;
     private static double                      uiFontScaleFactor        = 1.25;
 
     private Context() {

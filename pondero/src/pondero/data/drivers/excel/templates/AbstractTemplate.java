@@ -51,6 +51,7 @@ public abstract class AbstractTemplate {
 
     public void save(final File reportFile) throws Exception {
         try (FileOutputStream fileOut = new FileOutputStream(reportFile)) {
+            ExcelDriver.fillMetadate(template);
             template.write(fileOut);
         }
     }

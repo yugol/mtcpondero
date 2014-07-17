@@ -62,7 +62,7 @@ public class Pondero implements Ponderable, PModelListener {
 
     /**
      * Launch the application.
-     *
+     * 
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
@@ -88,6 +88,9 @@ public class Pondero implements Ponderable, PModelListener {
                     app.mainFrame.setLocationRelativeTo(null);
                     app.mainFrame.setVisible(true);
                     app.openDocumentAction.openWorkbook(WorkbookFactory.openWorkbook(Context.getLastWorkbookFile()));
+                    if (Context.isUpdateOnStartup()) {
+                        app.updateAction.actionPerformedInBackground();
+                    }
                 } catch (final Exception e) {
                     ExceptionReporting.showExceptionMessage(null, e);
                 }
@@ -127,8 +130,8 @@ public class Pondero implements Ponderable, PModelListener {
     private final Action             selectParticipantAction  = new SelectParticipantAction(this);
     private final Action             setPreferencesAction     = new SetPreferencesAction(this);
     private final Action             startTaskAction          = new RunTaskAction(this);
-    private final Action             updateAction             = new UpdateAction(this);
     private final OpenDocumentAction openDocumentAction       = new OpenDocumentAction(this);
+    private final UpdateAction       updateAction             = new UpdateAction(this);
 
     // Widgets
     private JFrame                   mainFrame;
@@ -154,7 +157,7 @@ public class Pondero implements Ponderable, PModelListener {
 
     /**
      * Create the application.
-     *
+     * 
      * @throws Exception
      */
     public Pondero() throws Exception {
