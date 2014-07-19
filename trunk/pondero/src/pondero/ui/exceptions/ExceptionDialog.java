@@ -168,7 +168,7 @@ public class ExceptionDialog extends JDialog {
         final Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(selection, selection);
 
-        return "Please click below and paste clipboard content (Ctrl+V) or (Right-Click + Paste) \n\n\n\n\n";
+        return L10n.getString("msg.exception-report-body");
     }
 
 }

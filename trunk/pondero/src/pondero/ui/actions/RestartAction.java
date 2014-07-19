@@ -10,6 +10,7 @@ public class RestartAction extends QuitAction {
     public RestartAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.restart"));
+        putValue(SMALL_ICON, null);
     }
 
     @Override

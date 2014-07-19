@@ -50,9 +50,9 @@ public class QuitAction extends PonderableAction {
             FileUtils.deleteQuietly(Context.getFolderResultsTemp());
             getMainFrame().setVisible(false);
             if (restart) {
-                action("restarting application");
-                final File ponderoBat = new File(Context.getFolderHome(), "pondero.bat");
-                Runtime.getRuntime().exec(ponderoBat.getCanonicalPath());
+                final File ponderoBat = new File(Context.getFolderHome().getCanonicalPath(), "pondero.bat");
+                action("restarting application: ", ponderoBat.getCanonicalPath());
+                Runtime.getRuntime().exec(ponderoBat.getAbsolutePath());
             } else {
                 action("closing application");
             }
