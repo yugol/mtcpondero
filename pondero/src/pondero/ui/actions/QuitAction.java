@@ -4,13 +4,13 @@ import static pondero.Logger.action;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import org.apache.commons.io.FileUtils;
 import pondero.Context;
 import pondero.L10n;
 import pondero.data.Workbook;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
 import pondero.ui.exceptions.ExceptionReporting;
-import pondero.util.FileUtil;
 
 @SuppressWarnings("serial")
 public class QuitAction extends PonderableAction {
@@ -42,7 +42,7 @@ public class QuitAction extends PonderableAction {
                 wb.close();
             }
             action("closing application");
-            FileUtil.deleteTempFiles();
+            FileUtils.deleteQuietly(Context.getFolderResultsTemp());
             getMainFrame().setVisible(false);
             if (Context.isRunningFromIde()) {
                 getMainFrame().dispose();
