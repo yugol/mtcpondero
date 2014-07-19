@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="quick" name="Create Runnable Jar for Project pondero-libs">
 
+	<property name="release" value="2014-07-27" />
 	<property name="jredir" location="F:/Java/jre7-32" />
-	<property name="mavendir" location="C:/Users/Iulian/.m2/repository" />
 	<property name="soldir" location="F:/Workspace/pondero-dev" />
 	<property name="pkgdir" location="F:/Workspace/Pondero" />
+	<property name="mavendir" location="C:/Users/Iulian/.m2/repository" />
 	<property name="iscc" value='"C:/Program Files (x86)/Inno Setup 5/iscc.exe"' />
-	<property name="release" value="2014-07-27" />
 
 	<target name="quick" depends="pondero" />
 
 	<target name="tidy" depends="pondero">
-		<delete file="${pkgdir}/res/pondero.properties" />
+		<delete file="${pkgdir}/cfg/pondero.properties" />
 		<delete file="${pkgdir}/tests/pondero-test-ic.jar" failonerror="false" />
 	</target>
 
@@ -19,19 +19,7 @@
 
 	<target name="full" depends="pondero, pondero-libs, tests" />
 
-	<target name="pack" depends="full">
-		<delete file="${pkgdir}/pondero-setup.exe" failonerror="false" />
-		<delete file="${pkgdir}/Romanian.isl" failonerror="false" />
-		<java classname="pondero.UnicodeToAscii">
-			<classpath>
-				<pathelement path="./target/classes" />
-			</classpath>
-			<arg value="${soldir}/pondero-packaging/setup/windows/inno/Romanian.utf8.isl" />
-			<arg value="${pkgdir}/Romanian.isl" />
-		</java>
-		<copy file="${soldir}/pondero-packaging/license/lgpl-brief.ro.txt" todir="${pkgdir}/res" overwrite="true" />
-		<copy file="${soldir}/pondero-packaging/resources/pondero-48x48.ico" todir="${pkgdir}/res" overwrite="true" />
-		<copy file="${soldir}/pondero-packaging/setup/windows/inno/pondero-setup.iss" todir="${pkgdir}" overwrite="true" />
+	<target name="pack" depends="pack-context">
 		<exec executable="${iscc}">
 			<arg value="${pkgdir}/pondero-setup.iss" />
 		</exec>
@@ -43,13 +31,27 @@
 		<copy file="${pkgdir}/tests/pondero-test-ic.jar" todir="F:\OneDrive\Pondero\update\artifacts\tests\${release}" overwrite="true" />
 	</target>
 
-	<target name="create-context">
+	<target name="pack-context" depends="full">
+		<delete file="${pkgdir}/pondero-setup.exe" failonerror="false" />
+		<delete file="${pkgdir}/Romanian.isl" failonerror="false" />
+		<java classname="pondero.UnicodeToAscii">
+			<classpath>
+				<pathelement path="./target/classes" />
+			</classpath>
+			<arg value="${soldir}/pondero-packaging/setup/windows/inno/Romanian.utf8.isl" />
+			<arg value="${pkgdir}/Romanian.isl" />
+		</java>
+		<copy file="${soldir}/pondero-packaging/license/lgpl-brief.ro.txt" todir="${pkgdir}" overwrite="true" />
+		<copy file="${soldir}/pondero-packaging/resources/pondero-48x48.ico" todir="${pkgdir}/cfg" overwrite="true" />
+		<copy file="${soldir}/pondero-packaging/setup/windows/inno/pondero-setup.iss" todir="${pkgdir}" overwrite="true" />
+	</target>
+
+	<target name="run-context">
 		<mkdir dir="${pkgdir}/bin" />
+		<mkdir dir="${pkgdir}/cfg" />
 		<mkdir dir="${pkgdir}/jre" />
-		<mkdir dir="${pkgdir}/res" />
 		<mkdir dir="${pkgdir}/results" />
 		<mkdir dir="${pkgdir}/tests" />
-
 		<copy file="${soldir}/pondero-packaging/setup/windows/pondero.bat" todir="${pkgdir}" overwrite="true" />
 		<copy file="${soldir}/pondero-packaging/setup/windows/pondero-debug.bat" todir="${pkgdir}" overwrite="true" />
 		<copy todir="${pkgdir}/jre">
@@ -57,7 +59,7 @@
 		</copy>
 	</target>
 
-	<target name="pondero" depends="create-context">
+	<target name="pondero" depends="run-context">
 		<ant antfile="${soldir}/pondero/make-jar-pondero.xml" />
 		<ant antfile="${soldir}/pondero-install/make-jar-pondero-install.xml" />
 	</target>

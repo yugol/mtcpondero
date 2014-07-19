@@ -45,12 +45,12 @@ public final class Context {
         return getFolder("bin");
     }
 
-    public static File getFolderLogs() {
-        return getFolder("logs");
+    public static File getFolderCfg() {
+        return getFolder("cfg");
     }
 
-    public static File getFolderRes() {
-        return getFolder("res");
+    public static File getFolderLogs() {
+        return getFolder("log");
     }
 
     public static File getFolderResults() {
@@ -127,7 +127,7 @@ public final class Context {
             if (!homeFolder.exists()) {
                 homeFolder.mkdirs();
             }
-            propertiesFile = new File(getFolderRes(), PROPERTIES_FILE_NAME);
+            propertiesFile = new File(getFolderCfg(), PROPERTIES_FILE_NAME);
             if (propertiesFile.exists()) {
                 final Reader propertiesReader = new FileReader(propertiesFile);
                 final Properties properties = new Properties();

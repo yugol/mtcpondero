@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Pondero"
-#define MyAppVersion "0.2"
+#define MyAppVersion "0.3-alpha"
 #define MyAppPublisher "Mindtrips Communications"
 #define MyAppURL "http://www.purl.org/net/pondero/home"
 #define MyAppExeName "pondero.bat"
@@ -14,19 +14,18 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{19A9B2D8-1B89-4136-9006-BE0A30FF834B}
 AppName={#MyAppName}
-AppVersion={#MyAppVersion}
-;AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
-AppSupportURL={#MyAppURL}
-AppUpdatesURL={#MyAppURL}
-DefaultDirName=D:\{#MyAppName}
+AppVersion={#MyAppVersion}
+Compression=lzma
+DefaultDirName={code:GetInstallDir}
 DefaultGroupName={#MyAppName}
-LicenseFile={#PonderoRoot}\res\lgpl-brief.ro.txt
+LicenseFile={#PonderoRoot}\lgpl-brief.ro.txt
 OutputDir={#PonderoRoot}
 OutputBaseFilename=pondero-setup
-Compression=lzma
+PrivilegesRequired=lowest
 SolidCompression=yes
+UninstallFilesDir={app}\bin
 
 [Languages]
 Name: "romanian"; MessagesFile: "{#PonderoRoot}\Romanian.isl"
@@ -35,26 +34,37 @@ Name: "romanian"; MessagesFile: "{#PonderoRoot}\Romanian.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source:   "{#PonderoRoot}\pondero.bat";                DestDir: "{app}";       Flags: ignoreversion
+Source:   "{#PonderoRoot}\jre\*";                      DestDir: "{app}\jre";   Flags: ignoreversion recursesubdirs createallsubdirs
+Source:   "{#PonderoRoot}\cfg\pondero-48x48.ico";      DestDir: "{app}\cfg";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\bin\pondero.jar";            DestDir: "{app}\bin";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\bin\pondero-libs.jar";       DestDir: "{app}\bin";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\bin\pondero-install.jar";    DestDir: "{app}\bin";   Flags: ignoreversion
-Source:   "{#PonderoRoot}\res\pondero-48x48.ico";      DestDir: "{app}\res";   Flags: ignoreversion
-Source:   "{#PonderoRoot}\jre\*";                      DestDir: "{app}\jre";   Flags: ignoreversion recursesubdirs createallsubdirs
+Source:   "{#PonderoRoot}\pondero.bat";                DestDir: "{app}";       Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Dirs]
 Name: "{app}\results"
-Name: "{app}\logs"
 
 [Icons]
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\res\pondero-48x48.ico"; Tasks: desktopicon
-Name: "{group}\{#MyAppName}";         Filename: "{app}\{#MyAppExeName}";         IconFilename: "{app}\res\pondero-48x48.ico"
+Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\cfg\pondero-48x48.ico"; Tasks: desktopicon
+Name: "{group}\{#MyAppName}";         Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\cfg\pondero-48x48.ico"
 ; Name: "{group}\Logs";                 Filename: "{app}\logs"
-; Name: "{group}\licenta";              Filename: "{app}\res\pondero-license.txt"
+; Name: "{group}\licenta";              Filename: "{app}\cfg\pondero-license.txt"
 ; Name: "{group}\Test Results";         Filename: "{app}\results"
 ; Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall skipifsilent
 
+[Registry]
+Root: "HKCU"; Subkey: "Software\{#MyAppPublisher}"; Flags: uninsdeletekey
+Root: "HKCU"; Subkey: "Software\{#MyAppPublisher}\{#MyAppName}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"
+
+[Code]
+function GetInstallDir(def: string): string;
+var InstallDir: string;
+begin
+  Result := ExpandConstant('{userdocs}') + '\{#MyAppName}';
+  if RegQueryStringValue(HKEY_CURRENT_USER, 'Software\{#MyAppPublisher}\{#MyAppName}', '', InstallDir) then
+    Result := InstallDir;
+end;
