@@ -2,6 +2,7 @@ package pondero.ui.actions;
 
 import static pondero.Logger.action;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
@@ -23,6 +24,10 @@ public class QuitAction extends PonderableAction {
 
     @Override
     public void actionPerformed(final ActionEvent evt) {
+        closeApplication(false);
+    }
+
+    protected void closeApplication(final boolean restart) {
         try {
             final Workbook wb = getCurrentWorkbook();
             if (wb != null) {
@@ -41,9 +46,16 @@ public class QuitAction extends PonderableAction {
                 }
                 wb.close();
             }
-            action("closing application");
+
             FileUtils.deleteQuietly(Context.getFolderResultsTemp());
             getMainFrame().setVisible(false);
+            if (restart) {
+                action("restarting application");
+                final File ponderoBat = new File(Context.getFolderHome(), "pondero.bat");
+                Runtime.getRuntime().exec(ponderoBat.getCanonicalPath());
+            } else {
+                action("closing application");
+            }
             if (Context.isRunningFromIde()) {
                 getMainFrame().dispose();
             } else {
