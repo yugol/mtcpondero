@@ -49,7 +49,11 @@ public final class Context {
         return getFolder("cfg");
     }
 
-    public static File getFolderLogs() {
+    public static File getFolderHome() {
+        return homeFolder;
+    }
+
+    public static File getFolderLog() {
         return getFolder("log");
     }
 

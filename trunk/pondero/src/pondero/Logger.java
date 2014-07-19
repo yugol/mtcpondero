@@ -82,7 +82,7 @@ public final class Logger {
     private static PrintStream log() {
         if (logFileOut == null) {
             try {
-                final File LOG_FILE = new File(Context.getFolderLogs(), buildLogFileName());
+                final File LOG_FILE = new File(Context.getFolderLog(), buildLogFileName());
                 logFileOut = new PrintStream(LOG_FILE);
             } catch (final FileNotFoundException e) {
                 e.printStackTrace();

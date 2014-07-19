@@ -46,6 +46,7 @@ import pondero.ui.actions.HomePageAction;
 import pondero.ui.actions.ModifyParticipantAction;
 import pondero.ui.actions.OpenDocumentAction;
 import pondero.ui.actions.QuitAction;
+import pondero.ui.actions.RestartAction;
 import pondero.ui.actions.RunDocumentAction;
 import pondero.ui.actions.RunTestAction;
 import pondero.ui.actions.SaveAsDocumentAction;
@@ -124,6 +125,7 @@ public class Pondero implements Ponderable, PModelListener {
     private final Action             homePageAction           = new HomePageAction(this);
     private final Action             modifyParticipantAction  = new ModifyParticipantAction(this);
     private final Action             quitAction               = new QuitAction(this);
+    private final Action             restartAction            = new RestartAction(this);
     private final Action             runDocument              = new RunDocumentAction(this);
     private final Action             saveAsDocument           = new SaveAsDocumentAction(this);
     private final Action             saveDocument             = new SaveDocumentAction(this);
@@ -148,6 +150,7 @@ public class Pondero implements Ponderable, PModelListener {
     private JMenuItem                mntmAbout;
     private JMenuItem                mntmParticipant;
     private JMenuItem                mntmPreferences;
+    private JMenuItem                mntmRestart;
     private JMenuItem                mntmSave;
     private JMenuItem                mntmSaveas;
     private JMenuItem                mntmTest;
@@ -294,7 +297,7 @@ public class Pondero implements Ponderable, PModelListener {
         final JMenu mnApplication = new JMenu(" " + L10n.getString("lbl.application") + " ");
         menuBar.add(mnApplication);
 
-        mntmAbout = new JMenuItem(L10n.getString("Pondero.mntmAbout.text")); //$NON-NLS-1$
+        mntmAbout = new JMenuItem();
         mntmAbout.setAction(aboutAction);
         mnApplication.add(mntmAbout);
 
@@ -309,6 +312,10 @@ public class Pondero implements Ponderable, PModelListener {
         mnApplication.add(mntmUpdate);
 
         mnApplication.addSeparator();
+
+        mntmRestart = new JMenuItem();
+        mntmRestart.setAction(restartAction);
+        mnApplication.add(mntmRestart);
 
         final JMenuItem mntmQuit = new JMenuItem();
         mntmQuit.setName(MENU_ITEM_QUIT_NAME);
