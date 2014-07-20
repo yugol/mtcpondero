@@ -530,6 +530,9 @@ public class Pondero implements Ponderable, PModelListener {
         btnStart = new JButton(L10n.getString("lbl.start"));
         btnStart.setName(BUTTON_START_NAME);
         btnStart.setAction(startTaskAction);
+        btnStart.setFont(btnStart.getFont().deriveFont(Font.BOLD | Font.ITALIC));
+        btnStart.setBackground(SwingUtil.getListSelectedBackgroundColor());
+        btnStart.setForeground(SwingUtil.getListSelectedForegroundColor());
         pnlTestNavigation.add(btnStart, BorderLayout.EAST);
 
         statusBar = new StatusBar();
