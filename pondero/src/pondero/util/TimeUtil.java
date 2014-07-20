@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import pondero.Context;
 
-public final class DateUtil {
+public final class TimeUtil {
 
     private static final SimpleDateFormat ISO_DATE_FORMATTER      = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat ISO_TIME_FORMATTER      = new SimpleDateFormat("HH:mm:ss");
@@ -161,7 +161,7 @@ public final class DateUtil {
         return DATE_UI_FORMATTER.format(cal.getTime());
     }
 
-    private DateUtil() {
+    private TimeUtil() {
     }
 
 }

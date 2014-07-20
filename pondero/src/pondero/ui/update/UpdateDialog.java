@@ -38,7 +38,7 @@ import pondero.tests.update.UpdateListener;
 import pondero.tests.update.Updates;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.util.StringUtil;
-import pondero.util.UiUtil;
+import pondero.util.SwingUtil;
 
 @SuppressWarnings("serial")
 public class UpdateDialog extends JDialog implements UpdateListener {
@@ -136,7 +136,7 @@ public class UpdateDialog extends JDialog implements UpdateListener {
             contentPanel.add(scrollPane, gbc_scrollPane);
             {
                 listUpdates = new JList<Artifact>();
-                listUpdates.setBackground(UiUtil.getListBackgroundColor());
+                listUpdates.setBackground(SwingUtil.getListBackgroundColor());
                 listUpdates.addMouseListener(new MouseAdapter() {
 
                     @Override

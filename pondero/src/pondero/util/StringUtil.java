@@ -66,11 +66,11 @@ public class StringUtil {
             case FORMULA:
                 return (String) value;
             case DATE:
-                return DateUtil.toIsoDate(value);
+                return TimeUtil.toIsoDate(value);
             case TIME:
-                return DateUtil.toIsoTime(value);
+                return TimeUtil.toIsoTime(value);
             case TIMESTAMP:
-                return DateUtil.toIsoTimestamp(value);
+                return TimeUtil.toIsoTimestamp(value);
             case BOOLEAN:
             case DECIMAL:
             case INT:

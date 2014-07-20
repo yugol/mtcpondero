@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import pondero.tests.test.Test;
 import pondero.util.NumberUtil;
-import pondero.util.UiUtil;
+import pondero.util.SwingUtil;
 
 @SuppressWarnings("serial")
 public class TestCellRenderer extends JPanel implements ListCellRenderer<Test> {
@@ -36,15 +36,15 @@ public class TestCellRenderer extends JPanel implements ListCellRenderer<Test> {
             final boolean cellHasFocus) {
         lblName.setText(value.getCodeName());
         if (isSelected) {
-            setBackground(UiUtil.getListSelectedBackgroundColor());
-            lblName.setForeground(UiUtil.getListSelectedForegroundColor());
+            setBackground(SwingUtil.getListSelectedBackgroundColor());
+            lblName.setForeground(SwingUtil.getListSelectedForegroundColor());
         } else {
             if (NumberUtil.isOdd(index)) {
-                setBackground(UiUtil.getListBackgroundOddColor());
+                setBackground(SwingUtil.getListBackgroundOddColor());
             } else {
-                setBackground(UiUtil.getListBackgroundEvenColor());
+                setBackground(SwingUtil.getListBackgroundEvenColor());
             }
-            lblName.setForeground(UiUtil.getListForegroundColor());
+            lblName.setForeground(SwingUtil.getListForegroundColor());
         }
         return this;
     }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import pondero.util.BooleanUtil;
-import pondero.util.DateUtil;
+import pondero.util.TimeUtil;
 import pondero.util.NumberUtil;
 import pondero.util.StringUtil;
 
@@ -97,13 +97,13 @@ public abstract class PRow {
                     setRaw(index, BooleanUtil.toBoolean(value));
                     break;
                 case DATE:
-                    setRaw(index, DateUtil.toDateMillis(value));
+                    setRaw(index, TimeUtil.toDateMillis(value));
                     break;
                 case TIME:
-                    setRaw(index, DateUtil.toTimeMillis(value));
+                    setRaw(index, TimeUtil.toTimeMillis(value));
                     break;
                 case TIMESTAMP:
-                    setRaw(index, DateUtil.toTimestampMillis(value));
+                    setRaw(index, TimeUtil.toTimestampMillis(value));
                     break;
                 case FORMULA:
                     setRaw(index, StringUtil.toCellString(value));
@@ -145,7 +145,7 @@ public abstract class PRow {
     }
 
     protected Calendar getCalendar(final int index) throws Exception {
-        return DateUtil.toCalendar(get(index));
+        return TimeUtil.toCalendar(get(index));
     }
 
     protected Calendar getCalendar(final String name) throws Exception {

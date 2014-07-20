@@ -14,7 +14,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import pondero.Context;
-import pondero.util.DateUtil;
+import pondero.util.TimeUtil;
 import pondero.util.StringUtil;
 import pondero.util.WebUtil;
 
@@ -149,7 +149,7 @@ public class UpdateUtil {
             final Artifact aDesc = new Artifact(artifactType, id, Integer.parseInt(major), Integer.parseInt(minor), maturity);
             aDesc.setProtected(isProtected);
             aDesc.setMandatory(mandatory);
-            aDesc.setReleaseDate(DateUtil.parseIsoCalendar(releaseDate));
+            aDesc.setReleaseDate(TimeUtil.parseIsoCalendar(releaseDate));
             aDesc.setPasswordHash(passwordHash);
             aDesc.setUrl(url);
             return aDesc;

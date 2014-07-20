@@ -26,7 +26,7 @@ import javax.swing.plaf.FontUIResource;
 import pondero.Context;
 import pondero.ui.exceptions.ExceptionReporting;
 
-public class UiUtil {
+public class SwingUtil {
 
     public static void enableFullScreenMode(final JFrame window) {
         if (OsUtil.isMacOSX()) {

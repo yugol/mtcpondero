@@ -16,9 +16,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import pondero.L10n;
 import pondero.tests.update.Artifact;
-import pondero.util.DateUtil;
+import pondero.util.TimeUtil;
 import pondero.util.NumberUtil;
-import pondero.util.UiUtil;
+import pondero.util.SwingUtil;
 
 @SuppressWarnings("serial")
 public class ArtifactCellRenderer extends JPanel implements ListCellRenderer<Artifact> {
@@ -86,21 +86,21 @@ public class ArtifactCellRenderer extends JPanel implements ListCellRenderer<Art
 
         if (selection.get(index)) {
             chckbxSelected.setSelected(true);
-            setBackground(UiUtil.getListSelectedBackgroundColor());
-            lblId.setForeground(UiUtil.getListSelectedForegroundColor());
-            lblReleaseDate.setForeground(UiUtil.getListSelectedForegroundColor());
+            setBackground(SwingUtil.getListSelectedBackgroundColor());
+            lblId.setForeground(SwingUtil.getListSelectedForegroundColor());
+            lblReleaseDate.setForeground(SwingUtil.getListSelectedForegroundColor());
         } else {
             chckbxSelected.setSelected(false);
             if (NumberUtil.isOdd(index)) {
-                setBackground(UiUtil.getListBackgroundOddColor());
+                setBackground(SwingUtil.getListBackgroundOddColor());
             } else {
-                setBackground(UiUtil.getListBackgroundEvenColor());
+                setBackground(SwingUtil.getListBackgroundEvenColor());
             }
-            lblId.setForeground(UiUtil.getListForegroundColor());
-            lblReleaseDate.setForeground(UiUtil.getListForegroundColor());
+            lblId.setForeground(SwingUtil.getListForegroundColor());
+            lblReleaseDate.setForeground(SwingUtil.getListForegroundColor());
         }
         lblId.setText(value.getCodeName() + " (" + L10n.getString("lbl." + value.getType()) + ")");
-        lblReleaseDate.setText(L10n.getString("lbl.release-date") + ":" + DateUtil.toUiDate(value.getReleaseDate()));
+        lblReleaseDate.setText(L10n.getString("lbl.release-date") + ":" + TimeUtil.toUiDate(value.getReleaseDate()));
         if (value.isMandatory()) {
             lblIcon.setIcon(new ImageIcon(ArtifactCellRenderer.class.getResource("/com/famfamfam/silk/exclamation.png")));
         } else {

@@ -57,7 +57,7 @@ import pondero.ui.actions.UpdateAction;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.status.StatusBar;
 import pondero.ui.tests.TestSelector;
-import pondero.util.UiUtil;
+import pondero.util.SwingUtil;
 
 public class Pondero implements Ponderable, PModelListener {
 
@@ -75,9 +75,9 @@ public class Pondero implements Ponderable, PModelListener {
         action("starting application");
 
         TestSelector.REGISTERED_TESTS.addAll(TestLoader.loadTests());
-        UiUtil.getAvailableLafs();
-        UiUtil.setLaf();
-        UiUtil.scaleUi(Context.getUiFontScaleFactor());
+        SwingUtil.getAvailableLafs();
+        SwingUtil.setLaf();
+        SwingUtil.scaleUi(Context.getUiFontScaleFactor());
 
         // start application
         final Pondero app = new Pondero();
