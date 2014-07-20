@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import pondero.util.BooleanUtil;
-import pondero.util.DateUtil;
+import pondero.util.TimeUtil;
 import pondero.util.NumberUtil;
 import pondero.util.StringUtil;
 
@@ -52,7 +52,7 @@ public class TestRow extends PRow {
     }
 
     public void setDate(final Object value) throws Exception {
-        set(TestSheet.ATTR_DATE, DateUtil.toDateMillis(value));
+        set(TestSheet.ATTR_DATE, TimeUtil.toDateMillis(value));
     }
 
     public void setDecimal(final Object value) throws Exception {
@@ -72,11 +72,11 @@ public class TestRow extends PRow {
     }
 
     public void setTime(final Object value) throws Exception {
-        set(TestSheet.ATTR_TIME, DateUtil.toTimeMillis(value));
+        set(TestSheet.ATTR_TIME, TimeUtil.toTimeMillis(value));
     }
 
     public void setTimestamp(final Object value) throws Exception {
-        set(TestSheet.ATTR_TIMESTAMP, DateUtil.toTimestampMillis(value));
+        set(TestSheet.ATTR_TIMESTAMP, TimeUtil.toTimestampMillis(value));
     }
 
 }
