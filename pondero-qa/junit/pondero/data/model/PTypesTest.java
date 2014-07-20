@@ -12,7 +12,7 @@ import org.junit.Test;
 import pondero.PonderoTest;
 import pondero.data.drivers.excel.ExcelFileFilter;
 import pondero.data.drivers.excel.templates.TestTemplate;
-import pondero.util.DateUtil;
+import pondero.util.TimeUtil;
 
 public class PTypesTest extends PonderoTest {
 
@@ -76,7 +76,7 @@ public class PTypesTest extends PonderoTest {
         testSheet.addRow().setDate(new Date(now));
         testSheet.addRow().setDate(new java.sql.Date(now));
         testSheet.addRow().setDate(nowCal);
-        testSheet.addRow().setDate(DateUtil.toIsoDate(now));
+        testSheet.addRow().setDate(TimeUtil.toIsoDate(now));
 
         testSheet.addColumn(TestSheet.ATTR_TIME, PType.TIME);
         testSheet.addRow().setTime(null);
@@ -84,7 +84,7 @@ public class PTypesTest extends PonderoTest {
         testSheet.addRow().setTime(new Date(now));
         testSheet.addRow().setTime(new java.sql.Time(now));
         testSheet.addRow().setTime(nowCal);
-        testSheet.addRow().setTime(DateUtil.toIsoTime(now));
+        testSheet.addRow().setTime(TimeUtil.toIsoTime(now));
 
         testSheet.addColumn(TestSheet.ATTR_TIMESTAMP, PType.TIMESTAMP);
         testSheet.addRow().setTimestamp(null);
@@ -92,7 +92,7 @@ public class PTypesTest extends PonderoTest {
         testSheet.addRow().setTimestamp(new Date(now));
         testSheet.addRow().setTimestamp(new java.sql.Timestamp(now));
         testSheet.addRow().setTimestamp(nowCal);
-        testSheet.addRow().setTimestamp(DateUtil.toIsoTimestamp(now));
+        testSheet.addRow().setTimestamp(TimeUtil.toIsoTimestamp(now));
 
         testSheet.addColumn(TestSheet.ATTR_FORMULA, PType.FORMULA);
         testSheet.addRow().setFormula(null);
