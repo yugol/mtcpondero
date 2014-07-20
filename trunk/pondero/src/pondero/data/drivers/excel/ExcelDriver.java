@@ -21,7 +21,7 @@ import pondero.data.model.PSheet;
 import pondero.data.model.PType;
 import pondero.tests.update.Artifact;
 import pondero.util.BooleanUtil;
-import pondero.util.DateUtil;
+import pondero.util.TimeUtil;
 import pondero.util.NumberUtil;
 import pondero.util.StringUtil;
 
@@ -209,16 +209,16 @@ public abstract class ExcelDriver extends Driver {
             if (Cell.CELL_TYPE_STRING == xType) { return NumberUtil.toDecimal(cell.getStringCellValue()); }
             if (Cell.CELL_TYPE_BLANK == xType) { return null; }
         } else if (PType.DATE == pType) {
-            if (Cell.CELL_TYPE_NUMERIC == xType) { return DateUtil.toDateMillis(cell.getNumericCellValue()); }
-            if (Cell.CELL_TYPE_STRING == xType) { return DateUtil.toDateMillis(cell.getStringCellValue()); }
+            if (Cell.CELL_TYPE_NUMERIC == xType) { return TimeUtil.toDateMillis(cell.getNumericCellValue()); }
+            if (Cell.CELL_TYPE_STRING == xType) { return TimeUtil.toDateMillis(cell.getStringCellValue()); }
             if (Cell.CELL_TYPE_BLANK == xType) { return null; }
         } else if (PType.TIME == pType) {
-            if (Cell.CELL_TYPE_NUMERIC == xType) { return DateUtil.toTimeMillis(cell.getNumericCellValue()); }
-            if (Cell.CELL_TYPE_STRING == xType) { return DateUtil.toTimeMillis(cell.getStringCellValue()); }
+            if (Cell.CELL_TYPE_NUMERIC == xType) { return TimeUtil.toTimeMillis(cell.getNumericCellValue()); }
+            if (Cell.CELL_TYPE_STRING == xType) { return TimeUtil.toTimeMillis(cell.getStringCellValue()); }
             if (Cell.CELL_TYPE_BLANK == xType) { return null; }
         } else if (PType.TIMESTAMP == pType) {
-            if (Cell.CELL_TYPE_NUMERIC == xType) { return DateUtil.toTimestampMillis(cell.getNumericCellValue()); }
-            if (Cell.CELL_TYPE_STRING == xType) { return DateUtil.toTimestampMillis(cell.getStringCellValue()); }
+            if (Cell.CELL_TYPE_NUMERIC == xType) { return TimeUtil.toTimestampMillis(cell.getNumericCellValue()); }
+            if (Cell.CELL_TYPE_STRING == xType) { return TimeUtil.toTimestampMillis(cell.getStringCellValue()); }
             if (Cell.CELL_TYPE_BLANK == xType) { return null; }
         } else if (PType.FORMULA == pType) {
             if (Cell.CELL_TYPE_FORMULA == xType) { return cell.getCellFormula(); }

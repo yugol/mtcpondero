@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-import pondero.util.DateUtil;
+import pondero.util.TimeUtil;
 
 public final class Logger {
 
@@ -63,7 +63,7 @@ public final class Logger {
 
     private static String buildLogFileName() {
         final long timestamp = System.currentTimeMillis();
-        return DateUtil.toIsoDate(timestamp) + "@" + DateUtil.toCompactTime(timestamp) + ".log";
+        return TimeUtil.toIsoDate(timestamp) + "@" + TimeUtil.toCompactTime(timestamp) + ".log";
     }
 
     private static int getMaxLoggableLevel() {
@@ -141,7 +141,7 @@ public final class Logger {
 
         final StringBuilder logEntry = new StringBuilder();
         logEntry.append("[");
-        logEntry.append(DateUtil.toIsoTime(System.currentTimeMillis()));
+        logEntry.append(TimeUtil.toIsoTime(System.currentTimeMillis()));
         logEntry.append("] ");
         logEntry.append(levelHint);
         logEntry.append(" (");

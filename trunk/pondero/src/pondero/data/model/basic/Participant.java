@@ -15,7 +15,7 @@ import pondero.data.domains.Gender;
 import pondero.data.model.PRow;
 import pondero.data.model.PSheet;
 import pondero.ui.exceptions.ExceptionReporting;
-import pondero.util.DateUtil;
+import pondero.util.TimeUtil;
 import pondero.util.StringUtil;
 
 public class Participant extends PRow {
@@ -90,7 +90,7 @@ public class Participant extends PRow {
         final Calendar dob = getDob();
         if (dob != null) {
             final int dobYear = dob.get(Calendar.YEAR);
-            return DateUtil.getCurrentYear() - dobYear;
+            return TimeUtil.getCurrentYear() - dobYear;
         }
         return null;
     }
@@ -190,7 +190,7 @@ public class Participant extends PRow {
     }
 
     public void setAge(final Integer value) throws Exception {
-        setDob(new GregorianCalendar(DateUtil.getCurrentYear() - value, Calendar.JANUARY, 1));
+        setDob(new GregorianCalendar(TimeUtil.getCurrentYear() - value, Calendar.JANUARY, 1));
     }
 
     public void setDob(final Calendar value) throws Exception {

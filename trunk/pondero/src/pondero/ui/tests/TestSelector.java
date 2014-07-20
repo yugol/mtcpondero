@@ -16,7 +16,7 @@ import javax.swing.event.ListSelectionEvent;
 import pondero.L10n;
 import pondero.tests.test.Test;
 import pondero.ui.DialogSelectionListener;
-import pondero.util.UiUtil;
+import pondero.util.SwingUtil;
 
 @SuppressWarnings("serial")
 public class TestSelector extends JComponent {
@@ -35,7 +35,7 @@ public class TestSelector extends JComponent {
 
         final JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportBorder(new TitledBorder(null, L10n.getString("lbl.choose-test") + ":", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        scrollPane.getViewport().setBackground(UiUtil.getListBackgroundColor());
+        scrollPane.getViewport().setBackground(SwingUtil.getListBackgroundColor());
         panel.add(scrollPane, BorderLayout.CENTER);
 
         list = new JList<Test>();

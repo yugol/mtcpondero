@@ -6,7 +6,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
 import pondero.util.NumberUtil;
-import pondero.util.UiUtil;
+import pondero.util.SwingUtil;
 
 @SuppressWarnings("serial")
 public class ParticipantCellRenderer extends JLabel implements TableCellRenderer {
@@ -20,15 +20,15 @@ public class ParticipantCellRenderer extends JLabel implements TableCellRenderer
         setHorizontalAlignment(column == 0 ? SwingConstants.TRAILING : SwingConstants.LEADING);
         setText("  " + value.toString() + "   ");
         if (isSelected) {
-            setBackground(UiUtil.getListSelectedBackgroundColor());
-            setForeground(UiUtil.getListSelectedForegroundColor());
+            setBackground(SwingUtil.getListSelectedBackgroundColor());
+            setForeground(SwingUtil.getListSelectedForegroundColor());
         } else {
             if (NumberUtil.isOdd(row)) {
-                setBackground(UiUtil.getListBackgroundOddColor());
+                setBackground(SwingUtil.getListBackgroundOddColor());
             } else {
-                setBackground(UiUtil.getListBackgroundEvenColor());
+                setBackground(SwingUtil.getListBackgroundEvenColor());
             }
-            setForeground(UiUtil.getListForegroundColor());
+            setForeground(SwingUtil.getListForegroundColor());
         }
         return this;
     }
