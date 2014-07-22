@@ -43,6 +43,7 @@ public abstract class Test extends TestRenderer implements IsController {
 
     @Override
     public void doBegin() throws Exception {
+        controllerStack.clear();
         monitor = new TaskMonitor(System.currentTimeMillis());
         monitor.markStartTime();
         launcher.onTaskStarted(this);
