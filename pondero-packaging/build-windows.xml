@@ -4,7 +4,7 @@
 	<property name="release" value="2014-07-27" />
 	<property name="jredir" location="F:/Java/jre7-32" />
 	<property name="soldir" location="F:/Workspace/pondero-dev" />
-	<property name="pkgdir" location="F:/Workspace/Pondero" />
+	<property name="pkgdir" location="F:/Pondero" />
 	<property name="mavendir" location="C:/Users/Iulian/.m2/repository" />
 	<property name="iscc" value='"C:/Program Files (x86)/Inno Setup 5/iscc.exe"' />
 

@@ -277,7 +277,7 @@ public final class Context {
     private static final String                UPDATE_ON_STARTUP_KEY    = "updateOnStartup";
     private static final String                PROPERTIES_FILE_NAME     = "pondero.properties";
 
-    private static final String                DEFAULT_HOME_FOLDER_NAME = "../../Pondero";
+    private static final String                DEFAULT_HOME_FOLDER_NAME = "/Pondero";
     private static final String                DEFAULT_WORKBOOK_NAME    = "default.xlsx";
 
     private static final int                   FRAME_RATE               = 15;
