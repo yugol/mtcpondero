@@ -3,7 +3,7 @@
 
 	<property name="mavendir" location="/Users/Iulian/.m2/repository" />
 	<property name="soldir" location="/Users/Iulian/Documents/psih" />
-	<property name="pkgdir" location="/Users/Iulian/Documents/Pondero" />
+	<property name="pkgdir" location="/Users/Iulian/Pondero" />
 
 	<target name="full" depends="pondero-libs, pondero, pondero-test-ic" />
 	<target name="quick" depends="pondero, pondero-test-ic" />

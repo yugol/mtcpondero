@@ -123,7 +123,7 @@ public final class Context {
 
             if (StringUtil.isNullOrBlank(homeFolderName)) {
                 runningFromIde = true;
-                homeFolderName = DEFAULT_HOME_FOLDER_NAME;
+                homeFolderName = getDefaultHomeFolderName();
             } else {
                 runningFromIde = false;
             }
@@ -248,6 +248,12 @@ public final class Context {
 
     public static void setUiThemeString(final String value) {
         uiThemeString = value;
+    }
+
+    private static String getDefaultHomeFolderName() {
+        if (OsUtil.isWindows()) { return DEFAULT_HOME_FOLDER_NAME; }
+        if (OsUtil.isMacOSX()) { return System.getProperties().getProperty("user.home") + DEFAULT_HOME_FOLDER_NAME; }
+        return null;
     }
 
     private static File getFolder(final String name) {
