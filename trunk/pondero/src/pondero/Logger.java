@@ -67,7 +67,7 @@ public final class Logger {
     }
 
     private static int getMaxLoggableLevel() {
-        return Math.max(maxConsoleLevel, maxFileLevel);
+        return Math.max(maxConsoleLevel, Math.max(maxBufferLevel, maxFileLevel));
     }
 
     private static void justPrintTheDamnThing(final PrintStream destination, final String message, final Throwable t) {
@@ -183,7 +183,7 @@ public final class Logger {
     public static final int          DEBUG           = 60;
     public static final int          TRACE           = 70;
 
-    public static int                maxConsoleLevel = ERROR;
+    public static int                maxConsoleLevel = TRACE;
     public static int                maxBufferLevel  = CRITICAL;
     public static int                maxFileLevel    = NONE;
 
