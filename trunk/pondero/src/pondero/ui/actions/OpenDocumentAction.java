@@ -80,9 +80,8 @@ public class OpenDocumentAction extends PonderableAction {
                 if (count > 0) {
                     getMainFrame().setCursor(new Cursor(Cursor.WAIT_CURSOR));
                     for (int i = 1; i <= count; ++i) {
-                        final Participant p = workbook.addParticipant();
+                        final Participant p = workbook.getParticipant(Participants.HASH + i);
                         p.randomize();
-                        p.setId(Participants.HASH + i);
                     }
                 }
                 action("adding ", count, " random participants");

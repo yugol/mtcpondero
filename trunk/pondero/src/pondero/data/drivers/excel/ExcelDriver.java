@@ -21,9 +21,9 @@ import pondero.data.model.PSheet;
 import pondero.data.model.PType;
 import pondero.tests.update.Artifact;
 import pondero.util.BooleanUtil;
-import pondero.util.TimeUtil;
 import pondero.util.NumberUtil;
 import pondero.util.StringUtil;
+import pondero.util.TimeUtil;
 
 //http://poi.apache.org/spreadsheet/quick-guide.html
 
@@ -136,6 +136,10 @@ public abstract class ExcelDriver extends Driver {
         info("closing data file: ", getConnectionString());
         workbook = null;
         dataFile = null;
+    }
+
+    public File getFile() {
+        return dataFile;
     }
 
     private CellStyle createCellStyle(final String format, final boolean odd) {

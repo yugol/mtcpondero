@@ -465,6 +465,10 @@ public class ParticipantManagementDialog extends JDialog {
         participant.setMileage((int) valMileage.getValue());
     }
 
+    public String getParticipantId() {
+        return valId.getText();
+    }
+
     public void setParticipant(final Object p) throws Exception {
         if (p instanceof Participant) {
             final Participant participant = (Participant) p;

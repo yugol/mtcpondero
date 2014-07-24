@@ -12,19 +12,21 @@ public interface Workbook {
 
     void addModelListener(PModelListener listener);
 
-    Participant addParticipant() throws Exception;
-
     TrialRecord addTrialRecord(String experimentId) throws Exception;
 
     void close() throws Exception;
 
     Participants getAllParticipants() throws Exception;
 
+    File getFile();
+
     BasicModel getModel();
 
     String getName();
 
     String getNextPariciantId() throws Exception;
+
+    Participant getParticipant(String participantId) throws Exception;
 
     int getParticipantCount() throws Exception;
 
