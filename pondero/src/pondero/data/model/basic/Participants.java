@@ -32,6 +32,11 @@ public class Participants extends PSheet {
         lock();
     }
 
+    @Override
+    public Participant addRow() throws Exception {
+        return (Participant) addRow(new Participant(this));
+    }
+
     public String getNextPariciantId() {
         int maxIdx = 100;
         for (int rowIdx = 0; rowIdx < getRowCount(); ++rowIdx) {
@@ -52,13 +57,19 @@ public class Participants extends PSheet {
     }
 
     @Override
-    public Participant addRow() throws Exception {
-        return (Participant) addRow(new Participant(this));
-    }
-
-    @Override
     public Participant getRow(final int index) {
         return (Participant) super.getRow(index);
+    }
+
+    public Participant getRow(final String participantId) throws Exception {
+        Participant participant = null;
+        for (int rowIdx = 0; rowIdx < getRowCount(); ++rowIdx) {
+            participant = getRow(rowIdx);
+            if (participant.getId().equals(participantId)) { return participant; }
+        }
+        participant = new Participant(this);
+        participant.setId(participantId);
+        return (Participant) addRow(participant);
     }
 
 }

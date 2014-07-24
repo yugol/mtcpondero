@@ -26,11 +26,6 @@ public class BasicWorkbook implements Workbook {
     }
 
     @Override
-    public Participant addParticipant() throws Exception {
-        return model.getParticipants().addRow();
-    }
-
-    @Override
     public TrialRecord addTrialRecord(final String testId) throws Exception {
         return model.getRecords(testId).addRow();
     }
@@ -46,6 +41,11 @@ public class BasicWorkbook implements Workbook {
     }
 
     @Override
+    public File getFile() {
+        return template.getFile();
+    }
+
+    @Override
     public BasicModel getModel() {
         return model;
     }
@@ -58,6 +58,11 @@ public class BasicWorkbook implements Workbook {
     @Override
     public String getNextPariciantId() throws Exception {
         return model.getParticipants().getNextPariciantId();
+    }
+
+    @Override
+    public Participant getParticipant(final String participantId) throws Exception {
+        return model.getParticipants().getRow(participantId);
     }
 
     @Override

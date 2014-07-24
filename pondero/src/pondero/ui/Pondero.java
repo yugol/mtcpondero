@@ -242,8 +242,8 @@ public class Pondero implements Ponderable, PModelListener {
             }
             statusBar.setMessage(StatusBar.DEFAULT,
                     L10n.getString("lbl.data-register")
-                    + ": " + currentWorkbook.getName()
-                    + (currentWorkbook.isDirty() ? " *" : ""));
+                            + ": " + currentWorkbook.getName()
+                            + (currentWorkbook.isDirty() ? " *" : ""));
         }
         currentState = state;
     }
@@ -261,6 +261,7 @@ public class Pondero implements Ponderable, PModelListener {
         currentParticipant = null;
         currentTask = null;
         setCurrentState(PonderoState.PARTICIPANT_SELECTION);
+        Context.setLastWorkbookFile(workbook.getFile());
     }
 
     @Override

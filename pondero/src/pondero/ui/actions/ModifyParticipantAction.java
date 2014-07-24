@@ -33,7 +33,8 @@ public class ModifyParticipantAction extends PonderableAction implements Partici
     public void onParticipantSave(final ParticipantManagementDialog source) {
         info("saving participant");
         try {
-            final Participant p = getCurrentWorkbook().addParticipant();
+            final String participantId = source.getParticipantId();
+            final Participant p = getCurrentWorkbook().getParticipant(participantId);
             source.getParticipant(p);
             getApp().setCurrentParticipant(p);
         } catch (final Exception e) {
