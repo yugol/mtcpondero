@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project pondero-install with libraries in sub-folder">
+
+	<target name="create_run_jar">
+		<jar destfile="${pkgdir}/bin/pondero-install.jar">
+			<manifest>
+				<attribute name="Main-Class" value="pondero.UpdateInstaller" />
+				<attribute name="Class-Path" value="." />
+				<attribute name="Pondero-Artifact-Type" value="APPLICATION" />
+				<attribute name="Pondero-Artifact-Id" value="PONDERO-INSTALL" />
+				<attribute name="Pondero-Artifact-Major" value="0" />
+				<attribute name="Pondero-Artifact-Minor" value="3" />
+				<attribute name="Pondero-Artifact-Maturity" value="alpha" />
+			</manifest>
+			<fileset dir="${soldir}/pondero-install/bin" />
+		</jar>
+	</target>
+
+</project>
