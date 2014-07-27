@@ -1,0 +1,252 @@
+package pondero.data.model.basic;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+import pondero.L10n;
+import pondero.data.domains.Education;
+import pondero.data.domains.Gender;
+import pondero.data.model.PRow;
+import pondero.data.model.PSheet;
+import pondero.ui.exceptions.ExceptionReporting;
+import pondero.util.TimeUtil;
+import pondero.util.StringUtil;
+
+public class Participant extends PRow {
+
+    public static String getHtml(final Participant participant) throws Exception {
+        final StringBuilder html = new StringBuilder("<html>");
+        if (participant == null) {
+            html.append(L10n.getString("msg.no-participant-selected"));
+        } else {
+            html.append("<center><h1>");
+            html.append(participant.getSurname()).append(" ").append(participant.getName());
+            html.append("</h1></center>");
+            html.append("<p>&nbsp;</p>");
+            html.append("<table cellborder='0'>");
+            html.append("<tr>");
+            html.append("<td align='right' color='gray'><b>").append(L10n.getString("lbl.participant.age")).append(": ").append("</b></td>");
+            html.append("<td><i>").append(participant.getAge()).append(" ").append(years(participant.getAge())).append("</i></td>");
+            html.append("</tr>");
+            html.append("<tr>");
+            html.append("<td align='right' color='gray'><b>").append(L10n.getString("lbl.participant.gender")).append(": ").append("</b></td>");
+            html.append("<td><i>").append(participant.getGender()).append("</i></td>");
+            html.append("</tr>");
+            html.append("<tr>");
+            html.append("<td align='right' color='gray'><b>").append(L10n.getString("lbl.participant.driving-age")).append(": ").append("</b></td>");
+            html.append("<td><i>").append(participant.getDrivingAge()).append(" ").append(years(participant.getDrivingAge())).append("</i></td>");
+            html.append("</tr>");
+            html.append("</table>");
+        }
+        html.append("</html>");
+        return html.toString();
+    }
+
+    private static List<String> readNames(final String url) {
+        final List<String> names = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Participant.class.getResourceAsStream(url), "UTF-8"))) {
+            String name = null;
+            while (null != (name = reader.readLine())) {
+                names.add(name);
+                if (!StringUtil.isNullOrBlank(name)) {
+                    names.add(name);
+                }
+            }
+        } catch (final IOException e) {
+            ExceptionReporting.showExceptionMessage(null, e);
+        }
+        return names;
+    }
+
+    private static String years(final int age) {
+        if (age == 1) { return "an"; }
+        if (age == 0 || 1 < age && age < 20) { return "ani"; }
+        return "de ani";
+    }
+
+    private static final Random       RND = new Random();
+    private static final List<String> FNAMES;
+    private static final List<String> MNAMES;
+    private static final List<String> SNAMES;
+
+    static {
+        FNAMES = readNames("/pondero/res/fnames.txt");
+        MNAMES = readNames("/pondero/res/mnames.txt");
+        SNAMES = readNames("/pondero/res/snames.txt");
+    }
+
+    Participant(final PSheet sheet) throws Exception {
+        super(sheet);
+        setId(UUID.randomUUID().toString());
+    }
+
+    public Integer getAge() throws Exception {
+        final Calendar dob = getDob();
+        if (dob != null) {
+            final int dobYear = dob.get(Calendar.YEAR);
+            return TimeUtil.getCurrentYear() - dobYear;
+        }
+        return null;
+    }
+
+    public Calendar getDob() throws Exception {
+        return getCalendar(Participants.ATTR_DOB);
+    }
+
+    public Integer getDrivingAge() {
+        return getInteger(Participants.ATTR_DRIVING_AGE);
+    }
+
+    public Education getEducation() {
+        final String education = (String) get(Participants.ATTR_EDUCATION);
+        return Education.parse(education);
+    }
+
+    public Gender getGender() {
+        final String gender = (String) get(Participants.ATTR_GENDER);
+        return Gender.parse(gender);
+    }
+
+    public String getId() {
+        return (String) get(Participants.ATTR_ID);
+    }
+
+    public Integer getMileage() {
+        return getInteger(Participants.ATTR_MILEAGE);
+    }
+
+    public String getName() {
+        return (String) get(Participants.ATTR_NAME);
+    }
+
+    public String getSurname() {
+        return (String) get(Participants.ATTR_SURNAME);
+    }
+
+    @Override
+    public void randomize() throws Exception {
+        // gender
+        setGender(RND.nextBoolean() ? Gender.MASCULINE : Gender.FEMININE);
+
+        // name
+        setSurname(SNAMES.get(RND.nextInt(SNAMES.size())));
+        if (getGender() == Gender.FEMININE) {
+            setName(FNAMES.get(RND.nextInt(FNAMES.size())));
+        } else {
+            setName(MNAMES.get(RND.nextInt(MNAMES.size())));
+        }
+
+        // age
+        setAge(RND.nextInt(70 - 20) + 20);
+
+        // education
+        if (getAge() >= 18 && RND.nextDouble() > 0.05) {
+            if (getAge() >= 20 && RND.nextDouble() < 0.9) {
+                if (getAge() >= 25 && RND.nextDouble() < 0.5) {
+                    if (getAge() >= 30 && RND.nextDouble() < 0.2) {
+                        if (getAge() >= 35 && RND.nextDouble() < 0.1) {
+                            if (getAge() >= 40 && RND.nextDouble() < 0.05) {
+                                setEducation(Education.PHD);
+                            } else {
+                                setEducation(Education.MSC);
+                            }
+                        } else {
+                            setEducation(Education.BSC);
+                        }
+                    } else {
+                        setEducation(Education.HSG);
+                    }
+                } else {
+                    setEducation(Education.TWELVE);
+                }
+            } else {
+                setEducation(Education.TEN);
+            }
+        } else {
+            setEducation(Education.LTEN);
+        }
+
+        // driving age
+        int drivingAge = getAge() - 18;
+        if (drivingAge > 0) {
+            drivingAge = RND.nextInt(drivingAge);
+        } else {
+            drivingAge = 0;
+        }
+        setDrivingAge(drivingAge);
+
+        // mileage
+        int mileage = drivingAge * 100000;
+        if (mileage > 0) {
+            mileage = RND.nextInt(mileage);
+        }
+        setMileage(mileage);
+    }
+
+    public void setAge(final Integer value) throws Exception {
+        setDob(new GregorianCalendar(TimeUtil.getCurrentYear() - value, Calendar.JANUARY, 1));
+    }
+
+    public void setDob(final Calendar value) throws Exception {
+        set(Participants.ATTR_DOB, value);
+    }
+
+    public void setDrivingAge(final Integer value) throws Exception {
+        set(Participants.ATTR_DRIVING_AGE, value);
+    }
+
+    public void setEducation(final Education value) throws Exception {
+        set(Participants.ATTR_EDUCATION, value.code);
+    }
+
+    public void setGender(final Gender value) throws Exception {
+        set(Participants.ATTR_GENDER, value.code);
+    }
+
+    public void setId(final int id) throws Exception {
+        setId(String.valueOf(id));
+    }
+
+    public void setId(final String value) throws Exception {
+        set(Participants.ATTR_ID, value);
+    }
+
+    public void setMileage(final Integer value) throws Exception {
+        set(Participants.ATTR_MILEAGE, value);
+    }
+
+    public void setName(final String value) throws Exception {
+        set(Participants.ATTR_NAME, value);
+    }
+
+    public void setSurname(final String value) throws Exception {
+        set(Participants.ATTR_SURNAME, value);
+    }
+
+    @Override
+    public String toCsv() throws Exception {
+        final StringBuilder csv = new StringBuilder();
+        csv.append(getId()).append(", ");
+        csv.append(getSurname()).append(", ");
+        csv.append(getName()).append(", ");
+        csv.append(getDob()).append(", ");
+        csv.append(getAge()).append(", ");
+        csv.append(getGender()).append(", ");
+        csv.append(getEducation()).append(", ");
+        csv.append(getDrivingAge()).append(", ");
+        csv.append(getMileage());
+        return csv.toString();
+    }
+
+    @Override
+    public String toString() {
+        return getSurname() + ", " + getName() + " (" + getId() + ")";
+    }
+
+}
