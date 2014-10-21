@@ -12,6 +12,7 @@ import pondero.data.Workbook;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
 import pondero.ui.exceptions.ExceptionReporting;
+import pondero.util.OsUtil;
 
 @SuppressWarnings("serial")
 public class QuitAction extends PonderableAction {
@@ -50,9 +51,9 @@ public class QuitAction extends PonderableAction {
             FileUtils.deleteQuietly(Context.getFolderResultsTemp());
             getMainFrame().setVisible(false);
             if (restart) {
-                final File ponderoBat = new File(Context.getFolderHome().getCanonicalPath(), "pondero.bat");
-                action("restarting application: ", ponderoBat.getCanonicalPath());
-                Runtime.getRuntime().exec(ponderoBat.getAbsolutePath());
+                final File ponderoLauncher = new File(Context.getFolderHome().getCanonicalPath(), OsUtil.getLauncherName());
+                action("restarting application: ", ponderoLauncher.getCanonicalPath());
+                Runtime.getRuntime().exec(ponderoLauncher.getAbsolutePath());
             } else {
                 action("closing application");
             }
@@ -65,5 +66,4 @@ public class QuitAction extends PonderableAction {
             ExceptionReporting.showExceptionMessage(getMainFrame(), e);
         }
     }
-
 }

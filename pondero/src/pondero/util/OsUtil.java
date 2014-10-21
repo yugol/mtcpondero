@@ -19,6 +19,11 @@ public final class OsUtil {
         return context.toString();
     }
 
+    public static String getLauncherName() {
+        if (isWindows()) { return "pondero.bat"; }
+        return "pondero.sh";
+    }
+
     public static boolean isLinux() {
         return System.getProperty("os.name").indexOf("Linux") >= 0;
     }
