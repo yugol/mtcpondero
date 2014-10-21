@@ -107,20 +107,6 @@ public final class Context {
 
     public static synchronized void init(String homeFolderName) throws Exception {
         if (homeFolder == null) {
-            if (OsUtil.isMacOSX()) {
-                try {
-                    System.setProperty("com.apple.mrj.application.apple.menu.about.name", L10n.getString("lbl.pondero"));
-                    System.setProperty("com.apple.macos.useScreenMenuBar", "true");
-                    System.setProperty("apple.laf.useScreenMenuBar", "true"); // for older versions of Java
-                } catch (final SecurityException e) {
-                    /* probably running via webstart, do nothing */
-                }
-            }
-            if (OsUtil.isWindows()) {
-                // System.setProperty("awt.useSystemAAFontSettings", "on");
-                System.setProperty("swing.aatext", "true");
-            }
-
             if (StringUtil.isNullOrBlank(homeFolderName)) {
                 runningFromIde = true;
                 homeFolderName = getDefaultHomeFolderName();
@@ -172,6 +158,21 @@ public final class Context {
             } else {
                 savePreferences();
             }
+
+            if (OsUtil.isMacOSX()) {
+                try {
+                    System.setProperty("com.apple.mrj.application.apple.menu.about.name", L10n.getString("lbl.pondero"));
+                    System.setProperty("com.apple.macos.useScreenMenuBar", "true");
+                    System.setProperty("apple.laf.useScreenMenuBar", "true"); // for older versions of Java
+                } catch (final SecurityException e) {
+                    /* probably running via webstart, do nothing */
+                }
+            }
+            if (OsUtil.isWindows()) {
+                // System.setProperty("awt.useSystemAAFontSettings", "on");
+                System.setProperty("swing.aatext", "true");
+            }
+
             info("home folder: ", homeFolder.getCanonicalPath());
             debug("properties file: ", propertiesFile.getCanonicalPath());
             trace("property: ", CONSOLE_LOG_LEVEL_KEY, "=", Logger.maxConsoleLevel);
