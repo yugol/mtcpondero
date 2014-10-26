@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="quick" name="Create Runnable Jar for Project pondero-libs">
 
-	<property name="release" value="2014-07-27" />
+	<property name="release" value="2014-10-26" />
 	<property name="jredir" location="F:/Java/jre7-32" />
 	<property name="soldir" location="F:/Workspace/pondero-dev" />
 	<property name="pkgdir" location="F:/Pondero" />
@@ -13,6 +13,7 @@
 	<target name="tidy" depends="pondero">
 		<delete file="${pkgdir}/cfg/pondero.properties" />
 		<delete file="${pkgdir}/tests/pondero-test-ic.jar" failonerror="false" />
+		<delete file="${pkgdir}/tests/pondero-test-sot.jar" failonerror="false" />
 	</target>
 
 	<target name="tests" depends="pondero-test-ic, pondero-test-sot" />
