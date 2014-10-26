@@ -36,8 +36,11 @@ public abstract class Test extends TestRenderer implements IsController {
     }
 
     public TrialRecord createRecord(final long runId) throws Exception {
-        final TrialRecord record = workbook.addTrialRecord(getTestId());
-        record.setExperimentId(runId);
+        TrialRecord record = null;
+        if (workbook != null) {
+            record = workbook.addTrialRecord(getTestId());
+            record.setExperimentId(runId);
+        }
         return record;
     }
 
@@ -95,14 +98,16 @@ public abstract class Test extends TestRenderer implements IsController {
 
     public void openRecord(final Trial trial) throws Exception {
         record = createRecord(monitor.getRunId());
-        if (participant != null) {
-            record.setParticipant(participant);
-        }
-        if (currentBlock != null) {
-            record.setBlockId(currentBlock.$name());
-        }
-        if (trial != null) {
-            record.setTrialId(trial.$name());
+        if (record != null) {
+            if (participant != null) {
+                record.setParticipant(participant);
+            }
+            if (currentBlock != null) {
+                record.setBlockId(currentBlock.$name());
+            }
+            if (trial != null) {
+                record.setTrialId(trial.$name());
+            }
         }
     }
 
