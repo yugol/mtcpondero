@@ -35,7 +35,12 @@ public class FillParticipantReport extends ReportFilling {
 
                         reportRow = getTimeMatrixRow(record.getExperimentTimestamp());
                         colIdx = timeMatrix.index(dataColName, PType.INT);
-                        reportRow.set(colIdx, record.getResponseTime());
+                        try {
+                            final Integer responseTime = record.getResponseTime();
+                            reportRow.set(colIdx, responseTime);
+                        } catch (final NullPointerException ex) {
+                            reportRow.set(colIdx, -1);
+                        }
                     }
                 }
                 template.addResponses(responseMatrix);
