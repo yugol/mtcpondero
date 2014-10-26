@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Pondero"
-#define MyAppVersion "0.3-alpha"
+#define MyAppVersion "0.4-alpha"
 #define MyAppPublisher "Mindtrips Communications"
 #define MyAppURL "http://www.purl.org/net/pondero/home"
 #define MyAppExeName "pondero.bat"
@@ -39,6 +39,8 @@ Source:   "{#PonderoRoot}\cfg\pondero-48x48.ico";      DestDir: "{app}\cfg";   F
 Source:   "{#PonderoRoot}\bin\pondero.jar";            DestDir: "{app}\bin";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\bin\pondero-libs.jar";       DestDir: "{app}\bin";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\bin\pondero-install.jar";    DestDir: "{app}\bin";   Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-ic.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-sot.jar"; DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\pondero.bat";                DestDir: "{app}";       Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
