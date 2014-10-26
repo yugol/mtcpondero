@@ -15,7 +15,7 @@
 		<delete file="${pkgdir}/tests/pondero-test-ic.jar" failonerror="false" />
 	</target>
 
-	<target name="tests" depends="pondero-test-ic" />
+	<target name="tests" depends="pondero-test-ic, pondero-test-sot" />
 
 	<target name="full" depends="pondero, pondero-libs, tests" />
 
@@ -70,6 +70,10 @@
 
 	<target name="pondero-test-ic">
 		<ant antfile="${soldir}/pondero-test-ic/make-jar-pondero-test-ic.xml" />
+	</target>
+	
+	<target name="pondero-test-sot">
+		<ant antfile="${soldir}/pondero-test-sot/make-jar-pondero-test-sot.xml" />
 	</target>
 
 </project>
