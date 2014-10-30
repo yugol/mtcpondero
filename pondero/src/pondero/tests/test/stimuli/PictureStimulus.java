@@ -14,6 +14,7 @@ import pondero.tests.staples.Coordinates;
 public class PictureStimulus extends VisualStimulus {
 
     private BufferedImage imgData;
+
     private Rectangle2D   imgBounds;
     private Coordinates   position;
     private Coordinates   size;
@@ -45,7 +46,7 @@ public class PictureStimulus extends VisualStimulus {
     public void setPath(final String path) throws IOException {
         final File imgFile = new File(path);
         if (imgFile.exists()) {
-            // try open the file directly
+            // try to open the file directly
             imgData = ImageIO.read(imgFile);
         } else {
             final String folder = "/" + getParent()._getTest().getClass().getPackage().getName().replace(".", "/") + "/";
