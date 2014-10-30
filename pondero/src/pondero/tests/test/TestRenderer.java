@@ -18,7 +18,7 @@ import pondero.ui.testing.TestFrame;
 
 public abstract class TestRenderer extends TestBase {
 
-    private final TestFrame            testFrame;
+    private final TestFrame             testFrame;
 
     private final Stack<HasScreencolor> screenColorStack = new Stack<HasScreencolor>();
     private final List<VisualStimulus>  visualStimuli    = new ArrayList<VisualStimulus>(); ;
@@ -57,6 +57,10 @@ public abstract class TestRenderer extends TestBase {
         return new Coordinates(bounds.getX(), bounds.getCenterY());
     }
 
+    public List<VisualStimulus> getVisualStimuli() {
+        return visualStimuli;
+    }
+
     public HasScreencolor peekScreencolor() {
         return screenColorStack.peek();
     }
@@ -84,7 +88,7 @@ public abstract class TestRenderer extends TestBase {
         visualStimuli.clear();
     }
 
-    public void showInstructions(final Page page, final boolean first, final boolean last) {
+    public void showCurtains(final Page page, final boolean first, final boolean last) {
         testFrame.showCurtains(page, first, last);
     }
 

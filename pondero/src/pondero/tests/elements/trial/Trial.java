@@ -67,13 +67,11 @@ public class Trial extends Element implements HasFeedback, IsController {
     @Override
     public void correctmessage(final boolean flag) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
     public void correctmessage(final String stimulusName, final long duration) {
         // TODO Auto-generated method stub
-
     }
 
     public void correctresponse(final String... correctresponse) {
