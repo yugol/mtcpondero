@@ -35,8 +35,7 @@ public abstract class TestRenderer extends TestBase {
     public void drawScene(final Graphics2D g2d, final int surfaceWidth, final int surfaceHeight) {
         g2d.setColor(getScreencolor());
         g2d.fillRect(0, 0, surfaceWidth, surfaceHeight);
-        final List<VisualStimulus> localStimuli = new ArrayList<VisualStimulus>(visualStimuli);
-        for (final VisualStimulus stimulus : localStimuli) {
+        for (final VisualStimulus stimulus : getVisualStimuli()) {
             stimulus.render(g2d, surfaceWidth, surfaceHeight);
         }
     }
@@ -58,7 +57,7 @@ public abstract class TestRenderer extends TestBase {
     }
 
     public List<VisualStimulus> getVisualStimuli() {
-        return visualStimuli;
+        return new ArrayList<VisualStimulus>(visualStimuli);
     }
 
     public HasScreencolor peekScreencolor() {
