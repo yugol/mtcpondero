@@ -61,7 +61,7 @@ public class Expt extends Element implements HasPreinstructions, HasPostinstruct
                 }
                 if (doStatus.currentPreIndex < preinstructions.length) {
                     final Page page = test.getPage(preinstructions[doStatus.currentPreIndex]);
-                    test.showInstructions(page, doStatus.currentPreIndex == 0, false);
+                    test.showCurtains(page, doStatus.currentPreIndex == 0, false);
                     return;
                 }
             }
@@ -85,7 +85,7 @@ public class Expt extends Element implements HasPreinstructions, HasPostinstruct
                 }
                 if (doStatus.currentPostIndex < postinstructions.length) {
                     final Page page = test.getPage(postinstructions[doStatus.currentPostIndex]);
-                    test.showInstructions(page, doStatus.currentPostIndex == 0, false);
+                    test.showCurtains(page, doStatus.currentPostIndex == 0, false);
                     return;
                 }
             }
