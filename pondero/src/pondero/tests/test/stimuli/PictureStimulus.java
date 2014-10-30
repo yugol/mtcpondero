@@ -23,6 +23,10 @@ public class PictureStimulus extends VisualStimulus {
         super(parent);
     }
 
+    public BufferedImage getImgData() {
+        return imgData;
+    }
+
     @Override
     public Picture getParent() {
         return (Picture) super.getParent();
