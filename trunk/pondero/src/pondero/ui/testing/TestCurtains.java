@@ -16,7 +16,7 @@ import pondero.tests.test.Test;
 import pondero.tests.test.responses.PrevNextResponse;
 
 @SuppressWarnings("serial")
-public class TestInstructions extends JPanel {
+public class TestCurtains extends JPanel {
 
     private static String getCharUiString(final Character ch) {
         if (ch == null) { return ""; }
@@ -31,7 +31,7 @@ public class TestInstructions extends JPanel {
     private final JButton   btnRight;
     private final JTextArea message;
 
-    public TestInstructions(final Test test) {
+    public TestCurtains(final Test test) {
         this.test = test;
         setBorder(null);
         setLayout(new BorderLayout());

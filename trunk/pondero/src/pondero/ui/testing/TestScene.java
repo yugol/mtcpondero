@@ -18,31 +18,31 @@ public class TestScene extends JPanel {
         getCenter().requestFocusInWindow();
     }
 
-    public TestVisualComponent getCenter() {
-        return (TestVisualComponent) getSceneComponent(BorderLayout.CENTER);
+    public TestSceneComponent getCenter() {
+        return (TestSceneComponent) getSceneComponent(BorderLayout.CENTER);
     }
 
-    public TestVisualComponent getSouth() {
-        return (TestVisualComponent) getSceneComponent(BorderLayout.SOUTH);
+    public TestSceneComponent getSouth() {
+        return (TestSceneComponent) getSceneComponent(BorderLayout.SOUTH);
     }
 
-    public void setCenter(final TestVisualComponent component) {
+    public void setCenter(final TestSceneComponent component) {
         setSceneComponent(component, BorderLayout.CENTER);
     }
 
-    public void setEast(final TestVisualComponent component) {
+    public void setEast(final TestSceneComponent component) {
         setSceneComponent(component, BorderLayout.EAST);
     }
 
-    public void setNorth(final TestVisualComponent component) {
+    public void setNorth(final TestSceneComponent component) {
         setSceneComponent(component, BorderLayout.NORTH);
     }
 
-    public void setSouth(final TestVisualComponent component) {
+    public void setSouth(final TestSceneComponent component) {
         setSceneComponent(component, BorderLayout.SOUTH);
     }
 
-    public void setWest(final TestVisualComponent component) {
+    public void setWest(final TestSceneComponent component) {
         setSceneComponent(component, BorderLayout.WEST);
     }
 
@@ -51,7 +51,7 @@ public class TestScene extends JPanel {
         return layout.getLayoutComponent(position);
     }
 
-    private void setSceneComponent(final TestVisualComponent component, final String position) {
+    private void setSceneComponent(final TestSceneComponent component, final String position) {
         final Component currentComponent = getSceneComponent(position);
         if (currentComponent != null) {
             remove(currentComponent);

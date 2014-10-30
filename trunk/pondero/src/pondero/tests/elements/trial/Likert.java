@@ -6,9 +6,9 @@ import pondero.tests.elements.interfaces.HasPosition;
 import pondero.tests.staples.Coordinate;
 import pondero.tests.staples.Coordinates;
 import pondero.tests.test.Test;
-import pondero.ui.testing.TestCanvas;
-import pondero.ui.testing.TestLikertComponent;
 import pondero.ui.testing.TestScene;
+import pondero.ui.testing.components.TestDrawableComponent;
+import pondero.ui.testing.components.TestLikertComponent;
 import pondero.util.StringUtil;
 
 public class Likert extends Trial implements HasPosition {
@@ -124,8 +124,8 @@ public class Likert extends Trial implements HasPosition {
         scene.setNorth(null);
         scene.setEast(null);
         scene.setWest(null);
-        if (!(scene.getCenter() instanceof TestCanvas)) {
-            scene.setCenter(new TestCanvas(_getTest()));
+        if (!(scene.getCenter() instanceof TestDrawableComponent)) {
+            scene.setCenter(new TestDrawableComponent(_getTest()));
         }
         TestLikertComponent lk = null;
         final Object south = scene.getSouth();

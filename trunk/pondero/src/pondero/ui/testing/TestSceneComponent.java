@@ -4,11 +4,11 @@ import javax.swing.JComponent;
 import pondero.tests.test.Test;
 
 @SuppressWarnings("serial")
-public class TestVisualComponent extends JComponent {
+public class TestSceneComponent extends JComponent {
 
     private final Test test;
 
-    public TestVisualComponent(final Test test) {
+    public TestSceneComponent(final Test test) {
         this.test = test;
         setFocusable(true);
     }

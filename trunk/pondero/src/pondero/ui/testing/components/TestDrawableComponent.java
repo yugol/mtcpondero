@@ -1,4 +1,4 @@
-package pondero.ui.testing;
+package pondero.ui.testing.components;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -10,11 +10,12 @@ import pondero.tests.test.Test;
 import pondero.tests.test.responses.KeyPressResponse;
 import pondero.tests.test.responses.MouseClickResponse;
 import pondero.ui.exceptions.ExceptionReporting;
+import pondero.ui.testing.TestSceneComponent;
 
 @SuppressWarnings("serial")
-public class TestCanvas extends TestVisualComponent {
+public class TestDrawableComponent extends TestSceneComponent {
 
-    public TestCanvas(final Test test) {
+    public TestDrawableComponent(final Test test) {
         super(test);
 
         addKeyListener(new KeyAdapter() {
