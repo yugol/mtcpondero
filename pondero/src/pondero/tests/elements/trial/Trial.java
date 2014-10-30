@@ -16,8 +16,8 @@ import pondero.tests.test.responses.Response;
 import pondero.tests.test.stimuli.Stimulus;
 import pondero.tests.test.stimuli.VisualStimulus;
 import pondero.ui.exceptions.ExceptionReporting;
-import pondero.ui.testing.TestCanvas;
 import pondero.ui.testing.TestScene;
+import pondero.ui.testing.components.TestDrawableComponent;
 
 public class Trial extends Element implements HasFeedback, IsController {
 
@@ -233,8 +233,8 @@ public class Trial extends Element implements HasFeedback, IsController {
         scene.setSouth(null);
         scene.setEast(null);
         scene.setWest(null);
-        if (!(scene.getCenter() instanceof TestCanvas)) {
-            scene.setCenter(new TestCanvas(_getTest()));
+        if (!(scene.getCenter() instanceof TestDrawableComponent)) {
+            scene.setCenter(new TestDrawableComponent(_getTest()));
         }
     }
 

@@ -19,7 +19,7 @@ public class TestFrame extends JFrame {
 
     private final JPanel           contentPane;
     private final TestScene        scene;
-    private final TestInstructions instructions;
+    private final TestCurtains instructions;
 
     /**
      * Create the frame.
@@ -51,7 +51,7 @@ public class TestFrame extends JFrame {
         scene.setBorder(null);
         contentPane.add(scene);
 
-        instructions = new TestInstructions(task);
+        instructions = new TestCurtains(task);
         instructions.setBorder(null);
         contentPane.add(instructions);
 
@@ -73,7 +73,7 @@ public class TestFrame extends JFrame {
         scene.paintImmediately(0, 0, scene.getWidth(), scene.getHeight());
     }
 
-    public void showInstructions(final Page instructPage, final boolean first, final boolean last) {
+    public void showCurtains(final Page instructPage, final boolean first, final boolean last) {
         scene.setVisible(false);
         instructions.setVisible(true);
         instructions.showInstructions(instructPage, first, last);

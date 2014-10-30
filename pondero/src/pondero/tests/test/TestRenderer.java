@@ -18,14 +18,14 @@ import pondero.ui.testing.TestFrame;
 
 public abstract class TestRenderer extends TestBase {
 
-    private final TestFrame            testWindow;
+    private final TestFrame            testFrame;
 
     private final Stack<HasScreencolor> screenColorStack = new Stack<HasScreencolor>();
     private final List<VisualStimulus>  visualStimuli    = new ArrayList<VisualStimulus>(); ;
 
     public TestRenderer() {
         super();
-        testWindow = new TestFrame((Test) this);
+        testFrame = new TestFrame((Test) this);
     }
 
     public void addVisualStimulus(final VisualStimulus stimulus) {
@@ -46,11 +46,11 @@ public abstract class TestRenderer extends TestBase {
     }
 
     public TestFrame getTestWindow() {
-        return testWindow;
+        return testFrame;
     }
 
     public Coordinates getTextSize(final Text text) {
-        final Graphics g = testWindow.getGraphics();
+        final Graphics g = testFrame.getGraphics();
         g.setFont(text._getFont());
         final FontMetrics fm = g.getFontMetrics();
         final Rectangle2D bounds = fm.getStringBounds("abc", g);
@@ -66,7 +66,7 @@ public abstract class TestRenderer extends TestBase {
 
             @Override
             public void run() {
-                testWindow.invalidateScene();
+                testFrame.invalidateScene();
             }
 
         });
@@ -85,11 +85,11 @@ public abstract class TestRenderer extends TestBase {
     }
 
     public void showInstructions(final Page page, final boolean first, final boolean last) {
-        testWindow.showInstructions(page, first, last);
+        testFrame.showCurtains(page, first, last);
     }
 
     public void showScene() {
-        testWindow.showScene();
+        testFrame.showScene();
     }
 
     protected void popScreencolor() {

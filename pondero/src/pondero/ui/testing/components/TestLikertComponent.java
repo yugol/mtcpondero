@@ -1,4 +1,4 @@
-package pondero.ui.testing;
+package pondero.ui.testing.components;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,9 +16,10 @@ import javax.swing.border.EmptyBorder;
 import pondero.tests.test.Test;
 import pondero.tests.test.responses.KeyPressResponse;
 import pondero.ui.exceptions.ExceptionReporting;
+import pondero.ui.testing.TestSceneComponent;
 
 @SuppressWarnings("serial")
-public class TestLikertComponent extends TestVisualComponent {
+public class TestLikertComponent extends TestSceneComponent {
 
     private static final float ANCHOR_LABEL_SIZE_FACTOR = 1.0f;
 
