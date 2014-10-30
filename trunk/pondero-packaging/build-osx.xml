@@ -4,8 +4,11 @@
 	<property name="mavendir" location="/Users/Iulian/.m2/repository" />
 	<property name="soldir" location="/Users/Iulian/Documents/psih" />
 	<property name="pkgdir" location="/Users/Iulian/Pondero" />
-	
-	<target name="tests" depends="pondero-test-ic, pondero-test-sot" />
+
+	<target name="tests" depends="
+		pondero-test-ic, 
+		pondero-test-mcal,
+		pondero-test-sot" />
 
 	<target name="full" depends="pondero-libs, pondero, tests" />
 	<target name="quick" depends="pondero, tests" />
@@ -38,6 +41,10 @@
 		<ant antfile="${soldir}/pondero-test-ic/make-jar-pondero-test-ic.xml" />
 	</target>
 
+	<target name="pondero-test-mcal" depends="create-context, pondero">
+		<ant antfile="${soldir}/pondero-test-mcal/make-jar-pondero-test-mcal.xml" />
+	</target>
+	
 	<target name="pondero-test-sot" depends="create-context, pondero">
 		<ant antfile="${soldir}/pondero-test-sot/make-jar-pondero-test-sot.xml" />
 	</target>
