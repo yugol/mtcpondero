@@ -1,6 +1,7 @@
 package pondero.data.analysis;
 
 import java.util.Date;
+import pondero.L10n;
 import pondero.data.analysis.PMatrix.MRow;
 import pondero.data.drivers.excel.templates.participant.ParticipantTemplate;
 import pondero.data.model.PSheet;
@@ -31,7 +32,11 @@ public class FillParticipantReport extends ReportFilling {
 
                         MRow reportRow = getResponseMatrixRow(record.getExperimentTimestamp());
                         int colIdx = responseMatrix.index(dataColName, PType.STRING);
-                        reportRow.set(colIdx, record.getResponse());
+                        try {
+                            reportRow.set(colIdx, record.getResponse());
+                        } catch (final IndexOutOfBoundsException ex) {
+                            reportRow.set(colIdx, L10n.NA);
+                        }
 
                         reportRow = getTimeMatrixRow(record.getExperimentTimestamp());
                         colIdx = timeMatrix.index(dataColName, PType.INT);

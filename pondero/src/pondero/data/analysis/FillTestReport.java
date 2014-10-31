@@ -1,5 +1,6 @@
 package pondero.data.analysis;
 
+import pondero.L10n;
 import pondero.data.analysis.PMatrix.MRow;
 import pondero.data.drivers.excel.templates.test.TestTemplate;
 import pondero.data.model.PSheet;
@@ -23,13 +24,22 @@ public class FillTestReport extends ReportFilling {
                     int colIdx = responseMatrix.index(PARTICIPANT_ID_NAME, PType.STRING);
                     reportRow.set(colIdx, record.getParticipantId());
                     colIdx = responseMatrix.index(dataColName, PType.STRING);
-                    reportRow.set(colIdx, record.getResponse());
+                    try {
+                        reportRow.set(colIdx, record.getResponse());
+                    } catch (final IndexOutOfBoundsException ex) {
+                        reportRow.set(colIdx, L10n.NA);
+                    }
 
                     reportRow = getTimeMatrixRow(record.getExperimentTimestamp());
                     colIdx = timeMatrix.index(PARTICIPANT_ID_NAME, PType.STRING);
                     reportRow.set(colIdx, record.getParticipantId());
                     colIdx = timeMatrix.index(dataColName, PType.STRING);
-                    reportRow.set(colIdx, record.getResponseTime());
+                    try {
+                        final Integer responseTime = record.getResponseTime();
+                        reportRow.set(colIdx, responseTime);
+                    } catch (final NullPointerException ex) {
+                        reportRow.set(colIdx, -1);
+                    }
                 }
                 template.addResponses(responseMatrix);
                 template.addTimes(timeMatrix);

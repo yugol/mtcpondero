@@ -18,4 +18,9 @@ public class KeyPressResponse extends Response {
         return key;
     }
 
+    @Override
+    public String toRecordString() {
+        return key;
+    }
+
 }

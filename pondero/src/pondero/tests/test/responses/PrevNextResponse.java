@@ -1,6 +1,5 @@
 package pondero.tests.test.responses;
 
-
 public class PrevNextResponse extends Response {
 
     private boolean next;
@@ -20,6 +19,11 @@ public class PrevNextResponse extends Response {
 
     public void setPrev(final boolean prev) {
         this.prev = prev;
+    }
+
+    @Override
+    public String toRecordString() {
+        throw new UnsupportedOperationException("PrevNextResponse.toRecordString() - not implemented");
     }
 
 }

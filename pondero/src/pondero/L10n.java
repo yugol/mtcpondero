@@ -8,6 +8,8 @@ import javax.swing.UIManager;
 
 public final class L10n {
 
+    public static final String          NA          = "N/A";
+
     private static final String         BUNDLE_NAME = "pondero.res.messages"; //$NON-NLS-1$
     private static final Locale         LOCALE;
     private static final ResourceBundle RESOURCE_BUNDLE;
