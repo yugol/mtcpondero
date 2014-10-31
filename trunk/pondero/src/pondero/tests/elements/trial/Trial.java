@@ -132,7 +132,7 @@ public class Trial extends Element implements HasFeedback, IsController {
                                     test.recordErrorResponse(input.getTime());
                                     fb = test.getErrormessage();
                                 }
-                                test.recordResponse(keyResponse);
+                                test.recordResponse(input);
                                 passed = true;
                                 if (fb != null) {
                                     final IsStimulus eltStimulus = test.getStimulus(fb.getStimulusName());
