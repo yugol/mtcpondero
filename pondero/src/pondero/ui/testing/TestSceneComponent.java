@@ -4,7 +4,7 @@ import javax.swing.JComponent;
 import pondero.tests.test.Test;
 
 @SuppressWarnings("serial")
-public class TestSceneComponent extends JComponent {
+public abstract class TestSceneComponent extends JComponent {
 
     private final Test test;
 
@@ -19,6 +19,9 @@ public class TestSceneComponent extends JComponent {
 
     public boolean hasTest() {
         return test != null;
+    }
+
+    public void reset() {
     }
 
 }
