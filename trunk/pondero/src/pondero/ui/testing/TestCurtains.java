@@ -30,6 +30,7 @@ public class TestCurtains extends JPanel {
     private final JButton   btnLeft;
     private final JButton   btnRight;
     private final JTextArea message;
+    private final JPanel    pnlMessage;
 
     public TestCurtains(final Test test) {
         this.test = test;
@@ -64,7 +65,7 @@ public class TestCurtains extends JPanel {
             }
 
         });
-        pnlNavigation.setBorder(new EmptyBorder(5, 10, 5, 10));
+        pnlNavigation.setBorder(new EmptyBorder(6, 10, 5, 10));
         pnlCenter.add(pnlNavigation, BorderLayout.SOUTH);
         pnlNavigation.setLayout(new GridLayout(0, 2, 20, 0));
 
@@ -121,6 +122,11 @@ public class TestCurtains extends JPanel {
         });
         pnlNavigation.add(btnRight);
 
+        pnlMessage = new JPanel();
+        pnlMessage.setBorder(new EmptyBorder(4, 4, 4, 4));
+        pnlMessage.setLayout(new BorderLayout(0, 0));
+        pnlCenter.add(pnlMessage, BorderLayout.CENTER);
+
         message = new JTextArea();
         message.addKeyListener(new KeyAdapter() {
 
@@ -133,10 +139,12 @@ public class TestCurtains extends JPanel {
             }
 
         });
+        message.setOpaque(false);
         message.setWrapStyleWord(true);
         message.setLineWrap(true);
         message.setEditable(false);
-        pnlCenter.add(message, BorderLayout.CENTER);
+        pnlMessage.add(message, BorderLayout.CENTER);
+
     }
 
     public void showInstructions(final Page page, final boolean first, final boolean last) {
