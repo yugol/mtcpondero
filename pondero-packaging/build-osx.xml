@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="quick" name="Create Runnable Jar for Project pondero-libs">
+<project default="full" name="Create Runnable Jar for Project pondero-libs">
 
 	<property name="mavendir" location="/Users/Iulian/.m2/repository" />
 	<property name="soldir" location="/Users/Iulian/Documents/psih" />
 	<property name="pkgdir" location="/Users/Iulian/Pondero" />
 
-	<target name="tests" depends="
-		pondero-test-ic, 
-		pondero-test-mcal,
-		pondero-test-sot" />
-
-	<target name="full" depends="pondero-libs, pondero, tests" />
-	<target name="quick" depends="pondero, tests" />
+	<target name="full" depends="pondero, tests" />
 
 	<target name="create-context">
 		<mkdir dir="${pkgdir}/bin" />
@@ -33,20 +27,30 @@
 		<ant antfile="${soldir}/pondero-libs/make-jar-pondero-libs.xml" />
 	</target>
 
-	<target name="pondero" depends="create-context, pondero-install">
+	<target name="pondero" depends="create-context, pondero-libs, pondero-install">
 		<ant antfile="${soldir}/pondero/make-jar-pondero.xml" />
 	</target>
 
-	<target name="pondero-test-ic" depends="create-context, pondero">
+	<target name="pondero-test-ic">
 		<ant antfile="${soldir}/pondero-test-ic/make-jar-pondero-test-ic.xml" />
 	</target>
 
-	<target name="pondero-test-mcal" depends="create-context, pondero">
+	<target name="pondero-test-mcal">
 		<ant antfile="${soldir}/pondero-test-mcal/make-jar-pondero-test-mcal.xml" />
 	</target>
-	
-	<target name="pondero-test-sot" depends="create-context, pondero">
+
+	<target name="pondero-test-scct">
+		<ant antfile="${soldir}/pondero-test-scct/make-jar-pondero-test-scct.xml" />
+	</target>
+
+	<target name="pondero-test-sot">
 		<ant antfile="${soldir}/pondero-test-sot/make-jar-pondero-test-sot.xml" />
 	</target>
+
+	<target name="tests" depends="create-context,
+		pondero-test-ic, 
+		pondero-test-mcal,
+		pondero-test-scct,
+		pondero-test-sot" />
 
 </project>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="quick" name="Create Runnable Jar for Project pondero-libs">
+<project default="full" name="Create Runnable Jar for Project pondero-libs">
 
 	<property name="release" value="2014-10-26" />
 	<property name="jredir" location="F:/Java/jre7-32" />
@@ -8,21 +8,7 @@
 	<property name="mavendir" location="C:/Users/Iulian/.m2/repository" />
 	<property name="iscc" value='"C:/Program Files (x86)/Inno Setup 5/iscc.exe"' />
 
-	<target name="quick" depends="pondero" />
-
-	<target name="tidy" depends="pondero">
-		<delete file="${pkgdir}/cfg/pondero.properties" />
-		<delete file="${pkgdir}/tests/pondero-test-ic.jar" failonerror="false" />
-		<delete file="${pkgdir}/tests/pondero-test-mcal.jar" failonerror="false" />
-		<delete file="${pkgdir}/tests/pondero-test-sot.jar" failonerror="false" />
-	</target>
-
-	<target name="tests" depends="
-		pondero-test-ic,
-		pondero-test-mcal,
-		pondero-test-sot" />
-
-	<target name="full" depends="pondero, pondero-libs, tests" />
+	<target name="full" depends="pondero-libs, pondero, tests" />
 
 	<target name="pack" depends="pack-context">
 		<exec executable="${iscc}">
@@ -30,10 +16,17 @@
 		</exec>
 	</target>
 
-	<target name="publish">
-		<copy file="${pkgdir}/pondero-setup.exe" todir="F:\Dropbox\Public\Pondero\releases\${release}" overwrite="true" />
-		<copy file="${pkgdir}/pondero-setup.exe" todir="F:\OneDrive\Pondero\release\${release}" overwrite="true" />
-		<copy file="${pkgdir}/tests/pondero-test-ic.jar" todir="F:\OneDrive\Pondero\update\artifacts\tests\${release}" overwrite="true" />
+	<target name="run-context">
+		<mkdir dir="${pkgdir}/bin" />
+		<mkdir dir="${pkgdir}/cfg" />
+		<mkdir dir="${pkgdir}/jre" />
+		<mkdir dir="${pkgdir}/results" />
+		<mkdir dir="${pkgdir}/tests" />
+		<copy file="${soldir}/pondero-packaging/setup/windows/pondero.bat" todir="${pkgdir}" overwrite="true" />
+		<copy file="${soldir}/pondero-packaging/setup/windows/pondero-debug.bat" todir="${pkgdir}" overwrite="true" />
+		<copy todir="${pkgdir}/jre">
+			<fileset dir="${jredir}" />
+		</copy>
 	</target>
 
 	<target name="pack-context" depends="full">
@@ -51,38 +44,35 @@
 		<copy file="${soldir}/pondero-packaging/setup/windows/inno/pondero-setup.iss" todir="${pkgdir}" overwrite="true" />
 	</target>
 
-	<target name="run-context">
-		<mkdir dir="${pkgdir}/bin" />
-		<mkdir dir="${pkgdir}/cfg" />
-		<mkdir dir="${pkgdir}/jre" />
-		<mkdir dir="${pkgdir}/results" />
-		<mkdir dir="${pkgdir}/tests" />
-		<copy file="${soldir}/pondero-packaging/setup/windows/pondero.bat" todir="${pkgdir}" overwrite="true" />
-		<copy file="${soldir}/pondero-packaging/setup/windows/pondero-debug.bat" todir="${pkgdir}" overwrite="true" />
-		<copy todir="${pkgdir}/jre">
-			<fileset dir="${jredir}" />
-		</copy>
-	</target>
-
 	<target name="pondero" depends="run-context">
 		<ant antfile="${soldir}/pondero/make-jar-pondero.xml" />
 		<ant antfile="${soldir}/pondero-install/make-jar-pondero-install.xml" />
 	</target>
 
-	<target name="pondero-libs" depends="pondero">
+	<target name="pondero-libs" depends="run-context">
 		<ant antfile="${soldir}/pondero-libs/make-jar-pondero-libs.xml" />
 	</target>
 
 	<target name="pondero-test-ic">
 		<ant antfile="${soldir}/pondero-test-ic/make-jar-pondero-test-ic.xml" />
 	</target>
-	
+
 	<target name="pondero-test-mcal">
 		<ant antfile="${soldir}/pondero-test-mcal/make-jar-pondero-test-mcal.xml" />
+	</target>
+
+	<target name="pondero-test-scct">
+		<ant antfile="${soldir}/pondero-test-scct/make-jar-pondero-test-scct.xml" />
 	</target>
 
 	<target name="pondero-test-sot">
 		<ant antfile="${soldir}/pondero-test-sot/make-jar-pondero-test-sot.xml" />
 	</target>
+
+	<target name="tests" depends="run-context,
+		pondero-test-ic,
+		pondero-test-mcal,
+		pondero-test-scct,
+		pondero-test-sot" />
 
 </project>
