@@ -15,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -24,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
@@ -63,7 +66,7 @@ public class Pondero implements Ponderable, PModelListener {
 
     /**
      * Launch the application.
-     *
+     * 
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
@@ -71,6 +74,13 @@ public class Pondero implements Ponderable, PModelListener {
     }
 
     public static Pondero start(final String[] args) throws Exception {
+        final Calendar deadline = new GregorianCalendar(2015, Calendar.APRIL, 1);
+        if (deadline.compareTo(Calendar.getInstance()) < 0) {
+            final String validityMessage = "We are sorry,\nthe validity of the application has expired!";
+            JOptionPane.showMessageDialog(null, validityMessage, Pondero.class.getSimpleName(), JOptionPane.WARNING_MESSAGE);
+            throw new RuntimeException(validityMessage);
+        }
+
         Context.init(args.length >= 1 ? args[0] : null);
         action("starting application");
 
@@ -160,7 +170,7 @@ public class Pondero implements Ponderable, PModelListener {
 
     /**
      * Create the application.
-     *
+     * 
      * @throws Exception
      */
     public Pondero() throws Exception {
