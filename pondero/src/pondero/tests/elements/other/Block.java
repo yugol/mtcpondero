@@ -51,56 +51,10 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
         return bgstim;
     }
 
-    @Override
-    public Set<String> getBlockFeedback() {
-        return blockfeedback;
-    }
-
-    @Override
-    public FeedbackStimulus getCorrectMessage() {
-        return correctmessageFlag && correctmessage != null ? correctmessage : null;
-    }
-
-    @Override
-    public FeedbackStimulus getErrorMessage() {
-        return errormessageFlag && errormessage != null ? errormessage : null;
-    }
-
-    @Override
-    public Color getScreenColor() {
-        return screencolor == null ? test.getDefaults().getScreenColor() : screencolor;
-    }
-
-    @Override
-    public void setScreenColor(final Color screencolor) {
-        this.screencolor = screencolor;
-    }
-
-    @Override
-    public String getTypeName() {
-        return TYPENAME;
-    }
-
     public void bgstim(final String... bgstim) {
         for (final String name : bgstim) {
             this.bgstim.add(name);
         }
-    }
-
-    @Override
-    public void setBlockFeedback(final String... blockfeedback) {
-        ElementUtil.fillBlockfeedback(this.blockfeedback, blockfeedback);
-    }
-
-    @Override
-    public void setCorrectMessage(final boolean flag) {
-        correctmessageFlag = flag;
-    }
-
-    @Override
-    public void setCorrectMessage(final String stimulusName, final long duration) {
-        correctmessage = new FeedbackStimulus(stimulusName, duration);
-        correctmessageFlag = true;
     }
 
     @Override
@@ -166,6 +120,47 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
     }
 
     @Override
+    public Set<String> getBlockFeedback() {
+        return blockfeedback;
+    }
+
+    @Override
+    public FeedbackStimulus getCorrectMessage() {
+        return correctmessageFlag && correctmessage != null ? correctmessage : null;
+    }
+
+    @Override
+    public FeedbackStimulus getErrorMessage() {
+        return errormessageFlag && errormessage != null ? errormessage : null;
+    }
+
+    @Override
+    public Color getScreenColor() {
+        return screencolor == null ? test.getDefaults().getScreenColor() : screencolor;
+    }
+
+    @Override
+    public String getTypeName() {
+        return TYPENAME;
+    }
+
+    @Override
+    public void setBlockFeedback(final String... blockfeedback) {
+        ElementUtil.fillBlockfeedback(this.blockfeedback, blockfeedback);
+    }
+
+    @Override
+    public void setCorrectMessage(final boolean flag) {
+        correctmessageFlag = flag;
+    }
+
+    @Override
+    public void setCorrectMessage(final String stimulusName, final long duration) {
+        correctmessage = new FeedbackStimulus(stimulusName, duration);
+        correctmessageFlag = true;
+    }
+
+    @Override
     public void setErrorMessage(final boolean flag) {
         errormessageFlag = flag;
     }
@@ -184,6 +179,11 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
     @Override
     public void setPreInstructions(final String... pages) {
         preinstructions = pages;
+    }
+
+    @Override
+    public void setScreenColor(final Color screencolor) {
+        this.screencolor = screencolor;
     }
 
     @Override
