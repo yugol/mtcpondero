@@ -15,8 +15,8 @@
 
 		<copy file="${soldir}/pondero-packaging/license/lgpl-brief.ro.txt" todir="${pkgdir}/res" overwrite="true" />
 		<copy file="${soldir}/pondero-packaging/resources/pondero-48x48.ico" todir="${pkgdir}/res" overwrite="true" />
-		<copy file="${soldir}/pondero-packaging/setup/osx/pondero.sh" todir="${pkgdir}" overwrite="true" />
-		<chmod file="${pkgdir}/pondero.sh" perm="a+x" />
+		<copy file="${soldir}/pondero-packaging/setup/osx/pondero.command" todir="${pkgdir}" overwrite="true" />
+		<chmod file="${pkgdir}/pondero.command" perm="ug+x" />
 	</target>
 
 	<target name="pondero-install" depends="create-context">
