@@ -54,51 +54,51 @@ public class ASubliminalPrimingTask extends Test {
                 "        CRIM\u0102        ");
 
         final Text pleasantprime = new Text("pleasantprime", getItem("pleasant"));
-        pleasantprime._setTxbgcolor(Color.WHITE);
-        pleasantprime.fontstyle("Courier New", 20, true);
+        pleasantprime.setTextBgColor(Color.WHITE);
+        pleasantprime.setFontStyle("Courier New", 20, true);
 
         final Text pleasanttarget = new Text("pleasanttarget", getItem("pleasant"));
-        pleasanttarget._setTxbgcolor(Color.WHITE);
-        pleasanttarget.fontstyle("Courier New", 20, true);
+        pleasanttarget.setTextBgColor(Color.WHITE);
+        pleasanttarget.setFontStyle("Courier New", 20, true);
 
         final Text unpleasantprime = new Text("unpleasantprime", getItem("unpleasant"));
-        unpleasantprime._setTxbgcolor(Color.WHITE);
-        unpleasantprime.fontstyle("Courier New", 20, true);
+        unpleasantprime.setTextBgColor(Color.WHITE);
+        unpleasantprime.setFontStyle("Courier New", 20, true);
 
         final Text unpleasanttarget = new Text("unpleasanttarget", getItem("unpleasant"));
-        unpleasanttarget._setTxbgcolor(Color.WHITE);
-        unpleasanttarget.fontstyle("Courier New", 20, true);
+        unpleasanttarget.setTextBgColor(Color.WHITE);
+        unpleasanttarget.setFontStyle("Courier New", 20, true);
 
         final Text forwardmask = new Text("forwardmask", "    KQHYTPDQFPBYL    ", "    PYLDQFBYTQKPH    ");
-        forwardmask._setTxbgcolor(Color.WHITE);
-        forwardmask.fontstyle("Courier New", 20, true);
+        forwardmask.setTextBgColor(Color.WHITE);
+        forwardmask.setFontStyle("Courier New", 20, true);
 
         final Text backwardmask = new Text("backwardmask", "    PYLDQFBYTQKPH    ", "    KQHYTPDQFPBYL    ");
-        backwardmask._setTxbgcolor(Color.WHITE);
-        backwardmask.fontstyle("Courier New", 20, true);
+        backwardmask.setTextBgColor(Color.WHITE);
+        backwardmask.setFontStyle("Courier New", 20, true);
 
         final Text pleasantreminder = new Text("pleasantreminder", "5 = pl\u0103cut");
-        pleasantreminder._setTxbgcolor(Color.WHITE);
-        pleasantreminder.fontstyle("Courier New", 20, true);
-        pleasantreminder.position("75%", "25%");
+        pleasantreminder.setTextBgColor(Color.WHITE);
+        pleasantreminder.setFontStyle("Courier New", 20, true);
+        pleasantreminder.setPosition("75%", "25%");
 
         final Text unpleasantreminder = new Text("unpleasantreminder", "a = nepl\u0103cut");
-        unpleasantreminder._setTxbgcolor(Color.WHITE);
-        unpleasantreminder.fontstyle("Courier New", 20, true);
-        unpleasantreminder.position("25%", "25%");
+        unpleasantreminder.setTextBgColor(Color.WHITE);
+        unpleasantreminder.setFontStyle("Courier New", 20, true);
+        unpleasantreminder.setPosition("25%", "25%");
 
         final Text errormessage = new Text("errormessage", "      GRESEAL\u0102       ");
-        errormessage._setTxbgcolor(Color.WHITE);
-        errormessage._setTxcolor(Color.RED);
-        errormessage.fontstyle("Courier New", 20, true);
+        errormessage.setTextBgColor(Color.WHITE);
+        errormessage.setTextColor(Color.RED);
+        errormessage.setFontStyle("Courier New", 20, true);
 
         final Text correctmessage = new Text("correctmessage", "       CORECT        ");
-        correctmessage._setTxbgcolor(Color.WHITE);
-        correctmessage.txcolor(0, 200, 0);
-        correctmessage.fontstyle("Courier New", 20, true);
+        correctmessage.setTextBgColor(Color.WHITE);
+        correctmessage.setTextColor(0, 200, 0);
+        correctmessage.setFontStyle("Courier New", 20, true);
 
         final Instruct instruct = new Instruct();
-        instruct.fontstyle("Dialog", 18, true);
+        instruct.setFontStyle("Dialog", 18, true);
         instruct.nextkey('5');
         instruct.prevkey('a');
         instruct.screencolor(224, 224, 224);
@@ -135,53 +135,53 @@ public class ASubliminalPrimingTask extends Test {
                         "    Dac\u0103 ave\u021bi \u00eentreb\u0103ri de orice natur\u0103 sau reac\u021bii fa\u021b\u0103 de experiment v\u0103 rug\u0103m s\u0103 le discuta\u021bi cu persoana care v-a ghidat.");
 
         final Trial pp = new Trial("pp");
-        pp.pretrialpause(300);
-        pp.validresponse("a", "5");
+        pp.setPreTrialPause(300);
+        pp.setValidResponses("a", "5");
         pp.correctresponse("5");
-        pp.stimulusframes("1=forwardmask; 10=pleasantprime; 13=backwardmask; 14=pleasanttarget");
-        pp.posttrialpause(100);
+        pp.setStimulusFrames("1=forwardmask; 10=pleasantprime; 13=backwardmask; 14=pleasanttarget");
+        pp.setPostTrialPause(100);
 
         final Trial pu = new Trial("pu");
-        pu.pretrialpause(300);
-        pu.validresponse("a", "5");
+        pu.setPreTrialPause(300);
+        pu.setValidResponses("a", "5");
         pu.correctresponse("a");
-        pu.stimulusframes("1=forwardmask; 10=pleasantprime; 13=backwardmask; 14=unpleasanttarget");
-        pu.posttrialpause(100);
+        pu.setStimulusFrames("1=forwardmask; 10=pleasantprime; 13=backwardmask; 14=unpleasanttarget");
+        pu.setPostTrialPause(100);
 
         final Trial up = new Trial("up");
-        up.pretrialpause(300);
-        up.validresponse("a", "5");
+        up.setPreTrialPause(300);
+        up.setValidResponses("a", "5");
         up.correctresponse("5");
-        up.stimulusframes("1=forwardmask; 10=unpleasantprime; 13=backwardmask; 14=pleasanttarget");
-        up.posttrialpause(100);
+        up.setStimulusFrames("1=forwardmask; 10=unpleasantprime; 13=backwardmask; 14=pleasanttarget");
+        up.setPostTrialPause(100);
 
         final Trial uu = new Trial("uu");
-        uu.pretrialpause(300);
-        uu.validresponse("a", "5");
+        uu.setPreTrialPause(300);
+        uu.setValidResponses("a", "5");
         uu.correctresponse("a");
-        uu.stimulusframes("1=forwardmask; 10=unpleasantprime; 13=backwardmask; 14=unpleasanttarget");
-        uu.posttrialpause(100);
+        uu.setStimulusFrames("1=forwardmask; 10=unpleasantprime; 13=backwardmask; 14=unpleasanttarget");
+        uu.setPostTrialPause(100);
 
         final Block practice = new Block("practice");
-        practice.screencolor(175, 175, 255);
+        practice.setScreenColor(175, 175, 255);
         practice.bgstim("pleasantreminder", "unpleasantreminder");
-        practice.preinstructions("intro1", "intro2", "intro3");
+        practice.setPreInstructions("intro1", "intro2", "intro3");
         practice.trials("1-5 = random(pp, pu, up, uu)");
-        practice.errormessage("errormessage", 200);
-        practice.correctmessage("correctmessage", 200);
-        practice.blockfeedback(HasBlockfeedback.LATENCY, HasBlockfeedback.CORRECT);
+        practice.setErrorMessage("errormessage", 200);
+        practice.setCorrectMessage("correctmessage", 200);
+        practice.setBlockFeedback(HasBlockfeedback.LATENCY, HasBlockfeedback.CORRECT);
 
         final Block data = new Block("data");
-        data.screencolor(175, 175, 255);
+        data.setScreenColor(175, 175, 255);
         data.bgstim("pleasantreminder", "unpleasantreminder");
-        data.preinstructions("ready");
+        data.setPreInstructions("ready");
         data.trials("1-5 = random(pp, pu, up, uu)");
-        data.blockfeedback(HasBlockfeedback.LATENCY, HasBlockfeedback.CORRECT);
+        data.setBlockFeedback(HasBlockfeedback.LATENCY, HasBlockfeedback.CORRECT);
 
         final Expt expt = new Expt();
-        expt.preinstructions("start");
+        expt.setPreInstructions("start");
         expt.blocks("1 = practice; 2-5 = data");
-        expt.postinstructions("end");
+        expt.setPostInstructions("end");
     }
 
 }

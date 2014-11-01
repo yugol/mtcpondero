@@ -19,7 +19,7 @@ public class Page extends Element {
     }
 
     @Override
-    public String $typename() {
+    public String getTypeName() {
         return TYPENAME;
     }
 

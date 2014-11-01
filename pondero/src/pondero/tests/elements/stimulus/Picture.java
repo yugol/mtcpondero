@@ -35,21 +35,21 @@ public class Picture extends Element implements HasErase, HasItems, IsVisualStim
     }
 
     @Override
-    public Coordinates _getPosition() {
-        return position == null ? test.getDefaults()._getPosition() : position;
+    public Coordinates getPosition() {
+        return position == null ? test.getDefaults().getPosition() : position;
     }
 
     @Override
-    public Coordinates _getSize() {
+    public Coordinates getSize() {
         return size;
     }
 
     @Override
-    public PictureStimulus _getStimulus() {
+    public PictureStimulus getStimulus() {
         final PictureStimulus stimulus = new PictureStimulus(this);
         try {
-            stimulus.setPosition(_getPosition());
-            stimulus.setSize(_getSize());
+            stimulus.setPosition(getPosition());
+            stimulus.setSize(getSize());
             stimulus.setPath(_nextItem());
         } catch (final IOException e) {
             ExceptionReporting.showExceptionMessage(null, e);
@@ -63,18 +63,12 @@ public class Picture extends Element implements HasErase, HasItems, IsVisualStim
     }
 
     @Override
-    public void _setErase(final Color color) {
-        eraseColor = color;
-        erase(true);
-    }
-
-    @Override
-    public void _setPosition(final Coordinates position) {
+    public void setPosition(final Coordinates position) {
         this.position = position;
     }
 
     @Override
-    public void _setSize(final Coordinates size) {
+    public void setSize(final Coordinates size) {
         this.size = size;
     }
 
@@ -84,40 +78,13 @@ public class Picture extends Element implements HasErase, HasItems, IsVisualStim
     }
 
     @Override
-    public boolean $erase() {
-        return eraseFlag;
+    public Coordinate getHeight() {
+        return getSize().getY();
     }
 
     @Override
-    public Color $erasecolor() {
-        if (!eraseFlag) { return null; }
-        if (eraseColor != null) { return eraseColor; }
-        return test.getScreencolor();
-    }
-
-    @Override
-    public int $erasecolorblue() {
-        return $erasecolor().getBlue();
-    }
-
-    @Override
-    public int $erasecolorgreen() {
-        return $erasecolor().getGreen();
-    }
-
-    @Override
-    public int $erasecolorred() {
-        return $erasecolor().getRed();
-    }
-
-    @Override
-    public Coordinate $height() {
-        return _getSize().getY();
-    }
-
-    @Override
-    public Coordinate $hposition() {
-        return _getPosition().getX();
+    public Coordinate getHPosition() {
+        return getPosition().getX();
     }
 
     @Override
@@ -151,49 +118,51 @@ public class Picture extends Element implements HasErase, HasItems, IsVisualStim
     }
 
     @Override
-    public String $typename() {
+    public String getTypeName() {
         return TYPENAME;
     }
 
     @Override
-    public Coordinate $vposition() {
-        return _getPosition().getY();
+    public Coordinate getVPosition() {
+        return getPosition().getY();
     }
 
     @Override
-    public Coordinate $width() {
-        return _getSize().getY();
+    public Coordinate getWidth() {
+        return getSize().getY();
     }
 
     @Override
-    public void erase(final boolean flag) {
-        eraseFlag = flag;
+    public Color getEraseColor() {
+        if (!eraseFlag) { return null; }
+        if (eraseColor != null) { return eraseColor; }
+        return test.getScreencolor();
     }
 
     @Override
-    public void erase(final int r, final int g, final int b) {
-        _setErase(ElementUtil.createColor(r, g, b));
-    }
-
-    @Override
-    public void height(final double height) {
-        size = _getSize();
+    public void setHeight(final double height) {
+        size = getSize();
         size.setY(height);
     }
 
     @Override
-    public void height(final String height) {
-        size = _getSize();
+    public void setHeight(final String height) {
+        size = getSize();
         size.setY(height);
     }
 
     @Override
-    public void position(final double x, final double y) {
+    public boolean isErase() {
+        return eraseFlag;
+    }
+
+    @Override
+    public void setPosition(final double x, final double y) {
         position = new Coordinates(x, y);
     }
 
     @Override
-    public void position(final String xExpr, final String yExpr) {
+    public void setPosition(final String xExpr, final String yExpr) {
         position = new Coordinates(xExpr, yExpr);
     }
 
@@ -202,24 +171,40 @@ public class Picture extends Element implements HasErase, HasItems, IsVisualStim
     }
 
     @Override
-    public void size(final double width, final double height) {
+    public void setErase(final boolean flag) {
+        eraseFlag = flag;
+    }
+
+    @Override
+    public void setErase(final int r, final int g, final int b) {
+        setEraseColor(ElementUtil.createColor(r, g, b));
+    }
+
+    @Override
+    public void setEraseColor(final Color color) {
+        eraseColor = color;
+        setErase(true);
+    }
+
+    @Override
+    public void setSize(final double width, final double height) {
         size = new Coordinates(width, height);
     }
 
     @Override
-    public void size(final String width, final String height) {
+    public void setSize(final String width, final String height) {
         size = new Coordinates(width, height);
     }
 
     @Override
-    public void width(final double width) {
-        size = _getSize();
+    public void setWidth(final double width) {
+        size = getSize();
         size.setY(width);
     }
 
     @Override
-    public void width(final String width) {
-        size = _getSize();
+    public void setWidth(final String width) {
+        size = getSize();
         size.setY(width);
     }
 

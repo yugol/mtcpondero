@@ -5,6 +5,6 @@ import pondero.tests.test.stimuli.VisualStimulus;
 public interface IsVisualStimulus extends HasPosition, HasSize, IsStimulus {
 
     @Override
-    public VisualStimulus _getStimulus();
+    public VisualStimulus getStimulus();
 
 }

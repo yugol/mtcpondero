@@ -45,7 +45,7 @@ public abstract class Test extends TestRenderer implements IsController {
     }
 
     @Override
-    public void doBegin() throws Exception {
+    public synchronized void doBegin() throws Exception {
         controllerStack.clear();
         monitor = new TaskMonitor(System.currentTimeMillis());
         monitor.markStartTime();
@@ -60,14 +60,14 @@ public abstract class Test extends TestRenderer implements IsController {
     }
 
     @Override
-    public void doEnd() {
+    public synchronized void doEnd() {
         monitor.markStopTime(TaskMonitor.END_SUCCESS);
         getTestWindow().hideTestWindow();
         launcher.onTaskEnded(this, monitor);
     }
 
     @Override
-    public void doStep(final Response input) throws Exception {
+    public synchronized void doStep(final Response input) throws Exception {
         final IsController controller = peekController();
         if (controller == null) {
             doEnd();
@@ -82,12 +82,12 @@ public abstract class Test extends TestRenderer implements IsController {
     }
 
     public FeedbackStimulus getCorrectmessage() {
-        if (currentBlock != null) { return currentBlock._getCorrectmessage(); }
+        if (currentBlock != null) { return currentBlock.getCorrectMessage(); }
         return null;
     }
 
     public FeedbackStimulus getErrormessage() {
-        if (currentBlock != null) { return currentBlock._getErrormessage(); }
+        if (currentBlock != null) { return currentBlock.getErrorMessage(); }
         return null;
     }
 
@@ -103,10 +103,10 @@ public abstract class Test extends TestRenderer implements IsController {
                 record.setParticipant(participant);
             }
             if (currentBlock != null) {
-                record.setBlockId(currentBlock.$name());
+                record.setBlockId(currentBlock.getName());
             }
             if (trial != null) {
-                record.setTrialId(trial.$name());
+                record.setTrialId(trial.getName());
             }
         }
     }

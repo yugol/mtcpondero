@@ -8,8 +8,8 @@ import java.util.Set;
 import pondero.tests.elements.Element;
 import pondero.tests.elements.interfaces.HasBlockfeedback;
 import pondero.tests.elements.interfaces.HasFeedback;
-import pondero.tests.elements.interfaces.HasPostinstructions;
-import pondero.tests.elements.interfaces.HasPreinstructions;
+import pondero.tests.elements.interfaces.HasPostInstructions;
+import pondero.tests.elements.interfaces.HasPreInstructions;
 import pondero.tests.elements.interfaces.HasScreencolor;
 import pondero.tests.elements.interfaces.IsController;
 import pondero.tests.elements.trial.Trial;
@@ -18,7 +18,7 @@ import pondero.tests.staples.ItemSequence;
 import pondero.tests.test.responses.PrevNextResponse;
 import pondero.tests.test.responses.Response;
 
-public class Block extends Element implements HasBlockfeedback, HasFeedback, HasPreinstructions, HasPostinstructions, HasScreencolor, IsController {
+public class Block extends Element implements HasBlockfeedback, HasFeedback, HasPreInstructions, HasPostInstructions, HasScreencolor, IsController {
 
     private class DoStatus {
 
@@ -45,6 +45,62 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
 
     public Block(final String name) {
         super(name);
+    }
+
+    public List<String> _getBgstim() {
+        return bgstim;
+    }
+
+    @Override
+    public Set<String> getBlockFeedback() {
+        return blockfeedback;
+    }
+
+    @Override
+    public FeedbackStimulus getCorrectMessage() {
+        return correctmessageFlag && correctmessage != null ? correctmessage : null;
+    }
+
+    @Override
+    public FeedbackStimulus getErrorMessage() {
+        return errormessageFlag && errormessage != null ? errormessage : null;
+    }
+
+    @Override
+    public Color getScreenColor() {
+        return screencolor == null ? test.getDefaults().getScreenColor() : screencolor;
+    }
+
+    @Override
+    public void setScreenColor(final Color screencolor) {
+        this.screencolor = screencolor;
+    }
+
+    @Override
+    public String getTypeName() {
+        return TYPENAME;
+    }
+
+    public void bgstim(final String... bgstim) {
+        for (final String name : bgstim) {
+            this.bgstim.add(name);
+        }
+    }
+
+    @Override
+    public void setBlockFeedback(final String... blockfeedback) {
+        ElementUtil.fillBlockfeedback(this.blockfeedback, blockfeedback);
+    }
+
+    @Override
+    public void setCorrectMessage(final boolean flag) {
+        correctmessageFlag = flag;
+    }
+
+    @Override
+    public void setCorrectMessage(final String stimulusName, final long duration) {
+        correctmessage = new FeedbackStimulus(stimulusName, duration);
+        correctmessageFlag = true;
     }
 
     @Override
@@ -109,85 +165,29 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
         }
     }
 
-    public List<String> _getBgstim() {
-        return bgstim;
-    }
-
     @Override
-    public Set<String> _getBlockfeedback() {
-        return blockfeedback;
-    }
-
-    @Override
-    public FeedbackStimulus _getCorrectmessage() {
-        return correctmessageFlag && correctmessage != null ? correctmessage : null;
-    }
-
-    @Override
-    public FeedbackStimulus _getErrormessage() {
-        return errormessageFlag && errormessage != null ? errormessage : null;
-    }
-
-    @Override
-    public Color _getScreencolor() {
-        return screencolor == null ? test.getDefaults()._getScreencolor() : screencolor;
-    }
-
-    @Override
-    public void _setScreencolor(final Color screencolor) {
-        this.screencolor = screencolor;
-    }
-
-    @Override
-    public String $typename() {
-        return TYPENAME;
-    }
-
-    public void bgstim(final String... bgstim) {
-        for (final String name : bgstim) {
-            this.bgstim.add(name);
-        }
-    }
-
-    @Override
-    public void blockfeedback(final String... blockfeedback) {
-        ElementUtil.fillBlockfeedback(this.blockfeedback, blockfeedback);
-    }
-
-    @Override
-    public void correctmessage(final boolean flag) {
-        correctmessageFlag = flag;
-    }
-
-    @Override
-    public void correctmessage(final String stimulusName, final long duration) {
-        correctmessage = new FeedbackStimulus(stimulusName, duration);
-        correctmessageFlag = true;
-    }
-
-    @Override
-    public void errormessage(final boolean flag) {
+    public void setErrorMessage(final boolean flag) {
         errormessageFlag = flag;
     }
 
     @Override
-    public void errormessage(final String stimulusName, final long duration) {
+    public void setErrorMessage(final String stimulusName, final long duration) {
         errormessage = new FeedbackStimulus(stimulusName, duration);
         errormessageFlag = true;
     }
 
     @Override
-    public void postinstructions(final String... pages) {
+    public void setPostInstructions(final String... pages) {
         postinstructions = pages;
     }
 
     @Override
-    public void preinstructions(final String... pages) {
+    public void setPreInstructions(final String... pages) {
         preinstructions = pages;
     }
 
     @Override
-    public void screencolor(final int r, final int g, final int b) {
+    public void setScreenColor(final int r, final int g, final int b) {
         screencolor = ElementUtil.createColor(r, g, b);
     }
 

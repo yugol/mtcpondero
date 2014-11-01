@@ -24,16 +24,16 @@ public interface HasFeedback {
 
     }
 
-    public FeedbackStimulus _getCorrectmessage();
+    public FeedbackStimulus getCorrectMessage();
 
-    public FeedbackStimulus _getErrormessage();
+    public FeedbackStimulus getErrorMessage();
 
-    public void correctmessage(boolean flag);
+    public void setCorrectMessage(boolean flag);
 
-    public void correctmessage(String stimulusName, long duration);
+    public void setCorrectMessage(String stimulusName, long duration);
 
-    public void errormessage(boolean flag);
+    public void setErrorMessage(boolean flag);
 
-    public void errormessage(String stimulusName, long duration);
+    public void setErrorMessage(String stimulusName, long duration);
 
 }

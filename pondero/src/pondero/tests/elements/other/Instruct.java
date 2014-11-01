@@ -25,13 +25,13 @@ public class Instruct extends Element implements HasFont, HasTextColor, HasInput
     }
 
     @Override
-    public Font _getFont() {
-        return font == null ? test.getDefaults()._getFont() : font;
+    public Font getFont() {
+        return font == null ? test.getDefaults().getFont() : font;
     }
 
     @Override
-    public InputDevice _getInputDevice() {
-        return inputDevice == null ? test.getDefaults()._getInputDevice() : inputDevice;
+    public InputDevice getInputDevice() {
+        return inputDevice == null ? test.getDefaults().getInputDevice() : inputDevice;
     }
 
     public Character _getNextkey() {
@@ -47,7 +47,7 @@ public class Instruct extends Element implements HasFont, HasTextColor, HasInput
     }
 
     @Override
-    public void _setFont(final Font font) {
+    public void setFont(final Font font) {
         this.font = font;
     }
 
@@ -56,72 +56,57 @@ public class Instruct extends Element implements HasFont, HasTextColor, HasInput
     }
 
     @Override
-    public void _setTxcolor(final Color color) {
+    public void setTextColor(final Color color) {
         txcolor = color;
     }
 
     @Override
-    public int $fontheight() {
-        return _getFont().getSize();
+    public int getFontHeight() {
+        return getFont().getSize();
     }
 
     @Override
-    public Color $textcolor() {
-        return txcolor == null ? test.getDefaults().$textcolor() : txcolor;
+    public Color getTextColor() {
+        return txcolor == null ? test.getDefaults().getTextColor() : txcolor;
     }
 
     @Override
-    public int $textcolorblue() {
-        return $textcolor().getBlue();
+    public void setFontStyle(final String faceName) {
+        setFontStyle(faceName, test.getDefaults().getFontHeight(), false, false, false, false);
     }
 
     @Override
-    public int $textcolorgreen() {
-        return $textcolor().getGreen();
+    public void setFontStyle(final String faceName, final int height) {
+        setFontStyle(faceName, height, false, false, false, false);
     }
 
     @Override
-    public int $textcolorred() {
-        return $textcolor().getRed();
+    public void setFontStyle(final String faceName, final int height, final boolean bold) {
+        setFontStyle(faceName, height, bold, false, false, false);
     }
 
     @Override
-    public String $typename() {
-        return TYPENAME;
+    public void setFontStyle(final String faceName, final int height, final boolean bold, final boolean italic) {
+        setFontStyle(faceName, height, bold, italic, false, false);
     }
 
     @Override
-    public void fontstyle(final String faceName) {
-        fontstyle(faceName, test.getDefaults().$fontheight(), false, false, false, false);
+    public void setFontStyle(final String faceName, final int height, final boolean bold, final boolean italic, final boolean underline) {
+        setFontStyle(faceName, height, bold, italic, underline, false);
     }
 
     @Override
-    public void fontstyle(final String faceName, final int height) {
-        fontstyle(faceName, height, false, false, false, false);
-    }
-
-    @Override
-    public void fontstyle(final String faceName, final int height, final boolean bold) {
-        fontstyle(faceName, height, bold, false, false, false);
-    }
-
-    @Override
-    public void fontstyle(final String faceName, final int height, final boolean bold, final boolean italic) {
-        fontstyle(faceName, height, bold, italic, false, false);
-    }
-
-    @Override
-    public void fontstyle(final String faceName, final int height, final boolean bold, final boolean italic, final boolean underline) {
-        fontstyle(faceName, height, bold, italic, underline, false);
-    }
-
-    @Override
-    public void fontstyle(final String faceName, final int height, final boolean bold, final boolean italic, final boolean underline, final boolean strikeout) {
+    public void setFontStyle(final String faceName, final int height, final boolean bold, final boolean italic, final boolean underline, final boolean strikeout) {
         font = ElementUtil.createFont(faceName, height, bold, italic, underline, strikeout);
     }
 
     @Override
-    public void inputdevice(final InputDevice device) {
+    public String getTypeName() {
+        return TYPENAME;
+    }
+
+    @Override
+    public void setInputDevice(final InputDevice device) {
         inputDevice = device;
     }
 
@@ -138,8 +123,8 @@ public class Instruct extends Element implements HasFont, HasTextColor, HasInput
     }
 
     @Override
-    public void txcolor(final int r, final int g, final int b) {
-        _setTxcolor(ElementUtil.createColor(r, g, b));
+    public void setTextColor(final int r, final int g, final int b) {
+        setTextColor(ElementUtil.createColor(r, g, b));
     }
 
 }
