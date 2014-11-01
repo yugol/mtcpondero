@@ -6,7 +6,7 @@ public class AePlayWaveTest {
 
     @Test
     public void testPlay() {
-        final AePlayWave sound = new AePlayWave("./junit/beep.wav");
+        final WavPlayer sound = new WavPlayer("./junit/beep.wav");
         sound.run();
     }
 
