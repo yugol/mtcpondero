@@ -6,38 +6,21 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import javax.swing.UIManager;
 
-public final class L10n {
-
-    public static final String          NA          = "N/A";
-
-    private static final String         BUNDLE_NAME = "pondero.res.messages"; //$NON-NLS-1$
-    private static final Locale         LOCALE;
-    private static final ResourceBundle RESOURCE_BUNDLE;
-    private static final MessageFormat  FORMATTER   = new MessageFormat("");
-
-    static {
-        LOCALE = Context.getLocale();
-        RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, LOCALE);
-        FORMATTER.setLocale(LOCALE);
-        localizeJOptionPaneButtons();
-        localizeJFileChoose();
-    }
+public class L10n {
 
     public static String getString(final String key) {
-        return getString(key, new Object[0]);
+        return getString(key, DUMMY_ARGS);
     }
 
     public static String getString(final String key, final Object... args) {
-        try {
-            String output = RESOURCE_BUNDLE.getString(key);
-            if (args != null && args.length > 0) {
-                FORMATTER.applyPattern(output);
-                output = FORMATTER.format(args);
-            }
-            return output;
-        } catch (final MissingResourceException e) {
-            return '!' + key + '!';
-        }
+        return getString(RESOURCE_BUNDLE, key, args);
+    }
+
+    public static void init(final Locale locale) {
+        RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, locale);
+        FORMATTER.setLocale(locale);
+        localizeJOptionPaneButtons();
+        localizeJFileChoose();
     }
 
     private static void localizeJFileChoose() {
@@ -69,7 +52,23 @@ public final class L10n {
         UIManager.put("OptionPane.cancelButtonText", getString("lbl.cancel"));
     }
 
-    private L10n() {
+    protected static String getString(final ResourceBundle bundle, final String key, final Object... args) {
+        try {
+            String output = bundle.getString(key);
+            if (args != null && args.length > 0) {
+                FORMATTER.applyPattern(output);
+                output = FORMATTER.format(args);
+            }
+            return output;
+        } catch (final MissingResourceException e) {
+            return '!' + key + '!';
+        }
     }
+
+    private static final String        BUNDLE_NAME = "pondero.res.messages";
+    private static final MessageFormat FORMATTER   = new MessageFormat("");
+    private static ResourceBundle      RESOURCE_BUNDLE;
+
+    protected static final Object[]    DUMMY_ARGS  = new Object[0];
 
 }
