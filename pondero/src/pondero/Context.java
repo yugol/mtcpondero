@@ -159,6 +159,8 @@ public final class Context {
                 savePreferences();
             }
 
+            L10n.init(getLocale());
+
             if (OsUtil.isMacOSX()) {
                 try {
                     System.setProperty("com.apple.mrj.application.apple.menu.about.name", L10n.getString("lbl.pondero"));
