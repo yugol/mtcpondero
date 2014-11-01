@@ -4,20 +4,14 @@ import java.awt.Color;
 
 public interface HasErase {
 
-    void _setErase(final Color color);
+    Color getEraseColor();
 
-    boolean $erase();
+    boolean isErase();
 
-    Color $erasecolor();
+    void setErase(final boolean flag);
 
-    int $erasecolorblue();
+    void setErase(final int r, final int g, final int b);
 
-    int $erasecolorgreen();
-
-    int $erasecolorred();
-
-    void erase(final boolean flag);
-
-    void erase(final int r, final int g, final int b);
+    void setEraseColor(final Color color);
 
 }

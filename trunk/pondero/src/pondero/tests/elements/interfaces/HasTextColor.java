@@ -4,16 +4,10 @@ import java.awt.Color;
 
 public interface HasTextColor {
 
-    public void _setTxcolor(final Color color);
+    public Color getTextColor();
 
-    public Color $textcolor();
+    public void setTextColor(final Color color);
 
-    public int $textcolorblue();
-
-    public int $textcolorgreen();
-
-    public int $textcolorred();
-
-    public void txcolor(final int r, final int g, final int b);
+    public void setTextColor(final int r, final int g, final int b);
 
 }

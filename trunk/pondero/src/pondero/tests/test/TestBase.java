@@ -52,38 +52,38 @@ public abstract class TestBase implements Runnable {
     }
 
     public void add(final Element element) {
-        if (Item.TYPENAME.equals(element.$typename())) {
-            if (items.get(element.$name()) == null) {
-                items.put(element.$name(), (Item) element);
+        if (Item.TYPENAME.equals(element.getTypeName())) {
+            if (items.get(element.getName()) == null) {
+                items.put(element.getName(), (Item) element);
             }
-        } else if (Text.TYPENAME.equals(element.$typename())) {
-            if (texts.get(element.$name()) == null) {
-                texts.put(element.$name(), (Text) element);
+        } else if (Text.TYPENAME.equals(element.getTypeName())) {
+            if (texts.get(element.getName()) == null) {
+                texts.put(element.getName(), (Text) element);
             }
-        } else if (Picture.TYPENAME.equals(element.$typename())) {
-            if (pictures.get(element.$name()) == null) {
-                pictures.put(element.$name(), (Picture) element);
+        } else if (Picture.TYPENAME.equals(element.getTypeName())) {
+            if (pictures.get(element.getName()) == null) {
+                pictures.put(element.getName(), (Picture) element);
             }
-        } else if (Page.TYPENAME.equals(element.$typename())) {
-            if (pages.get(element.$name()) == null) {
-                pages.put(element.$name(), (Page) element);
+        } else if (Page.TYPENAME.equals(element.getTypeName())) {
+            if (pages.get(element.getName()) == null) {
+                pages.put(element.getName(), (Page) element);
             }
-        } else if (Block.TYPENAME.equals(element.$typename())) {
-            if (blocks.get(element.$name()) == null) {
-                blocks.put(element.$name(), (Block) element);
+        } else if (Block.TYPENAME.equals(element.getTypeName())) {
+            if (blocks.get(element.getName()) == null) {
+                blocks.put(element.getName(), (Block) element);
             }
-        } else if (Trial.TYPENAME.equals(element.$typename())) {
-            if (trials.get(element.$name()) == null) {
-                trials.put(element.$name(), (Trial) element);
+        } else if (Trial.TYPENAME.equals(element.getTypeName())) {
+            if (trials.get(element.getName()) == null) {
+                trials.put(element.getName(), (Trial) element);
             }
-        } else if (Expt.TYPENAME.equals(element.$typename())) {
+        } else if (Expt.TYPENAME.equals(element.getTypeName())) {
             experiment = (Expt) element;
-        } else if (Instruct.TYPENAME.equals(element.$typename())) {
+        } else if (Instruct.TYPENAME.equals(element.getTypeName())) {
             instruct = (Instruct) element;
-        } else if (Defaults.TYPENAME.equals(element.$typename())) {
+        } else if (Defaults.TYPENAME.equals(element.getTypeName())) {
             defaults = (Defaults) element;
         } else {
-            throw new RuntimeException("Name " + element.$name() + " cannot be used for " + element.$typename());
+            throw new RuntimeException("Name " + element.getName() + " cannot be used for " + element.getTypeName());
         }
     }
 

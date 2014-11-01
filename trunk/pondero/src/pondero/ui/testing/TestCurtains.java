@@ -152,8 +152,8 @@ public class TestCurtains extends JPanel {
         pnlCenter.setBackground(test.getScreencolor());
 
         message.setBackground(test.getInstructions()._getScreencolor());
-        message.setForeground(test.getInstructions().$textcolor());
-        message.setFont(test.getInstructions()._getFont());
+        message.setForeground(test.getInstructions().getTextColor());
+        message.setFont(test.getInstructions().getFont());
         message.setText(page.$content());
 
         pnlNavigation.setBackground(test.getInstructions()._getScreencolor());

@@ -3,14 +3,14 @@ package pondero.tests.elements.other;
 import java.util.ArrayList;
 import java.util.List;
 import pondero.tests.elements.Element;
-import pondero.tests.elements.interfaces.HasPostinstructions;
-import pondero.tests.elements.interfaces.HasPreinstructions;
+import pondero.tests.elements.interfaces.HasPostInstructions;
+import pondero.tests.elements.interfaces.HasPreInstructions;
 import pondero.tests.elements.interfaces.IsController;
 import pondero.tests.staples.ItemSequence;
 import pondero.tests.test.responses.PrevNextResponse;
 import pondero.tests.test.responses.Response;
 
-public class Expt extends Element implements HasPreinstructions, HasPostinstructions, IsController {
+public class Expt extends Element implements HasPreInstructions, HasPostInstructions, IsController {
 
     private class DoStatus {
 
@@ -30,6 +30,16 @@ public class Expt extends Element implements HasPreinstructions, HasPostinstruct
 
     public Expt() {
         super("");
+    }
+
+    @Override
+    public String getTypeName() {
+        return TYPENAME;
+    }
+
+    public void blocks(final String blocks) {
+        this.blocks.clear();
+        this.blocks.addAll(new ItemSequence(blocks).getItems());
     }
 
     @Override
@@ -94,22 +104,12 @@ public class Expt extends Element implements HasPreinstructions, HasPostinstruct
     }
 
     @Override
-    public String $typename() {
-        return TYPENAME;
-    }
-
-    public void blocks(final String blocks) {
-        this.blocks.clear();
-        this.blocks.addAll(new ItemSequence(blocks).getItems());
-    }
-
-    @Override
-    public void postinstructions(final String... pages) {
+    public void setPostInstructions(final String... pages) {
         postinstructions = pages;
     }
 
     @Override
-    public void preinstructions(final String... pages) {
+    public void setPreInstructions(final String... pages) {
         preinstructions = pages;
     }
 

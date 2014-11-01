@@ -41,7 +41,7 @@ public abstract class TestRenderer extends TestBase {
     }
 
     public Color getScreencolor() {
-        return peekScreencolor()._getScreencolor();
+        return peekScreencolor().getScreenColor();
     }
 
     public TestFrame getTestWindow() {
@@ -50,7 +50,7 @@ public abstract class TestRenderer extends TestBase {
 
     public Coordinates getTextSize(final Text text) {
         final Graphics g = testFrame.getGraphics();
-        g.setFont(text._getFont());
+        g.setFont(text.getFont());
         final FontMetrics fm = g.getFontMetrics();
         final Rectangle2D bounds = fm.getStringBounds("abc", g);
         return new Coordinates(bounds.getX(), bounds.getCenterY());
@@ -64,7 +64,7 @@ public abstract class TestRenderer extends TestBase {
         return screenColorStack.peek();
     }
 
-    public void presentStimuli() {
+    public synchronized void presentStimuli() {
         SwingUtilities.invokeLater(new Runnable() {
 
             @Override
@@ -75,15 +75,15 @@ public abstract class TestRenderer extends TestBase {
         });
     }
 
-    public void removeVisualStimulus(final VisualStimulus visualStimulus) {
+    public synchronized void removeVisualStimulus(final VisualStimulus visualStimulus) {
         visualStimuli.remove(visualStimulus);
     }
 
-    public void resetStimuli() {
+    public synchronized void resetStimuli() {
         resetVisualStimuli();
     }
 
-    public void resetVisualStimuli() {
+    public synchronized void resetVisualStimuli() {
         visualStimuli.clear();
     }
 

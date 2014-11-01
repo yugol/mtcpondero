@@ -26,10 +26,10 @@ public abstract class Element {
         return test;
     }
 
-    public String $name() {
+    public String getName() {
         return name;
     }
 
-    public abstract String $typename();
+    public abstract String getTypeName();
 
 }

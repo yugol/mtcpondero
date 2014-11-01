@@ -4,8 +4,8 @@ import pondero.tests.test.stimuli.Stimulus;
 
 public interface IsStimulus {
 
-    public Stimulus _getStimulus();
+    public Stimulus getStimulus();
 
-    public String $name();
+    public String getName();
 
 }

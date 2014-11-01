@@ -39,30 +39,18 @@ public class Text extends Element implements HasErase, HasFont, HasItems, HasTex
     }
 
     @Override
-    public Font _getFont() {
-        return font == null ? test.getDefaults()._getFont() : font;
+    public Font getFont() {
+        return font == null ? test.getDefaults().getFont() : font;
     }
 
     @Override
-    public Coordinates _getPosition() {
-        return position == null ? test.getDefaults()._getPosition() : position;
+    public Coordinates getPosition() {
+        return position == null ? test.getDefaults().getPosition() : position;
     }
 
     @Override
-    public Coordinates _getSize() {
+    public Coordinates getSize() {
         return size == null ? test.getTextSize(this) : size;
-    }
-
-    @Override
-    public TextStimulus _getStimulus() {
-        final TextStimulus stimulus = new TextStimulus(this);
-        stimulus.setBgColor($textbgcolor());
-        stimulus.setFgColor($textcolor());
-        stimulus.setFont(_getFont());
-        stimulus.setPosition(_getPosition());
-        stimulus.setSize(size);
-        stimulus.setText(_nextItem());
-        return stimulus;
     }
 
     public String _nextItem() {
@@ -71,33 +59,27 @@ public class Text extends Element implements HasErase, HasFont, HasItems, HasTex
     }
 
     @Override
-    public void _setErase(final Color color) {
-        eraseColor = color;
-        erase(true);
-    }
-
-    @Override
-    public void _setFont(final Font font) {
+    public void setFont(final Font font) {
         this.font = font;
     }
 
     @Override
-    public void _setPosition(final Coordinates position) {
+    public void setPosition(final Coordinates position) {
         this.position = position;
     }
 
     @Override
-    public void _setSize(final Coordinates size) {
+    public void setSize(final Coordinates size) {
         this.size = size;
     }
 
     @Override
-    public void _setTxbgcolor(final Color color) {
+    public void setTextBgColor(final Color color) {
         txbgcolor = color;
     }
 
     @Override
-    public void _setTxcolor(final Color color) {
+    public void setTextColor(final Color color) {
         txcolor = color;
     }
 
@@ -111,45 +93,18 @@ public class Text extends Element implements HasErase, HasFont, HasItems, HasTex
     }
 
     @Override
-    public boolean $erase() {
-        return eraseFlag;
+    public int getFontHeight() {
+        return getFont().getSize();
     }
 
     @Override
-    public Color $erasecolor() {
-        if (!eraseFlag) { return null; }
-        if (eraseColor != null) { return eraseColor; }
-        return test.getScreencolor();
+    public Coordinate getHeight() {
+        return getSize().getY();
     }
 
     @Override
-    public int $erasecolorblue() {
-        return $erasecolor().getBlue();
-    }
-
-    @Override
-    public int $erasecolorgreen() {
-        return $erasecolor().getGreen();
-    }
-
-    @Override
-    public int $erasecolorred() {
-        return $erasecolor().getRed();
-    }
-
-    @Override
-    public int $fontheight() {
-        return _getFont().getSize();
-    }
-
-    @Override
-    public Coordinate $height() {
-        return _getSize().getY();
-    }
-
-    @Override
-    public Coordinate $hposition() {
-        return _getPosition().getX();
+    public Coordinate getHPosition() {
+        return getPosition().getX();
     }
 
     @Override
@@ -183,119 +138,103 @@ public class Text extends Element implements HasErase, HasFont, HasItems, HasTex
     }
 
     @Override
-    public Color $textbgcolor() {
-        return txbgcolor == null ? test.getDefaults().$textbgcolor() : txbgcolor;
+    public Color getTextBgColor() {
+        return txbgcolor == null ? test.getDefaults().getTextBgColor() : txbgcolor;
     }
 
     @Override
-    public int $textbgcolorblue() {
-        return $textbgcolor().getBlue();
+    public Color getTextColor() {
+        return txcolor == null ? test.getDefaults().getTextColor() : txcolor;
     }
 
     @Override
-    public int $textbgcolorgreen() {
-        return $textbgcolor().getGreen();
+    public Coordinate getVPosition() {
+        return getPosition().getY();
     }
 
     @Override
-    public int $textbgcolorred() {
-        return $textbgcolor().getRed();
+    public Coordinate getWidth() {
+        return getSize().getY();
     }
 
     @Override
-    public Color $textcolor() {
-        return txcolor == null ? test.getDefaults().$textcolor() : txcolor;
+    public void setFontStyle(final String faceName) {
+        setFontStyle(faceName, test.getDefaults().getFontHeight(), false, false, false, false);
     }
 
     @Override
-    public int $textcolorblue() {
-        return $textcolor().getBlue();
+    public void setFontStyle(final String faceName, final int height) {
+        setFontStyle(faceName, height, false, false, false, false);
     }
 
     @Override
-    public int $textcolorgreen() {
-        return $textcolor().getGreen();
+    public void setFontStyle(final String faceName, final int height, final boolean bold) {
+        setFontStyle(faceName, height, bold, false, false, false);
     }
 
     @Override
-    public int $textcolorred() {
-        return $textcolor().getRed();
+    public void setFontStyle(final String faceName, final int height, final boolean bold, final boolean italic) {
+        setFontStyle(faceName, height, bold, italic, false, false);
     }
 
     @Override
-    public String $typename() {
-        return TYPENAME;
+    public void setFontStyle(final String faceName, final int height, final boolean bold, final boolean italic, final boolean underline) {
+        setFontStyle(faceName, height, bold, italic, underline, false);
     }
 
     @Override
-    public Coordinate $vposition() {
-        return _getPosition().getY();
-    }
-
-    @Override
-    public Coordinate $width() {
-        return _getSize().getY();
-    }
-
-    @Override
-    public void erase(final boolean flag) {
-        eraseFlag = flag;
-    }
-
-    @Override
-    public void erase(final int r, final int g, final int b) {
-        _setErase(ElementUtil.createColor(r, g, b));
-    }
-
-    @Override
-    public void fontstyle(final String faceName) {
-        fontstyle(faceName, test.getDefaults().$fontheight(), false, false, false, false);
-    }
-
-    @Override
-    public void fontstyle(final String faceName, final int height) {
-        fontstyle(faceName, height, false, false, false, false);
-    }
-
-    @Override
-    public void fontstyle(final String faceName, final int height, final boolean bold) {
-        fontstyle(faceName, height, bold, false, false, false);
-    }
-
-    @Override
-    public void fontstyle(final String faceName, final int height, final boolean bold, final boolean italic) {
-        fontstyle(faceName, height, bold, italic, false, false);
-    }
-
-    @Override
-    public void fontstyle(final String faceName, final int height, final boolean bold, final boolean italic, final boolean underline) {
-        fontstyle(faceName, height, bold, italic, underline, false);
-    }
-
-    @Override
-    public void fontstyle(final String faceName, final int height, final boolean bold, final boolean italic, final boolean underline, final boolean strikeout) {
+    public void setFontStyle(final String faceName, final int height, final boolean bold, final boolean italic, final boolean underline, final boolean strikeout) {
         font = ElementUtil.createFont(faceName, height, bold, italic, underline, strikeout);
     }
 
     @Override
-    public void height(final double height) {
-        size = _getSize();
+    public Color getEraseColor() {
+        if (!eraseFlag) { return null; }
+        if (eraseColor != null) { return eraseColor; }
+        return test.getScreencolor();
+    }
+
+    @Override
+    public TextStimulus getStimulus() {
+        final TextStimulus stimulus = new TextStimulus(this);
+        stimulus.setBgColor(getTextBgColor());
+        stimulus.setFgColor(getTextColor());
+        stimulus.setFont(getFont());
+        stimulus.setPosition(getPosition());
+        stimulus.setSize(size);
+        stimulus.setText(_nextItem());
+        return stimulus;
+    }
+
+    @Override
+    public String getTypeName() {
+        return TYPENAME;
+    }
+
+    @Override
+    public void setHeight(final double height) {
+        size = getSize();
         size.setY(height);
     }
 
     @Override
-    public void height(final String height) {
-        size = _getSize();
+    public void setHeight(final String height) {
+        size = getSize();
         size.setY(height);
     }
 
     @Override
-    public void position(final double x, final double y) {
+    public boolean isErase() {
+        return eraseFlag;
+    }
+
+    @Override
+    public void setPosition(final double x, final double y) {
         position = new Coordinates(x, y);
     }
 
     @Override
-    public void position(final String xExpr, final String yExpr) {
+    public void setPosition(final String xExpr, final String yExpr) {
         position = new Coordinates(xExpr, yExpr);
     }
 
@@ -304,34 +243,50 @@ public class Text extends Element implements HasErase, HasFont, HasItems, HasTex
     }
 
     @Override
-    public void size(final double width, final double height) {
+    public void setErase(final boolean flag) {
+        eraseFlag = flag;
+    }
+
+    @Override
+    public void setErase(final int r, final int g, final int b) {
+        setEraseColor(ElementUtil.createColor(r, g, b));
+    }
+
+    @Override
+    public void setEraseColor(final Color color) {
+        eraseColor = color;
+        setErase(true);
+    }
+
+    @Override
+    public void setSize(final double width, final double height) {
         size = new Coordinates(width, height);
     }
 
     @Override
-    public void size(final String width, final String height) {
+    public void setSize(final String width, final String height) {
         size = new Coordinates(width, height);
     }
 
     @Override
-    public void txbgcolor(final int r, final int g, final int b) {
-        _setTxbgcolor(ElementUtil.createColor(r, g, b));
+    public void setTextBgColor(final int r, final int g, final int b) {
+        setTextBgColor(ElementUtil.createColor(r, g, b));
     }
 
     @Override
-    public void txcolor(final int r, final int g, final int b) {
-        _setTxcolor(ElementUtil.createColor(r, g, b));
+    public void setTextColor(final int r, final int g, final int b) {
+        setTextColor(ElementUtil.createColor(r, g, b));
     }
 
     @Override
-    public void width(final double width) {
-        size = _getSize();
+    public void setWidth(final double width) {
+        size = getSize();
         size.setY(width);
     }
 
     @Override
-    public void width(final String width) {
-        size = _getSize();
+    public void setWidth(final String width) {
+        size = getSize();
         size.setY(width);
     }
 

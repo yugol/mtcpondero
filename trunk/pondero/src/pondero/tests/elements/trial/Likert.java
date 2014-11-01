@@ -34,8 +34,8 @@ public class Likert extends Trial implements HasPosition {
     }
 
     @Override
-    public Coordinates _getPosition() {
-        return position == null ? test.getDefaults()._getPosition() : position;
+    public Coordinates getPosition() {
+        return position == null ? test.getDefaults().getPosition() : position;
     }
 
     public String _getQuiz() {
@@ -47,7 +47,7 @@ public class Likert extends Trial implements HasPosition {
     }
 
     @Override
-    public void _setPosition(final Coordinates position) {
+    public void setPosition(final Coordinates position) {
         this.position = position;
     }
 
@@ -56,13 +56,13 @@ public class Likert extends Trial implements HasPosition {
     }
 
     @Override
-    public Coordinate $hposition() {
-        return _getPosition().getX();
+    public Coordinate getHPosition() {
+        return getPosition().getX();
     }
 
     @Override
-    public Coordinate $vposition() {
-        return _getPosition().getY();
+    public Coordinate getVPosition() {
+        return getPosition().getY();
     }
 
     public void anchors() {
@@ -94,17 +94,17 @@ public class Likert extends Trial implements HasPosition {
         for (int i = 0; i < numpoints;) {
             validResponses[i] = String.valueOf(++i);
         }
-        super.validresponse(validResponses);
+        super.setValidResponses(validResponses);
         super.correctresponse(validResponses);
     }
 
     @Override
-    public void position(final double x, final double y) {
+    public void setPosition(final double x, final double y) {
         position = new Coordinates(x, y);
     }
 
     @Override
-    public void position(final String xExpr, final String yExpr) {
+    public void setPosition(final String xExpr, final String yExpr) {
         position = new Coordinates(xExpr, yExpr);
     }
 
@@ -113,7 +113,7 @@ public class Likert extends Trial implements HasPosition {
     }
 
     @Override
-    public void validresponse(final String... validresponse) {
+    public void setValidResponses(final String... validresponse) {
         throw new RuntimeException("validresponse is not supported for " + TYPENAME);
     }
 

@@ -15,10 +15,10 @@ import pondero.util.SwingUtil;
 @SuppressWarnings("serial")
 public class TestFrame extends JFrame {
 
-    public static final String     WINDOW_NAME = "testWindow";
+    public static final String WINDOW_NAME = "testWindow";
 
-    private final JPanel           contentPane;
-    private final TestScene        scene;
+    private final JPanel       contentPane;
+    private final TestScene    scene;
     private final TestCurtains instructions;
 
     /**
@@ -69,17 +69,17 @@ public class TestFrame extends JFrame {
         setVisible(false);
     }
 
-    public void invalidateScene() {
+    public synchronized void invalidateScene() {
         scene.paintImmediately(0, 0, scene.getWidth(), scene.getHeight());
     }
 
-    public void showCurtains(final Page instructPage, final boolean first, final boolean last) {
+    public synchronized void showCurtains(final Page instructPage, final boolean first, final boolean last) {
         scene.setVisible(false);
         instructions.setVisible(true);
         instructions.showInstructions(instructPage, first, last);
     }
 
-    public void showScene() {
+    public synchronized void showScene() {
         instructions.setVisible(false);
         scene.setVisible(true);
         scene.focalize();

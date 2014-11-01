@@ -32,181 +32,151 @@ public class Defaults extends Element implements HasBlockfeedback, HasFont, HasT
 
     public Defaults() {
         super("");
-        blockfeedback(MEANLATENCY, WINDOW, CORRECT);
+        setBlockFeedback(MEANLATENCY, WINDOW, CORRECT);
     }
 
     @Override
-    public Set<String> _getBlockfeedback() {
-        return blockfeedback;
-    }
-
-    @Override
-    public Font _getFont() {
+    public Font getFont() {
         return font;
     }
 
     @Override
-    public InputDevice _getInputDevice() {
+    public InputDevice getInputDevice() {
         return inputDevice;
     }
 
     @Override
-    public Coordinates _getPosition() {
+    public Coordinates getPosition() {
         return position;
     }
 
     @Override
-    public Color _getScreencolor() {
+    public Color getScreenColor() {
         return screencolor;
     }
 
     @Override
-    public void _setFont(final Font font) {
+    public void setFont(final Font font) {
         this.font = font == null ? ElementUtil.getDefaultFont() : font;
     }
 
     @Override
-    public void _setPosition(final Coordinates position) {
+    public void setPosition(final Coordinates position) {
         this.position = position == null ? ElementUtil.getDefaultPosition() : position;
     }
 
     @Override
-    public void _setScreencolor(final Color screencolor) {
+    public void setScreenColor(final Color screencolor) {
         this.screencolor = screencolor == null ? ElementUtil.getDefaultScreenColor() : screencolor;
     }
 
     @Override
-    public void _setTxbgcolor(final Color color) {
+    public void setTextBgColor(final Color color) {
         txbgcolor = color == null ? ElementUtil.getDefaultBackgroundColor() : color;
     }
 
     @Override
-    public void _setTxcolor(final Color color) {
+    public void setTextColor(final Color color) {
         txcolor = color == null ? ElementUtil.getDefaultForegroundColor() : color;
     }
 
     @Override
-    public int $fontheight() {
+    public int getFontHeight() {
         return font.getSize();
     }
 
     @Override
-    public Coordinate $hposition() {
-        return _getPosition().getX();
+    public Coordinate getHPosition() {
+        return getPosition().getX();
     }
 
     @Override
-    public Color $textbgcolor() {
+    public Color getTextBgColor() {
         return txbgcolor;
     }
 
     @Override
-    public int $textbgcolorblue() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int $textbgcolorgreen() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int $textbgcolorred() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Color $textcolor() {
+    public Color getTextColor() {
         return txcolor;
     }
 
     @Override
-    public int $textcolorblue() {
-        throw new UnsupportedOperationException();
+    public Coordinate getVPosition() {
+        return getPosition().getY();
     }
 
     @Override
-    public int $textcolorgreen() {
-        throw new UnsupportedOperationException();
+    public void setFontStyle(final String faceName) {
+        setFontStyle(faceName, ElementUtil.getDefaultFont().getSize(), false, false, false, false);
     }
 
     @Override
-    public int $textcolorred() {
-        throw new UnsupportedOperationException();
+    public void setFontStyle(final String faceName, final int height) {
+        setFontStyle(faceName, height, false, false, false, false);
     }
 
     @Override
-    public String $typename() {
-        return TYPENAME;
+    public void setFontStyle(final String faceName, final int height, final boolean bold) {
+        setFontStyle(faceName, height, bold, false, false, false);
     }
 
     @Override
-    public Coordinate $vposition() {
-        return _getPosition().getY();
+    public void setFontStyle(final String faceName, final int height, final boolean bold, final boolean italic) {
+        setFontStyle(faceName, height, bold, italic, false, false);
     }
 
     @Override
-    public void blockfeedback(final String... blockfeedback) {
-        ElementUtil.fillBlockfeedback(this.blockfeedback, blockfeedback);
+    public void setFontStyle(final String faceName, final int height, final boolean bold, final boolean italic, final boolean underline) {
+        setFontStyle(faceName, height, bold, italic, underline, false);
     }
 
     @Override
-    public void fontstyle(final String faceName) {
-        fontstyle(faceName, ElementUtil.getDefaultFont().getSize(), false, false, false, false);
-    }
-
-    @Override
-    public void fontstyle(final String faceName, final int height) {
-        fontstyle(faceName, height, false, false, false, false);
-    }
-
-    @Override
-    public void fontstyle(final String faceName, final int height, final boolean bold) {
-        fontstyle(faceName, height, bold, false, false, false);
-    }
-
-    @Override
-    public void fontstyle(final String faceName, final int height, final boolean bold, final boolean italic) {
-        fontstyle(faceName, height, bold, italic, false, false);
-    }
-
-    @Override
-    public void fontstyle(final String faceName, final int height, final boolean bold, final boolean italic, final boolean underline) {
-        fontstyle(faceName, height, bold, italic, underline, false);
-    }
-
-    @Override
-    public void fontstyle(final String faceName, final int height, final boolean bold, final boolean italic, final boolean underline, final boolean strikeout) {
+    public void setFontStyle(final String faceName, final int height, final boolean bold, final boolean italic, final boolean underline, final boolean strikeout) {
         font = ElementUtil.createFont(faceName, height, bold, italic, underline, strikeout);
     }
 
     @Override
-    public void inputdevice(final InputDevice device) {
+    public Set<String> getBlockFeedback() {
+        return blockfeedback;
+    }
+
+    @Override
+    public String getTypeName() {
+        return TYPENAME;
+    }
+
+    @Override
+    public void setInputDevice(final InputDevice device) {
         inputDevice = device == null ? DEFAULT_INPUT_DEVICE : device;
     }
 
     @Override
-    public void position(final double x, final double y) {
+    public void setPosition(final double x, final double y) {
         position = new Coordinates(x, y);
     }
 
     @Override
-    public void position(final String x, final String y) {
+    public void setPosition(final String x, final String y) {
         position = new Coordinates(x, y);
     }
 
     @Override
-    public void screencolor(final int r, final int g, final int b) {
+    public void setScreenColor(final int r, final int g, final int b) {
         screencolor = ElementUtil.createColor(r, g, b);
     }
 
     @Override
-    public void txbgcolor(final int r, final int g, final int b) {
+    public void setBlockFeedback(final String... blockfeedback) {
+        ElementUtil.fillBlockfeedback(this.blockfeedback, blockfeedback);
+    }
+
+    @Override
+    public void setTextBgColor(final int r, final int g, final int b) {
         txbgcolor = ElementUtil.createColor(r, g, b);
     }
 
     @Override
-    public void txcolor(final int r, final int g, final int b) {
+    public void setTextColor(final int r, final int g, final int b) {
         txcolor = ElementUtil.createColor(r, g, b);
     }
 

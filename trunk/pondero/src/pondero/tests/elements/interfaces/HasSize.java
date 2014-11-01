@@ -5,23 +5,24 @@ import pondero.tests.staples.Coordinates;
 
 public interface HasSize {
 
-    public Coordinates _getSize();
+    public Coordinate getHeight();
 
-    public void _setSize(Coordinates size);
+    public Coordinates getSize();
 
-    public Coordinate $height();
+    public Coordinate getWidth();
 
-    public Coordinate $width();
+    public void setHeight(double height);
 
-    public void height(double height);
+    public void setHeight(String height);
 
-    public void height(String height);
+    public void setSize(Coordinates size);
 
-    public void size(double width, double height);
+    public void setSize(double width, double height);
 
-    public void size(String width, String height);
+    public void setSize(String width, String height);
 
-    public void width(double width);
+    public void setWidth(double width);
 
-    public void width(String width);
+    public void setWidth(String width);
+
 }

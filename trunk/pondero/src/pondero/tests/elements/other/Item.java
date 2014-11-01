@@ -60,7 +60,7 @@ public class Item extends Element implements HasItems {
     }
 
     @Override
-    public String $typename() {
+    public String getTypeName() {
         return TYPENAME;
     }
 

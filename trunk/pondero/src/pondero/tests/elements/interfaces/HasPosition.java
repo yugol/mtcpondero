@@ -5,16 +5,16 @@ import pondero.tests.staples.Coordinates;
 
 public interface HasPosition {
 
-    public Coordinates _getPosition();
+    public Coordinate getHPosition();
 
-    public void _setPosition(Coordinates position);
+    public Coordinates getPosition();
 
-    public Coordinate $hposition();
+    public Coordinate getVPosition();
 
-    public Coordinate $vposition();
+    public void setPosition(Coordinates position);
 
-    public void position(final double x, final double y);
+    public void setPosition(final double x, final double y);
 
-    public void position(final String xExpr, final String yExpr);
+    public void setPosition(final String xExpr, final String yExpr);
 
 }

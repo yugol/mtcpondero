@@ -62,7 +62,7 @@ public class WebUtil {
 
     private static InputStream openUrlStream(final String urlString) throws IOException {
         final URL url = new URL(urlString);
-        trace("opening:", url);
+        trace("opening: ", url);
         final InputStream urlStream = url.openStream();
         return urlStream;
     }

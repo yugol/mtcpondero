@@ -4,16 +4,10 @@ import java.awt.Color;
 
 public interface HasTextColors extends HasTextColor {
 
-    public void _setTxbgcolor(final Color color);
+    public Color getTextBgColor();
 
-    public Color $textbgcolor();
+    public void setTextBgColor(final Color color);
 
-    public int $textbgcolorblue();
-
-    public int $textbgcolorgreen();
-
-    public int $textbgcolorred();
-
-    public void txbgcolor(final int r, final int g, final int b);
+    public void setTextBgColor(final int r, final int g, final int b);
 
 }
