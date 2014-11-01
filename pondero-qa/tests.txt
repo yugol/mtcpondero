@@ -1,0 +1,66 @@
+DONE:
+=====
+
+Iluzia Controlului - IC
+	Iluzia Controlului
+
+MisCALibration - MCAL
+	Miscalibrare si Adaptare
+
+Scala Comportamentelor Compensatorii în Trafic - SCCT
+	Chestionare
+
+Spirit de Observație în Trafic - SOT
+	Atentie
+
+
+
+TODO:
+=====
+
+Test de Adaptare - TA
+	Miscalibrare si Adaptare
+
+Atenția Concentrată - AC
+	Atentie
+	
+Interferența Sarcinii - IS
+	Atentie
+	
+Mobilitatea Atenției - MA
+	Atenție
+	
+Chestionar de Percepere a Riscului În Trafic - CPRT
+	Chestionare
+
+Inventarul Abilităților Conducătorului Auto - IACA
+	Chestionare
+
+Inventarul de Stres a Conducătorilor Auto - ISCA
+	Chestionare
+		
+Inventarul Multidimensional al Stilului de Conducere - IMSC
+	Chestionare
+
+Driver Anger Scale - DAS
+	Chestionare/XLS
+
+Driver's angry thoughts questionnaire - DATQ
+	Chestionare/XLS
+	
+Driving anger expression inventory - DAX 
+	Chestionare/XLS
+
+Traffic sensation seeking scale - SSS
+	Chestionare/XLS
+
+The big-five inventory - BFI 
+	Chestionare/XLS
+
+Barrett Impulsiveness Scale - BIS
+	Chestionare/XLS
+
+Dezirabilitate sociala - DS
+	Chestionare/XLS
+
+	
