@@ -74,7 +74,7 @@ public class Pondero implements Ponderable, PModelListener {
     }
 
     public static Pondero start(final String[] args) throws Exception {
-        final Calendar deadline = new GregorianCalendar(2015, Calendar.APRIL, 1);
+        final Calendar deadline = new GregorianCalendar(2015, Calendar.JANUARY, 1);
         if (deadline.compareTo(Calendar.getInstance()) < 0) {
             final String validityMessage = "We are sorry,\nthe validity of the application has expired!";
             JOptionPane.showMessageDialog(null, validityMessage, Pondero.class.getSimpleName(), JOptionPane.WARNING_MESSAGE);
