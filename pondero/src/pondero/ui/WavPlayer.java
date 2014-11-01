@@ -11,7 +11,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class AePlayWave extends Thread {
+public class WavPlayer extends Thread {
 
     enum Position {
         LEFT, RIGHT, NORMAL
@@ -21,12 +21,12 @@ public class AePlayWave extends Thread {
     private final Position curPosition;
     private final int      EXTERNAL_BUFFER_SIZE = 524288; // 128Kb ;
 
-    public AePlayWave(final String wavfile) {
+    public WavPlayer(final String wavfile) {
         filename = wavfile;
         curPosition = Position.NORMAL;
     }
 
-    public AePlayWave(final String wavfile, final Position p) {
+    public WavPlayer(final String wavfile, final Position p) {
         filename = wavfile;
         curPosition = p;
     }
