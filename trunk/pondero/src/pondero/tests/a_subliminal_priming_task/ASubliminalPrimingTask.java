@@ -1,6 +1,7 @@
 package pondero.tests.a_subliminal_priming_task;
 
 import java.awt.Color;
+import pondero.Constants;
 import pondero.tests.elements.interfaces.HasBlockfeedback;
 import pondero.tests.elements.other.Block;
 import pondero.tests.elements.other.Expt;
@@ -15,11 +16,11 @@ import pondero.tests.update.ArtifactType;
 
 public class ASubliminalPrimingTask extends Test {
 
-    private static final Artifact DESCRIPTOR = new Artifact(ArtifactType.TEST, "ASPT", 0, 1, "dev");
-
     public static void main(final String... args) {
         new ASubliminalPrimingTask().start(null);
     }
+
+    private static final Artifact DESCRIPTOR = new Artifact(ArtifactType.TEST, "ASPT", 0, 1, "dev");
 
     @Override
     public Artifact getArtifactDescriptor() {
@@ -101,7 +102,7 @@ public class ASubliminalPrimingTask extends Test {
         instruct.setFontStyle("Dialog", 18, true);
         instruct.nextkey('5');
         instruct.prevkey('a');
-        instruct.screencolor(224, 224, 224);
+        instruct.setScreenColor(Constants.DEFAULT_PAGE_SCERRN_COLOR);
 
         new Page("start", "    " + getCodeName());
 

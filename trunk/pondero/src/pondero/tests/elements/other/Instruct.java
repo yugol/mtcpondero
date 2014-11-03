@@ -17,7 +17,7 @@ public class Instruct extends Element implements HasFont, HasTextColor, HasInput
     private InputDevice        inputDevice = null;
     private Character          nextkey     = ' ';
     private Character          prevkey     = null;
-    private Color              screencolor = null;
+    private Color              screenColor = null;
     private Color              txcolor     = null;
 
     public Instruct() {
@@ -30,44 +30,48 @@ public class Instruct extends Element implements HasFont, HasTextColor, HasInput
     }
 
     @Override
-    public InputDevice getInputDevice() {
-        return inputDevice == null ? test.getDefaults().getInputDevice() : inputDevice;
-    }
-
-    public Character _getNextkey() {
-        return nextkey;
-    }
-
-    public Character _getPrevkey() {
-        return prevkey;
-    }
-
-    public Color _getScreencolor() {
-        return screencolor == null ? test.getScreencolor() : screencolor;
-    }
-
-    @Override
-    public void setFont(final Font font) {
-        this.font = font;
-    }
-
-    public void _setScreencolor(final Color screencolor) {
-        this.screencolor = screencolor;
-    }
-
-    @Override
-    public void setTextColor(final Color color) {
-        txcolor = color;
-    }
-
-    @Override
     public int getFontHeight() {
         return getFont().getSize();
     }
 
     @Override
+    public InputDevice getInputDevice() {
+        return inputDevice == null ? test.getDefaults().getInputDevice() : inputDevice;
+    }
+
+    public Character getNextkey() {
+        return nextkey;
+    }
+
+    public Character getPrevkey() {
+        return prevkey;
+    }
+
+    public Color getScreenColor() {
+        return screenColor == null ? test.getScreencolor() : screenColor;
+    }
+
+    @Override
     public Color getTextColor() {
         return txcolor == null ? test.getDefaults().getTextColor() : txcolor;
+    }
+
+    @Override
+    public String getTypeName() {
+        return TYPENAME;
+    }
+
+    public void nextkey(final Character nextkey) {
+        this.nextkey = nextkey;
+    }
+
+    public void prevkey(final Character prevkey) {
+        this.prevkey = prevkey;
+    }
+
+    @Override
+    public void setFont(final Font font) {
+        this.font = font;
     }
 
     @Override
@@ -101,25 +105,21 @@ public class Instruct extends Element implements HasFont, HasTextColor, HasInput
     }
 
     @Override
-    public String getTypeName() {
-        return TYPENAME;
-    }
-
-    @Override
     public void setInputDevice(final InputDevice device) {
         inputDevice = device;
     }
 
-    public void nextkey(final Character nextkey) {
-        this.nextkey = nextkey;
+    public void setScreenColor(final Color color) {
+        screenColor = color;
     }
 
-    public void prevkey(final Character prevkey) {
-        this.prevkey = prevkey;
+    public void setScreenColor(final int r, final int g, final int b) {
+        setScreenColor(ElementUtil.createColor(r, g, b));
     }
 
-    public void screencolor(final int r, final int g, final int b) {
-        screencolor = ElementUtil.createColor(r, g, b);
+    @Override
+    public void setTextColor(final Color color) {
+        txcolor = color;
     }
 
     @Override
