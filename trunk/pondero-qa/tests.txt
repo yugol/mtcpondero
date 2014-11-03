@@ -22,7 +22,11 @@ The big-five inventory - BFI
 Barrett Impulsiveness Scale - BIS
 	Chestionare/XLS
 	
-
+Driver's angry thoughts questionnaire - DATQ
+	Chestionare/XLS
+	
+	
+	
 TODO:
 =====
 
@@ -48,9 +52,6 @@ Inventarul Multidimensional al Stilului de Conducere - IMSC
 	Chestionare
 
 Driver Anger Scale - DAS
-	Chestionare/XLS
-
-Driver's angry thoughts questionnaire - DATQ
 	Chestionare/XLS
 	
 Driving anger expression inventory - DAX 
