@@ -27,8 +27,8 @@ public class LikertStimulus extends VisualStimulus {
 
     @Override
     public void render(final Graphics2D g2d, final int surfaceWidth, final int surfaceHeight) {
-        final int pointCnt = getParent().numpoints();
-        int buttonWidth = getParent().anchorwidth();
+        final int pointCnt = getParent().getNumPoints();
+        int buttonWidth = getParent().getAnchorWidth();
         if (buttonWidth <= 0) {
             buttonWidth = 80;
         }
@@ -56,7 +56,7 @@ public class LikertStimulus extends VisualStimulus {
                     true);
 
             g2d.setColor(Color.WHITE);
-            String message = getParent()._getAnchor(i);
+            String message = getParent().getAnchor(i);
             Rectangle2D textBounds = fm.getStringBounds(message, g2d);
             int textHMargin = (int) ((buttonWidth - textBounds.getWidth()) / 2);
             g2d.drawString(message,
