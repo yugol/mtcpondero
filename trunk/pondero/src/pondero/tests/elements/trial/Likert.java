@@ -24,35 +24,17 @@ public class Likert extends Trial implements HasPosition {
 
     public Likert(final String name) {
         super(name);
-        numpoints(5);
+        setNumPoints(5);
     }
 
-    public String _getAnchor(final int key) {
+    public String getAnchor(final int key) {
         final String value = anchors.get(key);
         if (StringUtil.isNullOrBlank(value)) { return ""; }
         return value;
     }
 
-    @Override
-    public Coordinates getPosition() {
-        return position == null ? test.getDefaults().getPosition() : position;
-    }
-
-    public String _getQuiz() {
-        return quiz;
-    }
-
-    public void _setAnchor(final int key, final String value) {
-        anchors.put(key, value);
-    }
-
-    @Override
-    public void setPosition(final Coordinates position) {
-        this.position = position;
-    }
-
-    public void _setQuiz(final String quiz) {
-        this.quiz = quiz;
+    public int getAnchorWidth() {
+        return anchorwidth;
     }
 
     @Override
@@ -60,35 +42,37 @@ public class Likert extends Trial implements HasPosition {
         return getPosition().getX();
     }
 
+    public int getNumPoints() {
+        return numpoints;
+    }
+
+    @Override
+    public Coordinates getPosition() {
+        return position == null ? test.getDefaults().getPosition() : position;
+    }
+
+    public String getQuiz() {
+        return quiz;
+    }
+
     @Override
     public Coordinate getVPosition() {
         return getPosition().getY();
     }
 
-    public void anchors() {
-    }
-
-    public int anchorwidth() {
-        return anchorwidth;
-    }
-
-    public void anchorwidth(final int anchorwidth) {
-        this.anchorwidth = anchorwidth;
-    }
-
-    public boolean mouse() {
+    public boolean isUseMouse() {
         return mouse;
     }
 
-    public void mouse(final boolean mouse) {
-        this.mouse = mouse;
+    public void setAnchor(final int key, final String value) {
+        anchors.put(key, value);
     }
 
-    public int numpoints() {
-        return numpoints;
+    public void setAnchorWidth(final int anchorwidth) {
+        this.anchorwidth = anchorwidth;
     }
 
-    public void numpoints(final int numpoints) {
+    public void setNumPoints(final int numpoints) {
         this.numpoints = numpoints;
         final String[] validResponses = new String[numpoints];
         for (int i = 0; i < numpoints;) {
@@ -96,6 +80,11 @@ public class Likert extends Trial implements HasPosition {
         }
         super.setValidResponses(validResponses);
         super.correctresponse(validResponses);
+    }
+
+    @Override
+    public void setPosition(final Coordinates position) {
+        this.position = position;
     }
 
     @Override
@@ -110,6 +99,10 @@ public class Likert extends Trial implements HasPosition {
 
     public void setQuiz(final String quiz) {
         this.quiz = quiz;
+    }
+
+    public void setUseMouse(final boolean mouse) {
+        this.mouse = mouse;
     }
 
     @Override
@@ -135,10 +128,10 @@ public class Likert extends Trial implements HasPosition {
         } else {
             lk = (TestLikertComponent) south;
         }
-        lk.setQuiz(_getQuiz());
-        lk.setPointCount(numpoints());
-        for (int i = 0; i < numpoints(); ++i) {
-            lk.setAnchor(i, _getAnchor(i));
+        lk.setQuiz(getQuiz());
+        lk.setPointCount(getNumPoints());
+        for (int i = 0; i < getNumPoints(); ++i) {
+            lk.setAnchor(i, getAnchor(i));
         }
     }
 

@@ -1,6 +1,9 @@
 DONE:
 =====
 
+Spirit de Observație în Trafic - SOT
+	Atentie
+
 Iluzia Controlului - IC
 	Iluzia Controlului
 
@@ -10,10 +13,15 @@ MisCALibration - MCAL
 Scala Comportamentelor Compensatorii în Trafic - SCCT
 	Chestionare
 
-Spirit de Observație în Trafic - SOT
-	Atentie
+Chestionar de Percepere a Riscului În Trafic - CPRT
+	Chestionare
 
+The big-five inventory - BFI 
+	Chestionare/XLS
 
+Barrett Impulsiveness Scale - BIS
+	Chestionare/XLS
+	
 
 TODO:
 =====
@@ -30,9 +38,6 @@ Interferența Sarcinii - IS
 Mobilitatea Atenției - MA
 	Atenție
 	
-Chestionar de Percepere a Riscului În Trafic - CPRT
-	Chestionare
-
 Inventarul Abilităților Conducătorului Auto - IACA
 	Chestionare
 
@@ -52,12 +57,6 @@ Driving anger expression inventory - DAX
 	Chestionare/XLS
 
 Traffic sensation seeking scale - SSS
-	Chestionare/XLS
-
-The big-five inventory - BFI 
-	Chestionare/XLS
-
-Barrett Impulsiveness Scale - BIS
 	Chestionare/XLS
 
 Dezirabilitate sociala - DS
