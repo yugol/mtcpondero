@@ -151,21 +151,21 @@ public class TestCurtains extends JPanel {
         setBackground(test.getScreencolor());
         pnlCenter.setBackground(test.getScreencolor());
 
-        message.setBackground(test.getInstructions()._getScreencolor());
+        message.setBackground(test.getInstructions().getScreenColor());
         message.setForeground(test.getInstructions().getTextColor());
         message.setFont(test.getInstructions().getFont());
         message.setText(page.$content());
 
-        pnlNavigation.setBackground(test.getInstructions()._getScreencolor());
-        if (!last && test.getInstructions()._getNextkey() != null) {
+        pnlNavigation.setBackground(test.getInstructions().getScreenColor());
+        if (!last && test.getInstructions().getNextkey() != null) {
             btnRight.setVisible(true);
-            btnRight.setText(L10n.getString("msg.press-key-for-next", getCharUiString(test.getInstructions()._getNextkey()))); //$NON-NLS-1$
+            btnRight.setText(L10n.getString("msg.press-key-for-next", getCharUiString(test.getInstructions().getNextkey()))); //$NON-NLS-1$
         } else {
             btnRight.setVisible(false);
         }
-        if (!first && test.getInstructions()._getPrevkey() != null) {
+        if (!first && test.getInstructions().getPrevkey() != null) {
             btnLeft.setVisible(true);
-            btnLeft.setText(L10n.getString("msg.press-key-for-previous", getCharUiString(test.getInstructions()._getPrevkey()))); //$NON-NLS-1$
+            btnLeft.setText(L10n.getString("msg.press-key-for-previous", getCharUiString(test.getInstructions().getPrevkey()))); //$NON-NLS-1$
         } else {
             btnLeft.setVisible(false);
         }
@@ -175,8 +175,8 @@ public class TestCurtains extends JPanel {
 
     private void handleKeyEvent(final KeyEvent evt) throws Exception {
         final PrevNextResponse input = new PrevNextResponse();
-        input.setNext(evt.getKeyChar() == test.getInstructions()._getNextkey());
-        input.setPrev(evt.getKeyChar() == test.getInstructions()._getPrevkey());
+        input.setNext(evt.getKeyChar() == test.getInstructions().getNextkey());
+        input.setPrev(evt.getKeyChar() == test.getInstructions().getPrevkey());
         test.doStep(input);
     }
 
