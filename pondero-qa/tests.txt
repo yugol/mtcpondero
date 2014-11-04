@@ -25,6 +25,20 @@ Barrett Impulsiveness Scale - BIS
 Driver's angry thoughts questionnaire - DATQ
 	Chestionare/XLS
 	
+Driving anger expression inventory - DAX 
+	Chestionare/XLS
+
+Traffic sensation seeking scale - SSS
+	Chestionare/XLS
+
+Dezirabilitate sociala - DS
+	Chestionare/XLS
+
+Inventarul Abilităților Conducătorului Auto - IACA
+	Chestionare
+		
+Inventarul Multidimensional al Stilului de Conducere - IMSC
+	Chestionare
 	
 	
 TODO:
@@ -42,25 +56,10 @@ Interferența Sarcinii - IS
 Mobilitatea Atenției - MA
 	Atenție
 	
-Inventarul Abilităților Conducătorului Auto - IACA
-	Chestionare
-
 Inventarul de Stres a Conducătorilor Auto - ISCA
-	Chestionare
-		
-Inventarul Multidimensional al Stilului de Conducere - IMSC
 	Chestionare
 
 Driver Anger Scale - DAS
 	Chestionare/XLS
 	
-Driving anger expression inventory - DAX 
-	Chestionare/XLS
-
-Traffic sensation seeking scale - SSS
-	Chestionare/XLS
-
-Dezirabilitate sociala - DS
-	Chestionare/XLS
-
 	
