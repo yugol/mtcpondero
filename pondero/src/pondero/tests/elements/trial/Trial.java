@@ -75,6 +75,7 @@ public class Trial extends Element implements HasFeedback, IsController {
         doStatus = new DoStatus();
         test.pushController(this);
         test.openRecord(this);
+        responses.clear();
     }
 
     @Override
@@ -308,14 +309,14 @@ public class Trial extends Element implements HasFeedback, IsController {
     }
 
     protected Long getResponseTime(final List<Response> input) {
-        return input.get(0).getTime();
+        return input.get(input.size() - 1).getTime();
     }
 
     protected boolean isCorrectResponse(final List<Response> input) {
         final Response participantInput = input.get(0);
         if (participantInput instanceof KeyPressResponse) {
             final KeyPressResponse keyResponse = (KeyPressResponse) participantInput;
-            return correctResponses.contains(keyResponse);
+            return correctResponses.contains(keyResponse.getCharAsString());
         }
         return false;
     }
