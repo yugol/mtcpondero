@@ -21,6 +21,7 @@ public class TestCurtains extends JPanel {
     private static String getCharUiString(final Character ch) {
         if (ch == null) { return ""; }
         if (ch == ' ') { return L10n.getString("space-key-name"); }
+        if (ch == '\n') { return L10n.getString("cr-key-name"); }
         return String.valueOf(ch);
     }
 
