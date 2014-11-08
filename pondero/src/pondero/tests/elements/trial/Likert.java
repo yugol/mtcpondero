@@ -112,13 +112,13 @@ public class Likert extends Trial implements HasPosition {
 
     @Override
     protected void configureScene() {
-        final Test test = _getTest();
+        final Test test = getTest();
         final TestScene scene = test.getTestWindow().getScene();
         scene.setNorth(null);
         scene.setEast(null);
         scene.setWest(null);
         if (!(scene.getCenter() instanceof TestDrawableComponent)) {
-            scene.setCenter(new TestDrawableComponent(_getTest()));
+            scene.setCenter(new TestDrawableComponent(getTest()));
         }
         TestLikertComponent lk = null;
         final Object south = scene.getSouth();

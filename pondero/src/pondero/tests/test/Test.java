@@ -154,9 +154,9 @@ public abstract class Test extends TestRenderer implements IsController {
         }
     }
 
-    public void recordResponse(final Response response) throws Exception {
+    public void recordResponse(final String response) throws Exception {
         if (record != null) {
-            record.setResponse(response.toRecordString());
+            record.setResponse(response);
         }
     }
 
