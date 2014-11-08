@@ -4,6 +4,9 @@ DONE:
 Spirit de Observație în Trafic - SOT
 	Atentie
 
+Atenția Concentrată - AC
+	Atentie
+
 Iluzia Controlului - IC
 	Iluzia Controlului
 
@@ -47,9 +50,6 @@ TODO:
 Test de Adaptare - TA
 	Miscalibrare si Adaptare
 
-Atenția Concentrată - AC
-	Atentie
-	
 Interferența Sarcinii - IS
 	Atentie
 	
