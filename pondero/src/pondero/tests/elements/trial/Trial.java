@@ -20,6 +20,7 @@ import pondero.tests.staples.Timing;
 import pondero.tests.test.Test;
 import pondero.tests.test.responses.KeyPressResponse;
 import pondero.tests.test.responses.KillResponse;
+import pondero.tests.test.responses.LikertResponse;
 import pondero.tests.test.responses.Response;
 import pondero.tests.test.stimuli.Stimulus;
 import pondero.tests.test.stimuli.VisualStimulus;
@@ -132,9 +133,15 @@ public class Trial extends Element implements HasFeedback, IsController {
                     responses.add(input);
                     completed = killerUserInput;
                 }
+            } else if (input instanceof LikertResponse) {
+                responses.add(input);
+                completed = true;
             } else if (input instanceof KillResponse) {
                 responses.add(input);
                 completed = true;
+            } else {
+                responses.add(input);
+                completed = killerUserInput;
             }
 
         }
@@ -309,7 +316,7 @@ public class Trial extends Element implements HasFeedback, IsController {
     }
 
     protected Long getResponseTime(final List<Response> input) {
-        return input.get(input.size() - 1).getTime();
+        return input.get(0).getTime();
     }
 
     protected boolean isCorrectResponse(final List<Response> input) {

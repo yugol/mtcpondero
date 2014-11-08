@@ -1,11 +1,14 @@
 package pondero.tests.elements.trial;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import pondero.tests.elements.interfaces.HasPosition;
 import pondero.tests.staples.Coordinate;
 import pondero.tests.staples.Coordinates;
 import pondero.tests.test.Test;
+import pondero.tests.test.responses.LikertResponse;
+import pondero.tests.test.responses.Response;
 import pondero.ui.testing.TestScene;
 import pondero.ui.testing.components.TestDrawableComponent;
 import pondero.ui.testing.components.TestLikertComponent;
@@ -18,13 +21,13 @@ public class Likert extends Trial implements HasPosition {
     private final Map<Integer, String> anchors     = new HashMap<Integer, String>();
     private int                        anchorwidth = 0;
     private boolean                    mouse       = true;
-    private int                        numpoints   = 5;
+    private int                        startIndex  = 1;
+    private int                        numPoints   = 5;
     private Coordinates                position    = null;
     private String                     quiz;
 
     public Likert(final String name) {
         super(name);
-        setNumPoints(5);
     }
 
     public String getAnchor(final int key) {
@@ -43,7 +46,7 @@ public class Likert extends Trial implements HasPosition {
     }
 
     public int getNumPoints() {
-        return numpoints;
+        return numPoints;
     }
 
     @Override
@@ -53,6 +56,10 @@ public class Likert extends Trial implements HasPosition {
 
     public String getQuiz() {
         return quiz;
+    }
+
+    public int getStartIndex() {
+        return startIndex;
     }
 
     @Override
@@ -73,13 +80,7 @@ public class Likert extends Trial implements HasPosition {
     }
 
     public void setNumPoints(final int numpoints) {
-        this.numpoints = numpoints;
-        final String[] validResponses = new String[numpoints];
-        for (int i = 0; i < numpoints;) {
-            validResponses[i] = String.valueOf(++i);
-        }
-        super.setValidResponses(validResponses);
-        super.setCorrectResponse(validResponses);
+        numPoints = numpoints;
     }
 
     @Override
@@ -99,6 +100,10 @@ public class Likert extends Trial implements HasPosition {
 
     public void setQuiz(final String quiz) {
         this.quiz = quiz;
+    }
+
+    public void setStartIndex(final int startIndex) {
+        this.startIndex = startIndex;
     }
 
     public void setUseMouse(final boolean mouse) {
@@ -123,16 +128,21 @@ public class Likert extends Trial implements HasPosition {
         TestLikertComponent lk = null;
         final Object south = scene.getSouth();
         if (!(south instanceof TestLikertComponent)) {
-            lk = new TestLikertComponent(test);
+            lk = new TestLikertComponent(test, getNumPoints(), getStartIndex());
             scene.setSouth(lk);
         } else {
             lk = (TestLikertComponent) south;
         }
         lk.setQuiz(getQuiz());
-        lk.setPointCount(getNumPoints());
         for (int i = 0; i < getNumPoints(); ++i) {
             lk.setAnchor(i, getAnchor(i));
         }
+    }
+
+    @Override
+    protected boolean isCorrectResponse(final List<Response> input) {
+        final Response participantInput = input.get(0);
+        return participantInput instanceof LikertResponse;
     }
 
 }
