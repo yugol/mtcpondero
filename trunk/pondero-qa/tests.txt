@@ -1,17 +1,20 @@
 DONE:
 =====
 
+Iluzia Controlului - IC
+	Iluzia Controlului
+
+Test de Adaptare - TA
+	Miscalibrare si Adaptare
+	
+MisCALibration - MCAL
+	Miscalibrare si Adaptare
+	
 Spirit de Observație în Trafic - SOT
 	Atentie
 
 Atenția Concentrată - AC
 	Atentie
-
-Iluzia Controlului - IC
-	Iluzia Controlului
-
-MisCALibration - MCAL
-	Miscalibrare si Adaptare
 
 Scala Comportamentelor Compensatorii în Trafic - SCCT
 	Chestionare
@@ -47,8 +50,7 @@ Inventarul Multidimensional al Stilului de Conducere - IMSC
 TODO:
 =====
 
-Test de Adaptare - TA
-	Miscalibrare si Adaptare
+
 
 Interferența Sarcinii - IS
 	Atentie
