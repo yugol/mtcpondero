@@ -17,6 +17,7 @@ import pondero.tests.elements.interfaces.IsVisualStimulus;
 import pondero.tests.staples.Frame;
 import pondero.tests.staples.FrameSequence;
 import pondero.tests.staples.Timing;
+import pondero.tests.test.Test;
 import pondero.tests.test.responses.KeyPressResponse;
 import pondero.tests.test.responses.KillResponse;
 import pondero.tests.test.responses.Response;
@@ -295,14 +296,15 @@ public class Trial extends Element implements HasFeedback, IsController {
     }
 
     protected void configureScene() {
-        final TestScene scene = getTest().getTestWindow().getScene();
+        final Test test = getTest();
+        final TestScene scene = test.getTestWindow().getScene();
+        if (!(scene.getCenter() instanceof TestDrawableComponent)) {
+            scene.setCenter(new TestDrawableComponent(test));
+        }
         scene.setNorth(null);
-        scene.setSouth(null);
         scene.setEast(null);
         scene.setWest(null);
-        if (!(scene.getCenter() instanceof TestDrawableComponent)) {
-            scene.setCenter(new TestDrawableComponent(getTest()));
-        }
+        scene.setSouth(null);
     }
 
     protected Long getResponseTime(final List<Response> input) {

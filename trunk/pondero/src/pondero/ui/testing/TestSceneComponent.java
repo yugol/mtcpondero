@@ -21,7 +21,6 @@ public abstract class TestSceneComponent extends JComponent {
         return test != null;
     }
 
-    public void reset() {
-    }
+    public abstract void reset();
 
 }

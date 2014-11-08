@@ -356,6 +356,10 @@ public class TestLikertComponent extends TestSceneComponent {
         add(btn9, gbc_btn9);
     }
 
+    @Override
+    public void reset() {
+    }
+
     public void setAnchor(final int labelIndex, final String txt) {
         getLabel(labelIndex).setText("<html>" + txt + "</html>");
     }

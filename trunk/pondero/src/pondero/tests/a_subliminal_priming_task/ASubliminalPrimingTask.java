@@ -102,7 +102,7 @@ public class ASubliminalPrimingTask extends Test {
         instruct.setFontStyle("Dialog", 18, true);
         instruct.nextkey('5');
         instruct.prevkey('a');
-        instruct.setScreenColor(Constants.DEFAULT_PAGE_SCERRN_COLOR);
+        instruct.setScreenColor(Constants.DEFAULT_PAGE_SCREEN_COLOR);
 
         new Page("start", "    " + getCodeName());
 
