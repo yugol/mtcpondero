@@ -3,7 +3,7 @@ package pondero.tests.test.responses;
 public class KillResponse extends Response {
 
     @Override
-    public String toRecordString() {
+    public String toRecordedResponseString() {
         return "";
     }
 

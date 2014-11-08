@@ -12,6 +12,6 @@ public abstract class Response {
         return time;
     }
 
-    public abstract String toRecordString();
+    public abstract String toRecordedResponseString();
 
 }

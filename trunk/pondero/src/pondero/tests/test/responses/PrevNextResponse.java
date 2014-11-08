@@ -22,7 +22,7 @@ public class PrevNextResponse extends Response {
     }
 
     @Override
-    public String toRecordString() {
+    public String toRecordedResponseString() {
         throw new UnsupportedOperationException("PrevNextResponse.toRecordString() - not implemented");
     }
 

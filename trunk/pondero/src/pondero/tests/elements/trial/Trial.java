@@ -2,10 +2,13 @@ package pondero.tests.elements.trial;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.swing.Timer;
 import pondero.Context;
+import pondero.Logger;
 import pondero.tests.elements.Element;
 import pondero.tests.elements.interfaces.HasFeedback;
 import pondero.tests.elements.interfaces.IsController;
@@ -43,18 +46,19 @@ public class Trial extends Element implements HasFeedback, IsController {
 
     }
 
-    public static final String TYPENAME         = "trial";
+    public static final String   TYPENAME         = "trial";
 
-    private boolean            killerUserInput  = true;
-    private final Set<String>  correctResponses = new HashSet<String>();
-    private long               postTrialPause   = 0;
-    private long               preTrialPause    = 0;
-    private int                timeout          = 0;
-    private FrameSequence      stimulusTimes    = new FrameSequence();
-    private String             trialCode;
-    private final Set<String>  validResponses   = new HashSet<String>();
+    private boolean              killerUserInput  = true;
+    private final Set<String>    correctResponses = new HashSet<String>();
+    private long                 postTrialPause   = 0;
+    private long                 preTrialPause    = 0;
+    private int                  timeout          = 0;
+    private FrameSequence        stimulusTimes    = new FrameSequence();
+    private String               trialCode;
+    private final Set<String>    validResponses   = new HashSet<String>();
+    private final List<Response> responses        = new ArrayList<Response>();
 
-    private DoStatus           doStatus;
+    private DoStatus             doStatus;
 
     public Trial(final String name) {
         super(name);
@@ -63,6 +67,7 @@ public class Trial extends Element implements HasFeedback, IsController {
 
     @Override
     public void doBegin() throws Exception {
+        Logger.trace("Trial: " + getName());
         configureScene();
         test.resetStimuli();
         test.showScene();
@@ -116,43 +121,39 @@ public class Trial extends Element implements HasFeedback, IsController {
         }
 
         boolean completed = false;
+
         if (input != null) {
+
             if (input instanceof KeyPressResponse) {
                 final String keyResponse = ((KeyPressResponse) input).getCharAsString();
                 if (validResponses.contains(keyResponse)) {
-
-                    HasFeedback.FeedbackStimulus fb = null;
-                    if (correctResponses.contains(keyResponse)) {
-                        test.recordCorrectResponse(input.getTime());
-                        fb = test.getCorrectmessage();
-                    } else {
-                        test.recordErrorResponse(input.getTime());
-                        fb = test.getErrormessage();
-                    }
-                    test.recordResponse(input);
+                    responses.add(input);
                     completed = killerUserInput;
-                    if (fb != null) {
-                        final IsStimulus eltStimulus = test.getStimulus(fb.getStimulusName());
-                        Stimulus actualStimulus = null;
-                        if (eltStimulus instanceof IsVisualStimulus) {
-                            actualStimulus = ((IsVisualStimulus) eltStimulus).getStimulus();
-                            test.addVisualStimulus((VisualStimulus) actualStimulus);
-                        }
-                        test.presentStimuli();
-                        Timing.pause(fb.getDuration());
-                        if (eltStimulus instanceof IsVisualStimulus) {
-                            test.removeVisualStimulus((VisualStimulus) actualStimulus);
-                        }
-                        test.presentStimuli();
-                    }
                 }
             } else if (input instanceof KillResponse) {
-                test.recordResponse(input);
+                responses.add(input);
                 completed = true;
             }
+
         }
 
         if (completed) {
+            final HasFeedback.FeedbackStimulus fb = evaluateResponse();
+            if (fb != null) {
+                final IsStimulus eltStimulus = test.getStimulus(fb.getStimulusName());
+                Stimulus actualStimulus = null;
+                if (eltStimulus instanceof IsVisualStimulus) {
+                    actualStimulus = ((IsVisualStimulus) eltStimulus).getStimulus();
+                    test.addVisualStimulus((VisualStimulus) actualStimulus);
+                }
+                test.presentStimuli();
+                Timing.pause(fb.getDuration());
+                if (eltStimulus instanceof IsVisualStimulus) {
+                    test.removeVisualStimulus((VisualStimulus) actualStimulus);
+                }
+                test.presentStimuli();
+            }
+
             Timing.pause(postTrialPause);
             doStatus.kill();
             doEnd();
@@ -164,6 +165,10 @@ public class Trial extends Element implements HasFeedback, IsController {
     public FeedbackStimulus getCorrectMessage() {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    public Set<String> getCorrectResponses() {
+        return correctResponses;
     }
 
     @Override
@@ -252,6 +257,20 @@ public class Trial extends Element implements HasFeedback, IsController {
         }
     }
 
+    private HasFeedback.FeedbackStimulus evaluateResponse() throws Exception {
+        HasFeedback.FeedbackStimulus fb = null;
+        final Long responseTime = getResponseTime(responses);
+        if (isCorrectResponse(responses)) {
+            test.recordCorrectResponse(responseTime);
+            fb = test.getCorrectmessage();
+        } else {
+            test.recordErrorResponse(responseTime);
+            fb = test.getErrormessage();
+        }
+        test.recordResponse(buildRecordedResponse(responses));
+        return fb;
+    }
+
     private void putVisualStimuli(final Frame frame) {
         test.resetVisualStimuli();
         if (test.getBgstim() != null) {
@@ -270,15 +289,33 @@ public class Trial extends Element implements HasFeedback, IsController {
         }
     }
 
+    protected String buildRecordedResponse(final List<Response> input) {
+        final Response participantInput = input.get(0);
+        return participantInput.toRecordedResponseString();
+    }
+
     protected void configureScene() {
-        final TestScene scene = _getTest().getTestWindow().getScene();
+        final TestScene scene = getTest().getTestWindow().getScene();
         scene.setNorth(null);
         scene.setSouth(null);
         scene.setEast(null);
         scene.setWest(null);
         if (!(scene.getCenter() instanceof TestDrawableComponent)) {
-            scene.setCenter(new TestDrawableComponent(_getTest()));
+            scene.setCenter(new TestDrawableComponent(getTest()));
         }
+    }
+
+    protected Long getResponseTime(final List<Response> input) {
+        return input.get(0).getTime();
+    }
+
+    protected boolean isCorrectResponse(final List<Response> input) {
+        final Response participantInput = input.get(0);
+        if (participantInput instanceof KeyPressResponse) {
+            final KeyPressResponse keyResponse = (KeyPressResponse) participantInput;
+            return correctResponses.contains(keyResponse);
+        }
+        return false;
     }
 
 }

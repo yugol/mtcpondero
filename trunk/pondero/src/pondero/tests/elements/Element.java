@@ -22,7 +22,7 @@ public abstract class Element {
         test.add(this);
     }
 
-    public Test _getTest() {
+    public Test getTest() {
         return test;
     }
 

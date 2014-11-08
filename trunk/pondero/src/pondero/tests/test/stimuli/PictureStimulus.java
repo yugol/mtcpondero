@@ -53,9 +53,9 @@ public class PictureStimulus extends VisualStimulus {
             // try to open the file directly
             imgData = ImageIO.read(imgFile);
         } else {
-            final String folder = "/" + getParent()._getTest().getClass().getPackage().getName().replace(".", "/") + "/";
+            final String folder = "/" + getParent().getTest().getClass().getPackage().getName().replace(".", "/") + "/";
             final String source = folder + path;
-            final InputStream imageStream = getParent()._getTest().getClass().getResourceAsStream(source);
+            final InputStream imageStream = getParent().getTest().getClass().getResourceAsStream(source);
             imgData = ImageIO.read(imageStream);
             imageStream.close();
         }

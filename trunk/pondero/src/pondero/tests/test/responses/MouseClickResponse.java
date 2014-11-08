@@ -15,7 +15,7 @@ public class MouseClickResponse extends Response {
     }
 
     @Override
-    public String toRecordString() {
+    public String toRecordedResponseString() {
         throw new UnsupportedOperationException("MouseClickResponse.toRecordString() - not implemented");
     }
 
