@@ -79,7 +79,7 @@ public class Likert extends Trial implements HasPosition {
             validResponses[i] = String.valueOf(++i);
         }
         super.setValidResponses(validResponses);
-        super.correctresponse(validResponses);
+        super.setCorrectResponse(validResponses);
     }
 
     @Override

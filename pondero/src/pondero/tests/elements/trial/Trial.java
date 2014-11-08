@@ -43,28 +43,22 @@ public class Trial extends Element implements HasFeedback, IsController {
 
     }
 
-    public static final String TYPENAME        = "trial";
+    public static final String TYPENAME         = "trial";
 
-    private final boolean      killerUserInput = true;
-    private final Set<String>  correctResponse = new HashSet<String>();
-    private long               postTrialPause  = 0;
-    private long               preTrialPause   = 0;
-    private int                timeout         = 0;
-    private FrameSequence      stimulusTimes   = new FrameSequence();
+    private boolean            killerUserInput  = true;
+    private final Set<String>  correctResponses = new HashSet<String>();
+    private long               postTrialPause   = 0;
+    private long               preTrialPause    = 0;
+    private int                timeout          = 0;
+    private FrameSequence      stimulusTimes    = new FrameSequence();
     private String             trialCode;
-    private final Set<String>  validResponses  = new HashSet<String>();
+    private final Set<String>  validResponses   = new HashSet<String>();
 
     private DoStatus           doStatus;
 
     public Trial(final String name) {
         super(name);
         trialCode = name;
-    }
-
-    public void correctresponse(final String... correctresponse) {
-        for (final String response : correctresponse) {
-            correctResponse.add(response);
-        }
     }
 
     @Override
@@ -128,7 +122,7 @@ public class Trial extends Element implements HasFeedback, IsController {
                 if (validResponses.contains(keyResponse)) {
 
                     HasFeedback.FeedbackStimulus fb = null;
-                    if (correctResponse.contains(keyResponse)) {
+                    if (correctResponses.contains(keyResponse)) {
                         test.recordCorrectResponse(input.getTime());
                         fb = test.getCorrectmessage();
                     } else {
@@ -205,6 +199,12 @@ public class Trial extends Element implements HasFeedback, IsController {
         // TODO Auto-generated method stub
     }
 
+    public void setCorrectResponse(final String... correctresponse) {
+        for (final String response : correctresponse) {
+            correctResponses.add(response);
+        }
+    }
+
     @Override
     public void setErrorMessage(final boolean flag) {
         // TODO Auto-generated method stub
@@ -213,6 +213,10 @@ public class Trial extends Element implements HasFeedback, IsController {
     @Override
     public void setErrorMessage(final String stimulusName, final long duration) {
         // TODO Auto-generated method stub
+    }
+
+    public void setKillerUserInput(final boolean killerUserInput) {
+        this.killerUserInput = killerUserInput;
     }
 
     public void setPostTrialPause(final long posttrialpause) {
@@ -230,16 +234,16 @@ public class Trial extends Element implements HasFeedback, IsController {
         }
     }
 
+    public void setStimulusTimes(final String expr) {
+        stimulusTimes = new FrameSequence(expr);
+    }
+
     public void setTimeout(final int timeout) {
         this.timeout = timeout;
     }
 
     public void setTrialCode(final String trialcode) {
         trialCode = trialcode;
-    }
-
-    public void setTtimulusTimes(final String expr) {
-        stimulusTimes = new FrameSequence(expr);
     }
 
     public void setValidResponses(final String... validresponse) {
