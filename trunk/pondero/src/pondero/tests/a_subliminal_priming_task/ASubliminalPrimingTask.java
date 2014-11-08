@@ -138,28 +138,28 @@ public class ASubliminalPrimingTask extends Test {
         final Trial pp = new Trial("pp");
         pp.setPreTrialPause(300);
         pp.setValidResponses("a", "5");
-        pp.correctresponse("5");
+        pp.setCorrectResponse("5");
         pp.setStimulusFrames("1=forwardmask; 10=pleasantprime; 13=backwardmask; 14=pleasanttarget");
         pp.setPostTrialPause(100);
 
         final Trial pu = new Trial("pu");
         pu.setPreTrialPause(300);
         pu.setValidResponses("a", "5");
-        pu.correctresponse("a");
+        pu.setCorrectResponse("a");
         pu.setStimulusFrames("1=forwardmask; 10=pleasantprime; 13=backwardmask; 14=unpleasanttarget");
         pu.setPostTrialPause(100);
 
         final Trial up = new Trial("up");
         up.setPreTrialPause(300);
         up.setValidResponses("a", "5");
-        up.correctresponse("5");
+        up.setCorrectResponse("5");
         up.setStimulusFrames("1=forwardmask; 10=unpleasantprime; 13=backwardmask; 14=pleasanttarget");
         up.setPostTrialPause(100);
 
         final Trial uu = new Trial("uu");
         uu.setPreTrialPause(300);
         uu.setValidResponses("a", "5");
-        uu.correctresponse("a");
+        uu.setCorrectResponse("a");
         uu.setStimulusFrames("1=forwardmask; 10=unpleasantprime; 13=backwardmask; 14=unpleasanttarget");
         uu.setPostTrialPause(100);
 
