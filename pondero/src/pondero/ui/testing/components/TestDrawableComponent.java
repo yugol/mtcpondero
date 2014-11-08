@@ -50,6 +50,10 @@ public class TestDrawableComponent extends TestSceneComponent {
     }
 
     @Override
+    public void reset() {
+    }
+
+    @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         if (hasTest()) {
