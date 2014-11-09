@@ -1,6 +1,5 @@
 package pondero.tests.test;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import pondero.tests.LockedTaskException;
@@ -13,28 +12,31 @@ import pondero.tests.elements.other.Instruct;
 import pondero.tests.elements.other.Item;
 import pondero.tests.elements.other.Page;
 import pondero.tests.elements.stimulus.Picture;
+import pondero.tests.elements.stimulus.Sound;
 import pondero.tests.elements.stimulus.Text;
 import pondero.tests.elements.trial.Trial;
 import pondero.tests.update.Artifact;
 
 public abstract class TestBase implements Runnable {
 
-    private static TestBase instance;
-    private static boolean  locked = false;
-
     public static Test instance() {
         return (Test) instance;
     }
 
-    private Defaults                     defaults;
-    private Instruct                     instruct;
-    private Expt                         experiment;
+    private static TestBase              instance;
+    private static boolean               locked   = false;
+
     protected final Map<String, Block>   blocks   = new LinkedHashMap<String, Block>();
-    protected final Map<String, Trial>   trials   = new LinkedHashMap<String, Trial>();
-    protected final Map<String, Text>    texts    = new LinkedHashMap<String, Text>();
+    protected final Map<String, Item>    items    = new LinkedHashMap<String, Item>();
+    protected final Map<String, Page>    pages    = new LinkedHashMap<String, Page>();
     protected final Map<String, Picture> pictures = new LinkedHashMap<String, Picture>();
-    protected final Map<String, Page>    pages    = new HashMap<String, Page>();
-    protected final Map<String, Item>    items    = new HashMap<String, Item>();
+    protected final Map<String, Sound>   sounds   = new LinkedHashMap<String, Sound>();
+    protected final Map<String, Text>    texts    = new LinkedHashMap<String, Text>();
+    protected final Map<String, Trial>   trials   = new LinkedHashMap<String, Trial>();
+
+    private Defaults                     defaults;
+    private Expt                         experiment;
+    private Instruct                     instruct;
 
     public TestBase() {
         if (locked) { throw new LockedTaskException(); }
@@ -52,38 +54,53 @@ public abstract class TestBase implements Runnable {
     }
 
     public void add(final Element element) {
-        if (Item.TYPENAME.equals(element.getTypeName())) {
-            if (items.get(element.getName()) == null) {
-                items.put(element.getName(), (Item) element);
-            }
-        } else if (Text.TYPENAME.equals(element.getTypeName())) {
-            if (texts.get(element.getName()) == null) {
-                texts.put(element.getName(), (Text) element);
-            }
-        } else if (Picture.TYPENAME.equals(element.getTypeName())) {
-            if (pictures.get(element.getName()) == null) {
-                pictures.put(element.getName(), (Picture) element);
-            }
-        } else if (Page.TYPENAME.equals(element.getTypeName())) {
-            if (pages.get(element.getName()) == null) {
-                pages.put(element.getName(), (Page) element);
-            }
-        } else if (Block.TYPENAME.equals(element.getTypeName())) {
-            if (blocks.get(element.getName()) == null) {
-                blocks.put(element.getName(), (Block) element);
-            }
-        } else if (Trial.TYPENAME.equals(element.getTypeName())) {
-            if (trials.get(element.getName()) == null) {
-                trials.put(element.getName(), (Trial) element);
-            }
-        } else if (Expt.TYPENAME.equals(element.getTypeName())) {
-            experiment = (Expt) element;
-        } else if (Instruct.TYPENAME.equals(element.getTypeName())) {
-            instruct = (Instruct) element;
-        } else if (Defaults.TYPENAME.equals(element.getTypeName())) {
-            defaults = (Defaults) element;
-        } else {
-            throw new RuntimeException("Name " + element.getName() + " cannot be used for " + element.getTypeName());
+        switch (element.getTypeName()) {
+            case Item.TYPENAME:
+                if (items.get(element.getName()) == null) {
+                    items.put(element.getName(), (Item) element);
+                }
+                break;
+            case Text.TYPENAME:
+                if (texts.get(element.getName()) == null) {
+                    texts.put(element.getName(), (Text) element);
+                }
+                break;
+            case Picture.TYPENAME:
+                if (pictures.get(element.getName()) == null) {
+                    pictures.put(element.getName(), (Picture) element);
+                }
+                break;
+            case Sound.TYPENAME:
+                if (sounds.get(element.getName()) == null) {
+                    sounds.put(element.getName(), (Sound) element);
+                }
+                break;
+            case Page.TYPENAME:
+                if (pages.get(element.getName()) == null) {
+                    pages.put(element.getName(), (Page) element);
+                }
+                break;
+            case Block.TYPENAME:
+                if (blocks.get(element.getName()) == null) {
+                    blocks.put(element.getName(), (Block) element);
+                }
+                break;
+            case Trial.TYPENAME:
+                if (trials.get(element.getName()) == null) {
+                    trials.put(element.getName(), (Trial) element);
+                }
+                break;
+            case Expt.TYPENAME:
+                experiment = (Expt) element;
+                break;
+            case Instruct.TYPENAME:
+                instruct = (Instruct) element;
+                break;
+            case Defaults.TYPENAME:
+                defaults = (Defaults) element;
+                break;
+            default:
+                throw new RuntimeException("Name " + element.getName() + " cannot be used for " + element.getTypeName());
         }
     }
 
@@ -121,6 +138,9 @@ public abstract class TestBase implements Runnable {
         IsStimulus stimulus = getText(name);
         if (stimulus == null) {
             stimulus = pictures.get(name);
+        }
+        if (stimulus == null) {
+            stimulus = sounds.get(name);
         }
         return stimulus;
     }

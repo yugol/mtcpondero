@@ -166,7 +166,7 @@ public class Picture extends Element implements HasErase, HasItems, IsVisualStim
         position = new Coordinates(xExpr, yExpr);
     }
 
-    public void select(final ItemSelection select) {
+    public void setSelectionMode(final ItemSelection select) {
         this.select = select;
     }
 

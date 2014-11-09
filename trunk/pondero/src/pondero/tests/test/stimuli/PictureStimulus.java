@@ -14,7 +14,6 @@ import pondero.tests.staples.Coordinates;
 public class PictureStimulus extends VisualStimulus {
 
     private BufferedImage imgData;
-
     private Rectangle2D   imgBounds;
     private Coordinates   position;
     private Coordinates   size;

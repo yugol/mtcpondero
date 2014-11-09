@@ -11,6 +11,7 @@ import pondero.Context;
 import pondero.Logger;
 import pondero.tests.elements.Element;
 import pondero.tests.elements.interfaces.HasFeedback;
+import pondero.tests.elements.interfaces.IsAuditoryStimulus;
 import pondero.tests.elements.interfaces.IsController;
 import pondero.tests.elements.interfaces.IsStimulus;
 import pondero.tests.elements.interfaces.IsVisualStimulus;
@@ -114,7 +115,7 @@ public class Trial extends Element implements HasFeedback, IsController {
                     for (final Frame frame : stimulusTimes) {
                         final long wait = frame.getIndex() - prevTimeIndex;
                         Timing.pause(wait);
-                        putVisualStimuli(frame);
+                        prepareStimuli(frame);
                         prevTimeIndex = frame.getIndex();
                         test.presentStimuli();
                     }
@@ -288,8 +289,8 @@ public class Trial extends Element implements HasFeedback, IsController {
         return fb;
     }
 
-    private void putVisualStimuli(final Frame frame) {
-        test.resetVisualStimuli();
+    private void prepareStimuli(final Frame frame) {
+        test.resetStimuli();
         if (test.getBgstim() != null) {
             for (final String name : test.getBgstim()) {
                 final IsStimulus stimulus = test.getStimulus(name);
@@ -302,6 +303,8 @@ public class Trial extends Element implements HasFeedback, IsController {
             final IsStimulus stimulus = test.getStimulus(name);
             if (stimulus instanceof IsVisualStimulus) {
                 test.addVisualStimulus(((IsVisualStimulus) stimulus).getStimulus());
+            } else if (stimulus instanceof IsAuditoryStimulus) {
+                test.addAuditoryStimulus(((IsAuditoryStimulus) stimulus).getStimulus());
             }
         }
     }
