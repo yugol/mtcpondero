@@ -97,8 +97,8 @@
 		<ant antfile="${soldir}/pondero-test-scct/make-jar-pondero-test-scct.xml" />
 	</target>
 
-	<target name="pondero-test-ma">
-		<ant antfile="${soldir}/pondero-test-ma/make-jar-pondero-test-ma.xml" />
+	<target name="pondero-test-maic">
+		<ant antfile="${soldir}/pondero-test-maic/make-jar-pondero-test-maic.xml" />
 	</target>
 
 	<target name="pondero-test-sss">
@@ -123,7 +123,7 @@
 		pondero-test-imsc,
 		pondero-test-is,
 		pondero-test-isca,
-		pondero-test-ma,
+		pondero-test-maic,
 		pondero-test-mcal,
 		pondero-test-scct,
 		pondero-test-sot,
