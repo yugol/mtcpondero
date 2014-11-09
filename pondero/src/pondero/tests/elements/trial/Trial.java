@@ -203,6 +203,11 @@ public class Trial extends Element implements HasFeedback, IsController {
         return killerUserInput;
     }
 
+    public void setCorrectAndValidResponses(final String... response) {
+        setCorrectResponses(response);
+        setValidResponses(response);
+    }
+
     @Override
     public void setCorrectMessage(final boolean flag) {
         // TODO Auto-generated method stub
