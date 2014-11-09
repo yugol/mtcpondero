@@ -13,19 +13,24 @@ import pondero.tests.elements.interfaces.HasScreencolor;
 import pondero.tests.elements.other.Page;
 import pondero.tests.elements.stimulus.Text;
 import pondero.tests.staples.Coordinates;
+import pondero.tests.test.stimuli.AuditoryStimulus;
 import pondero.tests.test.stimuli.VisualStimulus;
 import pondero.ui.testing.TestFrame;
 
 public abstract class TestRenderer extends TestBase {
 
-    private final TestFrame             testFrame;
+    private final TestFrame              testFrame;
 
-    private final Stack<HasScreencolor> screenColorStack = new Stack<HasScreencolor>();
-    private final List<VisualStimulus>  visualStimuli    = new ArrayList<VisualStimulus>(); ;
+    private final List<AuditoryStimulus> auditoryStimuli  = new ArrayList<AuditoryStimulus>();
+    private final List<VisualStimulus>   visualStimuli    = new ArrayList<VisualStimulus>();
+    private final Stack<HasScreencolor>  screenColorStack = new Stack<HasScreencolor>();
 
     public TestRenderer() {
-        super();
         testFrame = new TestFrame((Test) this);
+    }
+
+    public void addAuditoryStimulus(final AuditoryStimulus stimulus) {
+        auditoryStimuli.add(stimulus);
     }
 
     public void addVisualStimulus(final VisualStimulus stimulus) {
@@ -40,8 +45,12 @@ public abstract class TestRenderer extends TestBase {
         }
     }
 
+    public List<AuditoryStimulus> getAuditoryStimuli() {
+        return new ArrayList<AuditoryStimulus>(auditoryStimuli);
+    }
+
     public Color getScreencolor() {
-        return peekScreencolor().getScreenColor();
+        return peekScreenColor().getScreenColor();
     }
 
     public TestFrame getTestWindow() {
@@ -60,11 +69,14 @@ public abstract class TestRenderer extends TestBase {
         return new ArrayList<VisualStimulus>(visualStimuli);
     }
 
-    public HasScreencolor peekScreencolor() {
+    public HasScreencolor peekScreenColor() {
         return screenColorStack.peek();
     }
 
     public synchronized void presentStimuli() {
+        for (final AuditoryStimulus stimulus : getAuditoryStimuli()) {
+            stimulus.play();
+        }
         SwingUtilities.invokeLater(new Runnable() {
 
             @Override
@@ -80,11 +92,8 @@ public abstract class TestRenderer extends TestBase {
     }
 
     public synchronized void resetStimuli() {
-        resetVisualStimuli();
-    }
-
-    public synchronized void resetVisualStimuli() {
         visualStimuli.clear();
+        auditoryStimuli.clear();
     }
 
     public void showCurtains(final Page page, final boolean first, final boolean last) {
