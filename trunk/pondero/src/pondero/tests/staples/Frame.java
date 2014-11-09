@@ -1,13 +1,13 @@
 package pondero.tests.staples;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class Frame implements Comparable<Frame> {
 
     private int               index   = 0;
-    private final Set<String> content = new HashSet<String>();
+    private final Set<String> content = new TreeSet<String>();
 
     public Frame() {
     }

@@ -21,6 +21,7 @@ import pondero.tests.test.Test;
 import pondero.tests.test.responses.KeyPressResponse;
 import pondero.tests.test.responses.KillResponse;
 import pondero.tests.test.responses.LikertResponse;
+import pondero.tests.test.responses.MouseClickResponse;
 import pondero.tests.test.responses.Response;
 import pondero.tests.test.stimuli.Stimulus;
 import pondero.tests.test.stimuli.VisualStimulus;
@@ -136,6 +137,8 @@ public class Trial extends Element implements HasFeedback, IsController {
             } else if (input instanceof LikertResponse) {
                 responses.add(input);
                 completed = true;
+            } else if (input instanceof MouseClickResponse) {
+                // ignore for now
             } else if (input instanceof KillResponse) {
                 responses.add(input);
                 completed = true;
