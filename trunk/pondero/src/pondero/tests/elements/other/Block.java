@@ -191,7 +191,7 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
         screencolor = ElementUtil.createColor(r, g, b);
     }
 
-    public void trials(final String trials) {
+    public void setTrials(final String trials) {
         this.trials.clear();
         this.trials.addAll(new ItemSequence(trials).getItems());
     }

@@ -138,28 +138,28 @@ public class ASubliminalPrimingTask extends Test {
         final Trial pp = new Trial("pp");
         pp.setPreTrialPause(300);
         pp.setValidResponses("a", "5");
-        pp.setCorrectResponse("5");
+        pp.setCorrectResponses("5");
         pp.setStimulusFrames("1=forwardmask; 10=pleasantprime; 13=backwardmask; 14=pleasanttarget");
         pp.setPostTrialPause(100);
 
         final Trial pu = new Trial("pu");
         pu.setPreTrialPause(300);
         pu.setValidResponses("a", "5");
-        pu.setCorrectResponse("a");
+        pu.setCorrectResponses("a");
         pu.setStimulusFrames("1=forwardmask; 10=pleasantprime; 13=backwardmask; 14=unpleasanttarget");
         pu.setPostTrialPause(100);
 
         final Trial up = new Trial("up");
         up.setPreTrialPause(300);
         up.setValidResponses("a", "5");
-        up.setCorrectResponse("5");
+        up.setCorrectResponses("5");
         up.setStimulusFrames("1=forwardmask; 10=unpleasantprime; 13=backwardmask; 14=pleasanttarget");
         up.setPostTrialPause(100);
 
         final Trial uu = new Trial("uu");
         uu.setPreTrialPause(300);
         uu.setValidResponses("a", "5");
-        uu.setCorrectResponse("a");
+        uu.setCorrectResponses("a");
         uu.setStimulusFrames("1=forwardmask; 10=unpleasantprime; 13=backwardmask; 14=unpleasanttarget");
         uu.setPostTrialPause(100);
 
@@ -167,7 +167,7 @@ public class ASubliminalPrimingTask extends Test {
         practice.setScreenColor(175, 175, 255);
         practice.bgstim("pleasantreminder", "unpleasantreminder");
         practice.setPreInstructions("intro1", "intro2", "intro3");
-        practice.trials("1-5 = random(pp, pu, up, uu)");
+        practice.setTrials("1-5 = random(pp, pu, up, uu)");
         practice.setErrorMessage("errormessage", 200);
         practice.setCorrectMessage("correctmessage", 200);
         practice.setBlockFeedback(HasBlockfeedback.LATENCY, HasBlockfeedback.CORRECT);
@@ -176,7 +176,7 @@ public class ASubliminalPrimingTask extends Test {
         data.setScreenColor(175, 175, 255);
         data.bgstim("pleasantreminder", "unpleasantreminder");
         data.setPreInstructions("ready");
-        data.trials("1-5 = random(pp, pu, up, uu)");
+        data.setTrials("1-5 = random(pp, pu, up, uu)");
         data.setBlockFeedback(HasBlockfeedback.LATENCY, HasBlockfeedback.CORRECT);
 
         final Expt expt = new Expt();

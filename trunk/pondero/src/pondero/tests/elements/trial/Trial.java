@@ -213,7 +213,7 @@ public class Trial extends Element implements HasFeedback, IsController {
         // TODO Auto-generated method stub
     }
 
-    public void setCorrectResponse(final String... correctresponse) {
+    public void setCorrectResponses(final String... correctresponse) {
         for (final String response : correctresponse) {
             correctResponses.add(response);
         }
