@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Pondero"
-#define MyAppVersion "0.4-alpha"
+#define MyAppVersion "0.5-alpha (2014-11-09)"
 #define MyAppPublisher "Mindtrips Communications"
 #define MyAppURL "http://www.purl.org/net/pondero/home"
 #define MyAppExeName "pondero.bat"
@@ -34,14 +34,31 @@ Name: "romanian"; MessagesFile: "{#PonderoRoot}\Romanian.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source:   "{#PonderoRoot}\jre\*";                      DestDir: "{app}\jre";   Flags: ignoreversion recursesubdirs createallsubdirs
-Source:   "{#PonderoRoot}\cfg\pondero-48x48.ico";      DestDir: "{app}\cfg";   Flags: ignoreversion
-Source:   "{#PonderoRoot}\bin\pondero.jar";            DestDir: "{app}\bin";   Flags: ignoreversion
-Source:   "{#PonderoRoot}\bin\pondero-libs.jar";       DestDir: "{app}\bin";   Flags: ignoreversion
-Source:   "{#PonderoRoot}\bin\pondero-install.jar";    DestDir: "{app}\bin";   Flags: ignoreversion
-Source:   "{#PonderoRoot}\tests\pondero-test-ic.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
-Source:   "{#PonderoRoot}\tests\pondero-test-sot.jar"; DestDir: "{app}\tests"; Flags: ignoreversion
-Source:   "{#PonderoRoot}\pondero.bat";                DestDir: "{app}";       Flags: ignoreversion
+Source:   "{#PonderoRoot}\jre\*";                        DestDir: "{app}\jre";   Flags: ignoreversion recursesubdirs createallsubdirs
+Source:   "{#PonderoRoot}\cfg\pondero-48x48.ico";        DestDir: "{app}\cfg";   Flags: ignoreversion
+Source:   "{#PonderoRoot}\bin\pondero.jar";              DestDir: "{app}\bin";   Flags: ignoreversion
+Source:   "{#PonderoRoot}\bin\pondero-libs.jar";         DestDir: "{app}\bin";   Flags: ignoreversion
+Source:   "{#PonderoRoot}\bin\pondero-install.jar";      DestDir: "{app}\bin";   Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-ac.jar";    DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-bfi.jar";   DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-bis.jar";   DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-cprt.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-das.jar";   DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-datq.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-dax.jar";   DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-ds.jar";    DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-iaca.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-ic.jar";    DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-imsc.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-is.jar";    DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-isca.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-maic.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-mcal.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-scct.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-sot.jar";   DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-sss.jar";   DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-ta.jar";    DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\pondero.bat";                  DestDir: "{app}";       Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Dirs]
