@@ -2,7 +2,7 @@ package pondero.tests.test.stimuli;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -66,8 +66,8 @@ public class SoundStimulus extends AuditoryStimulus implements Runnable {
         } else {
             final String folder = "/" + getParent().getTest().getClass().getPackage().getName().replace(".", "/") + "/";
             final String source = folder + path;
-            final InputStream soundStream = getParent().getTest().getClass().getResourceAsStream(source);
-            audioInputStream = AudioSystem.getAudioInputStream(soundStream);
+            final URL url = getParent().getTest().getClass().getResource(source);
+            audioInputStream = AudioSystem.getAudioInputStream(url);
         }
     }
 
