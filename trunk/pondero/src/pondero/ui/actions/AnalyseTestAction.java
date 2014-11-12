@@ -20,7 +20,7 @@ public class AnalyseTestAction extends PonderableAction {
 
     public AnalyseTestAction(final Ponderable app) {
         super(app);
-        putValue(NAME, L10n.getString("lbl.test"));
+        putValue(NAME, L10n.getString("lbl.test..."));
     }
 
     @Override

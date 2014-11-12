@@ -7,9 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import pondero.Context;
 import pondero.L10n;
-import pondero.data.analysis.FillParticipantReport;
-import pondero.data.drivers.excel.ExcelFileFilter;
-import pondero.data.drivers.excel.templates.participant.ParticipantTemplate;
+import pondero.data.evaluation.FullReport;
+import pondero.data.evaluation.PdfFileFilter;
 import pondero.data.model.basic.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
@@ -18,11 +17,11 @@ import pondero.ui.participants.ParticipantSelectionDialog;
 import pondero.util.OsUtil;
 
 @SuppressWarnings("serial")
-public class AnalyseParticipantAction extends PonderableAction {
+public class EvaluationFullReportAction extends PonderableAction {
 
-    public AnalyseParticipantAction(final Ponderable app) {
+    public EvaluationFullReportAction(final Ponderable app) {
         super(app);
-        putValue(NAME, L10n.getString("lbl.participant..."));
+        putValue(NAME, L10n.getString("lbl.full-report..."));
         putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/user_gray.png")));
     }
 
@@ -36,12 +35,13 @@ public class AnalyseParticipantAction extends PonderableAction {
             if (dlg.getCloseOperation() == JOptionPane.YES_OPTION) {
                 final Participant participant = dlg.getSelection();
                 if (participant != null) {
-                    action("performing analysis of participant ", participant.getId());
-                    final ParticipantTemplate template = new ParticipantTemplate();
-                    new FillParticipantReport().fill(template, participant, getCurrentWorkbook().getModel());
-                    final String reportFileName = ParticipantTemplate.BASE_NAME + "-" + System.currentTimeMillis() + ExcelFileFilter.DEFAULT_EXTENSION;
+                    action("creating full report for ", participant.getId());
+                    final FullReport report = new FullReport(participant, getCurrentWorkbook().getModel());
+                    report.generate();
+                    final String reportFileName = FullReport.BASE_NAME + "-" + System.currentTimeMillis() + PdfFileFilter.DEFAULT_EXTENSION;
                     final File reportFile = new File(Context.getFolderResultsTemp(), reportFileName);
-                    template.save(reportFile);
+                    report.save(reportFile);
+                    report.close();
                     OsUtil.openFile(reportFile);
                 }
             }
