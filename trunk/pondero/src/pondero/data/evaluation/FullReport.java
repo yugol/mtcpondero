@@ -1,5 +1,6 @@
 package pondero.data.evaluation;
 
+import java.io.IOException;
 import org.apache.pdfbox.pdmodel.PDPage;
 import pondero.data.model.basic.BasicModel;
 import pondero.data.model.basic.Participant;
@@ -11,14 +12,15 @@ public class FullReport extends BasicPdfReport {
     private final BasicModel   model;
     private final Participant  participant;
 
-    public FullReport(final Participant participant, final BasicModel model) {
+    public FullReport(final Participant participant, final BasicModel model) throws IOException {
         this.model = model;
         this.participant = participant;
     }
 
     @Override
     public void generate() throws Exception {
-        final PDPage blankPage = addPage();
+        final PDPage firstPage = addPage();
+
     }
 
 }

@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+import pondero.Constants;
 import pondero.Context;
 import pondero.L10n;
 import pondero.Logger;
@@ -119,7 +120,7 @@ public class ExceptionDialog extends JDialog {
 
                     @Override
                     public void actionPerformed(final ActionEvent e) {
-                        WebUtil.mail(Context.CONTACT_MAIL_ADDRESS, "[PONDERO][EXCEPTION]: ", buildExceptionMailBody());
+                        WebUtil.mail(Constants.CONTACT_MAIL_ADDRESS, "[PONDERO][EXCEPTION]: ", buildExceptionMailBody());
                         dispose();
                     }
 

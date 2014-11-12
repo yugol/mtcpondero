@@ -3,7 +3,7 @@ package pondero.util;
 import static org.junit.Assert.fail;
 import java.io.IOException;
 import org.junit.Test;
-import pondero.Context;
+import pondero.Constants;
 import pondero.PonderoTest;
 
 public class WebUtilTest extends PonderoTest {
@@ -23,7 +23,7 @@ public class WebUtilTest extends PonderoTest {
 
     @Test
     public void testPurlToUrl() throws IOException {
-        final String urlString = WebUtil.purlToUrl(Context.UPDATE_REGISTRY_ADDRESS);
+        final String urlString = WebUtil.purlToUrl(Constants.UPDATE_REGISTRY_ADDRESS);
         System.out.println(urlString);
     }
 

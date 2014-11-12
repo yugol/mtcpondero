@@ -10,7 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
-import pondero.Context;
+import pondero.Constants;
 import pondero.ui.exceptions.ExceptionReporting;
 
 public class WebUtil {
@@ -54,7 +54,7 @@ public class WebUtil {
     }
 
     public static InputStream openCloudStream(String urlString) throws IOException {
-        if (urlString.startsWith(Context.PURL_HOME)) {
+        if (urlString.startsWith(Constants.PURL_HOME)) {
             urlString = purlToUrl(urlString);
         }
         return openUrlStream(urlString);

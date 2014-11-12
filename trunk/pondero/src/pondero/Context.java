@@ -272,11 +272,6 @@ public final class Context {
         }
     }
 
-    public static final String                 PURL_HOME                = "http://www.purl.org";
-    public static final String                 HOME_PAGE_ADDRESS        = PURL_HOME + "/net/pondero/home";
-    public static final String                 UPDATE_REGISTRY_ADDRESS  = PURL_HOME + "/net/pondero/update/registry.xml";
-    public static final String                 CONTACT_MAIL_ADDRESS     = "mindtrips.communications@gmail.com";
-
     private static final String                CONSOLE_LOG_LEVEL_KEY    = "consoleLogLevel";
     private static final String                FILE_LOG_LEVEL_KEY       = "fileLogLevel";
     private static final String                LAST_WORKBOOK_FILE_KEY   = "lastWorkbookFile";
