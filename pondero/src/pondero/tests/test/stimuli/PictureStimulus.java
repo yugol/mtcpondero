@@ -4,12 +4,12 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
 import pondero.tests.elements.stimulus.Picture;
 import pondero.tests.staples.Coordinates;
+import pondero.util.StreamUtil;
 
 public class PictureStimulus extends VisualStimulus {
 
@@ -47,18 +47,9 @@ public class PictureStimulus extends VisualStimulus {
     }
 
     public void setPath(final String path) throws IOException {
-        final File imgFile = new File(path);
-        if (imgFile.exists()) {
-            // try to open the file directly
-            imgData = ImageIO.read(imgFile);
-        } else {
-            final String folder = "/" + getParent().getTest().getClass().getPackage().getName().replace(".", "/") + "/";
-            final String source = folder + path;
-            final InputStream imageStream = getParent().getTest().getClass().getResourceAsStream(source);
-            imgData = ImageIO.read(imageStream);
-            imageStream.close();
-        }
-
+        final InputStream imageStream = StreamUtil.getResourceStream(path, getParent().getTest().getClass());
+        imgData = ImageIO.read(imageStream);
+        imageStream.close();
         imgBounds = new Rectangle2D.Double(0, 0, imgData.getWidth(), imgData.getHeight());
     }
 

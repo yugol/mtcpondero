@@ -13,9 +13,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import pondero.Constants;
 import pondero.Context;
-import pondero.util.TimeUtil;
 import pondero.util.StringUtil;
+import pondero.util.TimeUtil;
 import pondero.util.WebUtil;
 
 public class UpdateUtil {
@@ -72,7 +73,7 @@ public class UpdateUtil {
     public static Updates getAvailableUpdates() throws Exception {
         InputStream registryStream = null;
         try {
-            registryStream = WebUtil.openCloudStream(Context.UPDATE_REGISTRY_ADDRESS);
+            registryStream = WebUtil.openCloudStream(Constants.UPDATE_REGISTRY_ADDRESS);
             final Updates availableArtifacts = new Updates();
 
             final DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

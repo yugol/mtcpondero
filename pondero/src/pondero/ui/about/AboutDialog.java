@@ -30,6 +30,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import pondero.Constants;
 import pondero.Context;
 import pondero.L10n;
 import pondero.Logger;
@@ -42,7 +43,7 @@ public class AboutDialog extends JDialog {
 
     /**
      * Launch the application.
-     *
+     * 
      * @throws Exception
      */
     public static void main(final String[] args) throws Exception {
@@ -57,7 +58,7 @@ public class AboutDialog extends JDialog {
     }
 
     private static String getMailLink() {
-        return "<html><a href='mailto:" + Context.CONTACT_MAIL_ADDRESS + "'>" + Context.CONTACT_MAIL_ADDRESS + "</a></html>";
+        return "<html><a href='mailto:" + Constants.CONTACT_MAIL_ADDRESS + "'>" + Constants.CONTACT_MAIL_ADDRESS + "</a></html>";
     }
 
     private final JPanel      contentPanel = new JPanel();
@@ -144,7 +145,7 @@ public class AboutDialog extends JDialog {
                     @Override
                     public void mouseClicked(final MouseEvent e) {
                         Logger.action("sending about mail");
-                        WebUtil.mail(Context.CONTACT_MAIL_ADDRESS, "[PONDERO][ABOUT]: ", buildAboutMailBody());
+                        WebUtil.mail(Constants.CONTACT_MAIL_ADDRESS, "[PONDERO][ABOUT]: ", buildAboutMailBody());
                     }
 
                 });
