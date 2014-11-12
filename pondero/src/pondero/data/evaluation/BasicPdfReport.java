@@ -68,16 +68,20 @@ public abstract class BasicPdfReport {
     }
 
     protected PDPage addPage() throws Exception {
-        final PDPage newPage = new PDPage();
+        final PDPage newPage = new PDPage(PDPage.PAGE_SIZE_A4);
         final PDPageContentStream contentStream = new PDPageContentStream(getReport(), newPage);
         contentStream.beginText();
         contentStream.setFont(AR, 5);
         contentStream.moveTextPositionByAmount(5, 5);
-        contentStream.drawString(ro("Generat de aplica\u021Ba Pondero: " + Constants.HOME_PAGE_ADDRESS));
+        contentStream.drawString(ro("Generat de aplica\u021Ba 'Pondero': " + Constants.HOME_PAGE_ADDRESS));
         contentStream.endText();
         contentStream.close();
         report.addPage(newPage);
         return newPage;
+    }
+
+    protected PDPageContentStream getContentStream(final PDPage page) throws Exception {
+        return new PDPageContentStream(report, page, true, false, true);
     }
 
     protected PDDocument getReport() {
