@@ -1,5 +1,10 @@
 package pondero.data.model.basic;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import pondero.data.model.PModel;
 import pondero.data.model.PSheet;
 import pondero.data.model.PType;
@@ -33,9 +38,35 @@ public class TestRecords extends PSheet {
         return (TrialRecord) addRow(new TrialRecord(this));
     }
 
+    public TestInstance getInstance(final String participantId, final long testTime) {
+        final TestInstance instance = new TestInstance(getName(), participantId, testTime);
+        for (int i = 0; i < getRowCount(); ++i) {
+            final TrialRecord record = getRow(i);
+            if (testTime == record.getExperimentTimestamp()) {
+                if (participantId.equals(record.getParticipantId())) {
+                    instance.add(record);
+                }
+            }
+        }
+        return instance;
+    }
+
     @Override
     public TrialRecord getRow(final int index) {
         return (TrialRecord) super.getRow(index);
+    }
+
+    public List<Long> getTestTimes(final String participantId) {
+        final Set<Long> instanceSet = new HashSet<>();
+        for (int i = 0; i < getRowCount(); ++i) {
+            final TrialRecord record = getRow(i);
+            if (participantId.equals(record.getParticipantId())) {
+                instanceSet.add(record.getExperimentTimestamp());
+            }
+        }
+        final List<Long> instanceList = new ArrayList<>(instanceSet);
+        Collections.sort(instanceList);
+        return instanceList;
     }
 
 }

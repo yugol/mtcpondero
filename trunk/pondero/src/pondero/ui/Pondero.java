@@ -75,7 +75,7 @@ public class Pondero implements Ponderable, PModelListener {
         Context.init(args.length >= 1 ? args[0] : null);
         action("starting application");
 
-        TestSelector.REGISTERED_TESTS.addAll(TestLoader.loadTests());
+        Context.REGISTERED_TESTS.addAll(TestLoader.loadTests());
         SwingUtil.getAvailableLafs();
         SwingUtil.setLaf();
         SwingUtil.scaleUi(Context.getUiFontScaleFactor());

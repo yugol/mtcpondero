@@ -14,18 +14,18 @@ public abstract class BasicPdfReport {
 
     private final PDDocument report;
 
-    protected final PDFont   AR;
-    protected final PDFont   AR_B;
-    protected final PDFont   AR_BI;
-    protected final PDFont   AR_I;
-    protected final PDFont   COU;
-    protected final PDFont   COU_B;
-    protected final PDFont   COU_BI;
-    protected final PDFont   COU_I;
-    protected final PDFont   TNR;
-    protected final PDFont   TNR_B;
-    protected final PDFont   TNR_BI;
-    protected final PDFont   TNR_I;
+    public final PDFont      AR;
+    public final PDFont      AR_B;
+    public final PDFont      AR_BI;
+    public final PDFont      AR_I;
+    public final PDFont      COU;
+    public final PDFont      COU_B;
+    public final PDFont      COU_BI;
+    public final PDFont      COU_I;
+    public final PDFont      TNR;
+    public final PDFont      TNR_B;
+    public final PDFont      TNR_BI;
+    public final PDFont      TNR_I;
 
     public BasicPdfReport() throws IOException {
         report = new PDDocument();
@@ -43,11 +43,32 @@ public abstract class BasicPdfReport {
         TNR_I = PDTrueTypeFont.loadTTF(report, StreamUtil.getResourceStream("res/fonts/tnrl2i.ttf", null));
     }
 
+    public PDPage addPage() throws Exception {
+        final PDPage newPage = new PDPage(PDPage.PAGE_SIZE_A4);
+        final PDPageContentStream contentStream = new PDPageContentStream(getReport(), newPage);
+        contentStream.beginText();
+        contentStream.setFont(AR, 5);
+        contentStream.moveTextPositionByAmount(5, 5);
+        contentStream.drawString(ro("Generat de aplica\u021Ba 'Pondero': " + Constants.HOME_PAGE_ADDRESS));
+        contentStream.endText();
+        contentStream.close();
+        report.addPage(newPage);
+        return newPage;
+    }
+
     public void close() throws IOException {
         report.close();
     }
 
     public abstract void generate() throws Exception;
+
+    public PDPageContentStream getContentStream(final PDPage page) throws Exception {
+        return new PDPageContentStream(report, page, true, false, true);
+    }
+
+    public PDDocument getReport() {
+        return report;
+    }
 
     public final String ro(String input) {
         input = input.replace('\u0103', '\u00e3');
@@ -65,27 +86,6 @@ public abstract class BasicPdfReport {
 
     public void save(final File reportFile) throws Exception {
         report.save(reportFile);
-    }
-
-    protected PDPage addPage() throws Exception {
-        final PDPage newPage = new PDPage(PDPage.PAGE_SIZE_A4);
-        final PDPageContentStream contentStream = new PDPageContentStream(getReport(), newPage);
-        contentStream.beginText();
-        contentStream.setFont(AR, 5);
-        contentStream.moveTextPositionByAmount(5, 5);
-        contentStream.drawString(ro("Generat de aplica\u021Ba 'Pondero': " + Constants.HOME_PAGE_ADDRESS));
-        contentStream.endText();
-        contentStream.close();
-        report.addPage(newPage);
-        return newPage;
-    }
-
-    protected PDPageContentStream getContentStream(final PDPage page) throws Exception {
-        return new PDPageContentStream(report, page, true, false, true);
-    }
-
-    protected PDDocument getReport() {
-        return report;
     }
 
 }
