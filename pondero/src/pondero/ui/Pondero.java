@@ -42,6 +42,7 @@ import pondero.ui.actions.AboutAction;
 import pondero.ui.actions.AddParticipantAction;
 import pondero.ui.actions.AnalyseParticipantAction;
 import pondero.ui.actions.AnalyseTestAction;
+import pondero.ui.actions.EvaluationFullReportAction;
 import pondero.ui.actions.HomePageAction;
 import pondero.ui.actions.ModifyParticipantAction;
 import pondero.ui.actions.OpenDocumentAction;
@@ -101,15 +102,15 @@ public class Pondero implements Ponderable, PModelListener {
         return app;
     }
 
-    public static final String       BUTTON_ADD_NAME          = "addButton";
-    public static final String       BUTTON_BACK_NAME         = "backButton";
-    public static final String       BUTTON_MODIFY_NAME       = "modifyButton";
-    public static final String       BUTTON_NEXT_NAME         = "nextButton";
-    public static final String       BUTTON_SELECT_NAME       = "selectButton";
-    public static final String       BUTTON_START_NAME        = "startButton";
-    public static final String       MAIN_FRAME_NAME          = "ponderoMainFrame";
-    public static final String       MENU_ITEM_QUIT_NAME      = "quitMenuItem";
-    public static final String       REPORT_PARTICIPANT_NAME  = "participantReport";
+    public static final String       BUTTON_ADD_NAME            = "addButton";
+    public static final String       BUTTON_BACK_NAME           = "backButton";
+    public static final String       BUTTON_MODIFY_NAME         = "modifyButton";
+    public static final String       BUTTON_NEXT_NAME           = "nextButton";
+    public static final String       BUTTON_SELECT_NAME         = "selectButton";
+    public static final String       BUTTON_START_NAME          = "startButton";
+    public static final String       MAIN_FRAME_NAME            = "ponderoMainFrame";
+    public static final String       MENU_ITEM_QUIT_NAME        = "quitMenuItem";
+    public static final String       REPORT_PARTICIPANT_NAME    = "participantReport";
 
     // Essentials
     private PonderoState             currentState;
@@ -118,22 +119,23 @@ public class Pondero implements Ponderable, PModelListener {
     private Test                     currentTask;
 
     // Actions
-    private final Action             aboutAction              = new AboutAction(this);
-    private final Action             addParticipantAction     = new AddParticipantAction(this);
-    private final Action             analyseParticipantAction = new AnalyseParticipantAction(this);
-    private final Action             analyseTestAction        = new AnalyseTestAction(this);
-    private final Action             homePageAction           = new HomePageAction(this);
-    private final Action             modifyParticipantAction  = new ModifyParticipantAction(this);
-    private final Action             quitAction               = new QuitAction(this);
-    private final Action             restartAction            = new RestartAction(this);
-    private final Action             runDocument              = new RunDocumentAction(this);
-    private final Action             saveAsDocument           = new SaveAsDocumentAction(this);
-    private final Action             saveDocument             = new SaveDocumentAction(this);
-    private final Action             selectParticipantAction  = new SelectParticipantAction(this);
-    private final Action             setPreferencesAction     = new SetPreferencesAction(this);
-    private final Action             startTaskAction          = new RunTestAction(this);
-    private final OpenDocumentAction openDocumentAction       = new OpenDocumentAction(this);
-    private final UpdateAction       updateAction             = new UpdateAction(this);
+    private final Action             aboutAction                = new AboutAction(this);
+    private final Action             addParticipantAction       = new AddParticipantAction(this);
+    private final Action             analyseParticipantAction   = new AnalyseParticipantAction(this);
+    private final Action             analyseTestAction          = new AnalyseTestAction(this);
+    private final Action             homePageAction             = new HomePageAction(this);
+    private final Action             modifyParticipantAction    = new ModifyParticipantAction(this);
+    private final Action             quitAction                 = new QuitAction(this);
+    private final Action             restartAction              = new RestartAction(this);
+    private final Action             runDocument                = new RunDocumentAction(this);
+    private final Action             saveAsDocument             = new SaveAsDocumentAction(this);
+    private final Action             saveDocument               = new SaveDocumentAction(this);
+    private final Action             selectParticipantAction    = new SelectParticipantAction(this);
+    private final Action             setPreferencesAction       = new SetPreferencesAction(this);
+    private final Action             startTaskAction            = new RunTestAction(this);
+    private final Action             evaluationFullReportAction = new EvaluationFullReportAction(this);
+    private final OpenDocumentAction openDocumentAction         = new OpenDocumentAction(this);
+    private final UpdateAction       updateAction               = new UpdateAction(this);
 
     // Widgets
     private JFrame                   mainFrame;
@@ -157,6 +159,8 @@ public class Pondero implements Ponderable, PModelListener {
     private JMenuItem                mntmView;
     private JPanel                   stage;
     private StatusBar                statusBar;
+    private JMenu                    mnEvaluation;
+    private JMenuItem                mntmFullReport;
 
     /**
      * Create the application.
@@ -217,6 +221,7 @@ public class Pondero implements Ponderable, PModelListener {
         mntmSave.setEnabled(currentWorkbook != null);
         mntmSaveas.setEnabled(currentWorkbook != null);
         mnAnalysis.setEnabled(currentWorkbook != null);
+        mnEvaluation.setEnabled(currentWorkbook != null);
         if (currentWorkbook == null) {
             stage.setVisible(false);
             statusBar.setMessage(StatusBar.ERROR, L10n.getString("msg.please-choose-workbook"));
@@ -356,6 +361,13 @@ public class Pondero implements Ponderable, PModelListener {
         mntmTest = new JMenuItem();
         mntmTest.setAction(analyseTestAction);
         mnAnalysis.add(mntmTest);
+
+        mnEvaluation = new JMenu(" " + L10n.getString("lbl.evaluation") + " ");
+        menuBar.add(mnEvaluation);
+
+        mntmFullReport = new JMenuItem();
+        mntmFullReport.setAction(evaluationFullReportAction);
+        mnEvaluation.add(mntmFullReport);
 
         final JMenu mnHelp = new JMenu(" " + L10n.getString("lbl.help") + " ");
         menuBar.add(mnHelp);

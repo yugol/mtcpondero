@@ -13,6 +13,9 @@ public class L10n {
     }
 
     public static String getString(final String key, final Object... args) {
+        if (RESOURCE_BUNDLE == null) {
+            RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, Locale.ENGLISH);
+        }
         return getString(RESOURCE_BUNDLE, key, args);
     }
 
