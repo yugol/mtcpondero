@@ -1,5 +1,7 @@
 package pondero.data.model.basic;
 
+import java.util.ArrayList;
+import java.util.List;
 import pondero.data.model.PModel;
 
 public class BasicModel extends PModel {
@@ -24,4 +26,16 @@ public class BasicModel extends PModel {
         }
         return records;
     }
+
+    public List<String> getTestSheets() {
+        final List<String> tests = new ArrayList<>();
+        for (int i = 0; i < getSheetCount(); ++i) {
+            final String sheetName = getSheet(i).getName();
+            if (!Participants.NAME.equals(sheetName)) {
+                tests.add(sheetName);
+            }
+        }
+        return tests;
+    }
+
 }

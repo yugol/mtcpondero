@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
+import pondero.Context;
 import pondero.L10n;
 import pondero.tests.test.Test;
 import pondero.ui.DialogSelectionListener;
@@ -20,8 +21,6 @@ import pondero.util.SwingUtil;
 
 @SuppressWarnings("serial")
 public class TestSelector extends JComponent {
-
-    public static final List<Test>              REGISTERED_TESTS   = new ArrayList<Test>();
 
     private final JList<Test>                   list;
     private final List<DialogSelectionListener> selectionListeners = new ArrayList<DialogSelectionListener>();
@@ -74,7 +73,7 @@ public class TestSelector extends JComponent {
 
     private void addTests() {
         final DefaultListModel<Test> model = (DefaultListModel<Test>) list.getModel();
-        for (final Test test : REGISTERED_TESTS) {
+        for (final Test test : Context.REGISTERED_TESTS) {
             model.addElement(test);
         }
     }

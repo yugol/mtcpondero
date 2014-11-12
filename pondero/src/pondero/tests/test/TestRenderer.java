@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import javax.swing.SwingUtilities;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
+import pondero.data.evaluation.BasicPdfReport;
+import pondero.data.model.basic.TestInstance;
 import pondero.tests.elements.interfaces.HasScreencolor;
 import pondero.tests.elements.other.Page;
 import pondero.tests.elements.stimulus.Text;
@@ -16,6 +20,7 @@ import pondero.tests.staples.Coordinates;
 import pondero.tests.test.stimuli.AuditoryStimulus;
 import pondero.tests.test.stimuli.VisualStimulus;
 import pondero.ui.testing.TestFrame;
+import pondero.util.TimeUtil;
 
 public abstract class TestRenderer extends TestBase {
 
@@ -89,6 +94,18 @@ public abstract class TestRenderer extends TestBase {
 
     public synchronized void removeVisualStimulus(final VisualStimulus visualStimulus) {
         visualStimuli.remove(visualStimulus);
+    }
+
+    public void renderReport(final BasicPdfReport report, final TestInstance instance) throws Exception {
+        final String title = getArtifactDescriptor().getId() + "   " + TimeUtil.toIsoTimestamp(instance.getTestTime());
+        final PDPage page = report.addPage();
+        final PDPageContentStream cs = report.getContentStream(page);
+        cs.beginText();
+        cs.moveTextPositionByAmount(100, 700);
+        cs.setFont(report.AR_B, 16);
+        cs.drawString(title);
+        cs.endText();
+        cs.close();
     }
 
     public synchronized void resetStimuli() {

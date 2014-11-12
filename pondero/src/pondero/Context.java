@@ -12,7 +12,6 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -20,7 +19,6 @@ import java.util.Map;
 import java.util.Properties;
 import pondero.data.Workbook;
 import pondero.data.WorkbookFactory;
-import pondero.tests.test.CodeNameComparator;
 import pondero.tests.test.Test;
 import pondero.tests.update.Artifact;
 import pondero.ui.exceptions.ExceptionReporting;
@@ -86,15 +84,11 @@ public final class Context {
         return ARTIFACTS.get("PONDERO");
     }
 
-    public static List<Test> getRegisteredTests() {
-        final List<Test> tests = new ArrayList<Test>();
-        for (final Object artifact : ARTIFACTS.values()) {
-            if (artifact instanceof Test) {
-                tests.add((Test) artifact);
-            }
+    public static Test getTest(final String testName) {
+        for (final Test test : REGISTERED_TESTS) {
+            if (test.getArtifactDescriptor().getId().equals(testName)) { return test; }
         }
-        Collections.sort(tests, new CodeNameComparator());
-        return tests;
+        return null;
     }
 
     public static String getThemeString() {
@@ -297,6 +291,8 @@ public final class Context {
     private static String                      uiThemeString            = "Nimbus";
     private static boolean                     updateOnStartup          = false;
     private static double                      uiFontScaleFactor        = 1.25;
+
+    public static final List<Test>             REGISTERED_TESTS         = new ArrayList<Test>();
 
     private Context() {
     }

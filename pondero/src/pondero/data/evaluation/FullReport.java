@@ -2,10 +2,14 @@ package pondero.data.evaluation;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
+import pondero.Context;
 import pondero.data.model.basic.BasicModel;
 import pondero.data.model.basic.Participant;
+import pondero.data.model.basic.TestInstance;
+import pondero.tests.test.Test;
 import pondero.util.TimeUtil;
 
 public class FullReport extends BasicPdfReport {
@@ -29,6 +33,16 @@ public class FullReport extends BasicPdfReport {
     @Override
     public void generate() throws Exception {
         buildFistPage();
+        for (final String testName : model.getTestSheets()) {
+            final List<Long> instances = model.getRecords(testName).getTestTimes(participant.getId());
+            if (!instances.isEmpty()) {
+                final TestInstance instance = model.getRecords(testName).getInstance(participant.getId(), instances.get(instances.size() - 1));
+                final Test test = Context.getTest(instance.getTestName());
+                if (test != null) {
+                    test.renderReport(this, instance);
+                }
+            }
+        }
     }
 
     private void buildFistPage() throws Exception, IOException {
