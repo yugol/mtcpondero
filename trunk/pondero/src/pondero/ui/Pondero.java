@@ -45,7 +45,7 @@ import pondero.ui.actions.AnalyseTestAction;
 import pondero.ui.actions.EvaluationFullReportAction;
 import pondero.ui.actions.HomePageAction;
 import pondero.ui.actions.ModifyParticipantAction;
-import pondero.ui.actions.OpenDocumentAction;
+import pondero.ui.actions.OpenWorkbookAction;
 import pondero.ui.actions.QuitAction;
 import pondero.ui.actions.RestartAction;
 import pondero.ui.actions.RunDocumentAction;
@@ -134,7 +134,7 @@ public class Pondero implements Ponderable, PModelListener {
     private final Action             setPreferencesAction       = new SetPreferencesAction(this);
     private final Action             startTaskAction            = new RunTestAction(this);
     private final Action             evaluationFullReportAction = new EvaluationFullReportAction(this);
-    private final OpenDocumentAction openDocumentAction         = new OpenDocumentAction(this);
+    private final OpenWorkbookAction openDocumentAction         = new OpenWorkbookAction(this);
     private final UpdateAction       updateAction               = new UpdateAction(this);
 
     // Widgets
