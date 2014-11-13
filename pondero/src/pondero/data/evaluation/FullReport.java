@@ -15,9 +15,6 @@ public class FullReport extends PdfReport {
     static final float         FIRST_COLUMN  = 100;
     static final float         SECOND_COLUMN = 200;
 
-    static final float         WIDTH         = 595.27563f;
-    static final float         HEIGHT        = 841.8898f;
-
     public static final String BASE_NAME     = "FullReport";
 
     private final BasicModel   model;
@@ -30,7 +27,7 @@ public class FullReport extends PdfReport {
 
     @Override
     public void generate() throws Exception {
-        // buildFistPage();
+        buildFistPage();
         for (final String testName : model.getTestSheets()) {
             final List<Long> instances = model.getRecords(testName).getTestTimes(participant.getId());
             if (!instances.isEmpty()) {
