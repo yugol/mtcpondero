@@ -57,40 +57,40 @@ public class ParticipantManagementDialog extends JDialog {
 
     private final DocumentListener                    txtDocListener      = new DocumentListener() {
 
-        @Override
-        public void changedUpdate(final DocumentEvent e) {
-            setDirtyFlag();
-        }
+                                                                              @Override
+                                                                              public void changedUpdate(final DocumentEvent e) {
+                                                                                  setDirtyFlag();
+                                                                              }
 
-        @Override
-        public void insertUpdate(final DocumentEvent e) {
-            setDirtyFlag();
-        }
+                                                                              @Override
+                                                                              public void insertUpdate(final DocumentEvent e) {
+                                                                                  setDirtyFlag();
+                                                                              }
 
-        @Override
-        public void removeUpdate(final DocumentEvent e) {
-            setDirtyFlag();
-        }
+                                                                              @Override
+                                                                              public void removeUpdate(final DocumentEvent e) {
+                                                                                  setDirtyFlag();
+                                                                              }
 
-    };
+                                                                          };
 
     private final ItemListener                        itemListener        = new ItemListener() {
 
-        @Override
-        public void itemStateChanged(final ItemEvent arg0) {
-            setDirtyFlag();
-        }
+                                                                              @Override
+                                                                              public void itemStateChanged(final ItemEvent arg0) {
+                                                                                  setDirtyFlag();
+                                                                              }
 
-    };
+                                                                          };
 
     private final ChangeListener                      changeListener      = new ChangeListener() {
 
-        @Override
-        public void stateChanged(final ChangeEvent arg0) {
-            setDirtyFlag();
-        }
+                                                                              @Override
+                                                                              public void stateChanged(final ChangeEvent arg0) {
+                                                                                  setDirtyFlag();
+                                                                              }
 
-    };
+                                                                          };
 
     private final List<ParticipantManagementListener> managementListeners = new ArrayList<ParticipantManagementListener>();
     private boolean                                   dirty               = false;
@@ -565,6 +565,17 @@ public class ParticipantManagementDialog extends JDialog {
         if (StringUtil.isNullOrBlank(valName.getText())) {
             ExceptionReporting.showValidationMessage(null, L10n.getString("msg.name-cannot-be-empty"));
             return false;
+        }
+        final Integer naturalAge = (Integer) valAge.getValue();
+        if (naturalAge <= 0) {
+            ExceptionReporting.showValidationMessage(null, L10n.getString("msg.age-cannot-be-empty"));
+            return false;
+        } else {
+            final Integer drivingAge = (Integer) valDrivingAge.getValue();
+            if (drivingAge > naturalAge - 18) {
+                ExceptionReporting.showValidationMessage(null, L10n.getString("msg.improper-driving-age"));
+                return false;
+            }
         }
         return true;
     }

@@ -12,8 +12,21 @@ import pondero.util.StreamUtil;
 
 public abstract class PdfReport {
 
-    private final PDDocument report;
+    public static final String ro(String input) {
+        input = input.replace('\u0103', '\u00e3');
+        input = input.replace('â', '\u00e2');
+        input = input.replace('î', '\u00ee');
+        input = input.replace('\u0219', '\u00ba');
+        input = input.replace('\u021B', '\u00fe');
+        input = input.replace('\u0102', '\u00c3');
+        input = input.replace('Â', '\u00c2');
+        input = input.replace('Î', '\u00ce');
+        input = input.replace('\u0218', '\u00aa');
+        input = input.replace('\u021A', '\u00de');
+        return input;
+    }
 
+    private final PDDocument report;
     public final PDFont      AR;
     public final PDFont      AR_B;
     public final PDFont      AR_BI;
@@ -25,6 +38,7 @@ public abstract class PdfReport {
     public final PDFont      TNR;
     public final PDFont      TNR_B;
     public final PDFont      TNR_BI;
+
     public final PDFont      TNR_I;
 
     public PdfReport() throws IOException {
@@ -68,20 +82,6 @@ public abstract class PdfReport {
 
     public PDDocument getReport() {
         return report;
-    }
-
-    public final String ro(String input) {
-        input = input.replace('\u0103', '\u00e3');
-        input = input.replace('â', '\u00e2');
-        input = input.replace('î', '\u00ee');
-        input = input.replace('\u0219', '\u00ba');
-        input = input.replace('\u021B', '\u00fe');
-        input = input.replace('\u0102', '\u00c3');
-        input = input.replace('Â', '\u00c2');
-        input = input.replace('Î', '\u00ce');
-        input = input.replace('\u0218', '\u00aa');
-        input = input.replace('\u021A', '\u00de');
-        return input;
     }
 
     public void save(final File reportFile) throws Exception {
