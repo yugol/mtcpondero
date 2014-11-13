@@ -149,8 +149,8 @@ public class TestCurtains extends JPanel {
     }
 
     public void showInstructions(final Page page, final boolean first, final boolean last) {
-        setBackground(test.getScreencolor());
-        pnlCenter.setBackground(test.getScreencolor());
+        setBackground(test.getScreenColor());
+        pnlCenter.setBackground(test.getScreenColor());
 
         message.setBackground(test.getInstructions().getScreenColor());
         message.setForeground(test.getInstructions().getTextColor());

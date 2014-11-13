@@ -191,7 +191,7 @@ public class Text extends Element implements HasErase, HasFont, HasItems, HasTex
     public Color getEraseColor() {
         if (!eraseFlag) { return null; }
         if (eraseColor != null) { return eraseColor; }
-        return test.getScreencolor();
+        return test.getScreenColor();
     }
 
     @Override

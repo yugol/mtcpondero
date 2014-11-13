@@ -1,7 +1,6 @@
 package pondero.ui.testing.components;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,60 +12,68 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import pondero.tests.elements.trial.LikertConfig;
 import pondero.tests.test.Test;
 import pondero.tests.test.responses.LikertResponse;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.testing.TestSceneComponent;
+import pondero.util.StringUtil;
+import pondero.util.SwingUtil;
 
 @SuppressWarnings("serial")
 public class TestLikertComponent extends TestSceneComponent {
 
-    private static final Color QUIZ_BACKGROUND          = new Color(79, 129, 189);
-    private static final float ANCHOR_LABEL_SIZE_FACTOR = 1.0f;
+    private final JPanel    pnlMain;
+    private final JPanel    pnlInfo;
+    private final JLabel    lblInfo;
+    private final JLabel[]  labels;
+    private final JButton[] buttons;
 
-    private final JLabel       lblQuiz;
-    private final JLabel[]     labels;
-    private final JButton[]    buttons;
-    private final JPanel       panel;
-
-    public TestLikertComponent(final Test test, final int anchorCount, final int startIndex) {
+    public TestLikertComponent(final Test test, final LikertConfig config) {
         super(test);
-        setBorder(null);
+        setLayout(new BorderLayout(0, 0));
+
+        pnlMain = new JPanel();
+        pnlMain.setOpaque(true);
+        pnlMain.setBackground(config.getAnswersBgColor());
+        add(pnlMain, BorderLayout.CENTER);
 
         final GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[anchorCount];
+        gridBagLayout.columnWidths = new int[config.getNumPoints()];
         gridBagLayout.rowHeights = new int[] { 1, 0, 0 };
-        gridBagLayout.columnWeights = new double[anchorCount];
+        gridBagLayout.columnWeights = new double[config.getNumPoints()];
         gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0 };
-        setLayout(gridBagLayout);
+        pnlMain.setLayout(gridBagLayout);
 
-        panel = new JPanel();
-        panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        panel.setBackground(QUIZ_BACKGROUND);
+        pnlInfo = new JPanel();
+        pnlInfo.setBorder(new EmptyBorder(5, 5, 5, 5));
+        pnlInfo.setBackground(config.getInfoBgColor());
+        pnlInfo.setLayout(new BorderLayout(0, 0));
         final GridBagConstraints gbc_panel = new GridBagConstraints();
         gbc_panel.insets = new Insets(0, 0, 10, 0);
         gbc_panel.weighty = 1.0;
-        gbc_panel.gridwidth = anchorCount;
+        gbc_panel.gridwidth = config.getNumPoints();
         gbc_panel.fill = GridBagConstraints.BOTH;
         gbc_panel.gridx = 0;
         gbc_panel.gridy = 0;
-        add(panel, gbc_panel);
-        panel.setLayout(new BorderLayout(0, 0));
+        pnlMain.add(pnlInfo, gbc_panel);
 
-        lblQuiz = new JLabel();
-        lblQuiz.setText("ABC");
-        lblQuiz.setOpaque(true);
-        lblQuiz.setBackground(QUIZ_BACKGROUND);
-        lblQuiz.setForeground(Color.WHITE);
-        lblQuiz.setFont(new Font("Dialog", Font.BOLD, 24));
-        panel.add(lblQuiz, BorderLayout.CENTER);
+        lblInfo = new JLabel();
+        lblInfo.setText("Info:");
+        lblInfo.setOpaque(true);
+        lblInfo.setBackground(config.getInfoBgColor());
+        lblInfo.setForeground(config.getInfoFgColor());
+        lblInfo.setFont(lblInfo.getFont().deriveFont((float) SwingUtil.getUiScaledDefaultFontSize()));
+        pnlInfo.add(lblInfo, BorderLayout.CENTER);
 
-        labels = new JLabel[anchorCount];
-        buttons = new JButton[anchorCount];
+        labels = new JLabel[config.getNumPoints()];
+        buttons = new JButton[config.getNumPoints()];
 
-        for (int i = 0; i < anchorCount; ++i) {
-            labels[i] = createLabel(i);
-            buttons[i] = createButton(test, startIndex, i);
+        setInfo(config.getInfo());
+        for (int i = 0; i < config.getNumPoints(); ++i) {
+            labels[i] = createLabel(i, config);
+            setAnchor(i, config.getAnchor(i));
+            buttons[i] = createButton(test, config.getStartIndex(), i);
         }
     }
 
@@ -74,23 +81,24 @@ public class TestLikertComponent extends TestSceneComponent {
     public void reset() {
     }
 
-    public void setAnchor(final int labelIndex, final String txt) {
-        labels[labelIndex].setText("<html>" + txt + "</html>");
+    public void setAnchor(final int labelIndex, String txt) {
+        if (StringUtil.isNullOrBlank(txt)) {
+            txt = "";
+        }
+        labels[labelIndex].setText("<html><center>" + txt + "</center></html>");
     }
 
-    public void setQuiz(final String quiz) {
-        lblQuiz.setText("<html>" + quiz + "</html>");
+    public void setInfo(final String quiz) {
+        if (StringUtil.isNullOrBlank(quiz)) {
+            pnlInfo.setVisible(false);
+        } else {
+            pnlInfo.setVisible(true);
+            lblInfo.setText("<html>" + quiz + "</html>");
+        }
     }
 
     private JButton createButton(final Test test, final int startIndex, final int index) {
         final JButton btnAnchor = new JButton("[" + (startIndex + index) + "]");
-        final GridBagConstraints gbc_btnAnchor = new GridBagConstraints();
-        gbc_btnAnchor.weighty = 1.0;
-        gbc_btnAnchor.weightx = 1.0;
-        gbc_btnAnchor.insets = new Insets(0, 15, 10, 15);
-        gbc_btnAnchor.gridx = index;
-        gbc_btnAnchor.gridy = 2;
-        add(btnAnchor, gbc_btnAnchor);
         btnAnchor.addActionListener(new ActionListener() {
 
             @Override
@@ -103,19 +111,29 @@ public class TestLikertComponent extends TestSceneComponent {
             }
 
         });
+        btnAnchor.setFont(btnAnchor.getFont().deriveFont((float) (2 * SwingUtil.getUiScaledDefaultFontSize() / 3)));
+        final GridBagConstraints gbc_btnAnchor = new GridBagConstraints();
+        gbc_btnAnchor.weighty = 1.0;
+        gbc_btnAnchor.weightx = 1.0;
+        gbc_btnAnchor.insets = new Insets(0, 15, 10, 15);
+        gbc_btnAnchor.gridx = index;
+        gbc_btnAnchor.gridy = 2;
+        pnlMain.add(btnAnchor, gbc_btnAnchor);
         return btnAnchor;
     }
 
-    private JLabel createLabel(final int index) {
+    private JLabel createLabel(final int index, final LikertConfig config) {
         final JLabel lblAnchor = new JLabel("Anchor");
+        final int fontStyle = index == 0 || index == labels.length - 1 ? Font.BOLD : Font.PLAIN;
+        lblAnchor.setFont(lblAnchor.getFont().deriveFont(fontStyle, SwingUtil.getUiScaledDefaultFontSize() / 2));
+        lblAnchor.setHorizontalAlignment(SwingConstants.CENTER);
+        lblAnchor.setForeground(config.getAnswersFgColor());
         final GridBagConstraints gbc_lblAnchor = new GridBagConstraints();
         gbc_lblAnchor.fill = GridBagConstraints.BOTH;
         gbc_lblAnchor.insets = new Insets(0, 3, 3, 5);
         gbc_lblAnchor.gridx = index;
         gbc_lblAnchor.gridy = 1;
-        add(lblAnchor, gbc_lblAnchor);
-        lblAnchor.setFont(lblAnchor.getFont().deriveFont(Font.BOLD, lblAnchor.getFont().getSize() * ANCHOR_LABEL_SIZE_FACTOR));
-        lblAnchor.setHorizontalAlignment(SwingConstants.CENTER);
+        pnlMain.add(lblAnchor, gbc_lblAnchor);
         return lblAnchor;
     }
 
