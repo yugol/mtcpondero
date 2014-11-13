@@ -136,7 +136,7 @@ public class Picture extends Element implements HasErase, HasItems, IsVisualStim
     public Color getEraseColor() {
         if (!eraseFlag) { return null; }
         if (eraseColor != null) { return eraseColor; }
-        return test.getScreencolor();
+        return test.getScreenColor();
     }
 
     @Override

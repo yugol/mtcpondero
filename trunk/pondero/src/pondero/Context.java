@@ -141,6 +141,7 @@ public final class Context {
                 foo = properties.getProperty(UPDATE_ON_STARTUP_KEY);
                 if (!StringUtil.isNullOrBlank(foo)) {
                     updateOnStartup = Boolean.parseBoolean(foo.trim().toLowerCase());
+                    updateOnStartup = false;
                 }
                 foo = properties.getProperty(LAST_WORKBOOK_FILE_KEY);
                 if (!StringUtil.isNullOrBlank(foo)) {

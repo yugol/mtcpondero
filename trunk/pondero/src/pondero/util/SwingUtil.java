@@ -28,6 +28,17 @@ import pondero.ui.exceptions.ExceptionReporting;
 
 public class SwingUtil {
 
+    static {
+        final String seaglassLafClass = "com.seaglasslookandfeel.SeaGlassLookAndFeel";
+        try {
+            // Class.forName(seaglassLafClass);
+            // UIManager.installLookAndFeel("Seaglass", seaglassLafClass);
+        } catch (final Exception e) {
+            critical("could not install: ", seaglassLafClass);
+            ExceptionReporting.showExceptionMessage(null, e);
+        }
+    }
+
     public static void enableFullScreenMode(final JFrame window) {
         if (OsUtil.isMacOSX()) {
             final String className = "com.apple.eawt.FullScreenUtilities";
@@ -89,6 +100,12 @@ public class SwingUtil {
             color = SystemColor.textHighlightText;
         }
         return color;
+    }
+
+    public static int getUiScaledDefaultFontSize() {
+        final GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        final int height = gd.getDisplayMode().getHeight();
+        return height / 20;
     }
 
     public static void scaleUi(final double factor) {
@@ -180,17 +197,6 @@ public class SwingUtil {
     public static void showMaximized(final JFrame window) {
         final Rectangle usableArea = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
         window.setBounds(usableArea);
-    }
-
-    static {
-        final String seaglassLafClass = "com.seaglasslookandfeel.SeaGlassLookAndFeel";
-        try {
-            // Class.forName(seaglassLafClass);
-            // UIManager.installLookAndFeel("Seaglass", seaglassLafClass);
-        } catch (final Exception e) {
-            critical("could not install: ", seaglassLafClass);
-            ExceptionReporting.showExceptionMessage(null, e);
-        }
     }
 
 }

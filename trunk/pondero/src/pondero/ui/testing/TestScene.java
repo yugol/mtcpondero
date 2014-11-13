@@ -15,7 +15,10 @@ public class TestScene extends JPanel {
     }
 
     public void focalize() {
-        getCenter().requestFocusInWindow();
+        final TestSceneComponent center = getCenter();
+        if (center != null) {
+            center.requestFocusInWindow();
+        }
     }
 
     public TestSceneComponent getCenter() {
@@ -54,6 +57,7 @@ public class TestScene extends JPanel {
     private void setSceneComponent(final TestSceneComponent component, final String position) {
         final Component currentComponent = getSceneComponent(position);
         if (currentComponent != null) {
+            currentComponent.setVisible(false);
             remove(currentComponent);
         }
         if (component != null) {
