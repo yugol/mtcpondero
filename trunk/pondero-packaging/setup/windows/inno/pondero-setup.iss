@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Pondero"
-#define MyAppVersion "0.5-alpha (2014-11-09)"
+#define MyAppVersion "0.6-alpha (2014-11-13)"
 #define MyAppPublisher "Mindtrips Communications"
 #define MyAppURL "http://www.purl.org/net/pondero/home"
 #define MyAppExeName "pondero.bat"
