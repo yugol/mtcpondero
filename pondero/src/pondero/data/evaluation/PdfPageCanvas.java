@@ -29,7 +29,7 @@ public class PdfPageCanvas {
         contentStream.saveGraphicsState();
         contentStream.setTextMatrix(matrix);
         contentStream.moveTextPositionByAmount(x, y);
-        contentStream.drawString(str);
+        contentStream.drawString(PdfReport.ro(str));
         contentStream.restoreGraphicsState();
         contentStream.endText();
     }
