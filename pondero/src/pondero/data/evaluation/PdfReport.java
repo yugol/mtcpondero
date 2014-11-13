@@ -10,7 +10,7 @@ import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
 import pondero.Constants;
 import pondero.util.StreamUtil;
 
-public abstract class BasicPdfReport {
+public abstract class PdfReport {
 
     private final PDDocument report;
 
@@ -27,7 +27,7 @@ public abstract class BasicPdfReport {
     public final PDFont      TNR_BI;
     public final PDFont      TNR_I;
 
-    public BasicPdfReport() throws IOException {
+    public PdfReport() throws IOException {
         report = new PDDocument();
         AR = PDTrueTypeFont.loadTTF(report, StreamUtil.getResourceStream("res/fonts/arl2.ttf", null));
         AR_B = PDTrueTypeFont.loadTTF(report, StreamUtil.getResourceStream("res/fonts/arl2b.ttf", null));
@@ -43,7 +43,7 @@ public abstract class BasicPdfReport {
         TNR_I = PDTrueTypeFont.loadTTF(report, StreamUtil.getResourceStream("res/fonts/tnrl2i.ttf", null));
     }
 
-    public PDPage addPage() throws Exception {
+    public PDPage addPage() throws IOException {
         final PDPage newPage = new PDPage(PDPage.PAGE_SIZE_A4);
         final PDPageContentStream contentStream = new PDPageContentStream(getReport(), newPage);
         contentStream.beginText();
@@ -62,8 +62,8 @@ public abstract class BasicPdfReport {
 
     public abstract void generate() throws Exception;
 
-    public PDPageContentStream getContentStream(final PDPage page) throws Exception {
-        return new PDPageContentStream(report, page, true, false, true);
+    public PdfPageCanvas getCanvas(final PDPage page) throws IOException {
+        return new PdfPageCanvas(report, page);
     }
 
     public PDDocument getReport() {

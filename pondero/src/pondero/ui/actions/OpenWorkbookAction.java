@@ -19,11 +19,11 @@ import pondero.ui.Pondero;
 import pondero.ui.exceptions.ExceptionReporting;
 
 @SuppressWarnings("serial")
-public class OpenDocumentAction extends PonderableAction {
+public class OpenWorkbookAction extends PonderableAction {
 
     public static final int MAX_PARTICIPANT_COUNT = 30;
 
-    public OpenDocumentAction(final Ponderable app) {
+    public OpenWorkbookAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.open..."));
         putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/folder_page.png")));
