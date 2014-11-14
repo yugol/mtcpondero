@@ -8,6 +8,10 @@ import javax.swing.UIManager;
 
 public class L10n {
 
+    public static String formatNumber(final Number number) {
+        return String.valueOf(number);
+    }
+
     public static String getString(final String key) {
         return getString(key, DUMMY_ARGS);
     }
@@ -70,6 +74,7 @@ public class L10n {
 
     private static final String        BUNDLE_NAME = "pondero.res.messages";
     private static final MessageFormat FORMATTER   = new MessageFormat("");
+
     private static ResourceBundle      RESOURCE_BUNDLE;
 
     protected static final Object[]    DUMMY_ARGS  = new Object[0];
