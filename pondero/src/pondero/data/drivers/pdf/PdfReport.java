@@ -1,4 +1,4 @@
-package pondero.data.evaluation;
+package pondero.data.drivers.pdf;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,20 +12,6 @@ import pondero.util.StreamUtil;
 
 public abstract class PdfReport {
 
-    public static final String ro(String input) {
-        input = input.replace('\u0103', '\u00e3');
-        input = input.replace('â', '\u00e2');
-        input = input.replace('î', '\u00ee');
-        input = input.replace('\u0219', '\u00ba');
-        input = input.replace('\u021B', '\u00fe');
-        input = input.replace('\u0102', '\u00c3');
-        input = input.replace('Â', '\u00c2');
-        input = input.replace('Î', '\u00ce');
-        input = input.replace('\u0218', '\u00aa');
-        input = input.replace('\u021A', '\u00de');
-        return input;
-    }
-
     private final PDDocument report;
     public final PDFont      AR;
     public final PDFont      AR_B;
@@ -38,7 +24,6 @@ public abstract class PdfReport {
     public final PDFont      TNR;
     public final PDFont      TNR_B;
     public final PDFont      TNR_BI;
-
     public final PDFont      TNR_I;
 
     public PdfReport() throws IOException {
@@ -63,7 +48,7 @@ public abstract class PdfReport {
         contentStream.beginText();
         contentStream.setFont(AR, 5);
         contentStream.moveTextPositionByAmount(5, 5);
-        contentStream.drawString(ro("Generat de aplica\u021Ba 'Pondero': " + Constants.HOME_PAGE_ADDRESS));
+        contentStream.drawString(PdfUtil.ro("Generat de aplica\u021Ba 'Pondero': " + Constants.HOME_PAGE_ADDRESS));
         contentStream.endText();
         contentStream.close();
         report.addPage(newPage);
@@ -80,8 +65,56 @@ public abstract class PdfReport {
         return new PdfPageCanvas(report, page);
     }
 
+    public PDFont getMono() {
+        return COU;
+    }
+
+    public PDFont getMonoBold() {
+        return COU_B;
+    }
+
+    public PDFont getMonoBoldItalic() {
+        return COU_BI;
+    }
+
+    public PDFont getMonoItalic() {
+        return COU_I;
+    }
+
     public PDDocument getReport() {
         return report;
+    }
+
+    public PDFont getSansSerif() {
+        return AR;
+    }
+
+    public PDFont getSansSerifBold() {
+        return AR_B;
+    }
+
+    public PDFont getSansSerifBoldItalic() {
+        return AR_BI;
+    }
+
+    public PDFont getSansSerifItalic() {
+        return AR_I;
+    }
+
+    public PDFont getSerif() {
+        return TNR;
+    }
+
+    public PDFont getSerifBold() {
+        return TNR_B;
+    }
+
+    public PDFont getSerifBoldItalic() {
+        return TNR_BI;
+    }
+
+    public PDFont getSerifItalic() {
+        return TNR_I;
     }
 
     public void save(final File reportFile) throws Exception {

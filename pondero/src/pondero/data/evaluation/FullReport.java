@@ -4,13 +4,14 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import pondero.Context;
+import pondero.data.drivers.pdf.PdfPageCanvas;
 import pondero.data.model.basic.BasicModel;
 import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.TestInstance;
 import pondero.tests.test.Test;
 import pondero.util.TimeUtil;
 
-public class FullReport extends Profile {
+public class FullReport extends ProfileReport {
 
     static final float         FIRST_COLUMN  = 100;
     static final float         SECOND_COLUMN = 200;

@@ -1,6 +1,7 @@
-package pondero.data.evaluation;
+package pondero.data.evaluation.scoring;
 
 import java.util.List;
+import pondero.data.evaluation.ProfileEntry;
 import pondero.data.model.basic.TestInstance;
 
 public abstract class Evaluation {

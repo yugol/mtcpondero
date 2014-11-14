@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 import java.util.List;
 import java.util.Stack;
 import pondero.data.Workbook;
-import pondero.data.evaluation.Evaluation;
+import pondero.data.evaluation.scoring.Evaluation;
 import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.TestInstance;
 import pondero.data.model.basic.TrialRecord;
