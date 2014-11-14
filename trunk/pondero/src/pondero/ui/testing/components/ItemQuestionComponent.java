@@ -8,7 +8,7 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import pondero.tests.elements.trial.Question;
+import pondero.Constants;
 import pondero.tests.test.Test;
 import pondero.ui.testing.TestSceneComponent;
 import pondero.util.SwingUtil;
@@ -24,12 +24,12 @@ public class ItemQuestionComponent extends TestSceneComponent {
 
         final JPanel pnlMain = new JPanel();
         pnlMain.setOpaque(true);
-        pnlMain.setBackground(Question.DEFAULT_QUESTION_BG_COLOR);
+        pnlMain.setBackground(Constants.DEFAULT_QUESTION_BG_COLOR);
         add(pnlMain, BorderLayout.CENTER);
 
         lblQuestion.setOpaque(true);
-        lblQuestion.setBackground(Question.DEFAULT_QUESTION_BG_COLOR);
-        lblQuestion.setForeground(Question.DEFAULT_QUESTION_FG_COLOR);
+        lblQuestion.setBackground(Constants.DEFAULT_QUESTION_BG_COLOR);
+        lblQuestion.setForeground(Constants.DEFAULT_QUESTION_FG_COLOR);
         lblQuestion.setFont(lblQuestion.getFont().deriveFont(Font.BOLD, SwingUtil.getUiScaledDefaultFontSize()));
         lblQuestion.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -37,7 +37,7 @@ public class ItemQuestionComponent extends TestSceneComponent {
         pnlMain.setLayout(gridBagLayout);
 
         final GridBagConstraints gbc_panel = new GridBagConstraints();
-        gbc_panel.insets = new Insets(25, 25, 25, 25);
+        gbc_panel.insets = new Insets(40, 40, 40, 40);
         gbc_panel.weightx = 1.0;
         gbc_panel.anchor = GridBagConstraints.CENTER;
         gbc_panel.fill = GridBagConstraints.HORIZONTAL;
