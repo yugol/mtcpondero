@@ -23,6 +23,8 @@ import pondero.util.SwingUtil;
 @SuppressWarnings("serial")
 public class TestLikertComponent extends TestSceneComponent {
 
+    private final float     topFontSize = SwingUtil.getUiScaledDefaultFontSize();
+
     private final JPanel    pnlMain;
     private final JPanel    pnlInfo;
     private final JLabel    lblInfo;
@@ -63,7 +65,7 @@ public class TestLikertComponent extends TestSceneComponent {
         lblInfo.setOpaque(true);
         lblInfo.setBackground(config.getInfoBgColor());
         lblInfo.setForeground(config.getInfoFgColor());
-        lblInfo.setFont(lblInfo.getFont().deriveFont((float) SwingUtil.getUiScaledDefaultFontSize()));
+        lblInfo.setFont(lblInfo.getFont().deriveFont(2 * topFontSize / 3));
         pnlInfo.add(lblInfo, BorderLayout.CENTER);
 
         labels = new JLabel[config.getNumPoints()];
@@ -98,7 +100,7 @@ public class TestLikertComponent extends TestSceneComponent {
     }
 
     private JButton createButton(final Test test, final int startIndex, final int index) {
-        final JButton btnAnchor = new JButton("[" + (startIndex + index) + "]");
+        final JButton btnAnchor = new JButton(" " + (startIndex + index) + " ");
         btnAnchor.addActionListener(new ActionListener() {
 
             @Override
@@ -111,7 +113,7 @@ public class TestLikertComponent extends TestSceneComponent {
             }
 
         });
-        btnAnchor.setFont(btnAnchor.getFont().deriveFont((float) (2 * SwingUtil.getUiScaledDefaultFontSize() / 3)));
+        btnAnchor.setFont(btnAnchor.getFont().deriveFont(2 * topFontSize / 3));
         final GridBagConstraints gbc_btnAnchor = new GridBagConstraints();
         gbc_btnAnchor.weighty = 1.0;
         gbc_btnAnchor.weightx = 1.0;
@@ -125,7 +127,7 @@ public class TestLikertComponent extends TestSceneComponent {
     private JLabel createLabel(final int index, final LikertConfig config) {
         final JLabel lblAnchor = new JLabel("Anchor");
         final int fontStyle = index == 0 || index == labels.length - 1 ? Font.BOLD : Font.PLAIN;
-        lblAnchor.setFont(lblAnchor.getFont().deriveFont(fontStyle, SwingUtil.getUiScaledDefaultFontSize() / 2));
+        lblAnchor.setFont(lblAnchor.getFont().deriveFont(fontStyle, topFontSize / 2));
         lblAnchor.setHorizontalAlignment(SwingConstants.CENTER);
         lblAnchor.setForeground(config.getAnswersFgColor());
         final GridBagConstraints gbc_lblAnchor = new GridBagConstraints();
