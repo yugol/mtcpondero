@@ -95,8 +95,8 @@
 		<ant antfile="${soldir}/pondero-test-ic/make-jar-pondero-test-ic.xml" />
 	</target>
 
-	<target name="pondero-test-imsc">
-		<ant antfile="${soldir}/pondero-test-imsc/make-jar-pondero-test-imsc.xml" />
+	<target name="pondero-test-mdsi">
+		<ant antfile="${soldir}/pondero-test-mdsi/make-jar-pondero-test-mdsi.xml" />
 	</target>
 
 	<target name="pondero-test-is">
@@ -142,7 +142,7 @@
 		pondero-test-ds,
 		pondero-test-iaca,
 		pondero-test-ic, 
-		pondero-test-imsc,
+		pondero-test-mdsi,
 		pondero-test-is,
 		pondero-test-isca,
 		pondero-test-maic,
