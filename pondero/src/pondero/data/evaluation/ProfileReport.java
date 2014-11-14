@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import pondero.Context;
 import pondero.L10n;
+import pondero.Logger;
 import pondero.data.drivers.pdf.PdfPageCanvas;
 import pondero.data.drivers.pdf.PdfParagraph;
 import pondero.data.drivers.pdf.PdfReport;
@@ -65,10 +66,14 @@ public class ProfileReport extends PdfReport {
                 final TestInstance instance = model.getRecords(testName).getInstance(participant.getId(), instances.get(instances.size() - 1));
                 final Test test = Context.getTest(instance.getTestName());
                 if (test != null) {
-                    final Evaluation eval = test.getEvaluation(instance);
-                    for (final ProfileEntry entry : eval.getProfileEntries()) {
-                        drawEntry(canvas, test.getArtifactDescriptor().getId(), entry, rowTop, divisions);
-                        rowTop -= TABLE_ROW_HEIGHT;
+                    try {
+                        final Evaluation eval = test.getEvaluation(instance);
+                        for (final ProfileEntry entry : eval.getProfileEntries()) {
+                            drawEntry(canvas, test.getArtifactDescriptor().getId(), entry, rowTop, divisions);
+                            rowTop -= TABLE_ROW_HEIGHT;
+                        }
+                    } catch (final Exception ex) {
+                        Logger.error(ex, "Basic report generation");
                     }
                 }
             }
