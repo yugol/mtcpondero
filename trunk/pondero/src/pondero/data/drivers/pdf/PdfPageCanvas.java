@@ -1,4 +1,4 @@
-package pondero.data.evaluation;
+package pondero.data.drivers.pdf;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
@@ -12,14 +12,13 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 
 public class PdfPageCanvas {
 
-    static final float                   WIDTH       = 595.27563f;
-    static final float                   HEIGHT      = 841.8898f;
-
     // private final PDDocument             document;
     // private final PDPage                 page;
     private final PDPageContentStream    contentStream;
     private AffineTransform              matrix      = new AffineTransform();
     private final Stack<AffineTransform> matrixStack = new Stack<>();
+    private PDFont                       lastFont;
+    private float                        lastFontSize;
 
     public PdfPageCanvas(final PDDocument document, final PDPage page) throws IOException {
         // this.document = document;
@@ -29,6 +28,10 @@ public class PdfPageCanvas {
 
     public void close() throws IOException {
         contentStream.close();
+    }
+
+    public PdfParagraph createParagraph(final String text) {
+        return new PdfParagraph(this, text);
     }
 
     public void drawLine(final float x1, final float y1, final float x2, final float y2) throws IOException {
@@ -50,14 +53,34 @@ public class PdfPageCanvas {
         }
     }
 
+    public void drawParagraph(final PdfParagraph paragraph, final float x, final float y) throws IOException {
+        contentStream.beginText();
+        for (final PdfParagraphLine line : paragraph) {
+            contentStream.saveGraphicsState();
+            final Point2D xy = transform(x + line.getxDelta(), y + line.getyDelta());
+            contentStream.moveTextPositionByAmount((float) xy.getX(), (float) xy.getY());
+            contentStream.drawString(line.getText());
+            contentStream.restoreGraphicsState();
+        }
+        contentStream.endText();
+    }
+
     public void drawString(final String str, final float x, final float y) throws IOException {
         contentStream.beginText();
         contentStream.saveGraphicsState();
         final Point2D xy = transform(x, y);
         contentStream.moveTextPositionByAmount((float) xy.getX(), (float) xy.getY());
-        contentStream.drawString(PdfReport.ro(str));
+        contentStream.drawString(PdfUtil.ro(str));
         contentStream.restoreGraphicsState();
         contentStream.endText();
+    }
+
+    public float getStringHeight() {
+        return lastFont.getFontDescriptor().getFontBoundingBox().getHeight() / 1000 * lastFontSize;
+    }
+
+    public float getStringWidth(final String text) throws IOException {
+        return lastFont.getStringWidth(text) / 1000f * lastFontSize;
     }
 
     public AffineTransform getTransformation() {
@@ -87,6 +110,8 @@ public class PdfPageCanvas {
 
     public void setFont(final PDFont font, final float fontSize) throws IOException {
         contentStream.setFont(font, fontSize);
+        lastFont = font;
+        lastFontSize = fontSize;
     }
 
     public void setNonStrokingColor(final Color color) throws IOException {

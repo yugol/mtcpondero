@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import pondero.Context;
 import pondero.L10n;
-import pondero.data.evaluation.Profile;
+import pondero.data.evaluation.ProfileReport;
 import pondero.data.model.basic.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
@@ -36,9 +36,9 @@ public class EvaluationProfileAction extends PonderableAction {
                 final Participant participant = dlg.getSelection();
                 if (participant != null) {
                     action("creating full report for ", participant.getId());
-                    final Profile report = new Profile(participant, getCurrentWorkbook().getModel());
+                    final ProfileReport report = new ProfileReport(participant, getCurrentWorkbook().getModel());
                     report.generate();
-                    final String reportFileName = Profile.BASE_NAME + "-" + System.currentTimeMillis() + PdfFileFilter.DEFAULT_EXTENSION;
+                    final String reportFileName = ProfileReport.BASE_NAME + "-" + System.currentTimeMillis() + PdfFileFilter.DEFAULT_EXTENSION;
                     final File reportFile = new File(Context.getFolderResultsTemp(), reportFileName);
                     report.save(reportFile);
                     report.close();
