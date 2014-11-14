@@ -10,19 +10,15 @@ import pondero.data.model.basic.TestInstance;
 import pondero.tests.test.Test;
 import pondero.util.TimeUtil;
 
-public class FullReport extends PdfReport {
+public class FullReport extends Profile {
 
     static final float         FIRST_COLUMN  = 100;
     static final float         SECOND_COLUMN = 200;
 
     public static final String BASE_NAME     = "FullReport";
 
-    private final BasicModel   model;
-    private final Participant  participant;
-
     public FullReport(final Participant participant, final BasicModel model) throws IOException {
-        this.model = model;
-        this.participant = participant;
+        super(participant, model);
     }
 
     @Override

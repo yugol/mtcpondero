@@ -6,11 +6,11 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import pondero.Context;
 import pondero.L10n;
-import pondero.data.drivers.excel.ExcelFileFilter;
 import pondero.data.drivers.excel.templates.BasicTemplate;
 import pondero.data.model.basic.BasicModel;
 import pondero.ui.Ponderable;
 import pondero.ui.exceptions.ExceptionReporting;
+import pondero.util.ExcelFileFilter;
 import pondero.util.OsUtil;
 
 @SuppressWarnings("serial")

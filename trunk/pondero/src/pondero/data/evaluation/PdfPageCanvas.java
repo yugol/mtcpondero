@@ -15,15 +15,15 @@ public class PdfPageCanvas {
     static final float                   WIDTH       = 595.27563f;
     static final float                   HEIGHT      = 841.8898f;
 
-    private final PDDocument             document;
-    private final PDPage                 page;
+    // private final PDDocument             document;
+    // private final PDPage                 page;
     private final PDPageContentStream    contentStream;
     private AffineTransform              matrix      = new AffineTransform();
     private final Stack<AffineTransform> matrixStack = new Stack<>();
 
     public PdfPageCanvas(final PDDocument document, final PDPage page) throws IOException {
-        this.document = document;
-        this.page = page;
+        // this.document = document;
+        // this.page = page;
         contentStream = new PDPageContentStream(document, page, true, false, true);
     }
 

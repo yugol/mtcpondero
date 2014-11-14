@@ -8,13 +8,13 @@ import javax.swing.JOptionPane;
 import pondero.Context;
 import pondero.L10n;
 import pondero.data.analysis.FillParticipantReport;
-import pondero.data.drivers.excel.ExcelFileFilter;
 import pondero.data.drivers.excel.templates.participant.ParticipantTemplate;
 import pondero.data.model.basic.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.participants.ParticipantSelectionDialog;
+import pondero.util.ExcelFileFilter;
 import pondero.util.OsUtil;
 
 @SuppressWarnings("serial")

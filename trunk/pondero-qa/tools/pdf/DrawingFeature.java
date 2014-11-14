@@ -1,6 +1,6 @@
-package pondero.data.evaluation;
+package pdf;
 
-
+@Deprecated
 public class DrawingFeature {
 
 //    protected int separator            = '\n';

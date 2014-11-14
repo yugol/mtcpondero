@@ -4,7 +4,9 @@ import java.awt.EventQueue;
 import java.util.List;
 import java.util.Stack;
 import pondero.data.Workbook;
+import pondero.data.evaluation.Evaluation;
 import pondero.data.model.basic.Participant;
+import pondero.data.model.basic.TestInstance;
 import pondero.data.model.basic.TrialRecord;
 import pondero.tests.elements.interfaces.HasFeedback.FeedbackStimulus;
 import pondero.tests.elements.interfaces.HasScreencolor;
@@ -89,6 +91,10 @@ public abstract class Test extends TestRenderer implements IsController {
     public FeedbackStimulus getErrormessage() {
         if (currentBlock != null) { return currentBlock.getErrorMessage(); }
         return null;
+    }
+
+    public Evaluation getEvaluation(final TestInstance instance) {
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     public void kill() {

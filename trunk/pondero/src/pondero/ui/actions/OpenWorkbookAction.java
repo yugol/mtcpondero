@@ -11,12 +11,12 @@ import pondero.Context;
 import pondero.L10n;
 import pondero.data.Workbook;
 import pondero.data.WorkbookFactory;
-import pondero.data.drivers.excel.ExcelFileFilter;
 import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.Participants;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
 import pondero.ui.exceptions.ExceptionReporting;
+import pondero.util.ExcelFileFilter;
 
 @SuppressWarnings("serial")
 public class OpenWorkbookAction extends PonderableAction {

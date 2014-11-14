@@ -7,12 +7,12 @@ import javax.swing.JOptionPane;
 import pondero.Context;
 import pondero.L10n;
 import pondero.data.analysis.FillTestReport;
-import pondero.data.drivers.excel.ExcelFileFilter;
 import pondero.data.drivers.excel.templates.test.TestTemplate;
 import pondero.tests.test.Test;
 import pondero.ui.Ponderable;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.tests.TestSelectionDialog;
+import pondero.util.ExcelFileFilter;
 import pondero.util.OsUtil;
 
 @SuppressWarnings("serial")
