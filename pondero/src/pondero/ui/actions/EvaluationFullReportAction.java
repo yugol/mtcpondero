@@ -8,13 +8,13 @@ import javax.swing.JOptionPane;
 import pondero.Context;
 import pondero.L10n;
 import pondero.data.evaluation.FullReport;
-import pondero.data.evaluation.PdfFileFilter;
 import pondero.data.model.basic.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.participants.ParticipantSelectionDialog;
 import pondero.util.OsUtil;
+import pondero.util.PdfFileFilter;
 
 @SuppressWarnings("serial")
 public class EvaluationFullReportAction extends PonderableAction {

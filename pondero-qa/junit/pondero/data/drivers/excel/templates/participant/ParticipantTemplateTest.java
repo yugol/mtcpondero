@@ -5,7 +5,7 @@ import org.junit.AfterClass;
 import org.junit.Test;
 import pondero.PonderoTest;
 import pondero.data.domains.Gender;
-import pondero.data.drivers.excel.ExcelFileFilter;
+import pondero.util.ExcelFileFilter;
 
 public class ParticipantTemplateTest extends PonderoTest {
 

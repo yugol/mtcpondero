@@ -6,9 +6,9 @@ import javax.swing.JFileChooser;
 import pondero.Context;
 import pondero.L10n;
 import pondero.data.Workbook;
-import pondero.data.drivers.excel.ExcelFileFilter;
 import pondero.ui.Ponderable;
 import pondero.ui.exceptions.ExceptionReporting;
+import pondero.util.ExcelFileFilter;
 
 @SuppressWarnings("serial")
 public class SaveAsDocumentAction extends PonderableAction {

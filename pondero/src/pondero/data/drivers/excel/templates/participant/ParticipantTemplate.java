@@ -6,9 +6,9 @@ import java.io.InputStream;
 import java.util.Date;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import pondero.data.analysis.PMatrix;
-import pondero.data.drivers.excel.ExcelFileFilter;
 import pondero.data.drivers.excel.templates.AbstractTemplate;
 import pondero.data.drivers.excel.templates.WbLocation;
+import pondero.util.ExcelFileFilter;
 
 public class ParticipantTemplate extends AbstractTemplate {
 

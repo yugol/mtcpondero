@@ -1,4 +1,4 @@
-package pondero.data.evaluation;
+package pondero.util;
 
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
