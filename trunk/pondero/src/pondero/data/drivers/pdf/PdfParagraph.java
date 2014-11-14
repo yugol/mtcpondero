@@ -62,7 +62,7 @@ public class PdfParagraph implements Iterable<PdfParagraphLine> {
                 }
             }
             if (height != null && vAlign != VAlign.BOTTOM) {
-                final float lineHeight = canvas.getStringHeight() * 0.85f;
+                final float lineHeight = canvas.getStringHeight() * 0.75f;
                 if (vAlign == VAlign.MIDDLE) {
                     line.setyDelta((height - lineHeight) / 2);
                 } else if (vAlign == VAlign.TOP) {
