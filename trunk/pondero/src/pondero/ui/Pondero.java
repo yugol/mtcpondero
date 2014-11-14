@@ -43,6 +43,7 @@ import pondero.ui.actions.AddParticipantAction;
 import pondero.ui.actions.AnalyseParticipantAction;
 import pondero.ui.actions.AnalyseTestAction;
 import pondero.ui.actions.EvaluationFullReportAction;
+import pondero.ui.actions.EvaluationProfileAction;
 import pondero.ui.actions.HomePageAction;
 import pondero.ui.actions.ModifyParticipantAction;
 import pondero.ui.actions.OpenWorkbookAction;
@@ -123,6 +124,8 @@ public class Pondero implements Ponderable, PModelListener {
     private final Action             addParticipantAction       = new AddParticipantAction(this);
     private final Action             analyseParticipantAction   = new AnalyseParticipantAction(this);
     private final Action             analyseTestAction          = new AnalyseTestAction(this);
+    private final Action             evaluationFullReportAction = new EvaluationFullReportAction(this);
+    private final Action             evaluationProfileAction    = new EvaluationProfileAction(this);
     private final Action             homePageAction             = new HomePageAction(this);
     private final Action             modifyParticipantAction    = new ModifyParticipantAction(this);
     private final Action             quitAction                 = new QuitAction(this);
@@ -133,7 +136,6 @@ public class Pondero implements Ponderable, PModelListener {
     private final Action             selectParticipantAction    = new SelectParticipantAction(this);
     private final Action             setPreferencesAction       = new SetPreferencesAction(this);
     private final Action             startTaskAction            = new RunTestAction(this);
-    private final Action             evaluationFullReportAction = new EvaluationFullReportAction(this);
     private final OpenWorkbookAction openDocumentAction         = new OpenWorkbookAction(this);
     private final UpdateAction       updateAction               = new UpdateAction(this);
 
@@ -161,6 +163,7 @@ public class Pondero implements Ponderable, PModelListener {
     private StatusBar                statusBar;
     private JMenu                    mnEvaluation;
     private JMenuItem                mntmFullReport;
+    private JMenuItem                mntmProfile;
 
     /**
      * Create the application.
@@ -364,6 +367,12 @@ public class Pondero implements Ponderable, PModelListener {
 
         mnEvaluation = new JMenu(" " + L10n.getString("lbl.evaluation") + " ");
         menuBar.add(mnEvaluation);
+
+        mntmProfile = new JMenuItem("abc");
+        mntmProfile.setAction(evaluationProfileAction);
+        mnEvaluation.add(mntmProfile);
+
+        mnEvaluation.addSeparator();
 
         mntmFullReport = new JMenuItem();
         mntmFullReport.setAction(evaluationFullReportAction);

@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Pondero"
-#define MyAppVersion "0.6-alpha (2014-11-13)"
+#define MyAppVersion "0.7-alpha (2014-11-14)"
 #define MyAppPublisher "Mindtrips Communications"
 #define MyAppURL "http://www.purl.org/net/pondero/home"
 #define MyAppExeName "pondero.bat"
@@ -49,11 +49,11 @@ Source:   "{#PonderoRoot}\tests\pondero-test-dax.jar";   DestDir: "{app}\tests";
 Source:   "{#PonderoRoot}\tests\pondero-test-ds.jar";    DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-iaca.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-ic.jar";    DestDir: "{app}\tests"; Flags: ignoreversion
-Source:   "{#PonderoRoot}\tests\pondero-test-imsc.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-is.jar";    DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-isca.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-maic.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-mcal.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-mdsi.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-scct.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-sot.jar";   DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-sss.jar";   DestDir: "{app}\tests"; Flags: ignoreversion

@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import pondero.Context;
 import pondero.L10n;
-import pondero.data.evaluation.FullReport;
+import pondero.data.evaluation.Profile;
 import pondero.data.model.basic.Participant;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
@@ -17,12 +17,12 @@ import pondero.util.OsUtil;
 import pondero.util.PdfFileFilter;
 
 @SuppressWarnings("serial")
-public class EvaluationFullReportAction extends PonderableAction {
+public class EvaluationProfileAction extends PonderableAction {
 
-    public EvaluationFullReportAction(final Ponderable app) {
+    public EvaluationProfileAction(final Ponderable app) {
         super(app);
-        putValue(NAME, L10n.getString("lbl.full-report..."));
-        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/report_user.png")));
+        putValue(NAME, L10n.getString("lbl.profile..."));
+        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/table.png")));
     }
 
     @Override
@@ -36,9 +36,9 @@ public class EvaluationFullReportAction extends PonderableAction {
                 final Participant participant = dlg.getSelection();
                 if (participant != null) {
                     action("creating full report for ", participant.getId());
-                    final FullReport report = new FullReport(participant, getCurrentWorkbook().getModel());
+                    final Profile report = new Profile(participant, getCurrentWorkbook().getModel());
                     report.generate();
-                    final String reportFileName = FullReport.BASE_NAME + "-" + System.currentTimeMillis() + PdfFileFilter.DEFAULT_EXTENSION;
+                    final String reportFileName = Profile.BASE_NAME + "-" + System.currentTimeMillis() + PdfFileFilter.DEFAULT_EXTENSION;
                     final File reportFile = new File(Context.getFolderResultsTemp(), reportFileName);
                     report.save(reportFile);
                     report.close();
