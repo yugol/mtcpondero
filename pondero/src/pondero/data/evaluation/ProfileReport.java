@@ -1,13 +1,19 @@
 package pondero.data.evaluation;
 
+import java.awt.Color;
 import java.io.IOException;
+import java.util.List;
+import pondero.Context;
 import pondero.L10n;
 import pondero.data.drivers.pdf.PdfPageCanvas;
 import pondero.data.drivers.pdf.PdfParagraph;
 import pondero.data.drivers.pdf.PdfReport;
 import pondero.data.drivers.pdf.PdfUtil;
+import pondero.data.evaluation.scoring.Evaluation;
 import pondero.data.model.basic.BasicModel;
 import pondero.data.model.basic.Participant;
+import pondero.data.model.basic.TestInstance;
+import pondero.tests.test.Test;
 
 public class ProfileReport extends PdfReport {
 
@@ -27,7 +33,7 @@ public class ProfileReport extends PdfReport {
     private static final float    TABLE_TOP        = BIO_TOP - BIO_HEIGHT * 3 - 10;
     private static final float    TABLE_FIRST      = LEFT;
     private static final float    TABLE_SECOND     = TABLE_FIRST + WIDTH / 2;
-    private static final float    TABLE_THIRD      = TABLE_SECOND + 30;
+    private static final float    TABLE_THIRD      = TABLE_SECOND + 40;
     private static final float    TABLE_LAST       = TABLE_FIRST + WIDTH;
     private static final float    TABLE_ROW_HEIGHT = 20;
 
@@ -47,9 +53,57 @@ public class ProfileReport extends PdfReport {
         drawTitle(canvas);
         drawInfo(canvas);
 
-        final float[] divisions = drawTableHeader(canvas, TABLE_TOP, 7);
+        canvas.setStrokingColor(Color.DARK_GRAY);
 
+        float rowTop = TABLE_TOP;
+        final float[] divisions = drawTableHeader(canvas, rowTop, 7);
+
+        rowTop -= TABLE_ROW_HEIGHT * 2;
+        for (final String testName : model.getTestSheets()) {
+            final List<Long> instances = model.getRecords(testName).getTestTimes(participant.getId());
+            if (!instances.isEmpty()) {
+                final TestInstance instance = model.getRecords(testName).getInstance(participant.getId(), instances.get(instances.size() - 1));
+                final Test test = Context.getTest(instance.getTestName());
+                if (test != null) {
+                    final Evaluation eval = test.getEvaluation(instance);
+                    for (final ProfileEntry entry : eval.getProfileEntries()) {
+                        drawEntry(canvas, test.getArtifactDescriptor().getId(), entry, rowTop, divisions);
+                        rowTop -= TABLE_ROW_HEIGHT;
+                    }
+                }
+            }
+        }
         canvas.close();
+    }
+
+    private void drawEntry(final PdfPageCanvas canvas, final String testId, final ProfileEntry entry, final float rowTop, final float[] divisions) throws IOException {
+        canvas.setFont(getSerif(), 10);
+
+        PdfParagraph par = canvas.createParagraph(" " + testId + " " + entry.getName());
+        par.setWidth(TABLE_SECOND - TABLE_FIRST);
+        par.setHeight(TABLE_ROW_HEIGHT);
+        par.sethAlign(PdfParagraph.HAlign.LEFT);
+        canvas.drawParagraph(par, TABLE_FIRST, rowTop - TABLE_ROW_HEIGHT);
+
+        par = canvas.createParagraph(entry.getRawScore());
+        par.setWidth(TABLE_THIRD - TABLE_SECOND);
+        par.setHeight(TABLE_ROW_HEIGHT);
+        canvas.drawParagraph(par, TABLE_SECOND, rowTop - TABLE_ROW_HEIGHT);
+
+        for (int i = 0; i < divisions.length; ++i) {
+            canvas.drawLine(divisions[i], rowTop, divisions[i], rowTop - TABLE_ROW_HEIGHT);
+            if (i == entry.getStandardScore()) {
+                canvas.setFont(getSerifBold(), 16);
+                par = canvas.createParagraph("*");
+                par.setWidth(divisions[1] - divisions[0]);
+                par.setHeight(TABLE_ROW_HEIGHT);
+                canvas.drawParagraph(par, divisions[i], rowTop - TABLE_ROW_HEIGHT);
+            }
+        }
+        canvas.drawLine(TABLE_FIRST, rowTop, TABLE_FIRST, rowTop - TABLE_ROW_HEIGHT);
+        canvas.drawLine(TABLE_SECOND, rowTop, TABLE_SECOND, rowTop - TABLE_ROW_HEIGHT);
+        canvas.drawLine(TABLE_LAST, rowTop, TABLE_LAST, rowTop - TABLE_ROW_HEIGHT);
+        canvas.drawLine(TABLE_FIRST, rowTop - TABLE_ROW_HEIGHT, TABLE_LAST, rowTop - TABLE_ROW_HEIGHT);
     }
 
     private void drawInfo(final PdfPageCanvas canvas) throws IOException, Exception {
@@ -73,9 +127,10 @@ public class ProfileReport extends PdfReport {
         canvas.drawLine(TABLE_FIRST, tableTop, TABLE_FIRST, tableTop - TABLE_ROW_HEIGHT * 2);
         canvas.drawLine(TABLE_SECOND, tableTop - TABLE_ROW_HEIGHT, TABLE_SECOND, tableTop - TABLE_ROW_HEIGHT * 2);
         canvas.drawLine(TABLE_THIRD, tableTop, TABLE_THIRD, tableTop - TABLE_ROW_HEIGHT);
-        canvas.drawLine(TABLE_LAST, tableTop, TABLE_LAST, tableTop - TABLE_ROW_HEIGHT);
+        canvas.drawLine(TABLE_LAST, tableTop, TABLE_LAST, tableTop - TABLE_ROW_HEIGHT * 2);
 
-        canvas.setFont(getSerif(), 10);
+        canvas.setFont(getSerifBold(), 10);
+
         PdfParagraph par = canvas.createParagraph("NS");
         par.setWidth(TABLE_LAST - TABLE_THIRD);
         par.setHeight(TABLE_ROW_HEIGHT);
@@ -91,6 +146,8 @@ public class ProfileReport extends PdfReport {
         par.setHeight(TABLE_ROW_HEIGHT);
         canvas.drawParagraph(par, TABLE_SECOND, tableTop - TABLE_ROW_HEIGHT * 2);
 
+        canvas.setFont(getSerifItalic(), 10);
+
         final float[] divisions = new float[n];
         final float increment = (TABLE_LAST - TABLE_THIRD) / n;
         for (int i = 0; i < n; ++i) {
@@ -101,8 +158,6 @@ public class ProfileReport extends PdfReport {
             par.setHeight(TABLE_ROW_HEIGHT);
             canvas.drawParagraph(par, divisions[i], tableTop - TABLE_ROW_HEIGHT * 2);
         }
-        canvas.drawLine(TABLE_LAST, tableTop - TABLE_ROW_HEIGHT, TABLE_LAST, tableTop - TABLE_ROW_HEIGHT * 2);
-
         return divisions;
     }
 
