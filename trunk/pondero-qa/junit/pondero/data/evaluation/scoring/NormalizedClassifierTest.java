@@ -8,8 +8,8 @@ public class NormalizedClassifierTest {
     @Test
     public void testNormalizedClassifier() {
         System.out.println(new NormalizedClassifier());
-        System.out.println(new NormalizedClassifier(0));
-        System.out.println(new NormalizedClassifier(-1, 1));
+        System.out.println(new NormalizedClassifier(0d));
+        System.out.println(new NormalizedClassifier(-1., 1.));
 
         System.out.println(new NormalizedClassifier(1, 2.7860, 1.12497));
         System.out.println(new NormalizedClassifier(3, 2.7860, 1.12497));
