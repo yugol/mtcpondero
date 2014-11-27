@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 public class NormalizedClassifier extends Classifier {
 
-    private final double[] classes;
+    private final Double[] classes;
 
-    public NormalizedClassifier(final double... classes) {
+    public NormalizedClassifier(final Double... classes) {
         this.classes = classes;
     }
 
     public NormalizedClassifier(final int classCount, final double mean, final double stdDev) {
-        classes = new double[classCount - 1];
+        classes = new Double[classCount - 1];
         final double halfIncrement = stdDev / classes.length * 2;
         final double increment = halfIncrement * 2;
         final double firstDivision = mean - halfIncrement * (classCount - 2);

@@ -84,7 +84,7 @@ public class ProfileReport extends PdfReport {
     private void drawEntry(final PdfPageCanvas canvas, final String testId, final ProfileEntry entry, final float rowTop, final float[] divisions) throws IOException {
         canvas.setFont(getSerif(), 10);
 
-        PdfParagraph par = canvas.createParagraph(" " + testId + " " + entry.getName());
+        PdfParagraph par = canvas.createParagraph(" " + testId + ": " + entry.getName());
         par.setWidth(TABLE_SECOND - TABLE_FIRST);
         par.setHeight(TABLE_ROW_HEIGHT);
         par.sethAlign(PdfParagraph.HAlign.LEFT);
