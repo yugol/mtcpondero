@@ -13,6 +13,20 @@
 				<attribute name="Pondero-Artifact-Maturity" value="alpha (2014-11-14)" />
 			</manifest>
 			<fileset dir="${soldir}/pondero/target/classes" />
+			<zipfileset excludes="META-INF/*.SF" src="${mavendir}/commons-io/commons-io/2.4/commons-io-2.4.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="${mavendir}/org/apache/poi/poi/3.10.1/poi-3.10.1.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="${mavendir}/commons-codec/commons-codec/1.5/commons-codec-1.5.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="${mavendir}/org/apache/poi/poi-ooxml/3.10.1/poi-ooxml-3.10.1.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="${mavendir}/org/apache/poi/poi-ooxml-schemas/3.10.1/poi-ooxml-schemas-3.10.1.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="${mavendir}/org/apache/xmlbeans/xmlbeans/2.3.0/xmlbeans-2.3.0.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="${mavendir}/stax/stax-api/1.0.1/stax-api-1.0.1.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="${mavendir}/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="${mavendir}/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="${mavendir}/com/famfamfam/silk/1.3/silk-1.3.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="${mavendir}/org/apache/pdfbox/pdfbox/1.8.7/pdfbox-1.8.7.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="${mavendir}/org/apache/pdfbox/fontbox/1.8.7/fontbox-1.8.7.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="${mavendir}/org/apache/pdfbox/jempbox/1.8.7/jempbox-1.8.7.jar" />
+			<zipfileset excludes="META-INF/*.SF" src="${mavendir}/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar" />
 		</jar>
 	</target>
 

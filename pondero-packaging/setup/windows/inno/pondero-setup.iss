@@ -37,7 +37,6 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source:   "{#PonderoRoot}\jre\*";                        DestDir: "{app}\jre";   Flags: ignoreversion recursesubdirs createallsubdirs
 Source:   "{#PonderoRoot}\cfg\pondero-48x48.ico";        DestDir: "{app}\cfg";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\bin\pondero.jar";              DestDir: "{app}\bin";   Flags: ignoreversion
-Source:   "{#PonderoRoot}\bin\pondero-libs.jar";         DestDir: "{app}\bin";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\bin\pondero-install.jar";      DestDir: "{app}\bin";   Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-ac.jar";    DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-bfi.jar";   DestDir: "{app}\tests"; Flags: ignoreversion
