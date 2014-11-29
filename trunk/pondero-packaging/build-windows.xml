@@ -8,7 +8,7 @@
 	<property name="mavendir" location="C:/Users/Iulian/.m2/repository" />
 	<property name="iscc" value='"C:/Program Files (x86)/Inno Setup 5/iscc.exe"' />
 
-	<target name="full" depends="pondero-libs, pondero, tests" />
+	<target name="full" depends="pondero, tests" />
 
 	<target name="pack" depends="pack-context">
 		<exec executable="${iscc}">
@@ -47,10 +47,6 @@
 	<target name="pondero" depends="run-context">
 		<ant antfile="${soldir}/pondero/make-jar-pondero.xml" />
 		<ant antfile="${soldir}/pondero-install/make-jar-pondero-install.xml" />
-	</target>
-
-	<target name="pondero-libs" depends="run-context">
-		<ant antfile="${soldir}/pondero-libs/make-jar-pondero-libs.xml" />
 	</target>
 
 	<!-- TESTS START HERE -->

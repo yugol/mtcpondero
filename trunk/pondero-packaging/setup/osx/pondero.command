@@ -12,5 +12,5 @@ PONDERO_HOME="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 cd "$PONDERO_HOME"
 $JAVA -jar ./bin/pondero-install.jar "$PONDERO_HOME"
-$JAVA -cp ./bin/pondero.jar:./bin/pondero-libs.jar:./tests/* pondero.ui.Pondero "$PONDERO_HOME" &
+$JAVA -cp ./bin/pondero.jar:./tests/* pondero.ui.Pondero "$PONDERO_HOME" &
 

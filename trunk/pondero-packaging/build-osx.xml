@@ -23,11 +23,7 @@
 		<ant antfile="${soldir}/pondero-install/make-jar-pondero-install.xml" />
 	</target>
 
-	<target name="pondero-libs" depends="create-context">
-		<ant antfile="${soldir}/pondero-libs/make-jar-pondero-libs.xml" />
-	</target>
-
-	<target name="pondero" depends="create-context, pondero-libs, pondero-install">
+	<target name="pondero" depends="create-context, pondero-install">
 		<ant antfile="${soldir}/pondero/make-jar-pondero.xml" />
 	</target>
 	
