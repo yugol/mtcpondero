@@ -16,11 +16,16 @@ public class Likert extends Trial implements HasPosition {
 
     public static final String TYPENAME = "likert";
 
-    private final LikertConfig config   = new LikertConfig();
+    private final LikertConfig config;
     private Coordinates        position = null;
 
     public Likert(final String name) {
+        this(name, new LikertConfig());
+    }
+
+    public Likert(final String name, final LikertConfig config) {
         super(name);
+        this.config = config;
     }
 
     public String getAnchor(final int key) {
@@ -83,7 +88,7 @@ public class Likert extends Trial implements HasPosition {
         position = new Coordinates(xExpr, yExpr);
     }
 
-    public void setQuiz(final String quiz) {
+    public void setInfo(final String quiz) {
         config.setInfo(quiz);
     }
 
