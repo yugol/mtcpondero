@@ -1,6 +1,5 @@
 package pondero.tests.elements.trial;
 
-import pondero.Constants;
 import pondero.tests.test.Test;
 import pondero.ui.testing.TestScene;
 import pondero.ui.testing.components.ItemQuestionComponent;
@@ -27,10 +26,6 @@ public class Question extends Trial {
     public void setLikert(final boolean flag) {
         if (flag && likertConfig == null) {
             likertConfig = new LikertConfig();
-            likertConfig.setInfoBgColor(Constants.DEFAULT_INFO_BG_COLOR);
-            likertConfig.setInfoFgColor(Constants.DEFAULT_INFO_FG_COLOR);
-            likertConfig.setAnswersBgColor(Constants.DEFAULT_ANSWERS_BG_COLOR);
-            likertConfig.setAnswersFgColor(Constants.DEFAULT_ANSWERS_FG_COLOR);
         }
         if (!flag) {
             likertConfig = null;

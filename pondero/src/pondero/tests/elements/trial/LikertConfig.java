@@ -3,14 +3,15 @@ package pondero.tests.elements.trial;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
+import pondero.Constants;
 import pondero.util.StringUtil;
 
 public class LikertConfig {
 
-    private Color                      answersBgColor = null;
-    private Color                      answersFgColor = Color.BLACK;
-    private Color                      infoBgColor    = new Color(79, 129, 189);
-    private Color                      infoFgColor    = Color.WHITE;
+    private Color                      answersBgColor = Constants.DEFAULT_ANSWERS_BG_COLOR;
+    private Color                      answersFgColor = Constants.DEFAULT_ANSWERS_FG_COLOR;
+    private Color                      infoBgColor    = Constants.DEFAULT_INFO_BG_COLOR;
+    private Color                      infoFgColor    = Constants.DEFAULT_INFO_FG_COLOR;
     private String                     info           = "";
     private boolean                    mouse          = true;
     private final Map<Integer, String> anchors        = new HashMap<Integer, String>();
