@@ -4,21 +4,24 @@ import static pondero.Logger.action;
 import static pondero.Logger.info;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import javax.swing.ImageIcon;
 import pondero.Context;
 import pondero.L10n;
 import pondero.data.drivers.excel.templates.BasicTemplate;
 import pondero.data.model.basic.BasicModel;
 import pondero.ui.Ponderable;
+import pondero.ui.Pondero;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.util.ExcelFileFilter;
 import pondero.util.OsUtil;
 
 @SuppressWarnings("serial")
-public class RunDocumentAction extends PonderableAction {
+public class ViewWorkbookAction extends PonderableAction {
 
-    public RunDocumentAction(final Ponderable app) {
+    public ViewWorkbookAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.open-externally"));
+        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/eye.png")));
     }
 
     @Override

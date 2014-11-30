@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 import pondero.Context;
 import pondero.data.drivers.pdf.PdfPageCanvas;
+import pondero.data.evaluation.profile.ProfileReport;
 import pondero.data.model.basic.BasicModel;
 import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.TestInstance;
