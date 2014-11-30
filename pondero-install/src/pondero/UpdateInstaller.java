@@ -5,18 +5,31 @@ import java.io.IOException;
 
 public class UpdateInstaller {
 
-    public static final String UPDATE_EXTENSION = ".update";
-
     public static void main(final String... args) throws Exception {
-        String home = "../../Pondero";
+        String home = "../../../Pondero";
         if (args.length > 0) {
             home = args[0];
         }
         final File homeFolder = new File(home);
-        System.out.println("Installing updates for " + homeFolder.getCanonicalPath() + " ...");
-        // installUpdates(new File(homeFolder.getCanonicalPath(), "bin"));
-        installUpdates(new File(homeFolder.getCanonicalPath(), "tests"));
-        System.out.println("done installing updates");
+        if (homeFolder.exists()) {
+            System.out.println("Clean up " + homeFolder.getCanonicalPath() + " ...");
+            final File ponderoLibsJar = new File(homeFolder, "/bin/pondero-libs.jar");
+            System.out.print("deleting " + ponderoLibsJar.getCanonicalPath() + " ... ");
+            if (ponderoLibsJar.exists()) {
+                ponderoLibsJar.delete();
+                System.out.println("done");
+            } else {
+                System.out.println("N/A");
+            }
+            System.out.println("done cleaning up");
+
+            System.out.println("Installing updates for " + homeFolder.getCanonicalPath() + " ...");
+            // installUpdates(new File(homeFolder.getCanonicalPath(), "bin"));
+            installUpdates(new File(homeFolder.getCanonicalPath(), "tests"));
+            System.out.println("done installing updates");
+        } else {
+            System.out.println("Could not find " + homeFolder.getCanonicalPath());
+        }
     }
 
     private static void installUpdates(final File folder) throws IOException {
@@ -42,5 +55,7 @@ public class UpdateInstaller {
         }
         System.out.println("done folder");
     }
+
+    public static final String UPDATE_EXTENSION = ".update";
 
 }
