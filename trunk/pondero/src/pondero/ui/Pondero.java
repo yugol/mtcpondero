@@ -17,6 +17,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
@@ -49,7 +50,7 @@ import pondero.ui.actions.ModifyParticipantAction;
 import pondero.ui.actions.OpenWorkbookAction;
 import pondero.ui.actions.QuitAction;
 import pondero.ui.actions.RestartAction;
-import pondero.ui.actions.RunDocumentAction;
+import pondero.ui.actions.ViewWorkbookAction;
 import pondero.ui.actions.SaveAsDocumentAction;
 import pondero.ui.actions.SaveDocumentAction;
 import pondero.ui.actions.SelectParticipantAction;
@@ -60,7 +61,6 @@ import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.status.StatusBar;
 import pondero.ui.tests.TestSelector;
 import pondero.util.SwingUtil;
-import javax.swing.ImageIcon;
 
 public class Pondero implements Ponderable, PModelListener {
 
@@ -131,7 +131,7 @@ public class Pondero implements Ponderable, PModelListener {
     private final Action             modifyParticipantAction    = new ModifyParticipantAction(this);
     private final Action             quitAction                 = new QuitAction(this);
     private final Action             restartAction              = new RestartAction(this);
-    private final Action             runDocument                = new RunDocumentAction(this);
+    private final Action             viewWorkbook                = new ViewWorkbookAction(this);
     private final Action             saveAsDocument             = new SaveAsDocumentAction(this);
     private final Action             saveDocument               = new SaveDocumentAction(this);
     private final Action             selectParticipantAction    = new SelectParticipantAction(this);
@@ -228,7 +228,6 @@ public class Pondero implements Ponderable, PModelListener {
         mnEvaluation.setEnabled(currentWorkbook != null);
         if (currentWorkbook == null) {
             stage.setVisible(false);
-            statusBar.setMessage(StatusBar.ERROR, L10n.getString("msg.please-choose-workbook"));
         } else {
             stage.setVisible(true);
             if (PonderoState.PARTICIPANT_SELECTION == state) {
@@ -249,12 +248,9 @@ public class Pondero implements Ponderable, PModelListener {
                 lblPageHint.setText(L10n.getString("msg.CHOOSE-TEST"));
                 btnStart.setEnabled(currentWorkbook != null && (currentParticipant != null || Context.isParticipantOptional()) && currentTask != null);
             }
-            statusBar.setMessage(StatusBar.DEFAULT,
-                    L10n.getString("lbl.data-register")
-                            + ": " + currentWorkbook.getName()
-                            + (currentWorkbook.isDirty() ? " *" : ""));
         }
         currentState = state;
+        updateStatusBarMessage();
     }
 
     @Override
@@ -340,7 +336,7 @@ public class Pondero implements Ponderable, PModelListener {
         mnData.add(mntmOpen);
 
         mntmView = new JMenuItem();
-        mntmView.setAction(runDocument);
+        mntmView.setAction(viewWorkbook);
         mnData.add(mntmView);
 
         mnData.addSeparator();
@@ -561,6 +557,33 @@ public class Pondero implements Ponderable, PModelListener {
 
         statusBar = new StatusBar();
         mainFrame.getContentPane().add(statusBar, BorderLayout.SOUTH);
+    }
+
+    private void updateStatusBarMessage() {
+        if (currentWorkbook == null) {
+            statusBar.setMessage(StatusBar.ERROR, L10n.getString("msg.please-choose-workbook"));
+        } else {
+            final StringBuilder message = new StringBuilder();
+            message.append(L10n.getString("lbl.data-register"));
+            message.append(": ");
+            message.append(currentWorkbook.getName());
+            message.append(currentWorkbook.isDirty() ? " *" : "");
+            if (currentParticipant != null) {
+                message.append(" -> ");
+                message.append(L10n.getString("lbl.participant"));
+                message.append(": ");
+                message.append(currentParticipant.getSurname());
+                message.append(" ");
+                message.append(currentParticipant.getName());
+            }
+            if (currentTask != null) {
+                message.append(" -> ");
+                message.append(L10n.getString("lbl.test"));
+                message.append(": ");
+                message.append(currentTask.getCodeName());
+            }
+            statusBar.setMessage(StatusBar.DEFAULT, message.toString());
+        }
     }
 
 }

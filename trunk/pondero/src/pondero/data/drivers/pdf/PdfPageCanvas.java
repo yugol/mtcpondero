@@ -23,7 +23,7 @@ public class PdfPageCanvas {
     public PdfPageCanvas(final PDDocument document, final PDPage page) throws IOException {
         // this.document = document;
         // this.page = page;
-        contentStream = new PDPageContentStream(document, page, true, false, true);
+        contentStream = new PDPageContentStream(document, page, true, true, true);
     }
 
     public void close() throws IOException {
@@ -73,6 +73,12 @@ public class PdfPageCanvas {
         contentStream.drawString(PdfUtil.ro(str));
         contentStream.restoreGraphicsState();
         contentStream.endText();
+    }
+
+    public void fillRect(final float x, final float y, final float width, final float height) throws IOException {
+        final Point2D start = transform(x, y);
+        final Point2D end = transform(x + width, y + height);
+        contentStream.fillRect((float) start.getX(), (float) start.getY(), (float) (end.getX() - start.getX()), (float) (end.getY() - start.getY()));
     }
 
     public float getStringHeight() {

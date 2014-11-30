@@ -1,4 +1,4 @@
-package pondero.data.evaluation;
+package pondero.data.evaluation.profile;
 
 public class ProfileEntry {
 

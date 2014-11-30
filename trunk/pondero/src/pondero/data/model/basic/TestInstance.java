@@ -1,6 +1,8 @@
 package pondero.data.model.basic;
 
 import java.util.ArrayList;
+import pondero.Context;
+import pondero.tests.test.Test;
 
 @SuppressWarnings("serial")
 public class TestInstance extends ArrayList<TrialRecord> {
@@ -17,6 +19,10 @@ public class TestInstance extends ArrayList<TrialRecord> {
 
     public String getParticipantId() {
         return participantId;
+    }
+
+    public Test getTest() {
+        return Context.getTest(testName);
     }
 
     public String getTestName() {

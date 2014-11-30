@@ -3,6 +3,7 @@ package pondero.ui.actions;
 import static pondero.Logger.action;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import pondero.Context;
 import pondero.L10n;
@@ -10,6 +11,7 @@ import pondero.data.analysis.FillTestReport;
 import pondero.data.drivers.excel.templates.test.TestTemplate;
 import pondero.tests.test.Test;
 import pondero.ui.Ponderable;
+import pondero.ui.Pondero;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.tests.TestSelectionDialog;
 import pondero.util.ExcelFileFilter;
@@ -21,6 +23,7 @@ public class AnalyseTestAction extends PonderableAction {
     public AnalyseTestAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.test..."));
+        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/application_go.png")));
     }
 
     @Override

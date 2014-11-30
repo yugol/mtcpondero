@@ -1,11 +1,12 @@
-package pondero.data.evaluation;
+package pondero.data.evaluation.profile;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import pondero.Context;
 import pondero.L10n;
-import pondero.Logger;
 import pondero.data.drivers.pdf.PdfPageCanvas;
 import pondero.data.drivers.pdf.PdfParagraph;
 import pondero.data.drivers.pdf.PdfReport;
@@ -36,7 +37,7 @@ public class ProfileReport extends PdfReport {
     private static final float    TABLE_SECOND     = TABLE_FIRST + WIDTH / 2;
     private static final float    TABLE_THIRD      = TABLE_SECOND + 40;
     private static final float    TABLE_LAST       = TABLE_FIRST + WIDTH;
-    private static final float    TABLE_ROW_HEIGHT = 20;
+    private static final float    TABLE_ROW_HEIGHT = 16;
 
     private static final String[] ROMAN            = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
 
@@ -50,32 +51,36 @@ public class ProfileReport extends PdfReport {
 
     @Override
     public void generate() throws Exception {
+
+        // fetch evaluations
+        final List<Evaluation> evaluations = new ArrayList<Evaluation>();
+        for (final String testName : model.getTestSheets()) {
+            final List<Long> instances = model.getRecords(testName).getTestTimes(participant.getId());
+            if (!instances.isEmpty()) {
+                final TestInstance testInstance = model.getRecords(testName).getInstance(participant.getId(), instances.get(instances.size() - 1));
+                final Test test = Context.getTest(testInstance.getTestName());
+                if (test != null) {
+                    final Evaluation evaluation = test.getEvaluation(testInstance);
+                    evaluations.add(evaluation);
+                }
+            }
+        }
+        Collections.sort(evaluations, new EvaluationsComparator());
+
+        // draw profile
         final PdfPageCanvas canvas = getCanvas(addPage());
         drawTitle(canvas);
         drawInfo(canvas);
 
-        canvas.setStrokingColor(Color.DARK_GRAY);
-
         float rowTop = TABLE_TOP;
         final float[] divisions = drawTableHeader(canvas, rowTop, 7);
-
         rowTop -= TABLE_ROW_HEIGHT * 2;
-        for (final String testName : model.getTestSheets()) {
-            final List<Long> instances = model.getRecords(testName).getTestTimes(participant.getId());
-            if (!instances.isEmpty()) {
-                final TestInstance instance = model.getRecords(testName).getInstance(participant.getId(), instances.get(instances.size() - 1));
-                final Test test = Context.getTest(instance.getTestName());
-                if (test != null) {
-                    try {
-                        final Evaluation eval = test.getEvaluation(instance);
-                        for (final ProfileEntry entry : eval.getProfileEntries()) {
-                            drawEntry(canvas, test.getArtifactDescriptor().getId(), entry, rowTop, divisions);
-                            rowTop -= TABLE_ROW_HEIGHT;
-                        }
-                    } catch (final Exception ex) {
-                        Logger.error(ex, "Basic report generation");
-                    }
-                }
+
+        for (final Evaluation eval : evaluations) {
+            for (final ProfileEntry entry : eval.getProfileEntries()) {
+                drawEntry(canvas, eval.getTest().getArtifactDescriptor().getId(), entry, rowTop, divisions);
+                rowTop -= TABLE_ROW_HEIGHT;
+
             }
         }
         canvas.close();
@@ -88,23 +93,35 @@ public class ProfileReport extends PdfReport {
         par.setWidth(TABLE_SECOND - TABLE_FIRST);
         par.setHeight(TABLE_ROW_HEIGHT);
         par.sethAlign(PdfParagraph.HAlign.LEFT);
+        canvas.setNonStrokingColor(Color.BLACK);
         canvas.drawParagraph(par, TABLE_FIRST, rowTop - TABLE_ROW_HEIGHT);
 
         par = canvas.createParagraph(entry.getRawScore());
         par.setWidth(TABLE_THIRD - TABLE_SECOND);
         par.setHeight(TABLE_ROW_HEIGHT);
+        canvas.setNonStrokingColor(Color.BLACK);
         canvas.drawParagraph(par, TABLE_SECOND, rowTop - TABLE_ROW_HEIGHT);
 
+        final float cellWidth = divisions[1] - divisions[0];
         for (int i = 0; i < divisions.length; ++i) {
-            canvas.drawLine(divisions[i], rowTop, divisions[i], rowTop - TABLE_ROW_HEIGHT);
-            if (i == entry.getStandardScore()) {
+            final int standardScore = entry.getStandardScore();
+            if (i <= standardScore) {
+                canvas.setNonStrokingColor(Color.LIGHT_GRAY);
+                canvas.fillRect(divisions[i], rowTop - TABLE_ROW_HEIGHT, cellWidth, TABLE_ROW_HEIGHT);
+            }
+            if (i == standardScore) {
                 canvas.setFont(getSerifBold(), 16);
                 par = canvas.createParagraph("*");
-                par.setWidth(divisions[1] - divisions[0]);
+                par.setWidth(cellWidth);
                 par.setHeight(TABLE_ROW_HEIGHT);
+                canvas.setNonStrokingColor(Color.BLACK);
                 canvas.drawParagraph(par, divisions[i], rowTop - TABLE_ROW_HEIGHT);
             }
+            canvas.setStrokingColor(Color.DARK_GRAY);
+            canvas.drawLine(divisions[i], rowTop, divisions[i], rowTop - TABLE_ROW_HEIGHT);
         }
+
+        canvas.setStrokingColor(Color.DARK_GRAY);
         canvas.drawLine(TABLE_FIRST, rowTop, TABLE_FIRST, rowTop - TABLE_ROW_HEIGHT);
         canvas.drawLine(TABLE_SECOND, rowTop, TABLE_SECOND, rowTop - TABLE_ROW_HEIGHT);
         canvas.drawLine(TABLE_LAST, rowTop, TABLE_LAST, rowTop - TABLE_ROW_HEIGHT);
@@ -125,6 +142,8 @@ public class ProfileReport extends PdfReport {
     }
 
     private float[] drawTableHeader(final PdfPageCanvas canvas, final float tableTop, final int n) throws IOException {
+        canvas.setStrokingColor(Color.DARK_GRAY);
+
         canvas.drawLine(TABLE_FIRST, tableTop, TABLE_LAST, tableTop);
         canvas.drawLine(TABLE_FIRST, tableTop - TABLE_ROW_HEIGHT, TABLE_LAST, tableTop - TABLE_ROW_HEIGHT);
         canvas.drawLine(TABLE_FIRST, tableTop - TABLE_ROW_HEIGHT * 2, TABLE_LAST, tableTop - TABLE_ROW_HEIGHT * 2);
