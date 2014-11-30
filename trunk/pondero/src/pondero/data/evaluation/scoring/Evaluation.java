@@ -18,4 +18,9 @@ public abstract class Evaluation {
 
     public abstract List<ProfileEntry> getProfileEntries();
 
+    protected double evaluate(final TestInstance instance, final int oneBasedIndex) {
+        if (oneBasedIndex <= instance.size()) { return Double.parseDouble(instance.get(oneBasedIndex - 1).getResponse()); }
+        return 0;
+    }
+
 }

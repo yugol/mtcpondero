@@ -50,16 +50,17 @@ import pondero.ui.actions.OpenWorkbookAction;
 import pondero.ui.actions.QuitAction;
 import pondero.ui.actions.RestartAction;
 import pondero.ui.actions.RunDocumentAction;
-import pondero.ui.actions.RunTestAction;
 import pondero.ui.actions.SaveAsDocumentAction;
 import pondero.ui.actions.SaveDocumentAction;
 import pondero.ui.actions.SelectParticipantAction;
 import pondero.ui.actions.SetPreferencesAction;
+import pondero.ui.actions.StartTestAction;
 import pondero.ui.actions.UpdateAction;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.status.StatusBar;
 import pondero.ui.tests.TestSelector;
 import pondero.util.SwingUtil;
+import javax.swing.ImageIcon;
 
 public class Pondero implements Ponderable, PModelListener {
 
@@ -135,7 +136,7 @@ public class Pondero implements Ponderable, PModelListener {
     private final Action             saveDocument               = new SaveDocumentAction(this);
     private final Action             selectParticipantAction    = new SelectParticipantAction(this);
     private final Action             setPreferencesAction       = new SetPreferencesAction(this);
-    private final Action             startTaskAction            = new RunTestAction(this);
+    private final Action             startTaskAction            = new StartTestAction(this);
     private final OpenWorkbookAction openDocumentAction         = new OpenWorkbookAction(this);
     private final UpdateAction       updateAction               = new UpdateAction(this);
 
@@ -470,6 +471,7 @@ public class Pondero implements Ponderable, PModelListener {
         pnlParticipantNavigation.setLayout(new BorderLayout(0, 0));
 
         btnNext = new JButton(L10n.getString("lbl.next"));
+        btnNext.setIcon(new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/resultset_next.png")));
         btnNext.setName(BUTTON_NEXT_NAME);
         btnNext.addActionListener(new ActionListener() {
 
@@ -517,6 +519,8 @@ public class Pondero implements Ponderable, PModelListener {
 
             @Override
             public void valueChosen(final ListSelectionEvent evt) {
+                valueChanged(evt);
+                startTaskAction.actionPerformed(null);
             }
 
         });
@@ -533,6 +537,7 @@ public class Pondero implements Ponderable, PModelListener {
         pnlTestNavigation.setLayout(new BorderLayout(0, 0));
 
         btnBack = new JButton(L10n.getString("lbl.back"));
+        btnBack.setIcon(new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/resultset_previous.png")));
         btnBack.setName(BUTTON_BACK_NAME);
         btnBack.addActionListener(new ActionListener() {
 
@@ -550,14 +555,12 @@ public class Pondero implements Ponderable, PModelListener {
         pnlTestNavigation.add(btnBack, BorderLayout.WEST);
 
         btnStart = new JButton(L10n.getString("lbl.start"));
-        btnStart.setName(BUTTON_START_NAME);
         btnStart.setAction(startTaskAction);
-        btnStart.setFont(btnStart.getFont().deriveFont(Font.BOLD | Font.ITALIC));
-        btnStart.setBackground(SwingUtil.getListSelectedBackgroundColor());
-        btnStart.setForeground(SwingUtil.getListSelectedForegroundColor());
+        btnStart.setFont(btnStart.getFont().deriveFont(Font.ITALIC));
         pnlTestNavigation.add(btnStart, BorderLayout.EAST);
 
         statusBar = new StatusBar();
         mainFrame.getContentPane().add(statusBar, BorderLayout.SOUTH);
     }
+
 }
