@@ -3,21 +3,24 @@ package pondero.ui.actions;
 import static pondero.Logger.action;
 import static pondero.Logger.trace;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import pondero.L10n;
 import pondero.tests.test.Test;
 import pondero.tests.test.launch.TaskLauncher;
 import pondero.tests.test.launch.TaskMonitor;
 import pondero.ui.Ponderable;
+import pondero.ui.Pondero;
 import pondero.ui.exceptions.ExceptionReporting;
 
 @SuppressWarnings("serial")
-public class RunTestAction extends PonderableAction implements TaskLauncher {
+public class StartTestAction extends PonderableAction implements TaskLauncher {
 
-    public RunTestAction(final Ponderable app) {
+    public StartTestAction(final Ponderable app) {
         super(app);
         putValue(NAME, L10n.getString("lbl.start"));
         putValue(SHORT_DESCRIPTION, L10n.getString("msg.start-test"));
+        putValue(SMALL_ICON, new ImageIcon(Pondero.class.getResource("/com/famfamfam/silk/application_go.png")));
     }
 
     @Override
