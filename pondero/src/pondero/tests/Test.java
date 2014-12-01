@@ -13,11 +13,11 @@ import pondero.task.launch.DefaultMonitor;
 import pondero.task.launch.TaskData;
 import pondero.task.launch.TaskMonitor;
 import pondero.task.responses.Response;
-import pondero.tests.elements.interfaces.HasFeedback.FeedbackStimulus;
-import pondero.tests.elements.interfaces.HasScreencolor;
-import pondero.tests.elements.interfaces.IsController;
 import pondero.tests.elements.other.Block;
 import pondero.tests.elements.trial.Trial;
+import pondero.tests.interfaces.HasScreencolor;
+import pondero.tests.interfaces.IsController;
+import pondero.tests.interfaces.HasFeedback.FeedbackStimulus;
 import pondero.ui.exceptions.ExceptionReporting;
 
 public abstract class Test extends TestRenderer implements IsController, Testable {
@@ -70,12 +70,12 @@ public abstract class Test extends TestRenderer implements IsController, Testabl
     }
 
     @Override
-    public synchronized void doNext(final Response input) throws Exception {
+    public synchronized void doStep(final Response input) throws Exception {
         final IsController controller = peekController();
         if (controller == null) {
             doEnd();
         } else {
-            controller.doNext(input);
+            controller.doStep(input);
         }
     }
 
@@ -135,7 +135,7 @@ public abstract class Test extends TestRenderer implements IsController, Testabl
         if (controller instanceof HasScreencolor) {
             popScreencolor();
         }
-        doNext(null);
+        doStep(null);
     }
 
     public void pushController(final IsController controller) {
@@ -174,7 +174,7 @@ public abstract class Test extends TestRenderer implements IsController, Testabl
             pushScreencolor(getDefaults());
             getTestWindow().showTestWindow();
             doBegin();
-            doNext(null);
+            doStep(null);
         } catch (final Exception e) {
             taskMonitor.onTaskEnded(this, taskData);
             ExceptionReporting.showExceptionMessage(null, e);

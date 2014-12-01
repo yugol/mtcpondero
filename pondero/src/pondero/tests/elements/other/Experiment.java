@@ -5,9 +5,9 @@ import java.util.List;
 import pondero.task.responses.PrevNextResponse;
 import pondero.task.responses.Response;
 import pondero.tests.elements.Element;
-import pondero.tests.elements.interfaces.HasPostInstructions;
-import pondero.tests.elements.interfaces.HasPreInstructions;
-import pondero.tests.elements.interfaces.IsController;
+import pondero.tests.interfaces.HasPostInstructions;
+import pondero.tests.interfaces.HasPreInstructions;
+import pondero.tests.interfaces.IsController;
 import pondero.tests.staples.ItemSequence;
 
 public class Experiment extends Element implements HasPreInstructions, HasPostInstructions, IsController {
@@ -45,7 +45,7 @@ public class Experiment extends Element implements HasPreInstructions, HasPostIn
     }
 
     @Override
-    public void doNext(final Response input) throws Exception {
+    public void doStep(final Response input) throws Exception {
         if (doStatus != null) {
             if (preinstructions != null) {
                 if (input != null && input instanceof PrevNextResponse) {
@@ -68,7 +68,7 @@ public class Experiment extends Element implements HasPreInstructions, HasPostIn
             if (doStatus.currentBlockIndex < blocks.size()) {
                 final Block block = test.getBlock(blocks.get(doStatus.currentBlockIndex++));
                 block.doBegin();
-                test.doNext(null);
+                test.doStep(null);
                 return;
             }
             if (postinstructions != null) {

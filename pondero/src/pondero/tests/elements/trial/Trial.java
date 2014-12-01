@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.swing.Timer;
 import pondero.Context;
 import pondero.Logger;
+import pondero.task.controllers.Timing;
 import pondero.task.responses.KeyPressResponse;
 import pondero.task.responses.KillResponse;
 import pondero.task.responses.LikertResponse;
@@ -18,14 +19,13 @@ import pondero.task.stimuli.Stimulus;
 import pondero.task.stimuli.VisualStimulus;
 import pondero.tests.Test;
 import pondero.tests.elements.Element;
-import pondero.tests.elements.interfaces.HasFeedback;
-import pondero.tests.elements.interfaces.IsAuditoryStimulus;
-import pondero.tests.elements.interfaces.IsController;
-import pondero.tests.elements.interfaces.IsStimulus;
-import pondero.tests.elements.interfaces.IsVisualStimulus;
+import pondero.tests.interfaces.HasFeedback;
+import pondero.tests.interfaces.IsAuditoryStimulus;
+import pondero.tests.interfaces.IsController;
+import pondero.tests.interfaces.IsStimulus;
+import pondero.tests.interfaces.IsVisualStimulus;
 import pondero.tests.staples.Frame;
 import pondero.tests.staples.FrameSequence;
-import pondero.tests.staples.Timing;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.testing.TestScene;
 import pondero.ui.testing.components.TestDrawableComponent;
@@ -89,7 +89,7 @@ public class Trial extends Element implements HasFeedback, IsController {
     }
 
     @Override
-    public void doNext(final Response input) throws Exception {
+    public void doStep(final Response input) throws Exception {
         if (doStatus.stimulusPresenter == null) {
             doStatus.stimulusPresenter = new Thread(new Runnable() {
 
@@ -102,7 +102,7 @@ public class Trial extends Element implements HasFeedback, IsController {
                             @Override
                             public void actionPerformed(final ActionEvent e) {
                                 try {
-                                    Trial.this.doNext(new KillResponse());
+                                    Trial.this.doStep(new KillResponse());
                                 } catch (final Exception ex) {
                                     ExceptionReporting.showExceptionMessage(null, ex);
                                 }

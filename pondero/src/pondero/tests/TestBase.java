@@ -3,7 +3,6 @@ package pondero.tests;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import pondero.tests.elements.Element;
-import pondero.tests.elements.interfaces.IsStimulus;
 import pondero.tests.elements.other.Block;
 import pondero.tests.elements.other.Defaults;
 import pondero.tests.elements.other.Experiment;
@@ -14,6 +13,7 @@ import pondero.tests.elements.stimulus.Picture;
 import pondero.tests.elements.stimulus.Sound;
 import pondero.tests.elements.stimulus.Text;
 import pondero.tests.elements.trial.Trial;
+import pondero.tests.interfaces.IsStimulus;
 import pondero.tests.management.Artifact;
 
 public abstract class TestBase implements Runnable {

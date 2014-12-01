@@ -6,11 +6,11 @@ import pondero.task.launch.TaskData;
 import pondero.task.launch.TaskRenderer;
 import pondero.task.responses.Response;
 import pondero.tests.Test;
-import pondero.tests.elements.interfaces.IsNavigableController;
 import pondero.tests.elements.other.Instruct;
+import pondero.tests.interfaces.IsController;
 import pondero.ui.exceptions.ExceptionReporting;
 
-public class Task extends TaskBase implements Runnable, Testable, IsNavigableController {
+public class Task extends TaskBase implements Runnable, Testable, IsController {
 
     public Task(final TaskRenderer renderer, final Test test) {
         super(renderer, test);
@@ -39,13 +39,7 @@ public class Task extends TaskBase implements Runnable, Testable, IsNavigableCon
     }
 
     @Override
-    public void doNext(final Response input) throws Exception {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void doPrev(final Response input) throws Exception {
+    public void doStep(final Response input) throws Exception {
         // TODO Auto-generated method stub
 
     }
@@ -69,7 +63,7 @@ public class Task extends TaskBase implements Runnable, Testable, IsNavigableCon
             signalTaskStarted();
             getRenderer().doBegin();
             getData().markStartTime();
-            doNext(null);
+            doStep(null);
         } catch (final Exception e) {
             getData().markStopTime(TaskData.END_ERROR);
             cleanup();

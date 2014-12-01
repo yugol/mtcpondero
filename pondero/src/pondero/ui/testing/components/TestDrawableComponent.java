@@ -24,7 +24,7 @@ public class TestDrawableComponent extends TestSceneComponent {
             public void keyPressed(final KeyEvent evt) {
                 if (test != null) {
                     try {
-                        test.doNext(new KeyPressResponse(evt));
+                        test.doStep(new KeyPressResponse(evt));
                     } catch (final Exception e) {
                         ExceptionReporting.showExceptionMessage(null, e);
                     }
@@ -39,7 +39,7 @@ public class TestDrawableComponent extends TestSceneComponent {
             public void mouseClicked(final MouseEvent evt) {
                 if (test != null) {
                     try {
-                        test.doNext(new MouseClickResponse(evt));
+                        test.doStep(new MouseClickResponse(evt));
                     } catch (final Exception e) {
                         ExceptionReporting.showExceptionMessage(null, e);
                     }

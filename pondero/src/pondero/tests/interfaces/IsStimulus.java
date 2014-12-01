@@ -1,4 +1,4 @@
-package pondero.tests.elements.interfaces;
+package pondero.tests.interfaces;
 
 import pondero.task.stimuli.Stimulus;
 

@@ -3,9 +3,9 @@ package pondero.tests.elements.other;
 import java.awt.Color;
 import java.awt.Font;
 import pondero.tests.elements.Element;
-import pondero.tests.elements.interfaces.HasFont;
-import pondero.tests.elements.interfaces.HasInputDevice;
-import pondero.tests.elements.interfaces.HasTextColor;
+import pondero.tests.interfaces.HasFont;
+import pondero.tests.interfaces.HasInputDevice;
+import pondero.tests.interfaces.HasTextColor;
 import pondero.tests.staples.ElementUtil;
 import pondero.tests.staples.InputDevice;
 

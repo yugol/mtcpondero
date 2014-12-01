@@ -3,7 +3,7 @@ package pondero.tests.elements.other;
 import java.util.ArrayList;
 import java.util.List;
 import pondero.tests.elements.Element;
-import pondero.tests.elements.interfaces.HasItems;
+import pondero.tests.interfaces.HasItems;
 
 public class Item extends Element implements HasItems {
 

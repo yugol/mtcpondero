@@ -18,7 +18,7 @@ public class TestMouseAdapter extends MouseAdapter {
         final PrevNextResponse input = new PrevNextResponse();
         input.setNext(true);
         try {
-            test.doNext(input);
+            test.doStep(input);
         } catch (final Exception e) {
         }
     }

@@ -3,9 +3,9 @@ package pondero.task.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import pondero.task.Task;
-import pondero.tests.elements.interfaces.IsNavigableController;
+import pondero.tests.interfaces.IsController;
 
-public abstract class TaskController implements IsNavigableController {
+public abstract class TaskController implements IsController {
 
     private final Task                 task;
     private TaskController             parent;

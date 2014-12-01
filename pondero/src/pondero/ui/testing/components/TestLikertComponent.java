@@ -106,7 +106,7 @@ public class TestLikertComponent extends TestSceneComponent {
             @Override
             public void actionPerformed(final ActionEvent evt) {
                 try {
-                    test.doNext(new LikertResponse(String.valueOf(startIndex + index)));
+                    test.doStep(new LikertResponse(String.valueOf(startIndex + index)));
                 } catch (final Exception e) {
                     ExceptionReporting.showExceptionMessage(null, e);
                 }
