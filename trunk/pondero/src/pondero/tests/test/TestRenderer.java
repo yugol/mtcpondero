@@ -96,7 +96,7 @@ public abstract class TestRenderer extends TestBase {
     }
 
     public void renderReport(final PdfReport report, final TestInstance instance) throws Exception {
-        final String title = getArtifactDescriptor().getId() + "   " + TimeUtil.toIsoTimestamp(instance.getTestTime());
+        final String title = getDescriptor().getId() + "   " + TimeUtil.toIsoTimestamp(instance.getTestTime());
         final PdfPageCanvas canvas = report.getCanvas(report.addPage());
         canvas.setFont(report.AR_B, 16);
         canvas.drawString(title, 100, 700);

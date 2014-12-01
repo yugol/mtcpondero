@@ -86,7 +86,7 @@ public final class Context {
 
     public static Test getTest(final String testName) {
         for (final Test test : REGISTERED_TESTS) {
-            if (test.getArtifactDescriptor().getId().equals(testName)) { return test; }
+            if (test.getDescriptor().getId().equals(testName)) { return test; }
         }
         return null;
     }
@@ -179,7 +179,6 @@ public final class Context {
             trace("property: ", UI_SCALE_FACTOR_KEY, "=", uiFontScaleFactor);
             trace("property: ", UPDATE_ON_STARTUP_KEY, "=", updateOnStartup);
             registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero.jar")));
-            registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero-libs.jar")));
             registerArtifact(Artifact.fromJarFile(new File(getFolderBin(), "pondero-install.jar")));
         }
     }

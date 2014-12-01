@@ -104,14 +104,14 @@ public abstract class TestBase implements Runnable {
         }
     }
 
-    public abstract Artifact getArtifactDescriptor();
+    public abstract Artifact getDescriptor();
 
     public Block getBlock(final String name) {
         return blocks.get(name);
     }
 
     public String getCodeName() {
-        return getArtifactDescriptor().getCodeName();
+        return getDescriptor().getCodeName();
     }
 
     public Defaults getDefaults() {
@@ -146,7 +146,7 @@ public abstract class TestBase implements Runnable {
     }
 
     public String getTestId() {
-        return getArtifactDescriptor().getId();
+        return getDescriptor().getId();
     }
 
     public Text getText(final String name) {
