@@ -21,7 +21,7 @@ public final class OsUtil {
 
     public static String getLauncherName() {
         if (isWindows()) { return "pondero.bat"; }
-        return "pondero.sh";
+        return "pondero.command";
     }
 
     public static boolean isLinux() {
