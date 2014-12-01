@@ -8,6 +8,7 @@ import pondero.data.evaluation.scoring.Evaluation;
 import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.TestInstance;
 import pondero.data.model.basic.TrialRecord;
+import pondero.task.Testable;
 import pondero.task.launch.DefaultMonitor;
 import pondero.task.launch.TaskData;
 import pondero.task.launch.TaskMonitor;
@@ -19,7 +20,7 @@ import pondero.tests.elements.other.Block;
 import pondero.tests.elements.trial.Trial;
 import pondero.ui.exceptions.ExceptionReporting;
 
-public abstract class Test extends TestRenderer implements IsController {
+public abstract class Test extends TestRenderer implements IsController, Testable {
 
     private Workbook                  workbook;
     private Participant               participant;
@@ -97,6 +98,7 @@ public abstract class Test extends TestRenderer implements IsController {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
+    @Override
     public void kill() {
         taskData.markStopTime(TaskData.END_KILL);
         taskMonitor.onTaskEnded(this, taskData);

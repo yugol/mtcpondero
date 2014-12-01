@@ -8,7 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-import pondero.tests.Test;
+import pondero.task.Testable;
 import pondero.tests.elements.other.Page;
 import pondero.util.SwingUtil;
 
@@ -24,7 +24,7 @@ public class TestFrame extends JFrame {
     /**
      * Create the frame.
      */
-    public TestFrame(final Test task) {
+    public TestFrame(final Testable test) {
         setName(WINDOW_NAME);
         setIconImage(Toolkit.getDefaultToolkit().getImage(TestFrame.class.getResource("/javax/swing/plaf/metal/icons/ocean/question.png")));
 
@@ -32,8 +32,8 @@ public class TestFrame extends JFrame {
 
             @Override
             public void windowClosing(final WindowEvent e) {
-                if (task != null) {
-                    task.kill();
+                if (test != null) {
+                    test.kill();
                 }
             }
 
@@ -47,15 +47,15 @@ public class TestFrame extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
-        scene = new TestScene(task);
+        scene = new TestScene(test);
         scene.setBorder(null);
         contentPane.add(scene);
 
-        instructions = new TestCurtains(task);
+        instructions = new TestCurtains(test);
         instructions.setBorder(null);
         contentPane.add(instructions);
 
-        setTitle(task.getCodeName());
+        setTitle(test.getCodeName());
 
         SwingUtil.enableFullScreenMode(this);
         SwingUtil.showFractionedCentered(this);
