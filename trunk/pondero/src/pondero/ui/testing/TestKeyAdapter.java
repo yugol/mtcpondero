@@ -2,14 +2,14 @@ package pondero.ui.testing;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import pondero.task.Testable;
 import pondero.task.responses.PrevNextResponse;
-import pondero.tests.Test;
 
 public class TestKeyAdapter extends KeyAdapter {
 
-    private final Test test;
+    private final Testable test;
 
-    public TestKeyAdapter(final Test test) {
+    public TestKeyAdapter(final Testable test) {
         this.test = test;
     }
 

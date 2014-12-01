@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import pondero.L10n;
-import pondero.tests.Test;
+import pondero.task.Testable;
 import pondero.tests.elements.other.Page;
 
 @SuppressWarnings("serial")
@@ -27,11 +27,11 @@ public class TestCurtains extends JPanel {
     private final JTextArea        message;
     private final JPanel           pnlMessage;
 
-    private final Test             test;
+    private final Testable         test;
     private final TestKeyAdapter   defaultKeyAdapter;
     private final TestMouseAdapter defaultMouseAdapter;
 
-    public TestCurtains(final Test test) {
+    public TestCurtains(final Testable test) {
         defaultKeyAdapter = new TestKeyAdapter(test);
         defaultMouseAdapter = new TestMouseAdapter(test);
         this.test = test;

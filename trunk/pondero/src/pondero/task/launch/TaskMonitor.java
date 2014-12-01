@@ -4,8 +4,8 @@ import pondero.tests.Test;
 
 public interface TaskMonitor {
 
-    void onTaskEnded(Test task, TaskData monitor);
+    void onTaskEnded(Test test, TaskData data);
 
-    void onTaskStarted(Test task);
+    void onTaskStarted(Test test);
 
 }

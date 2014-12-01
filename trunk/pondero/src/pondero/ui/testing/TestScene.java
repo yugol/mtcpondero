@@ -3,12 +3,12 @@ package pondero.ui.testing;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.JPanel;
-import pondero.tests.Test;
+import pondero.task.Testable;
 
 @SuppressWarnings("serial")
 public class TestScene extends JPanel {
 
-    public TestScene(final Test task) {
+    public TestScene(final Testable task) {
         setFocusable(true);
         setBorder(null);
         setLayout(new BorderLayout());

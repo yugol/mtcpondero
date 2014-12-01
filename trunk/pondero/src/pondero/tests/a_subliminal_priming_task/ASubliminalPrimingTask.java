@@ -2,6 +2,10 @@ package pondero.tests.a_subliminal_priming_task;
 
 import java.awt.Color;
 import pondero.Constants;
+import pondero.task.Task;
+import pondero.task.launch.DefaultMonitor;
+import pondero.task.launch.DefaultRenderer;
+import pondero.task.launch.TaskRenderer;
 import pondero.tests.Test;
 import pondero.tests.elements.interfaces.HasBlockfeedback;
 import pondero.tests.elements.other.Block;
@@ -17,7 +21,12 @@ import pondero.tests.management.ArtifactType;
 public class ASubliminalPrimingTask extends Test {
 
     public static void main(final String... args) {
-        new ASubliminalPrimingTask().start(null);
+        final TaskRenderer renderer = new DefaultRenderer();
+        final Test test = new ASubliminalPrimingTask();
+        final Task task = new Task(renderer, test);
+        task.addMonitor(new DefaultMonitor());
+        // SwingUtilities.invokeLater(task);
+        new Thread(task).start();
     }
 
     private static final Artifact DESCRIPTOR = new Artifact(ArtifactType.TEST, "ASPT", 0, 1, "dev");
