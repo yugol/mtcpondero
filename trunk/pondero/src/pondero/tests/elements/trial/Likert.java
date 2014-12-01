@@ -4,7 +4,7 @@ import java.util.List;
 import pondero.task.responses.LikertResponse;
 import pondero.task.responses.Response;
 import pondero.tests.Test;
-import pondero.tests.elements.interfaces.HasPosition;
+import pondero.tests.interfaces.HasPosition;
 import pondero.tests.staples.Coordinate;
 import pondero.tests.staples.Coordinates;
 import pondero.ui.testing.TestScene;

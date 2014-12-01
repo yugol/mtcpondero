@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import pondero.data.Workbook;
 import pondero.data.model.basic.Participant;
+import pondero.task.controllers.ExperimentController;
 import pondero.task.launch.TaskData;
 import pondero.task.launch.TaskMonitor;
 import pondero.task.launch.TaskRenderer;
@@ -17,6 +18,7 @@ public abstract class TaskBase {
     private final Participant       participant;
     private final TaskData          data     = new TaskData(System.currentTimeMillis()); ;
     private final List<TaskMonitor> monitors = new ArrayList<>();
+    private ExperimentController    root;
 
     protected TaskBase(final TaskRenderer renderer, final Test test) {
         this(renderer, test, null);
@@ -55,6 +57,10 @@ public abstract class TaskBase {
 
     public Workbook getWorkbook() {
         return workbook;
+    }
+
+    protected void buildExperimentTree() {
+        root = new ExperimentController((Task) this, test.getExperiment());
     }
 
     protected void cleanup() {

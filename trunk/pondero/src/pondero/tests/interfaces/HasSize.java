@@ -1,4 +1,4 @@
-package pondero.tests.elements.interfaces;
+package pondero.tests.interfaces;
 
 import pondero.tests.staples.Coordinate;
 import pondero.tests.staples.Coordinates;

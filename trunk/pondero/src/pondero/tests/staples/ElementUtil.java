@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import javax.swing.JLabel;
-import pondero.tests.elements.interfaces.HasBlockfeedback;
+import pondero.tests.interfaces.HasBlockfeedback;
 
 public class ElementUtil {
 

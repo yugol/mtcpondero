@@ -5,7 +5,7 @@ import pondero.tests.elements.other.Instruct;
 
 public interface Testable {
 
-    void doNext(Response input) throws Exception;
+    void doStep(Response input) throws Exception;
 
     String getCodeName();
 

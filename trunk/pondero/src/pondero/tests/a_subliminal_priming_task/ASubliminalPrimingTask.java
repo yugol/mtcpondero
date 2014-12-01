@@ -7,7 +7,6 @@ import pondero.task.launch.DefaultMonitor;
 import pondero.task.launch.DefaultRenderer;
 import pondero.task.launch.TaskRenderer;
 import pondero.tests.Test;
-import pondero.tests.elements.interfaces.HasBlockfeedback;
 import pondero.tests.elements.other.Block;
 import pondero.tests.elements.other.Experiment;
 import pondero.tests.elements.other.Instruct;
@@ -15,6 +14,7 @@ import pondero.tests.elements.other.Item;
 import pondero.tests.elements.other.Page;
 import pondero.tests.elements.stimulus.Text;
 import pondero.tests.elements.trial.Trial;
+import pondero.tests.interfaces.HasBlockfeedback;
 import pondero.tests.management.Artifact;
 import pondero.tests.management.ArtifactType;
 

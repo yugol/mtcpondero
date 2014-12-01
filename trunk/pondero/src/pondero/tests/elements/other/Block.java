@@ -8,13 +8,13 @@ import java.util.Set;
 import pondero.task.responses.PrevNextResponse;
 import pondero.task.responses.Response;
 import pondero.tests.elements.Element;
-import pondero.tests.elements.interfaces.HasBlockfeedback;
-import pondero.tests.elements.interfaces.HasFeedback;
-import pondero.tests.elements.interfaces.HasPostInstructions;
-import pondero.tests.elements.interfaces.HasPreInstructions;
-import pondero.tests.elements.interfaces.HasScreencolor;
-import pondero.tests.elements.interfaces.IsController;
 import pondero.tests.elements.trial.Trial;
+import pondero.tests.interfaces.HasBlockfeedback;
+import pondero.tests.interfaces.HasFeedback;
+import pondero.tests.interfaces.HasPostInstructions;
+import pondero.tests.interfaces.HasPreInstructions;
+import pondero.tests.interfaces.HasScreencolor;
+import pondero.tests.interfaces.IsController;
 import pondero.tests.staples.ElementUtil;
 import pondero.tests.staples.ItemSequence;
 
@@ -70,7 +70,7 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
     }
 
     @Override
-    public void doNext(final Response input) throws Exception {
+    public void doStep(final Response input) throws Exception {
         if (doStatus != null) {
             if (preinstructions != null) {
                 if (input != null && input instanceof PrevNextResponse) {
@@ -93,7 +93,7 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
             if (doStatus.currentTrialIndex < trials.size()) {
                 final Trial trial = test.getTrial(trials.get(doStatus.currentTrialIndex++));
                 trial.doBegin();
-                test.doNext(null);
+                test.doStep(null);
                 return;
             }
             if (postinstructions != null) {
