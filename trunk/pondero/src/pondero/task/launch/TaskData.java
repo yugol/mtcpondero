@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import pondero.data.model.basic.TrialRecord;
 
-public class TaskMonitor {
+public class TaskData {
 
     public static final int         END_SUCCESS = 0;
     public static final int         END_KILL    = -9;
@@ -15,7 +15,7 @@ public class TaskMonitor {
     private int                     stopCode;
     private final List<TrialRecord> records     = new ArrayList<TrialRecord>();
 
-    public TaskMonitor(final long runId) {
+    public TaskData(final long runId) {
         this.runId = runId;
     }
 

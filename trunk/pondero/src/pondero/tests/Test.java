@@ -10,7 +10,7 @@ import pondero.data.model.basic.TestInstance;
 import pondero.data.model.basic.TrialRecord;
 import pondero.task.launch.DefaultLauncher;
 import pondero.task.launch.TaskLauncher;
-import pondero.task.launch.TaskMonitor;
+import pondero.task.launch.TaskData;
 import pondero.task.responses.Response;
 import pondero.tests.elements.interfaces.HasFeedback.FeedbackStimulus;
 import pondero.tests.elements.interfaces.HasScreencolor;
@@ -24,7 +24,7 @@ public abstract class Test extends TestRenderer implements IsController {
     private Workbook                  workbook;
     private Participant               participant;
     private TaskLauncher              launcher;
-    private TaskMonitor               monitor;
+    private TaskData               monitor;
     private TrialRecord               record;
 
     private final Stack<IsController> controllerStack = new Stack<IsController>();
@@ -49,7 +49,7 @@ public abstract class Test extends TestRenderer implements IsController {
     @Override
     public synchronized void doBegin() throws Exception {
         controllerStack.clear();
-        monitor = new TaskMonitor(System.currentTimeMillis());
+        monitor = new TaskData(System.currentTimeMillis());
         monitor.markStartTime();
         launcher.onTaskStarted(this);
         if (getExperiment() != null) {
@@ -63,7 +63,7 @@ public abstract class Test extends TestRenderer implements IsController {
 
     @Override
     public synchronized void doEnd() {
-        monitor.markStopTime(TaskMonitor.END_SUCCESS);
+        monitor.markStopTime(TaskData.END_SUCCESS);
         getTestWindow().hideTestWindow();
         launcher.onTaskEnded(this, monitor);
     }
@@ -98,7 +98,7 @@ public abstract class Test extends TestRenderer implements IsController {
     }
 
     public void kill() {
-        monitor.markStopTime(TaskMonitor.END_KILL);
+        monitor.markStopTime(TaskData.END_KILL);
         launcher.onTaskEnded(this, monitor);
     }
 
