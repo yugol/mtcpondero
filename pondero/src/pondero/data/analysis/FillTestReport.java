@@ -8,7 +8,7 @@ import pondero.data.model.PType;
 import pondero.data.model.basic.BasicModel;
 import pondero.data.model.basic.TestRecords;
 import pondero.data.model.basic.TrialRecord;
-import pondero.tests.test.Test;
+import pondero.tests.Test;
 
 public class FillTestReport extends ReportFilling {
 

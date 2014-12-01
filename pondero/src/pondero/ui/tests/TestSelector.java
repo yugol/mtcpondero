@@ -16,7 +16,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import pondero.Context;
 import pondero.L10n;
-import pondero.tests.test.Test;
+import pondero.tests.Test;
 import pondero.ui.DialogSelectionListener;
 import pondero.util.SwingUtil;
 

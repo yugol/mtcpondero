@@ -1,6 +1,6 @@
 package pondero.tests.elements.interfaces;
 
-import pondero.tests.test.stimuli.VisualStimulus;
+import pondero.task.stimuli.VisualStimulus;
 
 public interface IsVisualStimulus extends HasPosition, HasSize, IsStimulus {
 

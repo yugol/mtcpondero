@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import pondero.task.responses.PrevNextResponse;
+import pondero.task.responses.Response;
 import pondero.tests.elements.Element;
 import pondero.tests.elements.interfaces.HasBlockfeedback;
 import pondero.tests.elements.interfaces.HasFeedback;
@@ -15,8 +17,6 @@ import pondero.tests.elements.interfaces.IsController;
 import pondero.tests.elements.trial.Trial;
 import pondero.tests.staples.ElementUtil;
 import pondero.tests.staples.ItemSequence;
-import pondero.tests.test.responses.PrevNextResponse;
-import pondero.tests.test.responses.Response;
 
 public class Block extends Element implements HasBlockfeedback, HasFeedback, HasPreInstructions, HasPostInstructions, HasScreencolor, IsController {
 

@@ -1,6 +1,6 @@
 package pondero.tests.elements.interfaces;
 
-import pondero.tests.test.stimuli.AuditoryStimulus;
+import pondero.task.stimuli.AuditoryStimulus;
 
 public interface IsAuditoryStimulus extends IsStimulus {
 

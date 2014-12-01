@@ -1,12 +1,12 @@
 package pondero.tests.elements.trial;
 
 import java.util.List;
+import pondero.task.responses.LikertResponse;
+import pondero.task.responses.Response;
+import pondero.tests.Test;
 import pondero.tests.elements.interfaces.HasPosition;
 import pondero.tests.staples.Coordinate;
 import pondero.tests.staples.Coordinates;
-import pondero.tests.test.Test;
-import pondero.tests.test.responses.LikertResponse;
-import pondero.tests.test.responses.Response;
 import pondero.ui.testing.TestScene;
 import pondero.ui.testing.components.TestDrawableComponent;
 import pondero.ui.testing.components.TestLikertComponent;

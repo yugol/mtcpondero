@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import pondero.Constants;
-import pondero.tests.test.Test;
+import pondero.tests.Test;
 import pondero.ui.testing.TestSceneComponent;
 import pondero.util.SwingUtil;
 

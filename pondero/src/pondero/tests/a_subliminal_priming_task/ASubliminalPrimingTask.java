@@ -2,6 +2,7 @@ package pondero.tests.a_subliminal_priming_task;
 
 import java.awt.Color;
 import pondero.Constants;
+import pondero.tests.Test;
 import pondero.tests.elements.interfaces.HasBlockfeedback;
 import pondero.tests.elements.other.Block;
 import pondero.tests.elements.other.Expt;
@@ -10,9 +11,8 @@ import pondero.tests.elements.other.Item;
 import pondero.tests.elements.other.Page;
 import pondero.tests.elements.stimulus.Text;
 import pondero.tests.elements.trial.Trial;
-import pondero.tests.test.Test;
-import pondero.tests.update.Artifact;
-import pondero.tests.update.ArtifactType;
+import pondero.tests.management.Artifact;
+import pondero.tests.management.ArtifactType;
 
 public class ASubliminalPrimingTask extends Test {
 

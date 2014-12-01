@@ -2,6 +2,7 @@ package pondero.tests.elements.stimulus;
 
 import java.awt.Color;
 import java.io.IOException;
+import pondero.task.stimuli.PictureStimulus;
 import pondero.tests.elements.Element;
 import pondero.tests.elements.interfaces.HasErase;
 import pondero.tests.elements.interfaces.HasItems;
@@ -11,7 +12,6 @@ import pondero.tests.staples.Coordinate;
 import pondero.tests.staples.Coordinates;
 import pondero.tests.staples.ElementUtil;
 import pondero.tests.staples.ItemSelection;
-import pondero.tests.test.stimuli.PictureStimulus;
 import pondero.ui.exceptions.ExceptionReporting;
 
 public class Picture extends Element implements HasErase, HasItems, IsVisualStimulus {

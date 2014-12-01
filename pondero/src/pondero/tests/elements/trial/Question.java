@@ -1,6 +1,6 @@
 package pondero.tests.elements.trial;
 
-import pondero.tests.test.Test;
+import pondero.tests.Test;
 import pondero.ui.testing.TestScene;
 import pondero.ui.testing.components.ItemQuestionComponent;
 import pondero.ui.testing.components.TestLikertComponent;

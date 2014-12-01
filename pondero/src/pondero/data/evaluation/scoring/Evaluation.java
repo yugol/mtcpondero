@@ -3,7 +3,7 @@ package pondero.data.evaluation.scoring;
 import java.util.List;
 import pondero.data.evaluation.profile.ProfileEntry;
 import pondero.data.model.basic.TestInstance;
-import pondero.tests.test.Test;
+import pondero.tests.Test;
 
 public abstract class Evaluation {
 

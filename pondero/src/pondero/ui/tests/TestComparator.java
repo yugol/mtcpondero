@@ -1,8 +1,8 @@
 package pondero.ui.tests;
 
 import java.util.Comparator;
-import pondero.tests.test.Test;
-import pondero.tests.update.Artifact;
+import pondero.tests.Test;
+import pondero.tests.management.Artifact;
 
 public class TestComparator implements Comparator<Test> {
 

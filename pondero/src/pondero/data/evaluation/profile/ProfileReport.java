@@ -15,7 +15,7 @@ import pondero.data.evaluation.scoring.Evaluation;
 import pondero.data.model.basic.BasicModel;
 import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.TestInstance;
-import pondero.tests.test.Test;
+import pondero.tests.Test;
 
 public class ProfileReport extends PdfReport {
 

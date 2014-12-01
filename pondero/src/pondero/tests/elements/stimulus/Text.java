@@ -2,6 +2,7 @@ package pondero.tests.elements.stimulus;
 
 import java.awt.Color;
 import java.awt.Font;
+import pondero.task.stimuli.TextStimulus;
 import pondero.tests.elements.Element;
 import pondero.tests.elements.interfaces.HasErase;
 import pondero.tests.elements.interfaces.HasFont;
@@ -13,7 +14,6 @@ import pondero.tests.staples.Coordinate;
 import pondero.tests.staples.Coordinates;
 import pondero.tests.staples.ElementUtil;
 import pondero.tests.staples.ItemSelection;
-import pondero.tests.test.stimuli.TextStimulus;
 
 public class Text extends Element implements HasErase, HasFont, HasItems, HasTextColors, IsVisualStimulus {
 

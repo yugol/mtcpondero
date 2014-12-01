@@ -1,8 +1,8 @@
 package pondero.tests.elements;
 
 import java.util.UUID;
-import pondero.tests.test.Test;
-import pondero.tests.test.TestBase;
+import pondero.tests.Test;
+import pondero.tests.TestBase;
 
 /*
  * method naming conventions

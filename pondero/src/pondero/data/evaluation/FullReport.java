@@ -9,7 +9,7 @@ import pondero.data.evaluation.profile.ProfileReport;
 import pondero.data.model.basic.BasicModel;
 import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.TestInstance;
-import pondero.tests.test.Test;
+import pondero.tests.Test;
 import pondero.util.TimeUtil;
 
 public class FullReport extends ProfileReport {
