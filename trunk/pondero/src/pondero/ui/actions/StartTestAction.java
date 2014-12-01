@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import pondero.L10n;
-import pondero.task.launch.TaskLauncher;
+import pondero.task.launch.TaskMonitor;
 import pondero.task.launch.TaskData;
 import pondero.tests.Test;
 import pondero.ui.Ponderable;
@@ -14,7 +14,7 @@ import pondero.ui.Pondero;
 import pondero.ui.exceptions.ExceptionReporting;
 
 @SuppressWarnings("serial")
-public class StartTestAction extends PonderableAction implements TaskLauncher {
+public class StartTestAction extends PonderableAction implements TaskMonitor {
 
     public StartTestAction(final Ponderable app) {
         super(app);

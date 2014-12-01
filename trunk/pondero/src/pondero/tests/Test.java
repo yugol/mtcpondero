@@ -8,9 +8,9 @@ import pondero.data.evaluation.scoring.Evaluation;
 import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.TestInstance;
 import pondero.data.model.basic.TrialRecord;
-import pondero.task.launch.DefaultLauncher;
-import pondero.task.launch.TaskLauncher;
+import pondero.task.launch.DefaultMonitor;
 import pondero.task.launch.TaskData;
+import pondero.task.launch.TaskMonitor;
 import pondero.task.responses.Response;
 import pondero.tests.elements.interfaces.HasFeedback.FeedbackStimulus;
 import pondero.tests.elements.interfaces.HasScreencolor;
@@ -23,8 +23,8 @@ public abstract class Test extends TestRenderer implements IsController {
 
     private Workbook                  workbook;
     private Participant               participant;
-    private TaskLauncher              launcher;
-    private TaskData               monitor;
+    private TaskData                  taskData;
+    private TaskMonitor               taskMonitor;
     private TrialRecord               record;
 
     private final Stack<IsController> controllerStack = new Stack<IsController>();
@@ -32,7 +32,7 @@ public abstract class Test extends TestRenderer implements IsController {
 
     public void closeRecord() {
         if (record != null) {
-            monitor.add(record);
+            taskData.add(record);
             record = null;
         }
     }
@@ -49,9 +49,9 @@ public abstract class Test extends TestRenderer implements IsController {
     @Override
     public synchronized void doBegin() throws Exception {
         controllerStack.clear();
-        monitor = new TaskData(System.currentTimeMillis());
-        monitor.markStartTime();
-        launcher.onTaskStarted(this);
+        taskData = new TaskData(System.currentTimeMillis());
+        taskData.markStartTime();
+        taskMonitor.onTaskStarted(this);
         if (getExperiment() != null) {
             getExperiment().doBegin();
         } else if (blocks.size() > 0) {
@@ -63,9 +63,9 @@ public abstract class Test extends TestRenderer implements IsController {
 
     @Override
     public synchronized void doEnd() {
-        monitor.markStopTime(TaskData.END_SUCCESS);
+        taskData.markStopTime(TaskData.END_SUCCESS);
         getTestWindow().hideTestWindow();
-        launcher.onTaskEnded(this, monitor);
+        taskMonitor.onTaskEnded(this, taskData);
     }
 
     @Override
@@ -98,12 +98,12 @@ public abstract class Test extends TestRenderer implements IsController {
     }
 
     public void kill() {
-        monitor.markStopTime(TaskData.END_KILL);
-        launcher.onTaskEnded(this, monitor);
+        taskData.markStopTime(TaskData.END_KILL);
+        taskMonitor.onTaskEnded(this, taskData);
     }
 
     public void openRecord(final Trial trial) throws Exception {
-        record = createRecord(monitor.getRunId());
+        record = createRecord(taskData.getRunId());
         if (record != null) {
             if (participant != null) {
                 record.setParticipant(participant);
@@ -174,7 +174,7 @@ public abstract class Test extends TestRenderer implements IsController {
             doBegin();
             doStep(null);
         } catch (final Exception e) {
-            launcher.onTaskEnded(this, monitor);
+            taskMonitor.onTaskEnded(this, taskData);
             ExceptionReporting.showExceptionMessage(null, e);
         }
     }
@@ -187,8 +187,8 @@ public abstract class Test extends TestRenderer implements IsController {
         this.workbook = workbook;
     }
 
-    public void start(final TaskLauncher launcher) {
-        this.launcher = launcher == null ? new DefaultLauncher() : launcher;
+    public void start(final TaskMonitor launcher) {
+        taskMonitor = launcher == null ? new DefaultMonitor() : launcher;
         EventQueue.invokeLater(this);
     }
 
