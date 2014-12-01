@@ -3,7 +3,7 @@ package pondero.task.launch;
 import pondero.data.model.basic.TrialRecord;
 import pondero.tests.Test;
 
-public class DefaultLauncher implements TaskLauncher {
+public class DefaultMonitor implements TaskMonitor {
 
     @Override
     public void onTaskEnded(final Test task, final TaskData report) {
