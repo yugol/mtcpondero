@@ -50,13 +50,13 @@ import pondero.ui.actions.ModifyParticipantAction;
 import pondero.ui.actions.OpenWorkbookAction;
 import pondero.ui.actions.QuitAction;
 import pondero.ui.actions.RestartAction;
-import pondero.ui.actions.ViewWorkbookAction;
 import pondero.ui.actions.SaveAsDocumentAction;
 import pondero.ui.actions.SaveDocumentAction;
 import pondero.ui.actions.SelectParticipantAction;
 import pondero.ui.actions.SetPreferencesAction;
 import pondero.ui.actions.StartTestAction;
 import pondero.ui.actions.UpdateAction;
+import pondero.ui.actions.ViewWorkbookAction;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.status.StatusBar;
 import pondero.ui.tests.TestSelector;
@@ -131,7 +131,7 @@ public class Pondero implements Ponderable, PModelListener {
     private final Action             modifyParticipantAction    = new ModifyParticipantAction(this);
     private final Action             quitAction                 = new QuitAction(this);
     private final Action             restartAction              = new RestartAction(this);
-    private final Action             viewWorkbook                = new ViewWorkbookAction(this);
+    private final Action             viewWorkbook               = new ViewWorkbookAction(this);
     private final Action             saveAsDocument             = new SaveAsDocumentAction(this);
     private final Action             saveDocument               = new SaveDocumentAction(this);
     private final Action             selectParticipantAction    = new SelectParticipantAction(this);
@@ -234,7 +234,7 @@ public class Pondero implements Ponderable, PModelListener {
                 final CardLayout cl = (CardLayout) stage.getLayout();
                 cl.show(stage, "pnlParticipantSelection");
                 lblPageTitle.setText(L10n.getString("lbl.CHOOSE-PARTICIPANT"));
-                lblPageHint.setText(L10n.getString("msg.CHOOSE-PARTICIPANT"));
+                lblPageHint.setText(L10n.getString("msg.CHOOSE-PARTICIPANT", L10n.getString("lbl.next")));
                 epParticipantDescription.setEnabled(true);
                 epParticipantDescription.setText(Participant.getHtml(currentParticipant));
                 btnSelectParticipant.setEnabled(currentWorkbook != null && currentWorkbook.getParticipantCount() > 0);
@@ -245,7 +245,7 @@ public class Pondero implements Ponderable, PModelListener {
                 final CardLayout cl = (CardLayout) stage.getLayout();
                 cl.show(stage, "pnlTestSelection");
                 lblPageTitle.setText(L10n.getString("lbl.CHOOSE-TEST"));
-                lblPageHint.setText(L10n.getString("msg.CHOOSE-TEST"));
+                lblPageHint.setText(L10n.getString("msg.CHOOSE-TEST", L10n.getString("lbl.start"), L10n.getString("lbl.back")));
                 btnStart.setEnabled(currentWorkbook != null && (currentParticipant != null || Context.isParticipantOptional()) && currentTask != null);
             }
         }
