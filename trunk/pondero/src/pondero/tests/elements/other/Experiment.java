@@ -10,7 +10,7 @@ import pondero.tests.elements.interfaces.HasPreInstructions;
 import pondero.tests.elements.interfaces.IsController;
 import pondero.tests.staples.ItemSequence;
 
-public class Expt extends Element implements HasPreInstructions, HasPostInstructions, IsController {
+public class Experiment extends Element implements HasPreInstructions, HasPostInstructions, IsController {
 
     private class DoStatus {
 
@@ -28,18 +28,8 @@ public class Expt extends Element implements HasPreInstructions, HasPostInstruct
 
     private DoStatus           doStatus;
 
-    public Expt() {
+    public Experiment() {
         super("");
-    }
-
-    @Override
-    public String getTypeName() {
-        return TYPENAME;
-    }
-
-    public void blocks(final String blocks) {
-        this.blocks.clear();
-        this.blocks.addAll(new ItemSequence(blocks).getItems());
     }
 
     @Override
@@ -55,7 +45,7 @@ public class Expt extends Element implements HasPreInstructions, HasPostInstruct
     }
 
     @Override
-    public void doStep(final Response input) throws Exception {
+    public void doNext(final Response input) throws Exception {
         if (doStatus != null) {
             if (preinstructions != null) {
                 if (input != null && input instanceof PrevNextResponse) {
@@ -78,7 +68,7 @@ public class Expt extends Element implements HasPreInstructions, HasPostInstruct
             if (doStatus.currentBlockIndex < blocks.size()) {
                 final Block block = test.getBlock(blocks.get(doStatus.currentBlockIndex++));
                 block.doBegin();
-                test.doStep(null);
+                test.doNext(null);
                 return;
             }
             if (postinstructions != null) {
@@ -101,6 +91,16 @@ public class Expt extends Element implements HasPreInstructions, HasPostInstruct
             }
             doEnd();
         }
+    }
+
+    @Override
+    public String getTypeName() {
+        return TYPENAME;
+    }
+
+    public void setBlocks(final String blocks) {
+        this.blocks.clear();
+        this.blocks.addAll(new ItemSequence(blocks).getItems());
     }
 
     @Override

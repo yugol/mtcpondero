@@ -19,7 +19,7 @@ public class TestKeyAdapter extends KeyAdapter {
             final PrevNextResponse input = new PrevNextResponse();
             input.setNext(evt.getKeyChar() == test.getInstructions().getNextkey());
             input.setPrev(evt.getKeyChar() == test.getInstructions().getPrevkey());
-            test.doStep(input);
+            test.doNext(input);
         } catch (final Exception e) {
         }
     }

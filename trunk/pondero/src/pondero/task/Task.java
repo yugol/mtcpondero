@@ -6,9 +6,11 @@ import pondero.task.launch.TaskData;
 import pondero.task.launch.TaskRenderer;
 import pondero.task.responses.Response;
 import pondero.tests.Test;
+import pondero.tests.elements.interfaces.IsNavigableController;
 import pondero.tests.elements.other.Instruct;
+import pondero.ui.exceptions.ExceptionReporting;
 
-public class Task extends TaskBase implements Runnable, Testable {
+public class Task extends TaskBase implements Runnable, Testable, IsNavigableController {
 
     public Task(final TaskRenderer renderer, final Test test) {
         super(renderer, test);
@@ -26,29 +28,53 @@ public class Task extends TaskBase implements Runnable, Testable {
     }
 
     @Override
-    public void doStep(final Response input) throws Exception {
+    public void doBegin() throws Exception {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void doEnd() throws Exception {
+        getData().markStopTime(TaskData.END_SUCCESS);
+        cleanup();
+    }
+
+    @Override
+    public void doNext(final Response input) throws Exception {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void doPrev(final Response input) throws Exception {
         // TODO Auto-generated method stub
 
     }
 
     @Override
     public Instruct getInstructions() {
-        // TODO Auto-generated method stub
+        // TODO Auto-generated method stub 
         return null;
     }
 
     @Override
     public void kill() {
-        getData().markStopTime(TaskData.END_KILL);
-        getRenderer().destroy();
-        signalTaskEnded();
+        getData().markStopTime(TaskData.END_USER);
+        cleanup();
     }
 
     @Override
     public void run() {
-        signalTaskStarted();
-        getData().markStartTime();
-        getRenderer().init();
+        try {
+            doBegin();
+            signalTaskStarted();
+            getRenderer().doBegin();
+            getData().markStartTime();
+            doNext(null);
+        } catch (final Exception e) {
+            getData().markStopTime(TaskData.END_ERROR);
+            cleanup();
+            ExceptionReporting.showExceptionMessage(null, e);
+        }
     }
 
 }

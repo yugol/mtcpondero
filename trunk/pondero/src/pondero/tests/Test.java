@@ -70,17 +70,17 @@ public abstract class Test extends TestRenderer implements IsController, Testabl
     }
 
     @Override
-    public synchronized void doStep(final Response input) throws Exception {
+    public synchronized void doNext(final Response input) throws Exception {
         final IsController controller = peekController();
         if (controller == null) {
             doEnd();
         } else {
-            controller.doStep(input);
+            controller.doNext(input);
         }
     }
 
     public List<String> getBgstim() {
-        if (currentBlock != null) { return currentBlock._getBgstim(); }
+        if (currentBlock != null) { return currentBlock.getBgstim(); }
         return null;
     }
 
@@ -100,7 +100,7 @@ public abstract class Test extends TestRenderer implements IsController, Testabl
 
     @Override
     public void kill() {
-        taskData.markStopTime(TaskData.END_KILL);
+        taskData.markStopTime(TaskData.END_USER);
         taskMonitor.onTaskEnded(this, taskData);
     }
 
@@ -135,7 +135,7 @@ public abstract class Test extends TestRenderer implements IsController, Testabl
         if (controller instanceof HasScreencolor) {
             popScreencolor();
         }
-        doStep(null);
+        doNext(null);
     }
 
     public void pushController(final IsController controller) {
@@ -174,7 +174,7 @@ public abstract class Test extends TestRenderer implements IsController, Testabl
             pushScreencolor(getDefaults());
             getTestWindow().showTestWindow();
             doBegin();
-            doStep(null);
+            doNext(null);
         } catch (final Exception e) {
             taskMonitor.onTaskEnded(this, taskData);
             ExceptionReporting.showExceptionMessage(null, e);

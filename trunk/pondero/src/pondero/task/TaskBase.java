@@ -57,6 +57,11 @@ public abstract class TaskBase {
         return workbook;
     }
 
+    protected void cleanup() {
+        renderer.doEnd();
+        signalTaskEnded();
+    }
+
     protected TaskRenderer getRenderer() {
         return renderer;
     }
