@@ -8,6 +8,7 @@ import pondero.data.model.basic.Participant;
 import pondero.task.controllers.BlockController;
 import pondero.task.controllers.ExperimentController;
 import pondero.task.controllers.PageController;
+import pondero.task.controllers.RootController;
 import pondero.task.controllers.TaskController;
 import pondero.task.controllers.TrialController;
 import pondero.task.launch.TaskData;
@@ -16,9 +17,8 @@ import pondero.task.launch.TaskRenderer;
 import pondero.tests.Test;
 import pondero.tests.elements.other.Block;
 import pondero.tests.elements.other.Experiment;
-import pondero.tests.elements.other.Instruct;
 
-public abstract class TaskBase implements Iterable<TaskController> {
+public abstract class TaskBase extends Thread implements Iterable<TaskController> {
 
     private final TaskRenderer         renderer;
     private final Test                 test;
@@ -26,7 +26,6 @@ public abstract class TaskBase implements Iterable<TaskController> {
     private final Participant          participant;
     private final TaskData             data     = new TaskData(System.currentTimeMillis()); ;
     private final List<TaskMonitor>    monitors = new ArrayList<>();
-    private ExperimentController       root;
     private final List<TaskController> leaves   = new ArrayList<>();
 
     protected TaskBase(final TaskRenderer renderer, final Test test) {
@@ -76,26 +75,18 @@ public abstract class TaskBase implements Iterable<TaskController> {
 
     protected void buildExperimentTree() {
         final Experiment experiment = test.getExperiment();
-        root = new ExperimentController((Task) this, experiment);
-
-        final Instruct instruct = test.getInstructions();
-        root.setInstructFont(instruct.getFont());
-        root.setInstructNextKey(instruct.getNextkey());
-        root.setInstructPrevKey(instruct.getPrevkey());
-        root.setInstructScreenColor(instruct.getScreenColor());
-        root.setInstructTextColor(instruct.getTextColor());
-
+        final TaskController node = new ExperimentController((Task) this, experiment);
         if (experiment.getPreinstructions() != null) {
             for (final String pageId : experiment.getPreinstructions()) {
                 final TaskController leaf = new PageController((Task) this, test.getPage(pageId));
-                root.addChild(leaf);
+                node.addChild(leaf);
                 leaves.add(leaf);
             }
         }
         for (final String blockId : experiment.getBlocks()) {
             final Block block = test.getBlock(blockId);
             final BlockController controller = new BlockController((Task) this, block);
-            root.addChild(controller);
+            node.addChild(controller);
             if (block.getPreinstructions() != null) {
                 for (final String pageId : block.getPreinstructions()) {
                     final TaskController leaf = new PageController((Task) this, test.getPage(pageId));
@@ -119,16 +110,19 @@ public abstract class TaskBase implements Iterable<TaskController> {
         if (experiment.getPostinstructions() != null) {
             for (final String pageId : experiment.getPostinstructions()) {
                 final TaskController leaf = new PageController((Task) this, test.getPage(pageId));
-                root.addChild(leaf);
+                node.addChild(leaf);
                 leaves.add(leaf);
             }
         }
+        final RootController root = new RootController((Task) this, test.getDefaults(), test.getInstructions());
+        root.addChild(node);
     }
 
     protected synchronized void cleanUp(final int errorCode) {
         data.markStopTime(errorCode);
         renderer.doEnd();
         signalTaskEnded();
+        interrupt();
     }
 
     protected TaskRenderer getRenderer() {

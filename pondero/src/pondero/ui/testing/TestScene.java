@@ -2,8 +2,10 @@ package pondero.ui.testing;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.util.List;
 import javax.swing.JPanel;
 import pondero.task.Testable;
+import pondero.task.stimuli.VisualStimulus;
 
 @SuppressWarnings("serial")
 public class TestScene extends JPanel {
@@ -12,6 +14,14 @@ public class TestScene extends JPanel {
         setFocusable(true);
         setBorder(null);
         setLayout(new BorderLayout());
+    }
+
+    public void clear() {
+        setNorth(null);
+        setWest(null);
+        setCenter(null);
+        setEast(null);
+        setSouth(null);
     }
 
     public void focalize() {
@@ -25,8 +35,20 @@ public class TestScene extends JPanel {
         return (TestSceneComponent) getSceneComponent(BorderLayout.CENTER);
     }
 
+    public TestSceneComponent getEast() {
+        return (TestSceneComponent) getSceneComponent(BorderLayout.EAST);
+    }
+
+    public TestSceneComponent getNorth() {
+        return (TestSceneComponent) getSceneComponent(BorderLayout.NORTH);
+    }
+
     public TestSceneComponent getSouth() {
         return (TestSceneComponent) getSceneComponent(BorderLayout.SOUTH);
+    }
+
+    public TestSceneComponent getWest() {
+        return (TestSceneComponent) getSceneComponent(BorderLayout.WEST);
     }
 
     public void setCenter(final TestSceneComponent component) {
@@ -43,6 +65,29 @@ public class TestScene extends JPanel {
 
     public void setSouth(final TestSceneComponent component) {
         setSceneComponent(component, BorderLayout.SOUTH);
+    }
+
+    public void setStimuli(final List<VisualStimulus> visualStimuli) {
+        TestSceneComponent component = getNorth();
+        if (component != null) {
+            component.setVisualStimuli(visualStimuli);
+        }
+        component = getWest();
+        if (component != null) {
+            component.setVisualStimuli(visualStimuli);
+        }
+        component = getCenter();
+        if (component != null) {
+            component.setVisualStimuli(visualStimuli);
+        }
+        component = getEast();
+        if (component != null) {
+            component.setVisualStimuli(visualStimuli);
+        }
+        component = getSouth();
+        if (component != null) {
+            component.setVisualStimuli(visualStimuli);
+        }
     }
 
     public void setWest(final TestSceneComponent component) {

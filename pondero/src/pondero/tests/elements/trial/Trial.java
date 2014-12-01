@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.swing.Timer;
+import pondero.Constants;
 import pondero.Context;
 import pondero.Logger;
 import pondero.task.controllers.Timing;
@@ -61,12 +62,19 @@ public class Trial extends Element implements HasFeedback, IsController {
     private String               trialCode;
     private final Set<String>    validResponses   = new HashSet<String>();
     private final List<Response> responses        = new ArrayList<Response>();
+    private final TrialLayout    layout           = new TrialLayout();
 
     private DoStatus             doStatus;
 
     public Trial(final String name) {
         super(name);
         trialCode = name;
+        getLayout().setCenter(Constants.DRAWABLE_LAYOUT_COMPONENT);
+    }
+
+    public String buildRecordedResponse(final List<Response> input) {
+        final Response participantInput = input.get(0);
+        return participantInput.toRecordedResponseString();
     }
 
     @Override
@@ -190,6 +198,26 @@ public class Trial extends Element implements HasFeedback, IsController {
         return null;
     }
 
+    public TrialLayout getLayout() {
+        return layout;
+    }
+
+    public long getPostTrialPause() {
+        return postTrialPause;
+    }
+
+    public long getPreTrialPause() {
+        return preTrialPause;
+    }
+
+    public Long getResponseTime(final List<Response> input) {
+        return input.get(0).getTime();
+    }
+
+    public FrameSequence getStimulusTimes() {
+        return stimulusTimes;
+    }
+
     public int getTimeout() {
         return timeout;
     }
@@ -201,6 +229,19 @@ public class Trial extends Element implements HasFeedback, IsController {
     @Override
     public String getTypeName() {
         return TYPENAME;
+    }
+
+    public Set<String> getValidResponses() {
+        return validResponses;
+    }
+
+    public boolean isCorrectResponse(final List<Response> input) {
+        final Response participantInput = input.get(0);
+        if (participantInput instanceof KeyPressResponse) {
+            final KeyPressResponse keyResponse = (KeyPressResponse) participantInput;
+            return correctResponses.contains(keyResponse.getCharAsString());
+        }
+        return false;
     }
 
     public boolean isKillerUserInput() {
@@ -309,11 +350,6 @@ public class Trial extends Element implements HasFeedback, IsController {
         }
     }
 
-    protected String buildRecordedResponse(final List<Response> input) {
-        final Response participantInput = input.get(0);
-        return participantInput.toRecordedResponseString();
-    }
-
     protected void configureScene() {
         final Test test = getTest();
         final TestScene scene = test.getTestWindow().getScene();
@@ -324,19 +360,6 @@ public class Trial extends Element implements HasFeedback, IsController {
         scene.setEast(null);
         scene.setWest(null);
         scene.setSouth(null);
-    }
-
-    protected Long getResponseTime(final List<Response> input) {
-        return input.get(0).getTime();
-    }
-
-    protected boolean isCorrectResponse(final List<Response> input) {
-        final Response participantInput = input.get(0);
-        if (participantInput instanceof KeyPressResponse) {
-            final KeyPressResponse keyResponse = (KeyPressResponse) participantInput;
-            return correctResponses.contains(keyResponse.getCharAsString());
-        }
-        return false;
     }
 
 }
