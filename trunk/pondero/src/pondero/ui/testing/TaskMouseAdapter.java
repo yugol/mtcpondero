@@ -2,17 +2,16 @@ package pondero.ui.testing;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import pondero.task.Testable;
+import pondero.task.controllers.PageController;
 import pondero.task.responses.PrevNextResponse;
 
-@Deprecated
-public class TestMouseAdapter extends MouseAdapter {
+public class TaskMouseAdapter extends MouseAdapter {
 
-    private final Testable test;
-    private final boolean  next;
+    private final PageController pageController;
+    private final boolean        next;
 
-    public TestMouseAdapter(final Testable test, final boolean next) {
-        this.test = test;
+    public TaskMouseAdapter(final PageController pageController, final boolean next) {
+        this.pageController = pageController;
         this.next = next;
     }
 
@@ -21,7 +20,7 @@ public class TestMouseAdapter extends MouseAdapter {
         final PrevNextResponse input = new PrevNextResponse();
         input.setNext(next);
         try {
-            test.doStep(input);
+            pageController.doStep(input);
         } catch (final Exception e) {
         }
     }

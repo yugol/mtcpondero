@@ -2,6 +2,7 @@ package pondero.tests.elements.other;
 
 import java.awt.Color;
 import java.awt.Font;
+import pondero.Constants;
 import pondero.tests.elements.Element;
 import pondero.tests.interfaces.HasFont;
 import pondero.tests.interfaces.HasInputDevice;
@@ -13,12 +14,12 @@ public class Instruct extends Element implements HasFont, HasTextColor, HasInput
 
     public static final String TYPENAME    = "instruct";
 
-    private Font               font        = null;
+    private Font               font        = Constants.DEFAULT_INSTRUCT_FONT;
     private InputDevice        inputDevice = null;
-    private Character          nextkey     = ' ';
-    private Character          prevkey     = null;
-    private Color              screenColor = null;
-    private Color              txcolor     = null;
+    private Character          nextkey     = Constants.DEFAULT_INSTRUCT_NEXT_KEY;
+    private Character          prevkey     = Constants.DEFAULT_INSTRUCT_PREV_KEY;
+    private Color              screenColor = Constants.DEFAULT_INSTRUCT_SCREEN_COLOR;
+    private Color              txcolor     = Constants.DEFAULT_INSTRUCT_TEXT_COLOR;
 
     public Instruct() {
         super("");

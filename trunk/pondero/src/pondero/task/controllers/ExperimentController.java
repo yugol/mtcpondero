@@ -6,11 +6,8 @@ import pondero.tests.elements.other.Experiment;
 
 public class ExperimentController extends TaskController {
 
-    private final Experiment experiment;
-
     public ExperimentController(final Task task, final Experiment experiment) {
-        super(task);
-        this.experiment = experiment;
+        super(task, experiment);
     }
 
     @Override
@@ -31,8 +28,9 @@ public class ExperimentController extends TaskController {
 
     }
 
-    public Experiment getExperiment() {
-        return experiment;
+    @Override
+    public Experiment getElement() {
+        return (Experiment) super.getElement();
     }
 
 }

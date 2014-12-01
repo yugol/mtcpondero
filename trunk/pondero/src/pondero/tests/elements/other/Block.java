@@ -47,16 +47,6 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
         super(name);
     }
 
-    public List<String> getBgstim() {
-        return bgstim;
-    }
-
-    public void setBgstim(final String... bgstim) {
-        for (final String name : bgstim) {
-            this.bgstim.add(name);
-        }
-    }
-
     @Override
     public void doBegin() {
         doStatus = new DoStatus();
@@ -119,6 +109,10 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
         }
     }
 
+    public List<String> getBgstim() {
+        return bgstim;
+    }
+
     @Override
     public Set<String> getBlockFeedback() {
         return blockfeedback;
@@ -134,14 +128,32 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
         return errormessageFlag && errormessage != null ? errormessage : null;
     }
 
+    public String[] getPostinstructions() {
+        return postinstructions;
+    }
+
+    public String[] getPreinstructions() {
+        return preinstructions;
+    }
+
     @Override
     public Color getScreenColor() {
         return screencolor == null ? test.getDefaults().getScreenColor() : screencolor;
     }
 
+    public List<String> getTrials() {
+        return trials;
+    }
+
     @Override
     public String getTypeName() {
         return TYPENAME;
+    }
+
+    public void setBgstim(final String... bgstim) {
+        for (final String name : bgstim) {
+            this.bgstim.add(name);
+        }
     }
 
     @Override

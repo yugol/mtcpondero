@@ -2,12 +2,12 @@ package pondero.task.controllers;
 
 import pondero.task.Task;
 import pondero.task.responses.Response;
+import pondero.tests.elements.trial.Trial;
 
 public class TrialController extends TaskController {
 
-    public TrialController(final Task task) {
-        super(task);
-        // TODO Auto-generated constructor stub
+    public TrialController(final Task task, final Trial trial) {
+        super(task, trial);
     }
 
     @Override
@@ -26,6 +26,11 @@ public class TrialController extends TaskController {
     public void doStep(final Response input) throws Exception {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public Trial getElement() {
+        return (Trial) super.getElement();
     }
 
 }

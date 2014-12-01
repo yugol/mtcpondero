@@ -1,16 +1,21 @@
 package pondero.task;
 
+import java.util.ListIterator;
 import pondero.data.Workbook;
 import pondero.data.model.basic.Participant;
+import pondero.task.controllers.PageController;
+import pondero.task.controllers.TaskController;
 import pondero.task.launch.TaskData;
 import pondero.task.launch.TaskRenderer;
 import pondero.task.responses.Response;
 import pondero.tests.Test;
 import pondero.tests.elements.other.Instruct;
-import pondero.tests.interfaces.IsController;
 import pondero.ui.exceptions.ExceptionReporting;
 
-public class Task extends TaskBase implements Runnable, Testable, IsController {
+public class Task extends TaskBase implements Runnable, Testable {
+
+    private ListIterator<TaskController> controllerIterator;
+    private TaskController               controller;
 
     public Task(final TaskRenderer renderer, final Test test) {
         super(renderer, test);
@@ -27,21 +32,13 @@ public class Task extends TaskBase implements Runnable, Testable, IsController {
         getRenderer().setTask(this);
     }
 
-    @Override
-    public void doBegin() throws Exception {
-        // TODO Auto-generated method stub
+    public synchronized void doEnd() throws Exception {
+        cleanUp(TaskData.END_SUCCESS);
     }
 
     @Override
-    public void doEnd() throws Exception {
-        getData().markStopTime(TaskData.END_SUCCESS);
-        cleanup();
-    }
-
-    @Override
-    public void doStep(final Response input) throws Exception {
-        // TODO Auto-generated method stub
-
+    public synchronized void doStep(final Response input) throws Exception {
+        controller.doStep(input);
     }
 
     @Override
@@ -50,25 +47,46 @@ public class Task extends TaskBase implements Runnable, Testable, IsController {
         return null;
     }
 
+    public synchronized void goNext() throws Exception {
+        if (controllerIterator.hasNext()) {
+            controller = controllerIterator.next();
+            controller.doBegin();
+            doStep(null);
+        } else {
+            doEnd();
+        }
+    }
+
+    public synchronized void goPrev() throws Exception {
+        if (controllerIterator.hasPrevious()) {
+            controller = controllerIterator.previous();
+            controller.doBegin();
+            doStep(null);
+        }
+    }
+
     @Override
-    public void kill() {
-        getData().markStopTime(TaskData.END_USER);
-        cleanup();
+    public synchronized void kill() {
+        cleanUp(TaskData.END_USER);
     }
 
     @Override
     public void run() {
         try {
-            doBegin();
+
+            controllerIterator = iterator();
             signalTaskStarted();
             getRenderer().doBegin();
             getData().markStartTime();
-            doStep(null);
+            goNext();
         } catch (final Exception e) {
-            getData().markStopTime(TaskData.END_ERROR);
-            cleanup();
+            cleanUp(TaskData.END_ERROR);
             ExceptionReporting.showExceptionMessage(null, e);
         }
+    }
+
+    public void showCurtains(final PageController pageController) {
+        getRenderer().showCurtains(pageController);
     }
 
 }

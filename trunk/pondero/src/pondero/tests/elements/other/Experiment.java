@@ -93,6 +93,18 @@ public class Experiment extends Element implements HasPreInstructions, HasPostIn
         }
     }
 
+    public List<String> getBlocks() {
+        return blocks;
+    }
+
+    public String[] getPostinstructions() {
+        return postinstructions;
+    }
+
+    public String[] getPreinstructions() {
+        return preinstructions;
+    }
+
     @Override
     public String getTypeName() {
         return TYPENAME;
