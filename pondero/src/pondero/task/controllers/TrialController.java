@@ -29,19 +29,29 @@ public class TrialController extends TaskController {
 
     public TrialController(final Task task, final Trial trial) {
         super(task, trial);
-        final Test test = task.getTest();
-        if (test.getBgstim() != null) {
+    }
+
+    @Override
+    public void doBegin() throws Exception {
+        frames.clear();
+        responses.clear();
+        stimulusPresenter = null;
+        trialTimer = null;
+        record = null;
+
+        final Test test = getTask().getTest();
+        if (getBgstim() != null) {
             final StimulusFrame frame = new StimulusFrame(0);
-            for (final String name : test.getBgstim()) {
+            for (final String name : getBgstim()) {
                 final IsStimulus stimulus = test.getStimulus(name);
                 frame.addStimulus(stimulus.getStimulus());
             }
             frames.add(frame);
         }
-        for (final Frame timeFrame : trial.getStimulusTimes()) {
+        for (final Frame timeFrame : getElement().getStimulusTimes()) {
             final StimulusFrame frame = new StimulusFrame(timeFrame.getIndex());
-            if (test.getBgstim() != null) {
-                for (final String name : test.getBgstim()) {
+            if (getBgstim() != null) {
+                for (final String name : getBgstim()) {
                     final IsStimulus stimulus = test.getStimulus(name);
                     frame.addStimulus(stimulus.getStimulus());
                 }
@@ -52,17 +62,12 @@ public class TrialController extends TaskController {
             }
             frames.add(frame);
         }
-    }
 
-    @Override
-    public void doBegin() throws Exception {
-        stimulusPresenter = null;
-        trialTimer = null;
-        responses.clear();
         if (getTask().getWorkbook() != null) {
             record = getTask().getWorkbook().addTrialRecord(getTask().getTest().getDescriptor().getId());
             record.setExperimentId(getTask().getData().getRunId());
         }
+
         getTask().showScene(this);
     }
 

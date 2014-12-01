@@ -75,47 +75,47 @@ public abstract class TaskBase extends Thread implements Iterable<TaskController
 
     protected void buildExperimentTree() {
         final Experiment experiment = test.getExperiment();
-        final TaskController node = new ExperimentController((Task) this, experiment);
+        final TaskController experimentController = new ExperimentController((Task) this, experiment);
         if (experiment.getPreinstructions() != null) {
             for (final String pageId : experiment.getPreinstructions()) {
-                final TaskController leaf = new PageController((Task) this, test.getPage(pageId));
-                node.addChild(leaf);
-                leaves.add(leaf);
+                final PageController pageController = new PageController((Task) this, test.getPage(pageId));
+                experimentController.addChild(pageController);
+                leaves.add(pageController);
             }
         }
         for (final String blockId : experiment.getBlocks()) {
             final Block block = test.getBlock(blockId);
-            final BlockController controller = new BlockController((Task) this, block);
-            node.addChild(controller);
+            final BlockController blockController = new BlockController((Task) this, block);
+            experimentController.addChild(blockController);
             if (block.getPreinstructions() != null) {
                 for (final String pageId : block.getPreinstructions()) {
-                    final TaskController leaf = new PageController((Task) this, test.getPage(pageId));
-                    controller.addChild(leaf);
-                    leaves.add(leaf);
+                    final PageController pageController = new PageController((Task) this, test.getPage(pageId));
+                    blockController.addChild(pageController);
+                    leaves.add(pageController);
                 }
             }
             for (final String trialId : block.getTrials()) {
-                final TaskController leaf = new TrialController((Task) this, test.getTrial(trialId));
-                controller.addChild(leaf);
-                leaves.add(leaf);
+                final TrialController trialController = new TrialController((Task) this, test.getTrial(trialId));
+                blockController.addChild(trialController);
+                leaves.add(trialController);
             }
             if (block.getPostinstructions() != null) {
                 for (final String pageId : block.getPostinstructions()) {
-                    final TaskController leaf = new PageController((Task) this, test.getPage(pageId));
-                    controller.addChild(leaf);
-                    leaves.add(leaf);
+                    final PageController pageController = new PageController((Task) this, test.getPage(pageId));
+                    blockController.addChild(pageController);
+                    leaves.add(pageController);
                 }
             }
         }
         if (experiment.getPostinstructions() != null) {
             for (final String pageId : experiment.getPostinstructions()) {
-                final TaskController leaf = new PageController((Task) this, test.getPage(pageId));
-                node.addChild(leaf);
-                leaves.add(leaf);
+                final PageController pageController = new PageController((Task) this, test.getPage(pageId));
+                experimentController.addChild(pageController);
+                leaves.add(pageController);
             }
         }
-        final RootController root = new RootController((Task) this, test.getDefaults(), test.getInstructions());
-        root.addChild(node);
+        final RootController rootController = new RootController((Task) this, test.getDefaults(), test.getInstructions());
+        rootController.addChild(experimentController);
     }
 
     protected synchronized void cleanUp(final int errorCode) {

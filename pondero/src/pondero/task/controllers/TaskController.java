@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import pondero.task.Task;
 import pondero.tests.elements.Element;
+import pondero.tests.elements.other.Block;
 import pondero.tests.interfaces.HasFeedback;
 import pondero.tests.interfaces.HasFeedback.FeedbackStimulus;
 import pondero.tests.interfaces.HasFont;
@@ -35,6 +36,8 @@ public abstract class TaskController implements IsController {
 
     private FeedbackStimulus           correctMessage;
     private FeedbackStimulus           errorMessage;
+
+    private List<String>               bgstim;
 
     private TaskController             parent;
     private final List<TaskController> children = new ArrayList<>();
@@ -67,11 +70,20 @@ public abstract class TaskController implements IsController {
             correctMessage = foo.getCorrectMessage();
             errorMessage = foo.getErrorMessage();
         }
+        if (element instanceof Block) {
+            final Block foo = (Block) element;
+            bgstim = foo.getBgstim();
+        }
     }
 
     public void addChild(final TaskController child) {
         children.add(child);
         child.setParent(this);
+    }
+
+    public List<String> getBgstim() {
+        if (bgstim == null && parent != null) { return parent.getBgstim(); }
+        return bgstim;
     }
 
     public FeedbackStimulus getCorrectMessage() {
