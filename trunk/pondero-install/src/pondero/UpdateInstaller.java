@@ -10,6 +10,9 @@ public class UpdateInstaller {
         if (args.length > 0) {
             home = args[0];
         }
+        if (home.endsWith("\"")) {
+            home = home.substring(0, home.length() - 1);
+        }
         final File homeFolder = new File(home);
         if (homeFolder.exists()) {
             System.out.println("Clean up " + homeFolder.getCanonicalPath() + " ...");

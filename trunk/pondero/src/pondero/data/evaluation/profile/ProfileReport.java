@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import pondero.Context;
 import pondero.L10n;
+import pondero.Logger;
 import pondero.data.drivers.pdf.PdfPageCanvas;
 import pondero.data.drivers.pdf.PdfParagraph;
 import pondero.data.drivers.pdf.PdfReport;
@@ -60,8 +61,12 @@ public class ProfileReport extends PdfReport {
                 final TestInstance testInstance = model.getRecords(testName).getInstance(participant.getId(), instances.get(instances.size() - 1));
                 final Test test = Context.getTest(testInstance.getTestName());
                 if (test != null) {
-                    final Evaluation evaluation = test.getEvaluation(testInstance);
-                    evaluations.add(evaluation);
+                    try {
+                        final Evaluation evaluation = test.getEvaluation(testInstance);
+                        evaluations.add(evaluation);
+                    } catch (final UnsupportedOperationException ex) {
+                        Logger.warning(ex, test.getCodeName() + " does not support profiling");
+                    }
                 }
             }
         }
