@@ -34,11 +34,6 @@ public class TrialController extends TaskController {
     @Override
     public void doBegin() throws Exception {
         frames.clear();
-        responses.clear();
-        stimulusPresenter = null;
-        trialTimer = null;
-        record = null;
-
         final Test test = getTask().getTest();
         if (getBgstim() != null) {
             final StimulusFrame frame = new StimulusFrame(0);
@@ -63,10 +58,15 @@ public class TrialController extends TaskController {
             frames.add(frame);
         }
 
+        record = null;
         if (getTask().getWorkbook() != null) {
             record = getTask().getWorkbook().addTrialRecord(getTask().getTest().getDescriptor().getId());
             record.setExperimentId(getTask().getData().getRunId());
         }
+
+        responses.clear();
+        stimulusPresenter = null;
+        trialTimer = null;
 
         getTask().showScene(this);
     }
