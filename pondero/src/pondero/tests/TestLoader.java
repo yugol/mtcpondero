@@ -39,9 +39,10 @@ public class TestLoader {
             for (final Artifact candidate : artifacts) {
                 try {
                     final Class<? extends Test> testClass = testClassLoader.loadClass(candidate.getTestClassName()).asSubclass(Test.class);
-                    tests.add(testClass.newInstance());
+                    final Test test = testClass.newInstance();
+                    tests.add(test);
                     info("registered test: ", testClass.getCanonicalName());
-                    Context.registerArtifact(candidate);
+                    Context.registerArtifact(test.getDescriptor());
                 } catch (final ClassCastException e) {
                     warning(candidate.getFileName(), " is not a test");
                 }

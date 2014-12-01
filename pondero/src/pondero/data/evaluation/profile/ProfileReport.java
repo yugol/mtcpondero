@@ -78,7 +78,7 @@ public class ProfileReport extends PdfReport {
 
         for (final Evaluation eval : evaluations) {
             for (final ProfileEntry entry : eval.getProfileEntries()) {
-                drawEntry(canvas, eval.getTest().getArtifactDescriptor().getId(), entry, rowTop, divisions);
+                drawEntry(canvas, eval.getTest().getDescriptor().getId(), entry, rowTop, divisions);
                 rowTop -= TABLE_ROW_HEIGHT;
 
             }

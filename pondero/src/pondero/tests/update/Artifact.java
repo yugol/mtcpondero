@@ -20,10 +20,11 @@ public class Artifact implements Comparable<Artifact> {
             jarStream.close();
             final Attributes attrs = manifest.getMainAttributes();
             final ArtifactType type = ArtifactType.valueOf(attrs.getValue("Pondero-Artifact-Type"));
-            final String id = attrs.getValue("Pondero-Artifact-Id");
-            final int major = Integer.parseInt(attrs.getValue("Pondero-Artifact-Major"));
-            final int minor = Integer.parseInt(attrs.getValue("Pondero-Artifact-Minor"));
-            final String maturity = attrs.getValue("Pondero-Artifact-Maturity");
+            // in order to remove duplicate specification details about the tests will be specified in the code only
+            final String id = ArtifactType.TEST.equals(type) ? "" : attrs.getValue("Pondero-Artifact-Id");
+            final int major = ArtifactType.TEST.equals(type) ? 0 : Integer.parseInt(attrs.getValue("Pondero-Artifact-Major"));
+            final int minor = ArtifactType.TEST.equals(type) ? 0 : Integer.parseInt(attrs.getValue("Pondero-Artifact-Minor"));
+            final String maturity = ArtifactType.TEST.equals(type) ? "" : attrs.getValue("Pondero-Artifact-Maturity");
             final Artifact artifact = new Artifact(type, id, major, minor, maturity);
             if (ArtifactType.TEST.equals(type)) {
                 artifact.setTestClassName(attrs.getValue("Main-Class"));

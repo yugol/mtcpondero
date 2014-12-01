@@ -14,7 +14,7 @@ public class FillTestReport extends ReportFilling {
 
     public void fill(final TestTemplate template, final Test test, final BasicModel model) throws Exception {
         for (final PSheet sheet : model) {
-            if (sheet instanceof TestRecords && test.getArtifactDescriptor().getId().equals(sheet.getName())) {
+            if (sheet instanceof TestRecords && test.getDescriptor().getId().equals(sheet.getName())) {
                 reset(sheet.getName());
                 for (int rowIdx = 0; rowIdx < sheet.getRowCount(); ++rowIdx) {
                     final TrialRecord record = (TrialRecord) sheet.getRow(rowIdx);

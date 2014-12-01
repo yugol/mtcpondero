@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
@@ -72,8 +73,10 @@ public class TestSelector extends JComponent {
     }
 
     private void addTests() {
+        final List<Test> registeredTests = new ArrayList<Test>(Context.REGISTERED_TESTS);
+        Collections.sort(registeredTests, new TestComparator());
         final DefaultListModel<Test> model = (DefaultListModel<Test>) list.getModel();
-        for (final Test test : Context.REGISTERED_TESTS) {
+        for (final Test test : registeredTests) {
             model.addElement(test);
         }
     }

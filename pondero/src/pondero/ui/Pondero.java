@@ -282,7 +282,15 @@ public class Pondero implements Ponderable, PModelListener {
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        mainFrame = new JFrame(L10n.getString("lbl.pondero"));
+        final StringBuilder appName = new StringBuilder(L10n.getString("lbl.pondero"));
+        appName.append(" - v");
+        appName.append(Context.getPonderoArtifact().getMajor());
+        appName.append(".");
+        appName.append(Context.getPonderoArtifact().getMinor());
+        appName.append("-");
+        appName.append(Context.getPonderoArtifact().getMaturity());
+
+        mainFrame = new JFrame(appName.toString());
         mainFrame.setName(MAIN_FRAME_NAME);
         mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         mainFrame.setLocationByPlatform(true);
