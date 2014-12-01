@@ -6,9 +6,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import pondero.tests.test.Test;
-import pondero.tests.test.responses.KeyPressResponse;
-import pondero.tests.test.responses.MouseClickResponse;
+import pondero.task.responses.KeyPressResponse;
+import pondero.task.responses.MouseClickResponse;
+import pondero.tests.Test;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.testing.TestSceneComponent;
 

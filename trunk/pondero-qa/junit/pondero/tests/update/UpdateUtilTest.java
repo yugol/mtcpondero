@@ -2,6 +2,10 @@ package pondero.tests.update;
 
 import org.junit.Test;
 import pondero.PonderoTest;
+import pondero.tests.management.Artifact;
+import pondero.tests.management.ArtifactType;
+import pondero.tests.management.UpdateUtil;
+import pondero.tests.management.Updates;
 
 public class UpdateUtilTest extends PonderoTest {
 

@@ -1,13 +1,13 @@
 package pondero.tests.elements.stimulus;
 
+import pondero.task.stimuli.AuditoryStimulus;
+import pondero.task.stimuli.SoundStimulus;
 import pondero.tests.elements.Element;
 import pondero.tests.elements.interfaces.HasItems;
 import pondero.tests.elements.interfaces.IsAuditoryStimulus;
 import pondero.tests.elements.other.Item;
 import pondero.tests.staples.ElementUtil;
 import pondero.tests.staples.ItemSelection;
-import pondero.tests.test.stimuli.AuditoryStimulus;
-import pondero.tests.test.stimuli.SoundStimulus;
 import pondero.ui.exceptions.ExceptionReporting;
 
 public class Sound extends Element implements HasItems, IsAuditoryStimulus {

@@ -2,13 +2,13 @@ package pondero.tests.elements.other;
 
 import java.util.ArrayList;
 import java.util.List;
+import pondero.task.responses.PrevNextResponse;
+import pondero.task.responses.Response;
 import pondero.tests.elements.Element;
 import pondero.tests.elements.interfaces.HasPostInstructions;
 import pondero.tests.elements.interfaces.HasPreInstructions;
 import pondero.tests.elements.interfaces.IsController;
 import pondero.tests.staples.ItemSequence;
-import pondero.tests.test.responses.PrevNextResponse;
-import pondero.tests.test.responses.Response;
 
 public class Expt extends Element implements HasPreInstructions, HasPostInstructions, IsController {
 

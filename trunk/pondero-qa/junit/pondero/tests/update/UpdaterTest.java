@@ -2,6 +2,10 @@ package pondero.tests.update;
 
 import static pondero.Logger.error;
 import pondero.PonderoTest;
+import pondero.tests.management.Artifact;
+import pondero.tests.management.UpdateEngine;
+import pondero.tests.management.UpdateListener;
+import pondero.tests.management.Updates;
 
 public class UpdaterTest extends PonderoTest {
 

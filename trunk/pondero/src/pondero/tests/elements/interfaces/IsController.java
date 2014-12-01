@@ -1,6 +1,6 @@
 package pondero.tests.elements.interfaces;
 
-import pondero.tests.test.responses.Response;
+import pondero.task.responses.Response;
 
 public interface IsController {
 

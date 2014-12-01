@@ -3,7 +3,7 @@ package pondero.util;
 import java.io.File;
 import java.io.IOException;
 import pondero.Context;
-import pondero.tests.update.Artifact;
+import pondero.tests.management.Artifact;
 
 public final class OsUtil {
 

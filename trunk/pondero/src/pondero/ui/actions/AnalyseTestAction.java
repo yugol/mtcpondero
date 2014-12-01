@@ -9,7 +9,7 @@ import pondero.Context;
 import pondero.L10n;
 import pondero.data.analysis.FillTestReport;
 import pondero.data.drivers.excel.templates.test.TestTemplate;
-import pondero.tests.test.Test;
+import pondero.tests.Test;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
 import pondero.ui.exceptions.ExceptionReporting;

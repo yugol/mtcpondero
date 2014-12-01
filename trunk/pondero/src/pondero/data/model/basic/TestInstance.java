@@ -2,7 +2,7 @@ package pondero.data.model.basic;
 
 import java.util.ArrayList;
 import pondero.Context;
-import pondero.tests.test.Test;
+import pondero.tests.Test;
 
 @SuppressWarnings("serial")
 public class TestInstance extends ArrayList<TrialRecord> {

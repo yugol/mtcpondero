@@ -7,8 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import pondero.L10n;
+import pondero.tests.Test;
 import pondero.tests.elements.other.Page;
-import pondero.tests.test.Test;
 
 @SuppressWarnings("serial")
 public class TestCurtains extends JPanel {

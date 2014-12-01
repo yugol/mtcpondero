@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
-import pondero.tests.test.Test;
+import pondero.tests.Test;
 import pondero.util.NumberUtil;
 import pondero.util.SwingUtil;
 

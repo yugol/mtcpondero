@@ -19,7 +19,7 @@ import pondero.data.drivers.Driver;
 import pondero.data.model.PRow;
 import pondero.data.model.PSheet;
 import pondero.data.model.PType;
-import pondero.tests.update.Artifact;
+import pondero.tests.management.Artifact;
 import pondero.util.BooleanUtil;
 import pondero.util.ExcelFileFilter;
 import pondero.util.NumberUtil;

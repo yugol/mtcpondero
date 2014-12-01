@@ -2,8 +2,8 @@ package pondero.ui.testing;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import pondero.tests.test.Test;
-import pondero.tests.test.responses.PrevNextResponse;
+import pondero.task.responses.PrevNextResponse;
+import pondero.tests.Test;
 
 public class TestMouseAdapter extends MouseAdapter {
 
