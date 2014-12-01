@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import pondero.L10n;
 import pondero.task.launch.TaskLauncher;
-import pondero.task.launch.TaskMonitor;
+import pondero.task.launch.TaskData;
 import pondero.tests.Test;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
@@ -33,11 +33,11 @@ public class StartTestAction extends PonderableAction implements TaskLauncher {
     }
 
     @Override
-    public void onTaskEnded(final Test task, final TaskMonitor report) {
+    public void onTaskEnded(final Test task, final TaskData report) {
         trace("ended task: ", task.getCodeName());
         try {
             final StringBuilder html = new StringBuilder("<html>");
-            if (TaskMonitor.END_SUCCESS == report.getEndCode()) {
+            if (TaskData.END_SUCCESS == report.getEndCode()) {
                 html.append(L10n.getString("msg.test-completed", report.getRunningTimeInSeconds()));
             } else {
                 html.append(L10n.getString("msg.test-interrupted", report.getEndCode()));

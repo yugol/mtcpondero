@@ -6,7 +6,7 @@ import pondero.tests.Test;
 public class DefaultLauncher implements TaskLauncher {
 
     @Override
-    public void onTaskEnded(final Test task, final TaskMonitor report) {
+    public void onTaskEnded(final Test task, final TaskData report) {
         System.out.println("Test ended in " + report.getRunningTimeInSeconds() + " seconds");
         for (final TrialRecord record : report.getRecords()) {
             System.out.println(record.toCsv());
