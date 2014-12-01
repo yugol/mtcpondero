@@ -1,15 +1,14 @@
 package pondero.tests.a_subliminal_priming_task;
 
 import java.awt.Color;
-import pondero.Constants;
 import pondero.task.Task;
+import pondero.task.controllers.TaskController;
 import pondero.task.launch.DefaultMonitor;
 import pondero.task.launch.DefaultRenderer;
 import pondero.task.launch.TaskRenderer;
 import pondero.tests.Test;
 import pondero.tests.elements.other.Block;
 import pondero.tests.elements.other.Experiment;
-import pondero.tests.elements.other.Instruct;
 import pondero.tests.elements.other.Item;
 import pondero.tests.elements.other.Page;
 import pondero.tests.elements.stimulus.Text;
@@ -25,6 +24,9 @@ public class ASubliminalPrimingTask extends Test {
         final Test test = new ASubliminalPrimingTask();
         final Task task = new Task(renderer, test);
         task.addMonitor(new DefaultMonitor());
+        for (final TaskController c : task) {
+            System.out.println(c.getElement().getName());
+        }
         // SwingUtilities.invokeLater(task);
         new Thread(task).start();
     }
@@ -107,11 +109,11 @@ public class ASubliminalPrimingTask extends Test {
         correctmessage.setTextColor(0, 200, 0);
         correctmessage.setFontStyle("Courier New", 20, true);
 
-        final Instruct instruct = new Instruct();
-        instruct.setFontStyle("Dialog", 18, true);
-        instruct.nextkey('5');
-        instruct.prevkey('a');
-        instruct.setScreenColor(Constants.DEFAULT_PAGE_SCREEN_COLOR);
+//        final Instruct instruct = new Instruct();
+//        instruct.setFontStyle("Dialog", 18, true);
+//        instruct.nextkey('5');
+//        instruct.prevkey('a');
+//        instruct.setScreenColor(Constants.DEFAULT_PAGE_SCREEN_COLOR);
 
         new Page("start", "    " + getCodeName());
 

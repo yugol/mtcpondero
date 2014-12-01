@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import pondero.task.Testable;
 import pondero.task.responses.PrevNextResponse;
 
+@Deprecated
 public class TestKeyAdapter extends KeyAdapter {
 
     private final Testable test;

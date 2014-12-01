@@ -26,7 +26,7 @@ public abstract class TestBase implements Runnable {
     private static boolean               locked   = false;
 
     private Defaults                     defaults;
-    private Experiment                         experiment;
+    private Experiment                   experiment;
     private Instruct                     instruct;
 
     protected final Map<String, Block>   blocks   = new LinkedHashMap<String, Block>();
@@ -45,6 +45,9 @@ public abstract class TestBase implements Runnable {
             script();
             if (defaults == null) {
                 add(new Defaults());
+            }
+            if (instruct == null) {
+                add(new Instruct());
             }
         } finally {
             instance = null;
