@@ -9,7 +9,7 @@ import pondero.task.launch.TaskRenderer;
 import pondero.tests.Test;
 import pondero.tests.elements.interfaces.HasBlockfeedback;
 import pondero.tests.elements.other.Block;
-import pondero.tests.elements.other.Expt;
+import pondero.tests.elements.other.Experiment;
 import pondero.tests.elements.other.Instruct;
 import pondero.tests.elements.other.Item;
 import pondero.tests.elements.other.Page;
@@ -174,7 +174,7 @@ public class ASubliminalPrimingTask extends Test {
 
         final Block practice = new Block("practice");
         practice.setScreenColor(175, 175, 255);
-        practice.bgstim("pleasantreminder", "unpleasantreminder");
+        practice.setBgstim("pleasantreminder", "unpleasantreminder");
         practice.setPreInstructions("intro1", "intro2", "intro3");
         practice.setTrials("1-5 = random(pp, pu, up, uu)");
         practice.setErrorMessage("errormessage", 200);
@@ -183,14 +183,14 @@ public class ASubliminalPrimingTask extends Test {
 
         final Block data = new Block("data");
         data.setScreenColor(175, 175, 255);
-        data.bgstim("pleasantreminder", "unpleasantreminder");
+        data.setBgstim("pleasantreminder", "unpleasantreminder");
         data.setPreInstructions("ready");
         data.setTrials("1-5 = random(pp, pu, up, uu)");
         data.setBlockFeedback(HasBlockfeedback.LATENCY, HasBlockfeedback.CORRECT);
 
-        final Expt expt = new Expt();
+        final Experiment expt = new Experiment();
         expt.setPreInstructions("start");
-        expt.blocks("1 = practice; 2-5 = data");
+        expt.setBlocks("1 = practice; 2-5 = data");
         expt.setPostInstructions("end");
     }
 

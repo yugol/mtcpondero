@@ -8,6 +8,6 @@ public interface IsController {
 
     public void doEnd() throws Exception;
 
-    public void doStep(Response input) throws Exception;
+    public void doNext(Response input) throws Exception;
 
 }

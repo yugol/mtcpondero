@@ -89,7 +89,7 @@ public class Trial extends Element implements HasFeedback, IsController {
     }
 
     @Override
-    public void doStep(final Response input) throws Exception {
+    public void doNext(final Response input) throws Exception {
         if (doStatus.stimulusPresenter == null) {
             doStatus.stimulusPresenter = new Thread(new Runnable() {
 
@@ -102,7 +102,7 @@ public class Trial extends Element implements HasFeedback, IsController {
                             @Override
                             public void actionPerformed(final ActionEvent e) {
                                 try {
-                                    Trial.this.doStep(new KillResponse());
+                                    Trial.this.doNext(new KillResponse());
                                 } catch (final Exception ex) {
                                     ExceptionReporting.showExceptionMessage(null, ex);
                                 }

@@ -7,7 +7,8 @@ import pondero.data.model.basic.TrialRecord;
 public class TaskData {
 
     public static final int         END_SUCCESS = 0;
-    public static final int         END_KILL    = -9;
+    public static final int         END_ERROR   = -1;
+    public static final int         END_USER    = -9;
 
     private final long              runId;
     private long                    startTime;

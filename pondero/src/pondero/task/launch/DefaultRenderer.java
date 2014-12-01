@@ -9,12 +9,12 @@ public class DefaultRenderer implements TaskRenderer {
     private TestFrame frame;
 
     @Override
-    public void destroy() {
+    public void doEnd() {
         frame.dispose();
     }
 
     @Override
-    public void init() {
+    public void doBegin() {
         frame.setVisible(true);
     }
 

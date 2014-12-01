@@ -6,7 +6,7 @@ import pondero.tests.elements.Element;
 import pondero.tests.elements.interfaces.IsStimulus;
 import pondero.tests.elements.other.Block;
 import pondero.tests.elements.other.Defaults;
-import pondero.tests.elements.other.Expt;
+import pondero.tests.elements.other.Experiment;
 import pondero.tests.elements.other.Instruct;
 import pondero.tests.elements.other.Item;
 import pondero.tests.elements.other.Page;
@@ -26,7 +26,7 @@ public abstract class TestBase implements Runnable {
     private static boolean               locked   = false;
 
     private Defaults                     defaults;
-    private Expt                         experiment;
+    private Experiment                         experiment;
     private Instruct                     instruct;
 
     protected final Map<String, Block>   blocks   = new LinkedHashMap<String, Block>();
@@ -89,8 +89,8 @@ public abstract class TestBase implements Runnable {
                     trials.put(element.getName(), (Trial) element);
                 }
                 break;
-            case Expt.TYPENAME:
-                experiment = (Expt) element;
+            case Experiment.TYPENAME:
+                experiment = (Experiment) element;
                 break;
             case Instruct.TYPENAME:
                 instruct = (Instruct) element;
@@ -117,7 +117,7 @@ public abstract class TestBase implements Runnable {
 
     public abstract Artifact getDescriptor();
 
-    public Expt getExperiment() {
+    public Experiment getExperiment() {
         return experiment;
     }
 

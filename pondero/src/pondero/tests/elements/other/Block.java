@@ -47,11 +47,11 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
         super(name);
     }
 
-    public List<String> _getBgstim() {
+    public List<String> getBgstim() {
         return bgstim;
     }
 
-    public void bgstim(final String... bgstim) {
+    public void setBgstim(final String... bgstim) {
         for (final String name : bgstim) {
             this.bgstim.add(name);
         }
@@ -70,7 +70,7 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
     }
 
     @Override
-    public void doStep(final Response input) throws Exception {
+    public void doNext(final Response input) throws Exception {
         if (doStatus != null) {
             if (preinstructions != null) {
                 if (input != null && input instanceof PrevNextResponse) {
@@ -93,7 +93,7 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
             if (doStatus.currentTrialIndex < trials.size()) {
                 final Trial trial = test.getTrial(trials.get(doStatus.currentTrialIndex++));
                 trial.doBegin();
-                test.doStep(null);
+                test.doNext(null);
                 return;
             }
             if (postinstructions != null) {

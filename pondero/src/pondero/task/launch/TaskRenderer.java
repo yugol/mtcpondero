@@ -4,9 +4,9 @@ import pondero.task.Task;
 
 public interface TaskRenderer {
 
-    void destroy();
+    void doEnd();
 
-    void init();
+    void doBegin();
 
     void setTask(Task task);
 
