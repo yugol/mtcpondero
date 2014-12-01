@@ -6,14 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 import pondero.task.Task;
 import pondero.tests.elements.Element;
+import pondero.tests.interfaces.HasFeedback;
+import pondero.tests.interfaces.HasFeedback.FeedbackStimulus;
+import pondero.tests.interfaces.HasFont;
+import pondero.tests.interfaces.HasPosition;
+import pondero.tests.interfaces.HasScreencolor;
+import pondero.tests.interfaces.HasTextColor;
+import pondero.tests.interfaces.HasTextColors;
 import pondero.tests.interfaces.IsController;
+import pondero.tests.staples.Coordinates;
 
 public abstract class TaskController implements IsController {
 
     private final Task                 task;
     private final Element              element;
-    private TaskController             parent;
-    private final List<TaskController> children = new ArrayList<>();
 
     private Font                       instructFont;
     private Character                  instructNextKey;
@@ -21,9 +27,46 @@ public abstract class TaskController implements IsController {
     private Color                      instructScreenColor;
     private Color                      instructTextColor;
 
+    private Color                      screenColor;
+    private Color                      textBgColor;
+    private Color                      textColor;
+    private Font                       font;
+    private Coordinates                position;
+
+    private FeedbackStimulus           correctMessage;
+    private FeedbackStimulus           errorMessage;
+
+    private TaskController             parent;
+    private final List<TaskController> children = new ArrayList<>();
+
     public TaskController(final Task task, final Element element) {
         this.task = task;
         this.element = element;
+        if (element instanceof HasScreencolor) {
+            final HasScreencolor foo = (HasScreencolor) element;
+            screenColor = foo.getScreenColor();
+        }
+        if (element instanceof HasTextColor) {
+            final HasTextColor foo = (HasTextColor) element;
+            textColor = foo.getTextColor();
+        }
+        if (element instanceof HasTextColors) {
+            final HasTextColors foo = (HasTextColors) element;
+            textBgColor = foo.getTextBgColor();
+        }
+        if (element instanceof HasFont) {
+            final HasFont foo = (HasFont) element;
+            font = foo.getFont();
+        }
+        if (element instanceof HasPosition) {
+            final HasPosition foo = (HasPosition) element;
+            position = foo.getPosition();
+        }
+        if (element instanceof HasFeedback) {
+            final HasFeedback foo = (HasFeedback) element;
+            correctMessage = foo.getCorrectMessage();
+            errorMessage = foo.getErrorMessage();
+        }
     }
 
     public void addChild(final TaskController child) {
@@ -31,8 +74,23 @@ public abstract class TaskController implements IsController {
         child.setParent(this);
     }
 
+    public FeedbackStimulus getCorrectMessage() {
+        if (correctMessage == null && parent != null) { return parent.getCorrectMessage(); }
+        return correctMessage;
+    }
+
     public Element getElement() {
         return element;
+    }
+
+    public FeedbackStimulus getErrorMessage() {
+        if (errorMessage == null && parent != null) { return parent.getErrorMessage(); }
+        return errorMessage;
+    }
+
+    public Font getFont() {
+        if (font == null && parent != null) { return parent.getFont(); }
+        return font;
     }
 
     public Font getInstructFont() {
@@ -72,6 +130,11 @@ public abstract class TaskController implements IsController {
         return parent;
     }
 
+    public Coordinates getPosition() {
+        if (position == null && parent != null) { return parent.getPosition(); }
+        return position;
+    }
+
     public TaskController getPrevSibling() {
         if (parent != null) {
             final int index = parent.children.indexOf(this) - 1;
@@ -80,8 +143,23 @@ public abstract class TaskController implements IsController {
         return null;
     }
 
+    public Color getScreenColor() {
+        if (screenColor == null && parent != null) { return parent.getScreenColor(); }
+        return screenColor;
+    }
+
     public Task getTask() {
         return task;
+    }
+
+    public Color getTextBgColor() {
+        if (textBgColor == null && parent != null) { return parent.getTextBgColor(); }
+        return textBgColor;
+    }
+
+    public Color getTextColor() {
+        if (textColor == null && parent != null) { return parent.getTextColor(); }
+        return textColor;
     }
 
     public boolean isLeaf() {

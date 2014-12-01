@@ -2,6 +2,8 @@ package pondero.task.launch;
 
 import pondero.task.Task;
 import pondero.task.controllers.PageController;
+import pondero.task.controllers.StimulusFrame;
+import pondero.task.controllers.TrialController;
 
 public interface TaskRenderer {
 
@@ -9,8 +11,12 @@ public interface TaskRenderer {
 
     void doEnd();
 
+    void presentStimuli(StimulusFrame frame);
+
     void setTask(Task task);
 
-    void showCurtains(PageController pageController);
+    void showCurtains(PageController controller);
+
+    void showScene(TrialController controller);
 
 }

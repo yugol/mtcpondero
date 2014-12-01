@@ -61,12 +61,22 @@ public class Likert extends Trial implements HasPosition {
         return getPosition().getY();
     }
 
+    @Override
+    public boolean isCorrectResponse(final List<Response> input) {
+        final Response participantInput = input.get(0);
+        return participantInput instanceof LikertResponse;
+    }
+
     public boolean isUseMouse() {
         return config.isMouse();
     }
 
     public void setAnchor(final int key, final String value) {
         config.setAnchor(key, value);
+    }
+
+    public void setInfo(final String quiz) {
+        config.setInfo(quiz);
     }
 
     public void setNumPoints(final int numpoints) {
@@ -86,10 +96,6 @@ public class Likert extends Trial implements HasPosition {
     @Override
     public void setPosition(final String xExpr, final String yExpr) {
         position = new Coordinates(xExpr, yExpr);
-    }
-
-    public void setInfo(final String quiz) {
-        config.setInfo(quiz);
     }
 
     public void setStartIndex(final int startIndex) {
@@ -127,12 +133,6 @@ public class Likert extends Trial implements HasPosition {
         for (int i = 0; i < getNumPoints(); ++i) {
             lk.setAnchor(i, getAnchor(i));
         }
-    }
-
-    @Override
-    protected boolean isCorrectResponse(final List<Response> input) {
-        final Response participantInput = input.get(0);
-        return participantInput instanceof LikertResponse;
     }
 
 }

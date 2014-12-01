@@ -8,12 +8,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import pondero.task.responses.KeyPressResponse;
 import pondero.task.responses.MouseClickResponse;
+import pondero.task.stimuli.VisualStimulus;
 import pondero.tests.Test;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.testing.TestSceneComponent;
 
 @SuppressWarnings("serial")
 public class TestDrawableComponent extends TestSceneComponent {
+
+    public TestDrawableComponent() {
+        this(null);
+    }
 
     public TestDrawableComponent(final Test test) {
         super(test);
@@ -56,9 +61,18 @@ public class TestDrawableComponent extends TestSceneComponent {
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
+        final Graphics2D g2d = (Graphics2D) g;
+        final int width = getWidth();
+        final int height = getHeight();
         if (hasTest()) {
-            final Graphics2D g2d = (Graphics2D) g;
-            getTest().drawScene(g2d, getWidth(), getHeight());
+            getTest().drawScene(g2d, width, height);
+        }
+        if (hasController()) {
+            g2d.setColor(getController().getScreenColor());
+            g2d.fillRect(0, 0, width, height);
+            for (final VisualStimulus stimulus : getVisualStimuli()) {
+                stimulus.render(g2d, width, height);
+            }
         }
     }
 

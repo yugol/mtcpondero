@@ -23,12 +23,11 @@ public class ASubliminalPrimingTask extends Test {
         final TaskRenderer renderer = new DefaultRenderer();
         final Test test = new ASubliminalPrimingTask();
         final Task task = new Task(renderer, test);
-        task.addMonitor(new DefaultMonitor());
         for (final TaskController c : task) {
             System.out.println(c.getElement().getName());
         }
-        // SwingUtilities.invokeLater(task);
-        new Thread(task).start();
+        task.addMonitor(new DefaultMonitor());
+        task.start();
     }
 
     private static final Artifact DESCRIPTOR = new Artifact(ArtifactType.TEST, "ASPT", 0, 1, "dev");

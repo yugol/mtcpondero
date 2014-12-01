@@ -4,7 +4,9 @@ import java.util.ListIterator;
 import pondero.data.Workbook;
 import pondero.data.model.basic.Participant;
 import pondero.task.controllers.PageController;
+import pondero.task.controllers.StimulusFrame;
 import pondero.task.controllers.TaskController;
+import pondero.task.controllers.TrialController;
 import pondero.task.launch.TaskData;
 import pondero.task.launch.TaskRenderer;
 import pondero.task.responses.Response;
@@ -70,6 +72,10 @@ public class Task extends TaskBase implements Runnable, Testable {
         cleanUp(TaskData.END_USER);
     }
 
+    public void presentStimuli(final StimulusFrame frame) {
+        getRenderer().presentStimuli(frame);
+    }
+
     @Override
     public void run() {
         try {
@@ -87,6 +93,10 @@ public class Task extends TaskBase implements Runnable, Testable {
 
     public void showCurtains(final PageController pageController) {
         getRenderer().showCurtains(pageController);
+    }
+
+    public void showScene(final TrialController trialController) {
+        getRenderer().showScene(trialController);
     }
 
 }
