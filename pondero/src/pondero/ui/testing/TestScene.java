@@ -4,13 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.util.List;
 import javax.swing.JPanel;
-import pondero.task.Testable;
 import pondero.task.stimuli.VisualStimulus;
 
 @SuppressWarnings("serial")
 public class TestScene extends JPanel {
 
-    public TestScene(final Testable task) {
+    public TestScene() {
         setFocusable(true);
         setBorder(null);
         setLayout(new BorderLayout());

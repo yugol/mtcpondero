@@ -6,7 +6,6 @@ import pondero.task.responses.Response;
 import pondero.tests.elements.workflow.Trial;
 import pondero.tests.interfaces.HasLikertConfig;
 import pondero.ui.testing.components.LikertComponent;
-import pondero.util.StringUtil;
 
 public class Likert extends Trial implements HasLikertConfig {
 
@@ -24,25 +23,22 @@ public class Likert extends Trial implements HasLikertConfig {
         getLayout().setSouth(LikertComponent.class.getName());
     }
 
-    public String getAnchor(final int key) {
-        final String value = config.getAnchor(key);
-        if (StringUtil.isNullOrBlank(value)) { return ""; }
-        return value;
-    }
-
     @Override
     public LikertConfig getLikertConfig() {
         return config;
     }
 
+    @Deprecated
     public int getNumPoints() {
         return config.getNumPoints();
     }
 
+    @Deprecated
     public String getQuiz() {
         return config.getInfo();
     }
 
+    @Deprecated
     public int getStartIndex() {
         return config.getStartIndex();
     }
@@ -53,26 +49,32 @@ public class Likert extends Trial implements HasLikertConfig {
         return participantInput instanceof LikertResponse;
     }
 
+    @Deprecated
     public boolean isUseMouse() {
         return config.isMouse();
     }
 
+    @Deprecated
     public void setAnchor(final int key, final String value) {
         config.setAnchor(key, value);
     }
 
+    @Deprecated
     public void setInfo(final String quiz) {
         config.setInfo(quiz);
     }
 
+    @Deprecated
     public void setNumPoints(final int numpoints) {
         config.setNumPoints(numpoints);
     }
 
+    @Deprecated
     public void setStartIndex(final int startIndex) {
         config.setStartIndex(startIndex);
     }
 
+    @Deprecated
     public void setUseMouse(final boolean mouse) {
         config.setMouse(mouse);
     }

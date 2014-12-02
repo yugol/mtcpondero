@@ -8,9 +8,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-import pondero.task.Testable;
+import pondero.task.Task;
 import pondero.task.controllers.PageController;
-import pondero.tests.elements.other.Page;
 import pondero.util.SwingUtil;
 
 @SuppressWarnings("serial")
@@ -25,7 +24,7 @@ public class TestFrame extends JFrame {
     /**
      * Create the frame.
      */
-    public TestFrame(final Testable test) {
+    public TestFrame(final Task test) {
         setName(WINDOW_NAME);
         setIconImage(Toolkit.getDefaultToolkit().getImage(TestFrame.class.getResource("/javax/swing/plaf/metal/icons/ocean/question.png")));
 
@@ -48,7 +47,7 @@ public class TestFrame extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
-        scene = new TestScene(test);
+        scene = new TestScene();
         scene.setBorder(null);
         contentPane.add(scene);
 
@@ -72,13 +71,6 @@ public class TestFrame extends JFrame {
 
     public synchronized void invalidateScene() {
         scene.paintImmediately(0, 0, scene.getWidth(), scene.getHeight());
-    }
-
-    @Deprecated
-    public synchronized void showCurtains(final Page instructPage, final boolean first, final boolean last) {
-        scene.setVisible(false);
-        curtains.setVisible(true);
-        curtains.showInstructions(instructPage, first, last);
     }
 
     public synchronized void showCurtains(final PageController pageController) {

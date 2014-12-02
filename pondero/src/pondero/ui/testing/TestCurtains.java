@@ -14,7 +14,6 @@ import javax.swing.border.EmptyBorder;
 import pondero.L10n;
 import pondero.task.Testable;
 import pondero.task.controllers.PageController;
-import pondero.tests.elements.other.Page;
 
 @SuppressWarnings("serial")
 public class TestCurtains extends JPanel {
@@ -33,10 +32,7 @@ public class TestCurtains extends JPanel {
     private final JTextArea message;
     private final JPanel    pnlMessage;
 
-    private final Testable  test;
-
     public TestCurtains(final Testable test) {
-        this.test = test;
         setBorder(null);
         setLayout(new BorderLayout());
 
@@ -69,27 +65,6 @@ public class TestCurtains extends JPanel {
         pnlMessage.add(message, BorderLayout.CENTER);
     }
 
-    @Deprecated
-    public void showInstructions(final Page page, final boolean first, final boolean last) {
-        message.setFont(test.getInstructions().getFont());
-        message.setText(page.getContent());
-
-        if (!last && test.getInstructions().getNextkey() != null) {
-            btnRight.setText(L10n.getString("msg.press-key-for-next", getCharUiString(test.getInstructions().getNextkey())));
-            btnRight.setVisible(true);
-        } else {
-            btnRight.setVisible(false);
-        }
-        if (!first && test.getInstructions().getPrevkey() != null) {
-            btnLeft.setText(L10n.getString("msg.press-key-for-previous", getCharUiString(test.getInstructions().getPrevkey())));
-            btnLeft.setVisible(true);
-        } else {
-            btnLeft.setVisible(false);
-        }
-        setEventHandlers(new TestKeyAdapter(test), new TestMouseAdapter(test, false), new TestMouseAdapter(test, true));
-        message.requestFocus();
-    }
-
     public void showInstructions(final PageController pageController) {
         message.setFont(pageController.getInstructFont());
         message.setText(pageController.getElement().getContent());
@@ -117,7 +92,7 @@ public class TestCurtains extends JPanel {
 
     private void removeKeyListeners(final Component component) {
         for (final KeyListener listener : component.getKeyListeners()) {
-            if (listener instanceof TaskKeyAdapter || listener instanceof TestKeyAdapter) {
+            if (listener instanceof TaskKeyAdapter) {
                 component.removeKeyListener(listener);
             }
         }
@@ -125,7 +100,7 @@ public class TestCurtains extends JPanel {
 
     private void removeMouseListeners(final Component component) {
         for (final MouseListener listener : component.getMouseListeners()) {
-            if (listener instanceof TaskMouseAdapter || listener instanceof TestMouseAdapter) {
+            if (listener instanceof TaskMouseAdapter) {
                 component.removeMouseListener(listener);
             }
         }
