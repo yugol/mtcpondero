@@ -1,36 +1,18 @@
 package pondero.tests.elements.workflow;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.swing.Timer;
 import pondero.Context;
-import pondero.Logger;
-import pondero.task.controllers.Timing;
 import pondero.task.responses.KeyPressResponse;
-import pondero.task.responses.KillResponse;
-import pondero.task.responses.LikertResponse;
-import pondero.task.responses.MouseClickResponse;
 import pondero.task.responses.Response;
-import pondero.task.stimuli.Stimulus;
-import pondero.task.stimuli.VisualStimulus;
-import pondero.tests.Test;
 import pondero.tests.elements.Element;
 import pondero.tests.interfaces.HasFeedback;
-import pondero.tests.interfaces.IsAuditoryStimulus;
-import pondero.tests.interfaces.IsController;
-import pondero.tests.interfaces.IsStimulus;
-import pondero.tests.interfaces.IsVisualStimulus;
 import pondero.tests.staples.Frame;
 import pondero.tests.staples.FrameSequence;
-import pondero.ui.exceptions.ExceptionReporting;
-import pondero.ui.testing.TestScene;
 import pondero.ui.testing.components.DrawableComponent;
 
-public class Trial extends Element implements HasFeedback, IsController {
+public class Trial extends Element implements HasFeedback {
 
     public static class TrialLayout {
 
@@ -82,38 +64,17 @@ public class Trial extends Element implements HasFeedback, IsController {
 
     }
 
-    private class DoStatus {
+    public static final String TYPENAME         = "trial";
 
-        Thread stimulusPresenter = null;
-        Timer  trialTimer        = null;
-
-        void kill() {
-            if (trialTimer != null) {
-                trialTimer.stop();
-                trialTimer = null;
-            }
-            if (stimulusPresenter != null) {
-                stimulusPresenter.interrupt();
-                stimulusPresenter = null;
-            }
-        }
-
-    }
-
-    public static final String   TYPENAME         = "trial";
-
-    private boolean              killerUserInput  = true;
-    private final Set<String>    correctResponses = new HashSet<String>();
-    private long                 postTrialPause   = 0;
-    private long                 preTrialPause    = 0;
-    private int                  timeout          = 0;
-    private FrameSequence        stimulusTimes    = new FrameSequence();
-    private String               trialCode;
-    private final Set<String>    validResponses   = new HashSet<String>();
-    private final List<Response> responses        = new ArrayList<Response>();
-    private final TrialLayout    layout           = new TrialLayout();
-
-    private DoStatus             doStatus;
+    private boolean            killerUserInput  = true;
+    private final Set<String>  correctResponses = new HashSet<String>();
+    private long               postTrialPause   = 0;
+    private long               preTrialPause    = 0;
+    private int                timeout          = 0;
+    private FrameSequence      stimulusTimes    = new FrameSequence();
+    private String             trialCode;
+    private final Set<String>  validResponses   = new HashSet<String>();
+    private final TrialLayout  layout           = new TrialLayout();
 
     public Trial(final String name) {
         super(name);
@@ -124,111 +85,6 @@ public class Trial extends Element implements HasFeedback, IsController {
     public String buildRecordedResponse(final List<Response> input) {
         final Response participantInput = input.get(0);
         return participantInput.toRecordedResponseString();
-    }
-
-    @Override
-    public void doBegin() throws Exception {
-        Logger.trace("Trial: " + getName());
-        configureScene();
-        test.resetStimuli();
-        test.showScene();
-        doStatus = new DoStatus();
-        test.pushController(this);
-        test.openRecord(this);
-        responses.clear();
-    }
-
-    @Override
-    public void doEnd() throws Exception {
-        doStatus = null;
-        test.closeRecord();
-        test.popController();
-    }
-
-    @Override
-    public void doStep(final Response input) throws Exception {
-        if (doStatus.stimulusPresenter == null) {
-            doStatus.stimulusPresenter = new Thread(new Runnable() {
-
-                @Override
-                public void run() {
-                    Timing.pause(preTrialPause);
-                    if (timeout > 0) {
-                        doStatus.trialTimer = new Timer(timeout, new ActionListener() {
-
-                            @Override
-                            public void actionPerformed(final ActionEvent e) {
-                                try {
-                                    Trial.this.doStep(new KillResponse());
-                                } catch (final Exception ex) {
-                                    ExceptionReporting.showExceptionMessage(null, ex);
-                                }
-                            }
-
-                        });
-                        doStatus.trialTimer.start();
-                    }
-                    long prevTimeIndex = 0;
-                    for (final Frame frame : stimulusTimes) {
-                        final long wait = frame.getIndex() - prevTimeIndex;
-                        Timing.pause(wait);
-                        prepareStimuli(frame);
-                        prevTimeIndex = frame.getIndex();
-                        test.presentStimuli();
-                    }
-                }
-
-            });
-            doStatus.stimulusPresenter.start();
-        }
-
-        boolean completed = false;
-
-        if (input != null) {
-
-            if (input instanceof KeyPressResponse) {
-                final String keyResponse = ((KeyPressResponse) input).getCharAsString();
-                if (validResponses.contains(keyResponse)) {
-                    responses.add(input);
-                    completed = killerUserInput;
-                }
-            } else if (input instanceof LikertResponse) {
-                responses.add(input);
-                completed = true;
-            } else if (input instanceof MouseClickResponse) {
-                // ignore for now
-            } else if (input instanceof KillResponse) {
-                responses.add(input);
-                completed = true;
-            } else {
-                responses.add(input);
-                completed = killerUserInput;
-            }
-
-        }
-
-        if (completed) {
-            final HasFeedback.FeedbackStimulus fb = evaluateResponse();
-            if (fb != null) {
-                final IsStimulus eltStimulus = test.getStimulus(fb.getStimulusName());
-                Stimulus actualStimulus = null;
-                if (eltStimulus instanceof IsVisualStimulus) {
-                    actualStimulus = ((IsVisualStimulus) eltStimulus).getStimulus();
-                    test.addVisualStimulus((VisualStimulus) actualStimulus);
-                }
-                test.presentStimuli();
-                Timing.pause(fb.getDuration());
-                if (eltStimulus instanceof IsVisualStimulus) {
-                    test.removeVisualStimulus((VisualStimulus) actualStimulus);
-                }
-                test.presentStimuli();
-            }
-
-            Timing.pause(postTrialPause);
-            doStatus.kill();
-            doEnd();
-        }
-
     }
 
     @Override
@@ -363,52 +219,6 @@ public class Trial extends Element implements HasFeedback, IsController {
         for (final String response : validresponse) {
             validResponses.add(response);
         }
-    }
-
-    private HasFeedback.FeedbackStimulus evaluateResponse() throws Exception {
-        HasFeedback.FeedbackStimulus fb = null;
-        final Long responseTime = getResponseTime(responses);
-        if (isCorrectResponse(responses)) {
-            test.recordCorrectResponse(responseTime);
-            fb = test.getCorrectmessage();
-        } else {
-            test.recordErrorResponse(responseTime);
-            fb = test.getErrormessage();
-        }
-        test.recordResponse(buildRecordedResponse(responses));
-        return fb;
-    }
-
-    private void prepareStimuli(final Frame frame) {
-        test.resetStimuli();
-        if (test.getBgstim() != null) {
-            for (final String name : test.getBgstim()) {
-                final IsStimulus stimulus = test.getStimulus(name);
-                if (stimulus instanceof IsVisualStimulus) {
-                    test.addVisualStimulus(((IsVisualStimulus) stimulus).getStimulus());
-                }
-            }
-        }
-        for (final String name : frame.getContent()) {
-            final IsStimulus stimulus = test.getStimulus(name);
-            if (stimulus instanceof IsVisualStimulus) {
-                test.addVisualStimulus(((IsVisualStimulus) stimulus).getStimulus());
-            } else if (stimulus instanceof IsAuditoryStimulus) {
-                test.addAuditoryStimulus(((IsAuditoryStimulus) stimulus).getStimulus());
-            }
-        }
-    }
-
-    protected void configureScene() {
-        final Test test = getTest();
-        final TestScene scene = test.getTestWindow().getScene();
-        if (!(scene.getCenter() instanceof DrawableComponent)) {
-            scene.setCenter(new DrawableComponent(test));
-        }
-        scene.setNorth(null);
-        scene.setEast(null);
-        scene.setWest(null);
-        scene.setSouth(null);
     }
 
 }

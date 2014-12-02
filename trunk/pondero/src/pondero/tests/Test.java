@@ -1,176 +1,54 @@
 package pondero.tests;
 
-import java.util.List;
-import java.util.Stack;
-import pondero.data.Workbook;
+import java.awt.Color;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
+import pondero.data.drivers.pdf.PdfPageCanvas;
+import pondero.data.drivers.pdf.PdfReport;
 import pondero.data.evaluation.scoring.Evaluation;
-import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.TestInstance;
-import pondero.data.model.basic.TrialRecord;
-import pondero.task.Testable;
-import pondero.task.launch.TaskData;
-import pondero.task.launch.TaskMonitor;
-import pondero.task.responses.Response;
-import pondero.tests.elements.workflow.Block;
-import pondero.tests.elements.workflow.Trial;
-import pondero.tests.interfaces.HasFeedback.FeedbackStimulus;
-import pondero.tests.interfaces.HasScreencolor;
-import pondero.tests.interfaces.IsController;
+import pondero.tests.elements.stimulus.Text;
+import pondero.tests.staples.Coordinates;
+import pondero.ui.testing.TestFrame;
+import pondero.util.TimeUtil;
 
-public abstract class Test extends TestRenderer implements IsController, Testable {
+public abstract class Test extends TestBase {
 
-    private Workbook                  workbook;
-    private Participant               participant;
-    private TaskData                  taskData;
-    private TaskMonitor               taskMonitor;
-    private TrialRecord               record;
+    private final TestFrame testFrame;
 
-    private final Stack<IsController> controllerStack = new Stack<IsController>();
-    private Block                     currentBlock;
-
-    public void closeRecord() {
-        if (record != null) {
-            taskData.add(record);
-            record = null;
-        }
-    }
-
-    public TrialRecord createRecord(final long runId) throws Exception {
-        TrialRecord record = null;
-        if (workbook != null) {
-            record = workbook.addTrialRecord(getTestId());
-            record.setExperimentId(runId);
-        }
-        return record;
-    }
-
-    @Override
-    public synchronized void doBegin() throws Exception {
-        controllerStack.clear();
-        taskData = new TaskData(System.currentTimeMillis());
-        taskData.markStartTime();
-        taskMonitor.onTaskStarted(this);
-        if (getExperiment() != null) {
-            getExperiment().doBegin();
-        } else if (blocks.size() > 0) {
-            blocks.values().iterator().next().doBegin();
-        } else if (trials.size() > 0) {
-            trials.values().iterator().next().doBegin();
-        }
-    }
-
-    @Override
-    public synchronized void doEnd() {
-        taskData.markStopTime(TaskData.END_SUCCESS);
-        getTestWindow().hideTestWindow();
-        taskMonitor.onTaskEnded(this, taskData);
-    }
-
-    @Override
-    public synchronized void doStep(final Response input) throws Exception {
-        final IsController controller = peekController();
-        if (controller == null) {
-            doEnd();
-        } else {
-            controller.doStep(input);
-        }
-    }
-
-    public List<String> getBgstim() {
-        if (currentBlock != null) { return currentBlock.getBgstim(); }
-        return null;
-    }
-
-    public FeedbackStimulus getCorrectmessage() {
-        if (currentBlock != null) { return currentBlock.getCorrectMessage(); }
-        return null;
-    }
-
-    public FeedbackStimulus getErrormessage() {
-        if (currentBlock != null) { return currentBlock.getErrorMessage(); }
-        return null;
+    public Test() {
+        testFrame = new TestFrame(null);
     }
 
     public Evaluation getEvaluation(final TestInstance instance) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
-    @Override
-    public void kill() {
-        taskData.markStopTime(TaskData.END_USER);
-        taskMonitor.onTaskEnded(this, taskData);
+    @Deprecated
+    public Color getScreenColor() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
-    public void openRecord(final Trial trial) throws Exception {
-        record = createRecord(taskData.getRunId());
-        if (record != null) {
-            if (participant != null) {
-                record.setParticipant(participant);
-            }
-            if (currentBlock != null) {
-                record.setBlockId(currentBlock.getName());
-            }
-            if (trial != null) {
-                record.setTrialId(trial.getName());
-            }
-        }
+    public TestFrame getTestWindow() {
+        return testFrame;
     }
 
-    public IsController peekController() {
-        IsController controller = null;
-        if (!controllerStack.isEmpty()) {
-            controller = controllerStack.peek();
-        }
-        return controller;
+    public Coordinates getTextSize(final Text text) {
+        final Graphics g = testFrame.getGraphics();
+        g.setFont(text.getFont());
+        final FontMetrics fm = g.getFontMetrics();
+        final Rectangle2D bounds = fm.getStringBounds("abc", g);
+        return new Coordinates(bounds.getX(), bounds.getCenterY());
     }
 
-    public void popController() throws Exception {
-        final IsController controller = controllerStack.pop();
-        if (controller instanceof Block) {
-            currentBlock = null;
-        }
-        if (controller instanceof HasScreencolor) {
-            popScreencolor();
-        }
-        doStep(null);
-    }
-
-    public void pushController(final IsController controller) {
-        controllerStack.push(controller);
-        if (controller instanceof Block) {
-            currentBlock = (Block) controller;
-        }
-        if (controller instanceof HasScreencolor) {
-            pushScreencolor((HasScreencolor) controller);
-        }
-    }
-
-    public void recordCorrectResponse(final long time) throws Exception {
-        if (record != null) {
-            record.setResponseTimestamp(time);
-            record.setResponseCorrect(true);
-        }
-    }
-
-    public void recordErrorResponse(final long time) throws Exception {
-        if (record != null) {
-            record.setResponseTimestamp(time);
-            record.setResponseCorrect(false);
-        }
-    }
-
-    public void recordResponse(final String response) throws Exception {
-        if (record != null) {
-            record.setResponse(response);
-        }
-    }
-
-    public void setParticipant(final Participant participant) {
-        this.participant = participant;
-    }
-
-    public void setWorkbook(final Workbook workbook) {
-        this.workbook = workbook;
+    public void renderReport(final PdfReport report, final TestInstance instance) throws Exception {
+        final String title = getDescriptor().getId() + "   " + TimeUtil.toIsoTimestamp(instance.getTestTime());
+        final PdfPageCanvas canvas = report.getCanvas(report.addPage());
+        canvas.setFont(report.AR_B, 16);
+        canvas.drawString(title, 100, 700);
+        canvas.close();
     }
 
 }

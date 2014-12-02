@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 import pondero.task.responses.KeyPressResponse;
 import pondero.task.responses.MouseClickResponse;
 import pondero.task.stimuli.VisualStimulus;
-import pondero.tests.Test;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.testing.TestSceneComponent;
 
@@ -17,20 +16,13 @@ import pondero.ui.testing.TestSceneComponent;
 public class DrawableComponent extends TestSceneComponent {
 
     public DrawableComponent() {
-        this(null);
-    }
-
-    public DrawableComponent(final Test test) {
-        super(test);
 
         addKeyListener(new KeyAdapter() {
 
             @Override
             public void keyPressed(final KeyEvent evt) {
                 try {
-                    if (hasTest()) {
-                        getTest().doStep(new KeyPressResponse(evt));
-                    }
+
                     if (hasController()) {
                         getController().doStep(new KeyPressResponse(evt));
                     }
@@ -46,9 +38,6 @@ public class DrawableComponent extends TestSceneComponent {
             @Override
             public void mouseClicked(final MouseEvent evt) {
                 try {
-                    if (hasTest()) {
-                        getTest().doStep(new MouseClickResponse(evt));
-                    }
                     if (hasController()) {
                         getController().doStep(new MouseClickResponse(evt));
                     }
@@ -66,9 +55,7 @@ public class DrawableComponent extends TestSceneComponent {
         final Graphics2D g2d = (Graphics2D) g;
         final int width = getWidth();
         final int height = getHeight();
-        if (hasTest()) {
-            getTest().drawScene(g2d, width, height);
-        }
+
         if (hasController()) {
             g2d.setColor(getController().getScreenColor());
             g2d.fillRect(0, 0, width, height);
