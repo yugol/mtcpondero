@@ -27,12 +27,15 @@ public class TestDrawableComponent extends TestSceneComponent {
 
             @Override
             public void keyPressed(final KeyEvent evt) {
-                if (test != null) {
-                    try {
-                        test.doStep(new KeyPressResponse(evt));
-                    } catch (final Exception e) {
-                        ExceptionReporting.showExceptionMessage(null, e);
+                try {
+                    if (hasTest()) {
+                        getTest().doStep(new KeyPressResponse(evt));
                     }
+                    if (hasController()) {
+                        getController().doStep(new KeyPressResponse(evt));
+                    }
+                } catch (final Exception e) {
+                    ExceptionReporting.showExceptionMessage(null, e);
                 }
             }
 
@@ -42,20 +45,19 @@ public class TestDrawableComponent extends TestSceneComponent {
 
             @Override
             public void mouseClicked(final MouseEvent evt) {
-                if (test != null) {
-                    try {
-                        test.doStep(new MouseClickResponse(evt));
-                    } catch (final Exception e) {
-                        ExceptionReporting.showExceptionMessage(null, e);
+                try {
+                    if (hasTest()) {
+                        getTest().doStep(new MouseClickResponse(evt));
                     }
+                    if (hasController()) {
+                        getController().doStep(new MouseClickResponse(evt));
+                    }
+                } catch (final Exception e) {
+                    ExceptionReporting.showExceptionMessage(null, e);
                 }
             }
 
         });
-    }
-
-    @Override
-    public void reset() {
     }
 
     @Override

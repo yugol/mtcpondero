@@ -46,24 +46,41 @@ public class DefaultRenderer implements TaskRenderer {
     @Override
     public void showScene(final TrialController controller) {
         final TestScene scene = uiFrame.getScene();
-        scene.clear();
         final TrialLayout layout = controller.getElement().getLayout();
         if (layout.getNorth() != null) {
-            scene.setNorth(TestSceneComponent.newInstance(layout.getNorth(), controller));
+            scene.setNorth(prepareComponent(scene.getNorth(), layout.getNorth(), controller));
+        } else {
+            scene.setNorth(null);
         }
         if (layout.getWest() != null) {
-            scene.setWest(TestSceneComponent.newInstance(layout.getWest(), controller));
+            scene.setWest(prepareComponent(scene.getWest(), layout.getWest(), controller));
+        } else {
+            scene.setWest(null);
         }
         if (layout.getCenter() != null) {
-            scene.setCenter(TestSceneComponent.newInstance(layout.getCenter(), controller));
+            scene.setCenter(prepareComponent(scene.getCenter(), layout.getCenter(), controller));
+        } else {
+            scene.setCenter(null);
         }
         if (layout.getEast() != null) {
-            scene.setEast(TestSceneComponent.newInstance(layout.getEast(), controller));
+            scene.setEast(prepareComponent(scene.getEast(), layout.getEast(), controller));
+        } else {
+            scene.setEast(null);
         }
         if (layout.getSouth() != null) {
-            scene.setSouth(TestSceneComponent.newInstance(layout.getSouth(), controller));
+            scene.setSouth(prepareComponent(scene.getSouth(), layout.getSouth(), controller));
+        } else {
+            scene.setSouth(null);
         }
         uiFrame.showScene();
+    }
+
+    private TestSceneComponent prepareComponent(TestSceneComponent component, final String name, final TrialController controller) {
+        if (component == null || !component.getClass().getName().equals(name)) {
+            component = TestSceneComponent.getInstance(name);
+        }
+        component.setController(controller);
+        return component;
     }
 
 }

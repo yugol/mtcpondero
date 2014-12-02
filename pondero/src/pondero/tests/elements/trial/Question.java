@@ -45,7 +45,7 @@ public class Question extends Trial {
         if (StringUtil.isNullOrBlank(question)) {
             scene.setCenter(null);
         } else {
-            final ItemQuestionComponent center = new ItemQuestionComponent(test);
+            final ItemQuestionComponent center = new ItemQuestionComponent();
             center.setQuestion(question);
             scene.setCenter(center);
         }

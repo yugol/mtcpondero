@@ -9,7 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import pondero.Constants;
-import pondero.tests.Test;
 import pondero.ui.testing.TestSceneComponent;
 import pondero.util.SwingUtil;
 
@@ -18,8 +17,8 @@ public class ItemQuestionComponent extends TestSceneComponent {
 
     private final JLabel lblQuestion = new JLabel("1. Question?"); ;
 
-    public ItemQuestionComponent(final Test test) {
-        super(test);
+    public ItemQuestionComponent() {
+        super(null);
         setLayout(new BorderLayout(0, 0));
 
         final JPanel pnlMain = new JPanel();
