@@ -81,6 +81,7 @@ public class TrialController extends TaskController {
             stimulusPresenter.interrupt();
             stimulusPresenter = null;
         }
+        getTask().goNext();
     }
 
     @Override
@@ -123,7 +124,6 @@ public class TrialController extends TaskController {
         boolean completed = false;
 
         if (input != null) {
-
             if (input instanceof KeyPressResponse) {
                 final String keyResponse = ((KeyPressResponse) input).getCharAsString();
                 if (getElement().getValidResponses().contains(keyResponse)) {
@@ -142,7 +142,6 @@ public class TrialController extends TaskController {
                 responses.add(input);
                 completed = getElement().isKillerUserInput();
             }
-
         }
 
         if (completed) {

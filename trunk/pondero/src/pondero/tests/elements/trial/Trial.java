@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.swing.Timer;
-import pondero.Constants;
 import pondero.Context;
 import pondero.Logger;
 import pondero.task.controllers.Timing;
@@ -69,7 +68,7 @@ public class Trial extends Element implements HasFeedback, IsController {
     public Trial(final String name) {
         super(name);
         trialCode = name;
-        getLayout().setCenter(Constants.DRAWABLE_LAYOUT_COMPONENT);
+        getLayout().setCenter(TestDrawableComponent.class.getName());
     }
 
     public String buildRecordedResponse(final List<Response> input) {

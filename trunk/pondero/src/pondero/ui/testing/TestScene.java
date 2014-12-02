@@ -16,14 +16,6 @@ public class TestScene extends JPanel {
         setLayout(new BorderLayout());
     }
 
-    public void clear() {
-        setNorth(null);
-        setWest(null);
-        setCenter(null);
-        setEast(null);
-        setSouth(null);
-    }
-
     public void focalize() {
         final TestSceneComponent center = getCenter();
         if (center != null) {
@@ -101,12 +93,13 @@ public class TestScene extends JPanel {
 
     private void setSceneComponent(final TestSceneComponent component, final String position) {
         final Component currentComponent = getSceneComponent(position);
-        if (currentComponent != null) {
-            currentComponent.setVisible(false);
-            remove(currentComponent);
-        }
-        if (component != null) {
-            add(component, position);
+        if (currentComponent != component) {
+            if (currentComponent != null) {
+                remove(currentComponent);
+            }
+            if (component != null) {
+                add(component, position);
+            }
         }
     }
 

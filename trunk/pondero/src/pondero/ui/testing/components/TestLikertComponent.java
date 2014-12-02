@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import pondero.task.controllers.TrialController;
 import pondero.task.responses.LikertResponse;
 import pondero.tests.Test;
 import pondero.tests.elements.trial.LikertConfig;
@@ -88,6 +89,11 @@ public class TestLikertComponent extends TestSceneComponent {
             txt = "";
         }
         labels[labelIndex].setText("<html><center>" + txt + "</center></html>");
+    }
+
+    @Override
+    public void setController(final TrialController controller) {
+        super.setController(controller);
     }
 
     public void setInfo(final String quiz) {
