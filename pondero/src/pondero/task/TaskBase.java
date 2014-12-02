@@ -15,8 +15,8 @@ import pondero.task.launch.TaskData;
 import pondero.task.launch.TaskMonitor;
 import pondero.task.launch.TaskRenderer;
 import pondero.tests.Test;
-import pondero.tests.elements.other.Block;
-import pondero.tests.elements.other.Experiment;
+import pondero.tests.elements.workflow.Block;
+import pondero.tests.elements.workflow.Experiment;
 
 public abstract class TaskBase extends Thread implements Iterable<TaskController> {
 

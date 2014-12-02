@@ -1,10 +1,11 @@
-package pondero.tests.elements.other;
+package pondero.tests.elements.workflow;
 
 import java.util.ArrayList;
 import java.util.List;
 import pondero.task.responses.PrevNextResponse;
 import pondero.task.responses.Response;
 import pondero.tests.elements.Element;
+import pondero.tests.elements.other.Page;
 import pondero.tests.interfaces.HasPostInstructions;
 import pondero.tests.interfaces.HasPreInstructions;
 import pondero.tests.interfaces.IsController;

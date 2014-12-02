@@ -13,7 +13,7 @@ import pondero.task.responses.LikertResponse;
 import pondero.task.responses.MouseClickResponse;
 import pondero.task.responses.Response;
 import pondero.tests.Test;
-import pondero.tests.elements.trial.Trial;
+import pondero.tests.elements.workflow.Trial;
 import pondero.tests.interfaces.HasFeedback;
 import pondero.tests.interfaces.IsStimulus;
 import pondero.tests.staples.Frame;

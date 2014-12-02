@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import pondero.task.Task;
 import pondero.tests.elements.Element;
-import pondero.tests.elements.other.Block;
+import pondero.tests.elements.workflow.Block;
 import pondero.tests.interfaces.HasFeedback;
 import pondero.tests.interfaces.HasFeedback.FeedbackStimulus;
 import pondero.tests.interfaces.HasFont;

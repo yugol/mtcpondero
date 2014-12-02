@@ -1,4 +1,4 @@
-package pondero.tests.elements.trial;
+package pondero.tests.elements.workflow.trials;
 
 import java.awt.Color;
 import java.util.HashMap;
