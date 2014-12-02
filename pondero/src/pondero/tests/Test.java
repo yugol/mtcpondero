@@ -1,6 +1,5 @@
 package pondero.tests;
 
-import java.awt.EventQueue;
 import java.util.List;
 import java.util.Stack;
 import pondero.data.Workbook;
@@ -9,16 +8,14 @@ import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.TestInstance;
 import pondero.data.model.basic.TrialRecord;
 import pondero.task.Testable;
-import pondero.task.launch.DefaultMonitor;
 import pondero.task.launch.TaskData;
 import pondero.task.launch.TaskMonitor;
 import pondero.task.responses.Response;
 import pondero.tests.elements.workflow.Block;
 import pondero.tests.elements.workflow.Trial;
+import pondero.tests.interfaces.HasFeedback.FeedbackStimulus;
 import pondero.tests.interfaces.HasScreencolor;
 import pondero.tests.interfaces.IsController;
-import pondero.tests.interfaces.HasFeedback.FeedbackStimulus;
-import pondero.ui.exceptions.ExceptionReporting;
 
 public abstract class Test extends TestRenderer implements IsController, Testable {
 
@@ -168,30 +165,12 @@ public abstract class Test extends TestRenderer implements IsController, Testabl
         }
     }
 
-    @Override
-    public void run() {
-        try {
-            pushScreencolor(getDefaults());
-            getTestWindow().showTestWindow();
-            doBegin();
-            doStep(null);
-        } catch (final Exception e) {
-            taskMonitor.onTaskEnded(this, taskData);
-            ExceptionReporting.showExceptionMessage(null, e);
-        }
-    }
-
     public void setParticipant(final Participant participant) {
         this.participant = participant;
     }
 
     public void setWorkbook(final Workbook workbook) {
         this.workbook = workbook;
-    }
-
-    public void start(final TaskMonitor launcher) {
-        taskMonitor = launcher == null ? new DefaultMonitor() : launcher;
-        EventQueue.invokeLater(this);
     }
 
 }

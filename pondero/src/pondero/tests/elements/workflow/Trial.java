@@ -28,7 +28,7 @@ import pondero.tests.staples.Frame;
 import pondero.tests.staples.FrameSequence;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.testing.TestScene;
-import pondero.ui.testing.components.TestDrawableComponent;
+import pondero.ui.testing.components.DrawableComponent;
 
 public class Trial extends Element implements HasFeedback, IsController {
 
@@ -118,7 +118,7 @@ public class Trial extends Element implements HasFeedback, IsController {
     public Trial(final String name) {
         super(name);
         trialCode = name;
-        getLayout().setCenter(TestDrawableComponent.class.getName());
+        getLayout().setCenter(DrawableComponent.class.getName());
     }
 
     public String buildRecordedResponse(final List<Response> input) {
@@ -402,8 +402,8 @@ public class Trial extends Element implements HasFeedback, IsController {
     protected void configureScene() {
         final Test test = getTest();
         final TestScene scene = test.getTestWindow().getScene();
-        if (!(scene.getCenter() instanceof TestDrawableComponent)) {
-            scene.setCenter(new TestDrawableComponent(test));
+        if (!(scene.getCenter() instanceof DrawableComponent)) {
+            scene.setCenter(new DrawableComponent(test));
         }
         scene.setNorth(null);
         scene.setEast(null);

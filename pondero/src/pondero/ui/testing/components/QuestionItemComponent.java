@@ -9,16 +9,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import pondero.Constants;
+import pondero.task.controllers.TrialController;
+import pondero.tests.elements.workflow.trials.Question;
 import pondero.ui.testing.TestSceneComponent;
 import pondero.util.SwingUtil;
 
 @SuppressWarnings("serial")
-public class ItemQuestionComponent extends TestSceneComponent {
+public class QuestionItemComponent extends TestSceneComponent {
 
     private final JLabel lblQuestion = new JLabel("1. Question?"); ;
 
-    public ItemQuestionComponent() {
-        super(null);
+    public QuestionItemComponent() {
         setLayout(new BorderLayout(0, 0));
 
         final JPanel pnlMain = new JPanel();
@@ -46,11 +47,9 @@ public class ItemQuestionComponent extends TestSceneComponent {
     }
 
     @Override
-    public void reset() {
-    }
-
-    public void setQuestion(final String question) {
-        lblQuestion.setText("<html><center>" + question + "</center></html>");
+    public void setController(final TrialController controller) {
+        super.setController(controller);
+        lblQuestion.setText("<html><center>" + ((Question) controller.getElement()).getQuestion() + "</center></html>");
     }
 
 }

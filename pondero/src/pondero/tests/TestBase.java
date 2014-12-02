@@ -16,7 +16,7 @@ import pondero.tests.elements.workflow.Trial;
 import pondero.tests.interfaces.IsStimulus;
 import pondero.tests.management.Artifact;
 
-public abstract class TestBase implements Runnable {
+public abstract class TestBase {
 
     public static Test instance() {
         return (Test) instance;

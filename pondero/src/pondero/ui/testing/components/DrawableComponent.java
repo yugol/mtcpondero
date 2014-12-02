@@ -14,13 +14,13 @@ import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.testing.TestSceneComponent;
 
 @SuppressWarnings("serial")
-public class TestDrawableComponent extends TestSceneComponent {
+public class DrawableComponent extends TestSceneComponent {
 
-    public TestDrawableComponent() {
+    public DrawableComponent() {
         this(null);
     }
 
-    public TestDrawableComponent(final Test test) {
+    public DrawableComponent(final Test test) {
         super(test);
 
         addKeyListener(new KeyAdapter() {

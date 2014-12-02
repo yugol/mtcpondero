@@ -54,7 +54,7 @@ import pondero.ui.actions.SaveAsDocumentAction;
 import pondero.ui.actions.SaveDocumentAction;
 import pondero.ui.actions.SelectParticipantAction;
 import pondero.ui.actions.SetPreferencesAction;
-import pondero.ui.actions.StartTestAction;
+import pondero.ui.actions.RunTestAction;
 import pondero.ui.actions.UpdateAction;
 import pondero.ui.actions.ViewWorkbookAction;
 import pondero.ui.exceptions.ExceptionReporting;
@@ -118,7 +118,7 @@ public class Pondero implements Ponderable, PModelListener {
     private PonderoState             currentState;
     private Workbook                 currentWorkbook;
     private Participant              currentParticipant;
-    private Test                     currentTask;
+    private Test                     currentTest;
 
     // Actions
     private final Action             aboutAction                = new AboutAction(this);
@@ -136,7 +136,7 @@ public class Pondero implements Ponderable, PModelListener {
     private final Action             saveDocument               = new SaveDocumentAction(this);
     private final Action             selectParticipantAction    = new SelectParticipantAction(this);
     private final Action             setPreferencesAction       = new SetPreferencesAction(this);
-    private final Action             startTaskAction            = new StartTestAction(this);
+    private final Action             startTaskAction            = new RunTestAction(this);
     private final OpenWorkbookAction openDocumentAction         = new OpenWorkbookAction(this);
     private final UpdateAction       updateAction               = new UpdateAction(this);
 
@@ -188,8 +188,8 @@ public class Pondero implements Ponderable, PModelListener {
     }
 
     @Override
-    public Test getCurrentTask() {
-        return currentTask;
+    public Test getCurrentTest() {
+        return currentTest;
     }
 
     @Override
@@ -204,7 +204,7 @@ public class Pondero implements Ponderable, PModelListener {
 
     @Override
     public JFrame getTestFrame() {
-        if (currentTask != null) { return currentTask.getTestWindow(); }
+        if (currentTest != null) { return currentTest.getTestWindow(); }
         return null;
     }
 
@@ -246,7 +246,7 @@ public class Pondero implements Ponderable, PModelListener {
                 cl.show(stage, "pnlTestSelection");
                 lblPageTitle.setText(L10n.getString("lbl.CHOOSE-TEST"));
                 lblPageHint.setText(L10n.getString("msg.CHOOSE-TEST", L10n.getString("lbl.start"), L10n.getString("lbl.back")));
-                btnStart.setEnabled(currentWorkbook != null && (currentParticipant != null || Context.isParticipantOptional()) && currentTask != null);
+                btnStart.setEnabled(currentWorkbook != null && (currentParticipant != null || Context.isParticipantOptional()) && currentTest != null);
             }
         }
         currentState = state;
@@ -254,8 +254,8 @@ public class Pondero implements Ponderable, PModelListener {
     }
 
     @Override
-    public void setCurrentTask(final Test task) throws Exception {
-        currentTask = task;
+    public void setCurrentTest(final Test test) throws Exception {
+        currentTest = test;
         updateCurrentState();
     }
 
@@ -264,7 +264,7 @@ public class Pondero implements Ponderable, PModelListener {
         currentWorkbook = workbook;
         currentWorkbook.addModelListener(this);
         currentParticipant = null;
-        currentTask = null;
+        currentTest = null;
         setCurrentState(PonderoState.PARTICIPANT_SELECTION);
         Context.setLastWorkbookFile(workbook.getFile());
     }
@@ -512,9 +512,9 @@ public class Pondero implements Ponderable, PModelListener {
             @Override
             public void valueChanged(final ListSelectionEvent evt) {
                 final Test newTask = lstTests.getSelectedValue();
-                if (newTask != currentTask) {
+                if (newTask != currentTest) {
                     try {
-                        setCurrentTask(newTask);
+                        setCurrentTest(newTask);
                     } catch (final Exception e) {
                         ExceptionReporting.showExceptionMessage(null, e);
                     }
@@ -584,11 +584,11 @@ public class Pondero implements Ponderable, PModelListener {
                 message.append(" ");
                 message.append(currentParticipant.getName());
             }
-            if (currentTask != null) {
+            if (currentTest != null) {
                 message.append(" -> ");
                 message.append(L10n.getString("lbl.test"));
                 message.append(": ");
-                message.append(currentTask.getCodeName());
+                message.append(currentTest.getCodeName());
             }
             statusBar.setMessage(StatusBar.DEFAULT, message.toString());
         }
