@@ -9,9 +9,9 @@ import pondero.Logger;
 import pondero.task.controllers.TrialController;
 import pondero.task.stimuli.VisualStimulus;
 import pondero.tests.Test;
-import pondero.ui.testing.components.ItemQuestionComponent;
-import pondero.ui.testing.components.TestDrawableComponent;
-import pondero.ui.testing.components.TestLikertComponent;
+import pondero.ui.testing.components.QuestionItemComponent;
+import pondero.ui.testing.components.DrawableComponent;
+import pondero.ui.testing.components.LikertComponent;
 
 @SuppressWarnings("serial")
 public abstract class TestSceneComponent extends JComponent {
@@ -32,14 +32,19 @@ public abstract class TestSceneComponent extends JComponent {
     private static final Map<String, TestSceneComponent> REGISTERED_COMPONENTS = new HashMap<>();
 
     static {
-        registerComponent(TestDrawableComponent.class);
-        registerComponent(TestLikertComponent.class);
-        registerComponent(ItemQuestionComponent.class);
+        registerComponent(DrawableComponent.class);
+        registerComponent(LikertComponent.class);
+        registerComponent(QuestionItemComponent.class);
     }
 
     private final Test                                   test;
     private TrialController                              controller;
     private List<VisualStimulus>                         visualStimuli         = new ArrayList<VisualStimulus>();
+
+    public TestSceneComponent() {
+        setFocusable(true);
+        test = null;
+    }
 
     @Deprecated
     public TestSceneComponent(final Test test) {

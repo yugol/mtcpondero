@@ -1,21 +1,21 @@
 package pondero.tests.elements.workflow.trials;
 
-import pondero.tests.Test;
 import pondero.tests.elements.workflow.Trial;
-import pondero.ui.testing.TestScene;
-import pondero.ui.testing.components.ItemQuestionComponent;
-import pondero.ui.testing.components.TestLikertComponent;
-import pondero.util.StringUtil;
+import pondero.tests.interfaces.HasLikertConfig;
+import pondero.ui.testing.components.LikertComponent;
+import pondero.ui.testing.components.QuestionItemComponent;
 
-public class Question extends Trial {
+public class Question extends Trial implements HasLikertConfig {
 
-    private LikertConfig likertConfig;
     private String       question;
+    private LikertConfig likertConfig;
 
     public Question(final String name) {
         super(name);
+        getLayout().setCenter(QuestionItemComponent.class.getName());
     }
 
+    @Override
     public LikertConfig getLikertConfig() {
         return likertConfig;
     }
@@ -27,9 +27,11 @@ public class Question extends Trial {
     public void setLikert(final boolean flag) {
         if (flag && likertConfig == null) {
             likertConfig = new LikertConfig();
+            getLayout().setSouth(LikertComponent.class.getName());
         }
         if (!flag) {
             likertConfig = null;
+            getLayout().setSouth(null);
         }
     }
 
@@ -37,24 +39,4 @@ public class Question extends Trial {
         this.question = question;
     }
 
-    @Override
-    protected void configureScene() {
-        final Test test = getTest();
-        final TestScene scene = test.getTestWindow().getScene();
-        scene.setNorth(null);
-        scene.setWest(null);
-        if (StringUtil.isNullOrBlank(question)) {
-            scene.setCenter(null);
-        } else {
-            final ItemQuestionComponent center = new ItemQuestionComponent();
-            center.setQuestion(question);
-            scene.setCenter(center);
-        }
-        scene.setEast(null);
-        if (likertConfig != null) {
-            scene.setSouth(new TestLikertComponent(test, likertConfig));
-        } else {
-            scene.setSouth(null);
-        }
-    }
 }

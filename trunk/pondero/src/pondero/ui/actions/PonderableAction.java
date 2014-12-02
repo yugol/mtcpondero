@@ -24,8 +24,8 @@ public abstract class PonderableAction extends AbstractAction {
         return app.getCurrentParticipant();
     }
 
-    protected Test getCurrentTask() {
-        return app.getCurrentTask();
+    protected Test getCurrentTest() {
+        return app.getCurrentTest();
     }
 
     protected Workbook getCurrentWorkbook() {

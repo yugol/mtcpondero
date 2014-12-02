@@ -9,7 +9,7 @@ public interface Ponderable {
 
     Participant getCurrentParticipant();
 
-    Test getCurrentTask();
+    Test getCurrentTest();
 
     Workbook getCurrentWorkbook();
 
@@ -21,7 +21,7 @@ public interface Ponderable {
 
     void setCurrentState(PonderoState state) throws Exception;
 
-    void setCurrentTask(Test task) throws Exception;
+    void setCurrentTest(Test task) throws Exception;
 
     void setCurrentWorkbook(Workbook workbook) throws Exception;
 
