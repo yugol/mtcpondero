@@ -2,7 +2,7 @@ package pondero.task.controllers;
 
 import pondero.task.Task;
 import pondero.task.responses.Response;
-import pondero.tests.elements.other.Experiment;
+import pondero.tests.elements.workflow.Experiment;
 
 public class ExperimentController extends TaskController {
 

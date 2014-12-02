@@ -5,7 +5,7 @@ import pondero.task.controllers.PageController;
 import pondero.task.controllers.StimulusFrame;
 import pondero.task.controllers.TrialController;
 import pondero.task.stimuli.AuditoryStimulus;
-import pondero.tests.elements.trial.TrialLayout;
+import pondero.tests.elements.workflow.Trial.TrialLayout;
 import pondero.ui.testing.TestFrame;
 import pondero.ui.testing.TestScene;
 import pondero.ui.testing.TestSceneComponent;

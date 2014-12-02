@@ -2,7 +2,7 @@ package pondero.task.controllers;
 
 import pondero.task.Task;
 import pondero.task.responses.Response;
-import pondero.tests.elements.other.Block;
+import pondero.tests.elements.workflow.Block;
 
 public class BlockController extends TaskController {
 

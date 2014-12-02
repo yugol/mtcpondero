@@ -1,9 +1,10 @@
-package pondero.tests.elements.trial;
+package pondero.tests.elements.workflow.trials;
 
 import java.util.List;
 import pondero.task.responses.LikertResponse;
 import pondero.task.responses.Response;
 import pondero.tests.Test;
+import pondero.tests.elements.workflow.Trial;
 import pondero.tests.interfaces.HasPosition;
 import pondero.tests.staples.Coordinate;
 import pondero.tests.staples.Coordinates;

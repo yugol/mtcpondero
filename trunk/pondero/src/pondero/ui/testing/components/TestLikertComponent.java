@@ -15,7 +15,7 @@ import javax.swing.border.EmptyBorder;
 import pondero.task.controllers.TrialController;
 import pondero.task.responses.LikertResponse;
 import pondero.tests.Test;
-import pondero.tests.elements.trial.LikertConfig;
+import pondero.tests.elements.workflow.trials.LikertConfig;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.testing.TestSceneComponent;
 import pondero.util.StringUtil;
