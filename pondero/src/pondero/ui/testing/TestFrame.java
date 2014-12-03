@@ -21,10 +21,7 @@ public class TestFrame extends JFrame {
     private final TestScene    scene;
     private final TestCurtains curtains;
 
-    /**
-     * Create the frame.
-     */
-    public TestFrame(final Task test) {
+    public TestFrame(final Task task) {
         setName(WINDOW_NAME);
         setIconImage(Toolkit.getDefaultToolkit().getImage(TestFrame.class.getResource("/javax/swing/plaf/metal/icons/ocean/question.png")));
 
@@ -32,9 +29,7 @@ public class TestFrame extends JFrame {
 
             @Override
             public void windowClosing(final WindowEvent e) {
-                if (test != null) {
-                    test.kill();
-                }
+                task.kill();
             }
 
         });
@@ -51,11 +46,11 @@ public class TestFrame extends JFrame {
         scene.setBorder(null);
         contentPane.add(scene);
 
-        curtains = new TestCurtains(test);
+        curtains = new TestCurtains(task);
         curtains.setBorder(null);
         contentPane.add(curtains);
 
-        setTitle(test.getCodeName());
+        setTitle(task.getTest().getDescriptor().getCodeName());
 
         SwingUtil.enableFullScreenMode(this);
         SwingUtil.showFractionedCentered(this);
@@ -63,10 +58,6 @@ public class TestFrame extends JFrame {
 
     public TestScene getScene() {
         return scene;
-    }
-
-    public void hideTestWindow() {
-        setVisible(false);
     }
 
     public synchronized void invalidateScene() {

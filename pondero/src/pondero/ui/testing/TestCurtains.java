@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import pondero.L10n;
-import pondero.task.Testable;
+import pondero.task.Task;
 import pondero.task.controllers.PageController;
 
 @SuppressWarnings("serial")
@@ -32,7 +32,7 @@ public class TestCurtains extends JPanel {
     private final JTextArea message;
     private final JPanel    pnlMessage;
 
-    public TestCurtains(final Testable test) {
+    public TestCurtains(final Task task) {
         setBorder(null);
         setLayout(new BorderLayout());
 

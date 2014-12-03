@@ -34,7 +34,7 @@ public class TestCellRenderer extends JPanel implements ListCellRenderer<Test> {
             final int index,
             final boolean isSelected,
             final boolean cellHasFocus) {
-        lblName.setText(value.getCodeName());
+        lblName.setText(value.getDescriptor().getCodeName());
         if (isSelected) {
             setBackground(SwingUtil.getListSelectedBackgroundColor());
             lblName.setForeground(SwingUtil.getListSelectedForegroundColor());

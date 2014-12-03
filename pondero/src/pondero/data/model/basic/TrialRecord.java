@@ -9,7 +9,7 @@ public class TrialRecord extends PRow {
 
     TrialRecord(final PSheet sheet) throws Exception {
         super(sheet);
-        set(TestRecords.ATTR_TRIAL_TIMESTAMP, System.currentTimeMillis());
+        setTrialTimestamp(System.currentTimeMillis());
     }
 
     public String getBlockId() {
@@ -72,6 +72,10 @@ public class TrialRecord extends PRow {
 
     public void setTrialId(final String value) throws Exception {
         set(TestRecords.ATTR_TRIAL_ID, value);
+    }
+
+    public void setTrialTimestamp(final long timestamp) throws Exception {
+        set(TestRecords.ATTR_TRIAL_TIMESTAMP, timestamp);
     }
 
     @Override

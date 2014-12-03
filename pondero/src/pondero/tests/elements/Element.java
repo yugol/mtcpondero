@@ -2,7 +2,6 @@ package pondero.tests.elements;
 
 import java.util.UUID;
 import pondero.tests.Test;
-import pondero.tests.TestBase;
 
 /*
  * method naming conventions
@@ -18,16 +17,16 @@ public abstract class Element {
 
     public Element(final String name) {
         this.name = name == null ? UUID.randomUUID().toString() : name;
-        test = TestBase.instance();
+        test = Test.instance();
         test.add(this);
-    }
-
-    public Test getTest() {
-        return test;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Test getTest() {
+        return test;
     }
 
     public abstract String getTypeName();

@@ -15,8 +15,6 @@ public interface Ponderable {
 
     JFrame getMainFrame();
 
-    JFrame getTestFrame();
-
     void setCurrentParticipant(Participant participant) throws Exception;
 
     void setCurrentState(PonderoState state) throws Exception;

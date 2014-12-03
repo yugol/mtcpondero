@@ -65,7 +65,7 @@ public class ProfileReport extends PdfReport {
                         final Evaluation evaluation = test.getEvaluation(testInstance);
                         evaluations.add(evaluation);
                     } catch (final UnsupportedOperationException ex) {
-                        Logger.warning(ex, test.getCodeName() + " does not support profiling");
+                        Logger.warning(ex, test.getDescriptor().getCodeName() + " does not support profiling");
                     }
                 }
             }

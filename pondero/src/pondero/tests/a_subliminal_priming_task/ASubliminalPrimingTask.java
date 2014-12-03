@@ -114,7 +114,7 @@ public class ASubliminalPrimingTask extends Test {
 //        instruct.prevkey('a');
 //        instruct.setScreenColor(Constants.DEFAULT_PAGE_SCREEN_COLOR);
 
-        new Page("start", "    " + getCodeName());
+        new Page("start", "    " + getDescriptor().getCodeName());
 
         new Page("intro1",
                 "    Sarcinile pe care urmeaz\u0103 s\u0103 le efectua\u021bi \u00een acest experiment implic\u0103 EVALUAREA DE CATEGORII." +
@@ -194,5 +194,4 @@ public class ASubliminalPrimingTask extends Test {
         expt.setBlocks("1 = practice; 2-5 = data");
         expt.setPostInstructions("end");
     }
-
 }
