@@ -58,6 +58,7 @@ public class TestCurtains extends JPanel {
         pnlCenter.add(pnlMessage, BorderLayout.CENTER);
 
         message = new JTextArea();
+        message.setBorder(null);
         message.setOpaque(false);
         message.setWrapStyleWord(true);
         message.setLineWrap(true);
@@ -71,6 +72,7 @@ public class TestCurtains extends JPanel {
         pnlCenter.setBackground(pageController.getInstructScreenColor());
         pnlMessage.setBackground(pageController.getInstructScreenColor());
         pnlNavigation.setBackground(pageController.getInstructScreenColor());
+        message.setBackground(pageController.getInstructScreenColor());
         message.setForeground(pageController.getInstructTextColor());
 
         if (!pageController.getElement().isLast() && pageController.getInstructNextKey() != null) {
@@ -87,7 +89,7 @@ public class TestCurtains extends JPanel {
         }
 
         setEventHandlers(new TaskKeyAdapter(pageController), new TaskMouseAdapter(pageController, false), new TaskMouseAdapter(pageController, true));
-        message.requestFocus();
+        btnRight.requestFocus();
     }
 
     private void removeKeyListeners(final Component component) {
