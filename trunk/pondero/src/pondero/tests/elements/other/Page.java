@@ -7,7 +7,7 @@ public class Page extends Element {
     public static final String TYPENAME = "page";
 
     private final String       content;
-    private boolean            first    = false;
+    private boolean            first    = true;
     private boolean            last     = false;
 
     public Page(final String name, final String content) {
