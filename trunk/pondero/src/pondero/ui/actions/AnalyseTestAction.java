@@ -36,7 +36,7 @@ public class AnalyseTestAction extends PonderableAction {
             if (dlg.getCloseOperation() == JOptionPane.YES_OPTION) {
                 final Test test = dlg.getSelection();
                 if (test != null) {
-                    action("performing analysis of test ", test.getCodeName());
+                    action("performing analysis of test ", test.getDescriptor().getCodeName());
                     final TestTemplate template = new TestTemplate();
                     new FillTestReport().fill(template, test, getCurrentWorkbook().getModel());
                     final String reportFileName = TestTemplate.BASE_NAME + "-" + System.currentTimeMillis() + ExcelFileFilter.DEFAULT_EXTENSION;

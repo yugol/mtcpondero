@@ -1,11 +1,11 @@
 package pondero.task.launch;
 
-import pondero.tests.Test;
+import pondero.task.Task;
 
 public interface TaskMonitor {
 
-    void onTaskEnded(Test test, TaskData data);
+    void onTaskEnded(Task test, TaskData data);
 
-    void onTaskStarted(Test test);
+    void onTaskStarted(Task test);
 
 }

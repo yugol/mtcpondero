@@ -10,7 +10,6 @@ import pondero.task.Task;
 import pondero.task.launch.DefaultRenderer;
 import pondero.task.launch.TaskData;
 import pondero.task.launch.TaskMonitor;
-import pondero.tests.Test;
 import pondero.ui.Ponderable;
 import pondero.ui.Pondero;
 import pondero.ui.exceptions.ExceptionReporting;
@@ -27,15 +26,15 @@ public class RunTestAction extends PonderableAction implements TaskMonitor {
 
     @Override
     public void actionPerformed(final ActionEvent e) {
-        action("running test ", getCurrentTest().getCodeName(), " on ", getCurrentParticipant().getId());
+        action("running test ", getCurrentTest().getDescriptor().getCodeName(), " on ", getCurrentParticipant().getId());
         final Task task = new Task(new DefaultRenderer(), getCurrentTest(), getCurrentWorkbook(), getCurrentParticipant());
         task.addMonitor(this);
         task.start();
     }
 
     @Override
-    public void onTaskEnded(final Test task, final TaskData report) {
-        trace("ended task: ", task.getCodeName());
+    public void onTaskEnded(final Task task, final TaskData report) {
+        trace("ended task: ", task.getTest().getDescriptor().getCodeName());
         try {
             final StringBuilder html = new StringBuilder("<html>");
             if (TaskData.END_SUCCESS == report.getEndCode()) {
@@ -53,7 +52,7 @@ public class RunTestAction extends PonderableAction implements TaskMonitor {
 
             if (JOptionPane.NO_OPTION == decision) {
                 action("cancelling test results");
-                getCurrentWorkbook().removeRecords(task.getTestId(), report.getRecords());
+                getCurrentWorkbook().removeRecords(task.getTest().getDescriptor().getId(), report.getRecords());
             } else {
                 action("retaining test results");
             }
@@ -64,8 +63,8 @@ public class RunTestAction extends PonderableAction implements TaskMonitor {
     }
 
     @Override
-    public void onTaskStarted(final Test task) {
-        trace("started task: ", task.getCodeName());
+    public void onTaskStarted(final Task task) {
+        trace("started task: ", task.getTest().getDescriptor().getCodeName());
         getMainFrame().setVisible(false);
     }
 

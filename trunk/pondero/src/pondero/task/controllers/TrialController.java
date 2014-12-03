@@ -58,10 +58,15 @@ public class TrialController extends TaskController {
             frames.add(frame);
         }
 
-        record = null;
-        if (getTask().getWorkbook() != null) {
+        if (record == null && getTask().getWorkbook() != null) {
             record = getTask().getWorkbook().addTrialRecord(getTask().getTest().getDescriptor().getId());
             record.setExperimentId(getTask().getData().getRunId());
+            record.setParticipant(getTask().getParticipant());
+            record.setBlockId(getParent().getElement().getName());
+            record.setTrialId(getElement().getName());
+        }
+        if (record != null) {
+            record.setTrialTimestamp(System.currentTimeMillis());
         }
 
         responses.clear();
@@ -81,7 +86,6 @@ public class TrialController extends TaskController {
             stimulusPresenter.interrupt();
             stimulusPresenter = null;
         }
-        getTask().goNext();
     }
 
     @Override
@@ -122,6 +126,7 @@ public class TrialController extends TaskController {
         }
 
         boolean completed = false;
+        final boolean goForward = true;
 
         if (input != null) {
             if (input instanceof KeyPressResponse) {
@@ -163,6 +168,9 @@ public class TrialController extends TaskController {
 
             Timing.pause(getElement().getPostTrialPause());
             doEnd();
+            if (goForward) {
+                getTask().goNext();
+            }
         }
     }
 
@@ -171,26 +179,18 @@ public class TrialController extends TaskController {
         return (Trial) super.getElement();
     }
 
+    public TrialRecord getRecord() {
+        return record;
+    }
+
     private HasFeedback.FeedbackStimulus evaluateResponse() throws Exception {
+        final boolean correct = getElement().isCorrectResponse(responses);
         if (record != null) {
             record.setResponse(getElement().buildRecordedResponse(responses));
+            record.setResponseTimestamp(getElement().getResponseTime(responses));
+            record.setResponseCorrect(correct);
         }
-        HasFeedback.FeedbackStimulus fb = null;
-        final Long responseTime = getElement().getResponseTime(responses);
-        if (getElement().isCorrectResponse(responses)) {
-            fb = getCorrectMessage();
-            if (record != null) {
-                record.setResponseTimestamp(responseTime);
-                record.setResponseCorrect(true);
-            }
-        } else {
-            fb = getErrorMessage();
-            if (record != null) {
-                record.setResponseTimestamp(responseTime);
-                record.setResponseCorrect(false);
-            }
-        }
-        return fb;
+        return correct ? getCorrectMessage() : getErrorMessage();
     }
 
 }

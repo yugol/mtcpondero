@@ -49,12 +49,12 @@ public class Instruct extends Element implements HasFont, HasTextColor, HasInput
     }
 
     public Color getScreenColor() {
-        return screenColor == null ? test.getScreenColor() : screenColor;
+        return screenColor;
     }
 
     @Override
     public Color getTextColor() {
-        return txcolor == null ? test.getDefaults().getTextColor() : txcolor;
+        return txcolor;
     }
 
     @Override

@@ -50,11 +50,11 @@ import pondero.ui.actions.ModifyParticipantAction;
 import pondero.ui.actions.OpenWorkbookAction;
 import pondero.ui.actions.QuitAction;
 import pondero.ui.actions.RestartAction;
+import pondero.ui.actions.RunTestAction;
 import pondero.ui.actions.SaveAsDocumentAction;
 import pondero.ui.actions.SaveDocumentAction;
 import pondero.ui.actions.SelectParticipantAction;
 import pondero.ui.actions.SetPreferencesAction;
-import pondero.ui.actions.RunTestAction;
 import pondero.ui.actions.UpdateAction;
 import pondero.ui.actions.ViewWorkbookAction;
 import pondero.ui.exceptions.ExceptionReporting;
@@ -200,12 +200,6 @@ public class Pondero implements Ponderable, PModelListener {
     @Override
     public JFrame getMainFrame() {
         return mainFrame;
-    }
-
-    @Override
-    public JFrame getTestFrame() {
-        if (currentTest != null) { return currentTest.getTestWindow(); }
-        return null;
     }
 
     @Override
@@ -588,7 +582,7 @@ public class Pondero implements Ponderable, PModelListener {
                 message.append(" -> ");
                 message.append(L10n.getString("lbl.test"));
                 message.append(": ");
-                message.append(currentTest.getCodeName());
+                message.append(currentTest.getDescriptor().getCodeName());
             }
             statusBar.setMessage(StatusBar.DEFAULT, message.toString());
         }
