@@ -45,12 +45,12 @@ public class Task extends Thread implements Iterable<TaskController> {
     }
 
     public Task(final TaskRenderer renderer, final Test test, final Workbook workbook, final Participant participant) {
-        this.renderer = renderer;
+        this.test = test;
         this.workbook = workbook;
         this.participant = participant;
-        this.test = test;
-        buildExperimentTree();
+        this.renderer = renderer;
         renderer.setTask(this);
+        buildExperimentTree();
     }
 
     public void addMonitor(final TaskMonitor monitor) {
