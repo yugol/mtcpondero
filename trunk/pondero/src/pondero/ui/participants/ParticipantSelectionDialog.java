@@ -54,7 +54,7 @@ public class ParticipantSelectionDialog extends JDialog implements DialogSelecti
         setType(Type.UTILITY);
         setResizable(false);
         setTitle(L10n.getString("lbl.select-participant"));
-        setBounds(100, 100, (int) (400 * Context.getUiFontScaleFactor()), (int) (450 * Context.getUiFontScaleFactor()));
+        setBounds(100, 100, (int) (400 * Context.getUiFontScaleFactor()), (int) (350 * Context.getUiFontScaleFactor()));
         getContentPane().setLayout(new BorderLayout());
 
         final JPanel contentPanel = new JPanel();

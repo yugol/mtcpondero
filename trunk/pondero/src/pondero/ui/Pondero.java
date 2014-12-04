@@ -141,7 +141,6 @@ public class Pondero implements Ponderable, PModelListener {
     private final UpdateAction       updateAction               = new UpdateAction(this);
 
     // Widgets
-    private JFrame                   mainFrame;
     private JButton                  btnAddParticipant;
     private JButton                  btnBack;
     private JButton                  btnModifyParticipant;
@@ -149,12 +148,16 @@ public class Pondero implements Ponderable, PModelListener {
     private JButton                  btnSelectParticipant;
     private JButton                  btnStart;
     private JEditorPane              epParticipantDescription;
+    private JFrame                   mainFrame;
     private JLabel                   lblPageHint;
     private JLabel                   lblPageTitle;
     private JMenu                    mnAnalysis;
+    private JMenu                    mnEvaluation;
     private JMenuItem                mntmAbout;
+    private JMenuItem                mntmFullReport;
     private JMenuItem                mntmParticipant;
     private JMenuItem                mntmPreferences;
+    private JMenuItem                mntmProfile;
     private JMenuItem                mntmRestart;
     private JMenuItem                mntmSave;
     private JMenuItem                mntmSaveas;
@@ -162,9 +165,6 @@ public class Pondero implements Ponderable, PModelListener {
     private JMenuItem                mntmView;
     private JPanel                   stage;
     private StatusBar                statusBar;
-    private JMenu                    mnEvaluation;
-    private JMenuItem                mntmFullReport;
-    private JMenuItem                mntmProfile;
 
     /**
      * Create the application.
@@ -371,10 +371,11 @@ public class Pondero implements Ponderable, PModelListener {
         mntmProfile.setAction(evaluationProfileAction);
         mnEvaluation.add(mntmProfile);
 
-        mnEvaluation.addSeparator();
+        // mnEvaluation.addSeparator();
 
         mntmFullReport = new JMenuItem();
         mntmFullReport.setAction(evaluationFullReportAction);
+        mntmFullReport.setVisible(false);
         mnEvaluation.add(mntmFullReport);
 
         final JMenu mnHelp = new JMenu(" " + L10n.getString("lbl.help") + " ");

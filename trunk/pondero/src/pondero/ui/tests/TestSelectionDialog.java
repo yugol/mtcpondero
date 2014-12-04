@@ -52,7 +52,7 @@ public class TestSelectionDialog extends JDialog implements DialogSelectionListe
         setType(Type.UTILITY);
         setResizable(false);
         setTitle(L10n.getString("lbl.select-test")); //$NON-NLS-1$
-        setBounds(100, 100, (int) (400 * Context.getUiFontScaleFactor()), (int) (450 * Context.getUiFontScaleFactor()));
+        setBounds(100, 100, (int) (400 * Context.getUiFontScaleFactor()), (int) (350 * Context.getUiFontScaleFactor()));
         getContentPane().setLayout(new BorderLayout());
 
         final JPanel contentPanel = new JPanel();

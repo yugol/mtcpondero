@@ -1,10 +1,21 @@
 package pondero.data.evaluation.profile;
 
+import pondero.data.evaluation.scoring.Evaluation;
+
 public class ProfileEntry {
 
-    private String name;
-    private String rawScore;
-    private int    standardScore;
+    private final Evaluation evaluation;
+    private String           name;
+    private String           rawScore;
+    private int              standardScore;
+
+    public ProfileEntry(final Evaluation evaluation) {
+        this.evaluation = evaluation;
+    }
+
+    public Evaluation getEvaluation() {
+        return evaluation;
+    }
 
     public String getName() {
         return name;
