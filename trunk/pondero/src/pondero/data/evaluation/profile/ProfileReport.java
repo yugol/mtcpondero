@@ -20,29 +20,35 @@ import pondero.tests.Test;
 
 public class ProfileReport extends PdfReport {
 
-    public static final String    BASE_NAME        = "Profile";
+    private static String ani(final int age) {
+        if (age == 1) { return " an"; }
+        if (age < 20) { return " ani"; }
+        return " de ani";
+    }
 
+    public static final String    BASE_NAME        = "Profile";
     private static final float    LEFT             = PdfUtil.mmToUnits(25);
+
     private static final float    WIDTH            = PdfUtil.A4_WIDTH - 2 * PdfUtil.mmToUnits(25);
 
     private static final float    TITLE_TOP        = PdfUtil.A4_HEIGHT - PdfUtil.mmToUnits(37.5f);
-
     private static final float    BIO_TOP          = TITLE_TOP - 25;
     private static final float    BIO_FIRST        = LEFT + 10;
     private static final float    BIO_SECOND       = BIO_FIRST + 180;
     private static final float    BIO_THIRD        = BIO_SECOND + 150;
-    private static final float    BIO_HEIGHT       = 14;
 
+    private static final float    BIO_HEIGHT       = 14;
     private static final float    TABLE_TOP        = BIO_TOP - BIO_HEIGHT * 3 - 10;
     private static final float    TABLE_FIRST      = LEFT;
     private static final float    TABLE_SECOND     = BIO_SECOND;                                                // (TABLE_FIRST + WIDTH) / 2 - 10;
     private static final float    TABLE_THIRD      = TABLE_SECOND + 40;
     private static final float    TABLE_LAST       = TABLE_FIRST + WIDTH;
+
     private static final float    TABLE_ROW_HEIGHT = 16;
 
     private static final String[] ROMAN            = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
-
     protected final BasicModel    model;
+
     protected final Participant   participant;
 
     public ProfileReport(final Participant participant, final BasicModel model) throws IOException {
@@ -85,12 +91,6 @@ public class ProfileReport extends PdfReport {
         drawInfo(canvas);
         drawEntries(canvas, entries, 7);
         canvas.close();
-    }
-
-    private String ani(final int age) {
-        if (age == 1) { return " an"; }
-        if (age < 20) { return " ani"; }
-        return " de ani";
     }
 
     private void drawEntries(final PdfPageCanvas canvas, final List<ProfileEntry> entries, final int cellCount) throws IOException {
