@@ -2,6 +2,7 @@ package pondero.ui.testing;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import pondero.Logger;
 import pondero.task.controllers.PageController;
 import pondero.task.controllers.TrialController;
 import pondero.task.responses.KeyPressResponse;
@@ -30,6 +31,8 @@ public class TaskKeyAdapter extends KeyAdapter {
                 controller.doStep(new KeyPressResponse(evt));
             }
         } catch (final Exception e) {
+            Logger.error(e);
         }
     }
+
 }

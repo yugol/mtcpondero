@@ -83,8 +83,11 @@ public class Trial extends Element implements HasFeedback {
     }
 
     public String buildRecordedResponse(final List<Response> input) {
-        final Response participantInput = input.get(0);
-        return participantInput.toRecordedResponseString();
+        if (input.size() > 0) {
+            final Response participantInput = input.get(0);
+            return participantInput.toRecordedResponseString();
+        }
+        return "";
     }
 
     @Override
@@ -116,7 +119,8 @@ public class Trial extends Element implements HasFeedback {
     }
 
     public Long getResponseTime(final List<Response> input) {
-        return input.get(0).getTime();
+        if (input.size() > 0) { return input.get(0).getTime(); }
+        return 0L;
     }
 
     public FrameSequence getStimulusTimes() {
@@ -141,10 +145,12 @@ public class Trial extends Element implements HasFeedback {
     }
 
     public boolean isCorrectResponse(final List<Response> input) {
-        final Response participantInput = input.get(0);
-        if (participantInput instanceof KeyPressResponse) {
-            final KeyPressResponse keyResponse = (KeyPressResponse) participantInput;
-            return correctResponses.contains(keyResponse.getCharAsString());
+        if (input.size() > 0) {
+            final Response participantInput = input.get(0);
+            if (participantInput instanceof KeyPressResponse) {
+                final KeyPressResponse keyResponse = (KeyPressResponse) participantInput;
+                return correctResponses.contains(keyResponse.getCharAsString());
+            }
         }
         return false;
     }

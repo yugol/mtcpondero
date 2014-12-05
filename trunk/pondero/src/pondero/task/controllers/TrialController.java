@@ -124,48 +124,51 @@ public class TrialController extends TaskController {
             stimulusPresenter.start();
         }
 
-        boolean completed = false;
-        final boolean goForward = true;
-
         if (input != null) {
-            if (input instanceof KeyPressResponse) {
-                final String keyResponse = ((KeyPressResponse) input).getCharAsString();
-                if (getElement().getValidResponses().contains(keyResponse)) {
+            boolean completed = input.isGoBack();
+
+            if (!completed) {
+                if (input instanceof KeyPressResponse) {
+                    final String keyResponse = ((KeyPressResponse) input).getCharAsString();
+                    if (getElement().getValidResponses().contains(keyResponse)) {
+                        responses.add(input);
+                        completed = getElement().isKillerUserInput();
+                    }
+                } else if (input instanceof MouseClickResponse) {
+                    // ignore for now
+                } else if (input instanceof KillResponse) {
+                    responses.add(input);
+                    completed = true;
+                } else {
                     responses.add(input);
                     completed = getElement().isKillerUserInput();
                 }
-            } else if (input instanceof MouseClickResponse) {
-                // ignore for now
-            } else if (input instanceof KillResponse) {
-                responses.add(input);
-                completed = true;
-            } else {
-                responses.add(input);
-                completed = getElement().isKillerUserInput();
-            }
-        }
-
-        if (completed) {
-            final HasFeedback.FeedbackStimulus fb = evaluateResponse();
-            if (fb != null) {
-//                final IsStimulus eltStimulus = test.getStimulus(fb.getStimulusName());
-//                Stimulus actualStimulus = null;
-//                if (eltStimulus instanceof IsVisualStimulus) {
-//                    actualStimulus = ((IsVisualStimulus) eltStimulus).getStimulus();
-//                    test.addVisualStimulus((VisualStimulus) actualStimulus);
-//                }
-//                test.presentStimuli();
-//                Timing.pause(fb.getDuration());
-//                if (eltStimulus instanceof IsVisualStimulus) {
-//                    test.removeVisualStimulus((VisualStimulus) actualStimulus);
-//                }
-//                test.presentStimuli();
             }
 
-            Timing.pause(getElement().getPostTrialPause());
-            doEnd();
-            if (goForward) {
-                getTask().goNext();
+            if (completed) {
+                final HasFeedback.FeedbackStimulus fb = evaluateResponse();
+                if (fb != null) {
+//                    final IsStimulus eltStimulus = test.getStimulus(fb.getStimulusName());
+//                    Stimulus actualStimulus = null;
+//                    if (eltStimulus instanceof IsVisualStimulus) {
+//                        actualStimulus = ((IsVisualStimulus) eltStimulus).getStimulus();
+//                        test.addVisualStimulus((VisualStimulus) actualStimulus);
+//                    }
+//                    test.presentStimuli();
+//                    Timing.pause(fb.getDuration());
+//                    if (eltStimulus instanceof IsVisualStimulus) {
+//                        test.removeVisualStimulus((VisualStimulus) actualStimulus);
+//                    }
+//                    test.presentStimuli();
+                }
+
+                Timing.pause(getElement().getPostTrialPause());
+                doEnd();
+                if (input.isGoBack()) {
+                    getTask().goPrev();
+                } else {
+                    getTask().goNext();
+                }
             }
         }
     }

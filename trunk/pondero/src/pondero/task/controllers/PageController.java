@@ -26,7 +26,8 @@ public class PageController extends TaskController {
             final PrevNextResponse foo = (PrevNextResponse) input;
             if (foo.isNext()) {
                 getTask().goNext();
-            } else if (foo.isPrev()) {
+            }
+            if (foo.isPrev()) {
                 getTask().goPrev();
             }
         }
