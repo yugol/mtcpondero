@@ -1,12 +1,9 @@
 package pondero.ui.testing;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -14,9 +11,10 @@ import javax.swing.border.EmptyBorder;
 import pondero.L10n;
 import pondero.task.Task;
 import pondero.task.controllers.PageController;
+import pondero.tests.interfaces.IsController;
 
 @SuppressWarnings("serial")
-public class TestCurtains extends JPanel {
+public class TestCurtains extends JPanel implements Senzor {
 
     private static String getCharUiString(final Character ch) {
         if (ch == null) { return ""; }
@@ -31,6 +29,8 @@ public class TestCurtains extends JPanel {
     private final JButton   btnRight;
     private final JTextArea message;
     private final JPanel    pnlMessage;
+
+    private PageController  pageController;
 
     public TestCurtains(final Task task) {
         setBorder(null);
@@ -64,9 +64,29 @@ public class TestCurtains extends JPanel {
         message.setLineWrap(true);
         message.setEditable(false);
         pnlMessage.add(message, BorderLayout.CENTER);
+
+        // event handlers
+        final KeyAdapter keyAdapter = new TaskKeyAdapter(this);
+        pnlCenter.addKeyListener(keyAdapter);
+        pnlNavigation.addKeyListener(keyAdapter);
+        message.addKeyListener(keyAdapter);
+        btnLeft.addKeyListener(keyAdapter);
+        btnRight.addKeyListener(keyAdapter);
+
+        final MouseAdapter prevMouseAdapter = new TaskMouseAdapter(this, false);
+        btnLeft.addMouseListener(prevMouseAdapter);
+
+        final MouseAdapter nextMouseAdapter = new TaskMouseAdapter(this, true);
+        btnRight.addMouseListener(nextMouseAdapter);
+    }
+
+    @Override
+    public IsController getController() {
+        return pageController;
     }
 
     public void showInstructions(final PageController pageController) {
+        this.pageController = pageController;
         message.setFont(pageController.getInstructFont());
         message.setText(pageController.getElement().getContent());
         pnlCenter.setBackground(pageController.getInstructScreenColor());
@@ -88,44 +108,7 @@ public class TestCurtains extends JPanel {
             btnLeft.setVisible(false);
         }
 
-        setEventHandlers(new TaskKeyAdapter(pageController), new TaskMouseAdapter(pageController, false), new TaskMouseAdapter(pageController, true));
         btnRight.requestFocus();
-    }
-
-    private void removeKeyListeners(final Component component) {
-        for (final KeyListener listener : component.getKeyListeners()) {
-            if (listener instanceof TaskKeyAdapter) {
-                component.removeKeyListener(listener);
-            }
-        }
-    }
-
-    private void removeMouseListeners(final Component component) {
-        for (final MouseListener listener : component.getMouseListeners()) {
-            if (listener instanceof TaskMouseAdapter) {
-                component.removeMouseListener(listener);
-            }
-        }
-    }
-
-    private void setEventHandlers(final KeyAdapter keyAdapter, final MouseAdapter prevMouseAdapter, final MouseAdapter nextMouseAdapter) {
-        removeKeyListeners(pnlCenter);
-        removeKeyListeners(pnlNavigation);
-        removeKeyListeners(message);
-        removeKeyListeners(btnLeft);
-        removeKeyListeners(btnRight);
-
-        pnlCenter.addKeyListener(keyAdapter);
-        pnlNavigation.addKeyListener(keyAdapter);
-        message.addKeyListener(keyAdapter);
-        btnLeft.addKeyListener(keyAdapter);
-        btnRight.addKeyListener(keyAdapter);
-
-        removeMouseListeners(btnLeft);
-        removeMouseListeners(btnRight);
-
-        btnLeft.addMouseListener(prevMouseAdapter);
-        btnRight.addMouseListener(nextMouseAdapter);
     }
 
 }

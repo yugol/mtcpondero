@@ -6,16 +6,15 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import pondero.task.controllers.TrialController;
-import pondero.task.responses.LikertResponse;
 import pondero.tests.elements.workflow.trials.LikertConfig;
 import pondero.tests.interfaces.HasLikertConfig;
-import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.testing.TestSceneComponent;
 import pondero.util.StringUtil;
 import pondero.util.SwingUtil;
@@ -34,9 +33,11 @@ public class LikertComponent extends TestSceneComponent {
     private final JButton[]  buttons;
 
     public LikertComponent() {
+        addKeyListener(senzorKeyAdapter);
         setLayout(new BorderLayout());
 
         pnlMain = new JPanel();
+        pnlMain.addKeyListener(senzorKeyAdapter);
         pnlMain.setOpaque(true);
         add(pnlMain, BorderLayout.CENTER);
 
@@ -48,6 +49,7 @@ public class LikertComponent extends TestSceneComponent {
         pnlMain.setLayout(gridBagLayout);
 
         pnlInfo = new JPanel();
+        pnlInfo.addKeyListener(senzorKeyAdapter);
         pnlInfo.setBorder(new EmptyBorder(5, 5, 5, 5));
         pnlInfo.setLayout(new BorderLayout(0, 0));
         final GridBagConstraints gbc_panel = new GridBagConstraints();
@@ -60,6 +62,7 @@ public class LikertComponent extends TestSceneComponent {
         pnlMain.add(pnlInfo, gbc_panel);
 
         lblInfo = new JLabel();
+        lblInfo.addKeyListener(senzorKeyAdapter);
         lblInfo.setText("Info:");
         lblInfo.setOpaque(true);
         lblInfo.setFont(lblInfo.getFont().deriveFont(2 * topFontSize / 3));
@@ -107,15 +110,13 @@ public class LikertComponent extends TestSceneComponent {
 
     private JButton createButton(final int index) {
         final JButton btnAnchor = new JButton(" * ");
+        btnAnchor.addKeyListener(senzorKeyAdapter);
         btnAnchor.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(final ActionEvent evt) {
-                try {
-                    getController().doStep(new LikertResponse(btnAnchor.getText().trim()));
-                } catch (final Exception e) {
-                    ExceptionReporting.showExceptionMessage(null, e);
-                }
+                final KeyEvent kEvt = new KeyEvent(LikertComponent.this, 0, 0, 0, 0, btnAnchor.getText().trim().charAt(0));
+                senzorKeyAdapter.keyPressed(kEvt);
             }
 
         });
@@ -132,6 +133,7 @@ public class LikertComponent extends TestSceneComponent {
 
     private JLabel createLabel(final int index) {
         final JLabel lblAnchor = new JLabel("Anchor");
+        lblAnchor.addKeyListener(senzorKeyAdapter);
         lblAnchor.setFont(lblAnchor.getFont().deriveFont(topFontSize / 2));
         lblAnchor.setHorizontalAlignment(SwingConstants.CENTER);
         final GridBagConstraints gbc_lblAnchor = new GridBagConstraints();
