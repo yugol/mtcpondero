@@ -2,14 +2,15 @@ package pondero.task.responses;
 
 public class PrevNextResponse extends Response {
 
-    private boolean next;
+    private Boolean next;
+    private Boolean prev;
 
     public boolean isNext() {
-        return next;
+        return next != null && next;
     }
 
     public boolean isPrev() {
-        return !next;
+        return prev != null && prev;
     }
 
     public void setNext(final boolean next) {
@@ -17,7 +18,7 @@ public class PrevNextResponse extends Response {
     }
 
     public void setPrev(final boolean prev) {
-        next = !prev;
+        this.prev = prev;
     }
 
     @Override

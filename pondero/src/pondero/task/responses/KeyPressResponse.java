@@ -8,6 +8,7 @@ public class KeyPressResponse extends Response {
 
     public KeyPressResponse(final KeyEvent evt) {
         key = String.valueOf(evt.getKeyChar());
+        setGoBack(evt.getKeyChar() == '\b');
     }
 
     public KeyPressResponse(final String key) {

@@ -83,7 +83,8 @@ public class Task extends Thread implements Iterable<TaskController> {
 
     public synchronized void goNext() throws Exception {
         if (controllerIterator.hasNext()) {
-            controller = controllerIterator.next();
+            final TaskController foo = controllerIterator.next();
+            controller = foo == controller ? controllerIterator.next() : foo;
             controller.doBegin();
             doStep(null);
         } else {
@@ -93,7 +94,8 @@ public class Task extends Thread implements Iterable<TaskController> {
 
     public synchronized void goPrev() throws Exception {
         if (controllerIterator.hasPrevious()) {
-            controller = controllerIterator.previous();
+            final TaskController foo = controllerIterator.previous();
+            controller = foo == controller ? controllerIterator.previous() : foo;
             controller.doBegin();
             doStep(null);
         }
