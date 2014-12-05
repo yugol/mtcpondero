@@ -20,14 +20,17 @@ public class QuestionItemComponent extends TestSceneComponent {
     private final JLabel lblQuestion = new JLabel("1. Question?"); ;
 
     public QuestionItemComponent() {
-        setLayout(new BorderLayout(0, 0));
+        addKeyListener(senzorKeyAdapter);
+        setLayout(new BorderLayout());
 
         final JPanel pnlMain = new JPanel();
+        pnlMain.addKeyListener(senzorKeyAdapter);
         pnlMain.setOpaque(true);
         pnlMain.setBackground(Constants.DEFAULT_QUESTION_BG_COLOR);
         add(pnlMain, BorderLayout.CENTER);
 
         lblQuestion.setOpaque(true);
+        lblQuestion.addKeyListener(senzorKeyAdapter);
         lblQuestion.setBackground(Constants.DEFAULT_QUESTION_BG_COLOR);
         lblQuestion.setForeground(Constants.DEFAULT_QUESTION_FG_COLOR);
         lblQuestion.setFont(lblQuestion.getFont().deriveFont(Font.BOLD, SwingUtil.getUiScaledDefaultFontSize()));

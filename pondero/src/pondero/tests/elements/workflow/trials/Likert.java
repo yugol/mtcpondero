@@ -1,8 +1,5 @@
 package pondero.tests.elements.workflow.trials;
 
-import java.util.List;
-import pondero.task.responses.LikertResponse;
-import pondero.task.responses.Response;
 import pondero.tests.elements.workflow.Trial;
 import pondero.tests.interfaces.HasLikertConfig;
 import pondero.ui.testing.components.LikertComponent;
@@ -41,12 +38,6 @@ public class Likert extends Trial implements HasLikertConfig {
     @Deprecated
     public int getStartIndex() {
         return config.getStartIndex();
-    }
-
-    @Override
-    public boolean isCorrectResponse(final List<Response> input) {
-        final Response participantInput = input.get(0);
-        return participantInput instanceof LikertResponse;
     }
 
     @Deprecated

@@ -9,7 +9,6 @@ import pondero.data.model.basic.TrialRecord;
 import pondero.task.Task;
 import pondero.task.responses.KeyPressResponse;
 import pondero.task.responses.KillResponse;
-import pondero.task.responses.LikertResponse;
 import pondero.task.responses.MouseClickResponse;
 import pondero.task.responses.Response;
 import pondero.tests.Test;
@@ -135,9 +134,6 @@ public class TrialController extends TaskController {
                     responses.add(input);
                     completed = getElement().isKillerUserInput();
                 }
-            } else if (input instanceof LikertResponse) {
-                responses.add(input);
-                completed = true;
             } else if (input instanceof MouseClickResponse) {
                 // ignore for now
             } else if (input instanceof KillResponse) {

@@ -9,12 +9,12 @@ import pondero.Logger;
 import pondero.task.controllers.TrialController;
 import pondero.task.stimuli.VisualStimulus;
 import pondero.tests.Test;
-import pondero.ui.testing.components.QuestionItemComponent;
 import pondero.ui.testing.components.DrawableComponent;
 import pondero.ui.testing.components.LikertComponent;
+import pondero.ui.testing.components.QuestionItemComponent;
 
 @SuppressWarnings("serial")
-public abstract class TestSceneComponent extends JComponent {
+public abstract class TestSceneComponent extends JComponent implements Senzor {
 
     public static final TestSceneComponent getInstance(final String name) {
         return REGISTERED_COMPONENTS.get(name);
@@ -41,6 +41,9 @@ public abstract class TestSceneComponent extends JComponent {
     private TrialController                              controller;
     private List<VisualStimulus>                         visualStimuli         = new ArrayList<VisualStimulus>();
 
+    protected TaskKeyAdapter                             senzorKeyAdapter      = new TaskKeyAdapter(this);
+    protected TaskMouseAdapter                           senzorMouseAdapter    = new TaskMouseAdapter(this);
+
     public TestSceneComponent() {
         setFocusable(true);
         test = null;
@@ -52,6 +55,7 @@ public abstract class TestSceneComponent extends JComponent {
         setFocusable(true);
     }
 
+    @Override
     public TrialController getController() {
         return controller;
     }
