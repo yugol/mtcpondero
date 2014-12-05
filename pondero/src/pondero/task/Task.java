@@ -26,15 +26,17 @@ public class Task extends Thread implements Iterable<TaskController> {
     private final Test                   test;
     private final Workbook               workbook;
     private final Participant            participant;
-    private final TaskData               data     = new TaskData(System.currentTimeMillis()); ;
+    private final TaskData               data               = new TaskData(System.currentTimeMillis()); ;
 
     private final TaskRenderer           renderer;
 
     private TaskController               controller;
     private ListIterator<TaskController> controllerIterator;
 
-    private final List<TaskMonitor>      monitors = new ArrayList<>();
-    private final List<TaskController>   leaves   = new ArrayList<>();
+    private final List<TaskMonitor>      monitors           = new ArrayList<>();
+    private final List<TaskController>   leaves             = new ArrayList<>();
+
+    private int                          availableUndoSteps = 0;
 
     public Task(final TaskRenderer renderer, final Test test) {
         this(renderer, test, null);
@@ -85,6 +87,7 @@ public class Task extends Thread implements Iterable<TaskController> {
         if (controllerIterator.hasNext()) {
             final TaskController foo = controllerIterator.next();
             controller = foo == controller ? controllerIterator.next() : foo;
+            availableUndoSteps = 1;
             controller.doBegin();
             doStep(null);
         } else {
@@ -94,10 +97,13 @@ public class Task extends Thread implements Iterable<TaskController> {
 
     public synchronized void goPrev() throws Exception {
         if (controllerIterator.hasPrevious()) {
-            final TaskController foo = controllerIterator.previous();
-            controller = foo == controller ? controllerIterator.previous() : foo;
-            controller.doBegin();
-            doStep(null);
+            if (availableUndoSteps > 0) {
+                final TaskController foo = controllerIterator.previous();
+                controller = foo == controller ? controllerIterator.previous() : foo;
+                --availableUndoSteps;
+                controller.doBegin();
+                doStep(null);
+            }
         }
     }
 
