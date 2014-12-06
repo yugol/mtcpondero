@@ -5,6 +5,8 @@ To do for each test:
 * add comment
 * use new approach
 * clean warnings
+* use the new API
+* correct spelling
 
 State of the Art:
 
