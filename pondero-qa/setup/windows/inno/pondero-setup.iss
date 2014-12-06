@@ -42,6 +42,7 @@ Source:   "{#PonderoRoot}\tests\pondero-test-ac.jar";    DestDir: "{app}\tests";
 Source:   "{#PonderoRoot}\tests\pondero-test-bfi.jar";   DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-bis.jar";   DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-cprt.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-cct.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-das.jar";   DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-datq.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-dax.jar";   DestDir: "{app}\tests"; Flags: ignoreversion
@@ -50,6 +51,7 @@ Source:   "{#PonderoRoot}\tests\pondero-test-iaca.jar";  DestDir: "{app}\tests";
 Source:   "{#PonderoRoot}\tests\pondero-test-ic.jar";    DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-is.jar";    DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-isca.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
+Source:   "{#PonderoRoot}\tests\pondero-test-loc.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-maic.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-mcal.jar";  DestDir: "{app}\tests"; Flags: ignoreversion
 Source:   "{#PonderoRoot}\tests\pondero-test-mdsi.jar";  DestDir: "{app}\tests"; Flags: ignoreversion

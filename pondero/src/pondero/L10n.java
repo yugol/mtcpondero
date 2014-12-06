@@ -59,6 +59,10 @@ public class L10n {
         UIManager.put("OptionPane.cancelButtonText", getString("lbl.cancel"));
     }
 
+    protected static ResourceBundle getBundle(final Class<?> clazz) {
+        return ResourceBundle.getBundle(clazz.getPackage().getName() + ".messages", Context.getLocale());
+    }
+
     protected static String getString(final ResourceBundle bundle, final String key, final Object... args) {
         try {
             String output = bundle.getString(key);
