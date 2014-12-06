@@ -3,6 +3,7 @@ package pondero.tests.elements.workflow;
 import java.util.ArrayList;
 import java.util.List;
 import pondero.tests.elements.Element;
+import pondero.tests.elements.other.Page;
 import pondero.tests.interfaces.HasPostInstructions;
 import pondero.tests.interfaces.HasPreInstructions;
 import pondero.tests.staples.ItemSequence;
@@ -11,9 +12,9 @@ public class Experiment extends Element implements HasPreInstructions, HasPostIn
 
     public static final String TYPENAME         = "expt";
 
+    private String[]           preInstructions  = null;
     private final List<String> blocks           = new ArrayList<String>();
-    private String[]           postinstructions = null;
-    private String[]           preinstructions  = null;
+    private String[]           postInstructions = null;
 
     public Experiment() {
         super("");
@@ -24,11 +25,11 @@ public class Experiment extends Element implements HasPreInstructions, HasPostIn
     }
 
     public String[] getPostinstructions() {
-        return postinstructions;
+        return postInstructions;
     }
 
     public String[] getPreinstructions() {
-        return preinstructions;
+        return preInstructions;
     }
 
     @Override
@@ -42,13 +43,29 @@ public class Experiment extends Element implements HasPreInstructions, HasPostIn
     }
 
     @Override
+    public void setPostInstructions(final Page... pages) {
+        postInstructions = new String[pages.length];
+        for (int i = 0; i < pages.length; ++i) {
+            postInstructions[i] = pages[i].getName();
+        }
+    }
+
+    @Override
     public void setPostInstructions(final String... pages) {
-        postinstructions = pages;
+        postInstructions = pages;
+    }
+
+    @Override
+    public void setPreInstructions(final Page... pages) {
+        preInstructions = new String[pages.length];
+        for (int i = 0; i < pages.length; ++i) {
+            preInstructions[i] = pages[i].getName();
+        }
     }
 
     @Override
     public void setPreInstructions(final String... pages) {
-        preinstructions = pages;
+        preInstructions = pages;
     }
 
 }

@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import pondero.tests.elements.Element;
+import pondero.tests.elements.other.Page;
 import pondero.tests.interfaces.HasBlockfeedback;
 import pondero.tests.interfaces.HasFeedback;
 import pondero.tests.interfaces.HasPostInstructions;
@@ -18,16 +19,17 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
 
     public static final String TYPENAME           = "block";
 
-    private final Set<String>  blockfeedback      = new HashSet<String>();
+    private String[]           preInstructions    = null;
+    private Color              screenColor        = null;
     private final List<String> bgstim             = new ArrayList<String>();
+    private final List<String> trials             = new ArrayList<String>();
+    private final Set<String>  blockFeedback      = new HashSet<String>();
+    private String[]           postInstructions   = null;
+
     private boolean            correctmessageFlag = false;
     private FeedbackStimulus   correctmessage     = null;
     private boolean            errormessageFlag   = false;
     private FeedbackStimulus   errormessage       = null;
-    private String[]           postinstructions   = null;
-    private String[]           preinstructions    = null;
-    private Color              screencolor        = null;
-    private final List<String> trials             = new ArrayList<String>();
 
     public Block(final String name) {
         super(name);
@@ -39,7 +41,7 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
 
     @Override
     public Set<String> getBlockFeedback() {
-        return blockfeedback;
+        return blockFeedback;
     }
 
     @Override
@@ -53,16 +55,16 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
     }
 
     public String[] getPostinstructions() {
-        return postinstructions;
+        return postInstructions;
     }
 
     public String[] getPreinstructions() {
-        return preinstructions;
+        return preInstructions;
     }
 
     @Override
     public Color getScreenColor() {
-        return screencolor == null ? test.getDefaults().getScreenColor() : screencolor;
+        return screenColor == null ? test.getDefaults().getScreenColor() : screenColor;
     }
 
     public List<String> getTrials() {
@@ -82,7 +84,7 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
 
     @Override
     public void setBlockFeedback(final String... blockfeedback) {
-        ElementUtil.fillBlockfeedback(this.blockfeedback, blockfeedback);
+        ElementUtil.fillBlockfeedback(this.blockFeedback, blockfeedback);
     }
 
     @Override
@@ -108,23 +110,39 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
     }
 
     @Override
+    public void setPostInstructions(final Page... pages) {
+        postInstructions = new String[pages.length];
+        for (int i = 0; i < pages.length; ++i) {
+            postInstructions[i] = pages[i].getName();
+        }
+    }
+
+    @Override
     public void setPostInstructions(final String... pages) {
-        postinstructions = pages;
+        postInstructions = pages;
+    }
+
+    @Override
+    public void setPreInstructions(final Page... pages) {
+        preInstructions = new String[pages.length];
+        for (int i = 0; i < pages.length; ++i) {
+            preInstructions[i] = pages[i].getName();
+        }
     }
 
     @Override
     public void setPreInstructions(final String... pages) {
-        preinstructions = pages;
+        preInstructions = pages;
     }
 
     @Override
     public void setScreenColor(final Color screencolor) {
-        this.screencolor = screencolor;
+        this.screenColor = screencolor;
     }
 
     @Override
     public void setScreenColor(final int r, final int g, final int b) {
-        screencolor = ElementUtil.createColor(r, g, b);
+        screenColor = ElementUtil.createColor(r, g, b);
     }
 
     public void setTrials(final String trials) {
