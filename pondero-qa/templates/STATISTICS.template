@@ -1,21 +1,22 @@
         STATISTICS[0] = new BasicStatistics();
-        STATISTICS[0].setValidSize();
-        STATISTICS[0].setMean();
-        STATISTICS[0].setStdErrorMean();
-        STATISTICS[0].setMedian();
-        STATISTICS[0].setMode();
-        STATISTICS[0].setStdDeviation();
-        STATISTICS[0].setVariance();
-        STATISTICS[0].setSkewness();
-        STATISTICS[0].setStdErrorSkewness();
-        STATISTICS[0].setKurtosis();
-        STATISTICS[0].setStdErrorKurtosis();
-        STATISTICS[0].setAmplitude();
-        STATISTICS[0].setMin();
-        STATISTICS[0].setMax();
-        STATISTICS[0].putPercentile(4.8, );
-        STATISTICS[0].putPercentile(15.9, );
-        STATISTICS[0].putPercentile(37.1, );
-        STATISTICS[0].putPercentile(62.9, );
-        STATISTICS[0].putPercentile(84.1, );
-        STATISTICS[0].putPercentile(95.2, );
+STATISTICS[0].setValidSize(
+STATISTICS[0].setMissingSize(
+STATISTICS[0].setMean(
+STATISTICS[0].setStdErrorMean(
+STATISTICS[0].setMedian(
+STATISTICS[0].setMode(
+STATISTICS[0].setStdDeviation(
+STATISTICS[0].setVariance(
+STATISTICS[0].setSkewness(
+STATISTICS[0].setStdErrorSkewness(
+STATISTICS[0].setKurtosis(
+STATISTICS[0].setStdErrorKurtosis(
+STATISTICS[0].setAmplitude(
+STATISTICS[0].setMin(
+STATISTICS[0].setMax(
+STATISTICS[0].putPercentile(4.8, 
+STATISTICS[0].putPercentile(15.9, 
+STATISTICS[0].putPercentile(37.1, 
+STATISTICS[0].putPercentile(62.9, 
+STATISTICS[0].putPercentile(84.1, 
+STATISTICS[0].putPercentile(95.2, 

@@ -23,9 +23,9 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
     private Color              screenColor        = null;
     private final List<String> bgstim             = new ArrayList<String>();
     private final List<String> trials             = new ArrayList<String>();
-    private final Set<String>  blockFeedback      = new HashSet<String>();
     private String[]           postInstructions   = null;
 
+    private final Set<String>  blockFeedback      = new HashSet<String>();
     private boolean            correctmessageFlag = false;
     private FeedbackStimulus   correctmessage     = null;
     private boolean            errormessageFlag   = false;
@@ -33,6 +33,10 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
 
     public Block(final String name) {
         super(name);
+    }
+
+    public void addTrial(final Trial trial) {
+        trials.add(trial.getName());
     }
 
     public List<String> getBgstim() {
@@ -84,7 +88,7 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
 
     @Override
     public void setBlockFeedback(final String... blockfeedback) {
-        ElementUtil.fillBlockfeedback(this.blockFeedback, blockfeedback);
+        ElementUtil.fillBlockfeedback(blockFeedback, blockfeedback);
     }
 
     @Override
@@ -137,7 +141,7 @@ public class Block extends Element implements HasBlockfeedback, HasFeedback, Has
 
     @Override
     public void setScreenColor(final Color screencolor) {
-        this.screenColor = screencolor;
+        screenColor = screencolor;
     }
 
     @Override
