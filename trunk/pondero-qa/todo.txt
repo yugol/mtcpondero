@@ -1,3 +1,23 @@
+To do for each test:
+===================
+* change bundle
+* fix names (package + class)
+* add comment
+* use new approach
+* clean warnings
+
+State of the Art:
+
+- BFI
+- CCT
+- ISCA
+- IC
+- LOC
+- MDSI
+- SSS
+
+
+
 DONE:
 =====
 

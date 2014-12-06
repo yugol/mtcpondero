@@ -41,6 +41,10 @@
 		<ant antfile="${soldir}/pondero-test-bis/make-jar-pondero-test-bis.xml" />
 	</target>
 
+	<target name="pondero-test-cct">
+		<ant antfile="${soldir}/pondero-test-cct/make-jar-pondero-test-cct.xml" />
+	</target>
+
 	<target name="pondero-test-cprt">
 		<ant antfile="${soldir}/pondero-test-cprt/make-jar-pondero-test-cprt.xml" />
 	</target>
@@ -69,10 +73,6 @@
 		<ant antfile="${soldir}/pondero-test-ic/make-jar-pondero-test-ic.xml" />
 	</target>
 
-	<target name="pondero-test-mdsi">
-		<ant antfile="${soldir}/pondero-test-mdsi/make-jar-pondero-test-mdsi.xml" />
-	</target>
-
 	<target name="pondero-test-is">
 		<ant antfile="${soldir}/pondero-test-is/make-jar-pondero-test-is.xml" />
 	</target>
@@ -81,20 +81,28 @@
 		<ant antfile="${soldir}/pondero-test-isca/make-jar-pondero-test-isca.xml" />
 	</target>
 
-	<target name="pondero-test-sot">
-		<ant antfile="${soldir}/pondero-test-sot/make-jar-pondero-test-sot.xml" />
+	<target name="pondero-test-loc">
+		<ant antfile="${soldir}/pondero-test-loc/make-jar-pondero-test-loc.xml" />
+	</target>
+
+	<target name="pondero-test-maic">
+		<ant antfile="${soldir}/pondero-test-maic/make-jar-pondero-test-maic.xml" />
 	</target>
 
 	<target name="pondero-test-mcal">
 		<ant antfile="${soldir}/pondero-test-mcal/make-jar-pondero-test-mcal.xml" />
 	</target>
 
+	<target name="pondero-test-mdsi">
+		<ant antfile="${soldir}/pondero-test-mdsi/make-jar-pondero-test-mdsi.xml" />
+	</target>
+
 	<target name="pondero-test-scct">
 		<ant antfile="${soldir}/pondero-test-scct/make-jar-pondero-test-scct.xml" />
 	</target>
 
-	<target name="pondero-test-maic">
-		<ant antfile="${soldir}/pondero-test-maic/make-jar-pondero-test-maic.xml" />
+	<target name="pondero-test-sot">
+		<ant antfile="${soldir}/pondero-test-sot/make-jar-pondero-test-sot.xml" />
 	</target>
 
 	<target name="pondero-test-sss">
@@ -109,6 +117,7 @@
 		pondero-test-ac,
 		pondero-test-bfi,
 		pondero-test-bis,
+		pondero-test-cct,
 		pondero-test-cprt,
 		pondero-test-das,
 		pondero-test-datq,
@@ -116,11 +125,12 @@
 		pondero-test-ds,
 		pondero-test-iaca,
 		pondero-test-ic, 
-		pondero-test-mdsi,
 		pondero-test-is,
 		pondero-test-isca,
+		pondero-test-loc,
 		pondero-test-maic,
 		pondero-test-mcal,
+		pondero-test-mdsi,
 		pondero-test-scct,
 		pondero-test-sot,
 		pondero-test-sss,
