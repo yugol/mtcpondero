@@ -40,7 +40,7 @@ public class ProfileReport extends PdfReport {
     private static final float    BIO_HEIGHT       = 14;
     private static final float    TABLE_TOP        = BIO_TOP - BIO_HEIGHT * 3 - 10;
     private static final float    TABLE_FIRST      = LEFT;
-    private static final float    TABLE_SECOND     = BIO_SECOND;                                                // (TABLE_FIRST + WIDTH) / 2 - 10;
+    private static final float    TABLE_SECOND     = TABLE_FIRST + WIDTH / 2 - 10;
     private static final float    TABLE_THIRD      = TABLE_SECOND + 40;
     private static final float    TABLE_LAST       = TABLE_FIRST + WIDTH;
 
@@ -174,6 +174,11 @@ public class ProfileReport extends PdfReport {
             par.setWidth(TABLE_THIRD - TABLE_SECOND);
             par.setHeight(TABLE_ROW_HEIGHT);
             canvas.drawParagraph(par, TABLE_SECOND, rowTop - TABLE_ROW_HEIGHT);
+
+            par = canvas.createParagraph(ROMAN[entry.getStandardScore()]);
+            par.setWidth(cellWidth);
+            par.setHeight(TABLE_ROW_HEIGHT);
+            canvas.drawParagraph(par, cells[entry.getStandardScore()], rowTop - TABLE_ROW_HEIGHT);
         }
     }
 
