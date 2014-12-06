@@ -20,6 +20,10 @@ public class Experiment extends Element implements HasPreInstructions, HasPostIn
         super("");
     }
 
+    public void addBlock(final Block block) {
+        blocks.add(block.getName());
+    }
+
     public List<String> getBlocks() {
         return blocks;
     }
