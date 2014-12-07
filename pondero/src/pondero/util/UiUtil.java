@@ -26,7 +26,7 @@ import javax.swing.plaf.FontUIResource;
 import pondero.Context;
 import pondero.ui.exceptions.ExceptionReporting;
 
-public class SwingUtil {
+public class UiUtil {
 
     static {
         final String seaglassLafClass = "com.seaglasslookandfeel.SeaGlassLookAndFeel";

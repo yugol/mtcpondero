@@ -60,7 +60,7 @@ import pondero.ui.actions.ViewWorkbookAction;
 import pondero.ui.exceptions.ExceptionReporting;
 import pondero.ui.status.StatusBar;
 import pondero.ui.tests.TestSelector;
-import pondero.util.SwingUtil;
+import pondero.util.UiUtil;
 
 public class Pondero implements Ponderable, PModelListener {
 
@@ -78,9 +78,9 @@ public class Pondero implements Ponderable, PModelListener {
         action("starting application");
 
         Context.REGISTERED_TESTS.addAll(TestLoader.loadTests());
-        SwingUtil.getAvailableLafs();
-        SwingUtil.setLaf();
-        SwingUtil.scaleUi(Context.getUiFontScaleFactor());
+        UiUtil.getAvailableLafs();
+        UiUtil.setLaf();
+        UiUtil.scaleUi(Context.getUiFontScaleFactor());
 
         // start application
         final Pondero app = new Pondero();

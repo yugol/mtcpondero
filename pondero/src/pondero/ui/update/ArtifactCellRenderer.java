@@ -18,7 +18,7 @@ import pondero.L10n;
 import pondero.tests.management.Artifact;
 import pondero.util.TimeUtil;
 import pondero.util.NumberUtil;
-import pondero.util.SwingUtil;
+import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
 public class ArtifactCellRenderer extends JPanel implements ListCellRenderer<Artifact> {
@@ -86,18 +86,18 @@ public class ArtifactCellRenderer extends JPanel implements ListCellRenderer<Art
 
         if (selection.get(index)) {
             chckbxSelected.setSelected(true);
-            setBackground(SwingUtil.getListSelectedBackgroundColor());
-            lblId.setForeground(SwingUtil.getListSelectedForegroundColor());
-            lblReleaseDate.setForeground(SwingUtil.getListSelectedForegroundColor());
+            setBackground(UiUtil.getListSelectedBackgroundColor());
+            lblId.setForeground(UiUtil.getListSelectedForegroundColor());
+            lblReleaseDate.setForeground(UiUtil.getListSelectedForegroundColor());
         } else {
             chckbxSelected.setSelected(false);
             if (NumberUtil.isOdd(index)) {
-                setBackground(SwingUtil.getListBackgroundOddColor());
+                setBackground(UiUtil.getListBackgroundOddColor());
             } else {
-                setBackground(SwingUtil.getListBackgroundEvenColor());
+                setBackground(UiUtil.getListBackgroundEvenColor());
             }
-            lblId.setForeground(SwingUtil.getListForegroundColor());
-            lblReleaseDate.setForeground(SwingUtil.getListForegroundColor());
+            lblId.setForeground(UiUtil.getListForegroundColor());
+            lblReleaseDate.setForeground(UiUtil.getListForegroundColor());
         }
         lblId.setText(value.getCodeName() + " (" + L10n.getString("lbl." + value.getType()) + ")");
         lblReleaseDate.setText(L10n.getString("lbl.release-date") + ":" + TimeUtil.toUiDate(value.getReleaseDate()));

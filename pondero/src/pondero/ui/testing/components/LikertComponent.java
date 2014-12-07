@@ -1,6 +1,7 @@
 package pondero.ui.testing.components;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -12,19 +13,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import pondero.Constants;
 import pondero.task.controllers.TrialController;
 import pondero.tests.elements.workflow.trials.LikertConfig;
 import pondero.tests.interfaces.HasLikertConfig;
 import pondero.ui.testing.SceneComponent;
 import pondero.util.StringUtil;
-import pondero.util.SwingUtil;
 
 @SuppressWarnings("serial")
 public class LikertComponent extends SceneComponent {
 
     private static final int MAX_NUM_POINTS = 20;
-
-    private final float      topFontSize    = SwingUtil.getUiScaledDefaultFontSize();
 
     private final JPanel     pnlMain;
     private final JPanel     pnlInfo;
@@ -65,7 +64,7 @@ public class LikertComponent extends SceneComponent {
         lblInfo.addKeyListener(senzorKeyAdapter);
         lblInfo.setText("Info:");
         lblInfo.setOpaque(true);
-        lblInfo.setFont(lblInfo.getFont().deriveFont(2 * topFontSize / 3));
+        lblInfo.setFont(lblInfo.getFont().deriveFont(Constants.H2_FONT_SIZE));
         pnlInfo.add(lblInfo, BorderLayout.CENTER);
 
         labels = new JLabel[MAX_NUM_POINTS];
@@ -94,13 +93,22 @@ public class LikertComponent extends SceneComponent {
             lblInfo.setText("<html>" + config.getInfo() + "</html>");
         }
 
-        for (int i = 0; i < config.getNumPoints(); ++i) {
+        final int lastIndex = config.getNumPoints() - 1;
+        for (int i = 0; i <= lastIndex; ++i) {
+            final JLabel lblAnchor = labels[i];
             final String txt = StringUtil.isNullOrBlank(config.getAnchor(i)) ? "" : config.getAnchor(i);
-            labels[i].setForeground(config.getAnswersFgColor());
-            labels[i].setText("<html><center>" + txt + "</center></html>");
-            labels[i].setVisible(true);
-            buttons[i].setText(" " + (config.getStartIndex() + i) + " ");
-            buttons[i].setVisible(true);
+            lblAnchor.setForeground(config.getAnswersFgColor());
+            lblAnchor.setText("<html><center>" + txt + "</center></html>");
+            if (i == 0 || i == lastIndex) {
+                lblAnchor.setFont(lblAnchor.getFont().deriveFont(Font.BOLD));
+            } else {
+                lblAnchor.setFont(lblAnchor.getFont().deriveFont(Font.PLAIN));
+            }
+            lblAnchor.setVisible(true);
+
+            final JButton btnAnchor = buttons[i];
+            btnAnchor.setText(" " + (config.getStartIndex() + i) + " ");
+            btnAnchor.setVisible(true);
         }
         for (int i = config.getNumPoints(); i < MAX_NUM_POINTS; ++i) {
             labels[i].setVisible(false);
@@ -120,7 +128,7 @@ public class LikertComponent extends SceneComponent {
             }
 
         });
-        btnAnchor.setFont(btnAnchor.getFont().deriveFont(2 * topFontSize / 3));
+        btnAnchor.setFont(btnAnchor.getFont().deriveFont(Constants.H3_FONT_SIZE));
         final GridBagConstraints gbc_btnAnchor = new GridBagConstraints();
         gbc_btnAnchor.weighty = 1.0;
         gbc_btnAnchor.weightx = 1.0;
@@ -134,7 +142,7 @@ public class LikertComponent extends SceneComponent {
     private JLabel createLabel(final int index) {
         final JLabel lblAnchor = new JLabel("Anchor");
         lblAnchor.addKeyListener(senzorKeyAdapter);
-        lblAnchor.setFont(lblAnchor.getFont().deriveFont(topFontSize / 2));
+        lblAnchor.setFont(lblAnchor.getFont().deriveFont(Constants.H3_FONT_SIZE));
         lblAnchor.setHorizontalAlignment(SwingConstants.CENTER);
         final GridBagConstraints gbc_lblAnchor = new GridBagConstraints();
         gbc_lblAnchor.fill = GridBagConstraints.BOTH;

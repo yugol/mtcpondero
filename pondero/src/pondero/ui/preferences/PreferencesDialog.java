@@ -26,7 +26,7 @@ import pondero.Context;
 import pondero.L10n;
 import pondero.Logger;
 import pondero.ui.exceptions.ExceptionReporting;
-import pondero.util.SwingUtil;
+import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
 public class PreferencesDialog extends JDialog {
@@ -222,7 +222,7 @@ public class PreferencesDialog extends JDialog {
 
         final DefaultComboBoxModel<String> themeModel = new DefaultComboBoxModel<String>();
         themeModel.addElement("");
-        for (final String theme : SwingUtil.getAvailableLafs()) {
+        for (final String theme : UiUtil.getAvailableLafs()) {
             themeModel.addElement(theme);
         }
         cbTheme.setModel(themeModel);

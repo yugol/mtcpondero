@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+import pondero.Constants;
 import pondero.L10n;
 import pondero.task.Task;
 import pondero.task.controllers.PageController;
@@ -47,9 +48,11 @@ public class TestCurtains extends JPanel implements Senzor {
         pnlNavigation.setLayout(new GridLayout(0, 2, 20, 0));
 
         btnLeft = new JButton("<<");
+        btnLeft.setFont(btnLeft.getFont().deriveFont(Constants.H3_FONT_SIZE));
         pnlNavigation.add(btnLeft);
 
         btnRight = new JButton(">>");
+        btnRight.setFont(btnRight.getFont().deriveFont(Constants.H3_FONT_SIZE));
         pnlNavigation.add(btnRight);
 
         pnlMessage = new JPanel();

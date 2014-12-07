@@ -11,7 +11,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import pondero.task.Task;
 import pondero.task.controllers.PageController;
-import pondero.util.SwingUtil;
+import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
 public class TestFrame extends JFrame {
@@ -53,8 +53,8 @@ public class TestFrame extends JFrame {
 
         setTitle(task.getTest().getDescriptor().getCodeName());
 
-        SwingUtil.enableFullScreenMode(this);
-        SwingUtil.showFractionedCentered(this);
+        UiUtil.enableFullScreenMode(this);
+        UiUtil.showFractionedCentered(this);
     }
 
     public TestScene getScene() {
@@ -87,7 +87,7 @@ public class TestFrame extends JFrame {
 
     public void showTestWindow() {
         setVisible(true);
-        SwingUtil.showCentered(this);
+        UiUtil.showCentered(this);
     }
 
 }

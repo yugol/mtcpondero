@@ -14,22 +14,15 @@ import pondero.tests.interfaces.HasBlockfeedback;
 
 public class ElementUtil {
 
-    private static final Color       DEFAULT_SCREEN_COLOR = createColor(102, 204, 255);
-    private static final Color       DEFAULT_FG_COLOR     = Color.BLACK;
-    private static final Color       DEFAULT_BG_COLOR     = Color.WHITE;
-    private static final Font        DEFAULT_FONT         = new JLabel().getFont();
-    private static final Coordinates DEFAULT_POSITION     = new Coordinates("50%", "50%");
-    private static final Random      RAND                 = new Random();
-
     public static Color createColor(final int r, final int g, final int b) {
         final float[] color = Color.RGBtoHSB(r, g, b, null);
         return Color.getHSBColor(color[0], color[1], color[2]);
     }
 
-    public static Font createFont(final String faceName, final int height, final boolean bold, final boolean italic, final boolean underline, final boolean strikeout) {
+    public static Font createFont(final String faceName, final float height, final boolean bold, final boolean italic, final boolean underline, final boolean strikeout) {
         int style = bold ? Font.BOLD : Font.PLAIN;
         style |= italic ? Font.ITALIC : Font.PLAIN;
-        Font font = new Font(faceName, style, height);
+        Font font = new Font(faceName, style, (int) height);
         if (underline | strikeout) {
             final Map<TextAttribute, Object> fontAttributes = new HashMap<TextAttribute, Object>();
             if (underline) {
@@ -93,5 +86,17 @@ public class ElementUtil {
     public static int getRandomIndex(final int maxIndex) {
         return RAND.nextInt(maxIndex) + 1;
     }
+
+    private static final Color       DEFAULT_SCREEN_COLOR = createColor(102, 204, 255);
+
+    private static final Color       DEFAULT_FG_COLOR     = Color.BLACK;
+
+    private static final Color       DEFAULT_BG_COLOR     = Color.WHITE;
+
+    private static final Font        DEFAULT_FONT         = new JLabel().getFont();
+
+    private static final Coordinates DEFAULT_POSITION     = new Coordinates("50%", "50%");
+
+    private static final Random      RAND                 = new Random();
 
 }

@@ -12,7 +12,6 @@ import pondero.Constants;
 import pondero.task.controllers.TrialController;
 import pondero.tests.elements.workflow.trials.Question;
 import pondero.ui.testing.SceneComponent;
-import pondero.util.SwingUtil;
 
 @SuppressWarnings("serial")
 public class QuestionItemComponent extends SceneComponent {
@@ -33,7 +32,7 @@ public class QuestionItemComponent extends SceneComponent {
         lblQuestion.addKeyListener(senzorKeyAdapter);
         lblQuestion.setBackground(Constants.DEFAULT_QUESTION_BG_COLOR);
         lblQuestion.setForeground(Constants.DEFAULT_QUESTION_FG_COLOR);
-        lblQuestion.setFont(lblQuestion.getFont().deriveFont(Font.BOLD, SwingUtil.getUiScaledDefaultFontSize()));
+        lblQuestion.setFont(lblQuestion.getFont().deriveFont(Font.BOLD, Constants.H1_FONT_SIZE));
         lblQuestion.setHorizontalAlignment(SwingConstants.CENTER);
 
         final GridBagLayout gridBagLayout = new GridBagLayout();
