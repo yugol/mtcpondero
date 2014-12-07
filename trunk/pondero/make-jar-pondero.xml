@@ -9,8 +9,8 @@
 				<attribute name="Pondero-Artifact-Type" value="APPLICATION" />
 				<attribute name="Pondero-Artifact-Id" value="PONDERO" />
 				<attribute name="Pondero-Artifact-Major" value="0" />
-				<attribute name="Pondero-Artifact-Minor" value="8" />
-				<attribute name="Pondero-Artifact-Maturity" value="alpha (2014-12-01)" />
+				<attribute name="Pondero-Artifact-Minor" value="9" />
+				<attribute name="Pondero-Artifact-Maturity" value="alpha (2014-12-07)" />
 			</manifest>
 			<fileset dir="${soldir}/pondero/target/classes" />
 			<zipfileset excludes="META-INF/*.SF" src="${mavendir}/commons-io/commons-io/2.4/commons-io-2.4.jar" />

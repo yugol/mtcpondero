@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import pondero.task.Task;
 import pondero.task.controllers.PageController;
@@ -60,8 +61,16 @@ public class TestFrame extends JFrame {
         return scene;
     }
 
-    public synchronized void invalidateScene() {
-        scene.paintImmediately(0, 0, scene.getWidth(), scene.getHeight());
+    public void invalidateScene() {
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                scene.paintImmediately(0, 0, scene.getWidth(), scene.getHeight());
+
+            }
+
+        });
     }
 
     public synchronized void showCurtains(final PageController pageController) {

@@ -16,50 +16,50 @@ public class TestScene extends JPanel {
     }
 
     public void focalize() {
-        final TestSceneComponent center = getCenter();
+        final SceneComponent center = getCenter();
         if (center != null) {
             center.requestFocusInWindow();
         }
     }
 
-    public TestSceneComponent getCenter() {
-        return (TestSceneComponent) getSceneComponent(BorderLayout.CENTER);
+    public SceneComponent getCenter() {
+        return (SceneComponent) getSceneComponent(BorderLayout.CENTER);
     }
 
-    public TestSceneComponent getEast() {
-        return (TestSceneComponent) getSceneComponent(BorderLayout.EAST);
+    public SceneComponent getEast() {
+        return (SceneComponent) getSceneComponent(BorderLayout.EAST);
     }
 
-    public TestSceneComponent getNorth() {
-        return (TestSceneComponent) getSceneComponent(BorderLayout.NORTH);
+    public SceneComponent getNorth() {
+        return (SceneComponent) getSceneComponent(BorderLayout.NORTH);
     }
 
-    public TestSceneComponent getSouth() {
-        return (TestSceneComponent) getSceneComponent(BorderLayout.SOUTH);
+    public SceneComponent getSouth() {
+        return (SceneComponent) getSceneComponent(BorderLayout.SOUTH);
     }
 
-    public TestSceneComponent getWest() {
-        return (TestSceneComponent) getSceneComponent(BorderLayout.WEST);
+    public SceneComponent getWest() {
+        return (SceneComponent) getSceneComponent(BorderLayout.WEST);
     }
 
-    public void setCenter(final TestSceneComponent component) {
+    public void setCenter(final SceneComponent component) {
         setSceneComponent(component, BorderLayout.CENTER);
     }
 
-    public void setEast(final TestSceneComponent component) {
+    public void setEast(final SceneComponent component) {
         setSceneComponent(component, BorderLayout.EAST);
     }
 
-    public void setNorth(final TestSceneComponent component) {
+    public void setNorth(final SceneComponent component) {
         setSceneComponent(component, BorderLayout.NORTH);
     }
 
-    public void setSouth(final TestSceneComponent component) {
+    public void setSouth(final SceneComponent component) {
         setSceneComponent(component, BorderLayout.SOUTH);
     }
 
     public void setStimuli(final List<VisualStimulus> visualStimuli) {
-        TestSceneComponent component = getNorth();
+        SceneComponent component = getNorth();
         if (component != null) {
             component.setVisualStimuli(visualStimuli);
         }
@@ -81,7 +81,7 @@ public class TestScene extends JPanel {
         }
     }
 
-    public void setWest(final TestSceneComponent component) {
+    public void setWest(final SceneComponent component) {
         setSceneComponent(component, BorderLayout.WEST);
     }
 
@@ -90,7 +90,7 @@ public class TestScene extends JPanel {
         return layout.getLayoutComponent(position);
     }
 
-    private void setSceneComponent(final TestSceneComponent component, final String position) {
+    private void setSceneComponent(final SceneComponent component, final String position) {
         final Component currentComponent = getSceneComponent(position);
         if (currentComponent != component) {
             if (currentComponent != null) {

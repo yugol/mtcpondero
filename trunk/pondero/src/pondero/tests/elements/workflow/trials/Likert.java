@@ -14,6 +14,7 @@ public class Likert extends Trial implements HasLikertConfig {
         this(name, new LikertConfig());
     }
 
+    @Deprecated
     public Likert(final String name, final LikertConfig config) {
         super(name);
         this.config = config;
@@ -68,11 +69,6 @@ public class Likert extends Trial implements HasLikertConfig {
     @Deprecated
     public void setUseMouse(final boolean mouse) {
         config.setMouse(mouse);
-    }
-
-    @Override
-    public void setValidResponses(final String... validresponse) {
-        throw new RuntimeException("validresponse is not supported for " + TYPENAME);
     }
 
 }
