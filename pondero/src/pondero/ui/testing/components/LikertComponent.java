@@ -25,7 +25,7 @@ public class LikertComponent extends SceneComponent {
 
     private static final int MAX_NUM_POINTS = 20;
 
-    private final JPanel     pnlMain;
+    private final JPanel     pnlAnchors;
     private final JPanel     pnlInfo;
     private final JLabel     lblInfo;
     private final JLabel[]   labels;
@@ -35,30 +35,11 @@ public class LikertComponent extends SceneComponent {
         addKeyListener(senzorKeyAdapter);
         setLayout(new BorderLayout());
 
-        pnlMain = new JPanel();
-        pnlMain.addKeyListener(senzorKeyAdapter);
-        pnlMain.setOpaque(true);
-        add(pnlMain, BorderLayout.CENTER);
-
-        final GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.rowHeights = new int[] { 1, 0, 0 };
-        gridBagLayout.columnWidths = new int[MAX_NUM_POINTS];
-        gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0 };
-        gridBagLayout.columnWeights = new double[MAX_NUM_POINTS];
-        pnlMain.setLayout(gridBagLayout);
-
         pnlInfo = new JPanel();
         pnlInfo.addKeyListener(senzorKeyAdapter);
         pnlInfo.setBorder(new EmptyBorder(5, 15, 5, 15));
         pnlInfo.setLayout(new BorderLayout(0, 0));
-        final GridBagConstraints gbc_panel = new GridBagConstraints();
-        gbc_panel.insets = new Insets(0, 0, 10, 0);
-        gbc_panel.weighty = 1.0;
-        gbc_panel.fill = GridBagConstraints.BOTH;
-        gbc_panel.gridx = 0;
-        gbc_panel.gridy = 0;
-        gbc_panel.gridwidth = MAX_NUM_POINTS;
-        pnlMain.add(pnlInfo, gbc_panel);
+        add(pnlInfo, BorderLayout.CENTER);
 
         lblInfo = new JLabel();
         lblInfo.addKeyListener(senzorKeyAdapter);
@@ -66,6 +47,18 @@ public class LikertComponent extends SceneComponent {
         lblInfo.setOpaque(true);
         lblInfo.setFont(lblInfo.getFont().deriveFont(Constants.H2_FONT_SIZE));
         pnlInfo.add(lblInfo, BorderLayout.CENTER);
+
+        pnlAnchors = new JPanel();
+        pnlAnchors.addKeyListener(senzorKeyAdapter);
+        pnlAnchors.setOpaque(true);
+        add(pnlAnchors, BorderLayout.SOUTH);
+
+        final GridBagLayout gridBagLayout = new GridBagLayout();
+        gridBagLayout.rowHeights = new int[] { 1, 0, 0 };
+        gridBagLayout.columnWidths = new int[MAX_NUM_POINTS];
+        gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0 };
+        gridBagLayout.columnWeights = new double[MAX_NUM_POINTS];
+        pnlAnchors.setLayout(gridBagLayout);
 
         labels = new JLabel[MAX_NUM_POINTS];
         buttons = new JButton[MAX_NUM_POINTS];
@@ -81,7 +74,7 @@ public class LikertComponent extends SceneComponent {
         super.setController(controller);
         final LikertConfig config = ((HasLikertConfig) controller.getElement()).getLikertConfig();
 
-        pnlMain.setBackground(config.getAnswersBgColor());
+        pnlAnchors.setBackground(config.getAnswersBgColor());
 
         pnlInfo.setBackground(config.getInfoBgColor());
         lblInfo.setBackground(config.getInfoBgColor());
@@ -135,7 +128,7 @@ public class LikertComponent extends SceneComponent {
         gbc_btnAnchor.insets = new Insets(0, 15, 10, 15);
         gbc_btnAnchor.gridx = index;
         gbc_btnAnchor.gridy = 2;
-        pnlMain.add(btnAnchor, gbc_btnAnchor);
+        pnlAnchors.add(btnAnchor, gbc_btnAnchor);
         return btnAnchor;
     }
 
@@ -149,7 +142,7 @@ public class LikertComponent extends SceneComponent {
         gbc_lblAnchor.insets = new Insets(0, 3, 3, 5);
         gbc_lblAnchor.gridx = index;
         gbc_lblAnchor.gridy = 1;
-        pnlMain.add(lblAnchor, gbc_lblAnchor);
+        pnlAnchors.add(lblAnchor, gbc_lblAnchor);
         return lblAnchor;
     }
 
