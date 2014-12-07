@@ -25,7 +25,7 @@ import pondero.data.model.basic.Participant;
 import pondero.data.model.basic.Participants;
 import pondero.ui.DialogSelectionListener;
 import pondero.util.StringUtil;
-import pondero.util.SwingUtil;
+import pondero.util.UiUtil;
 
 @SuppressWarnings("serial")
 public class ParticipantSelector extends JComponent {
@@ -92,7 +92,7 @@ public class ParticipantSelector extends JComponent {
         textPattern.setColumns(10);
 
         final JScrollPane scrollPane = new JScrollPane();
-        scrollPane.getViewport().setBackground(SwingUtil.getListBackgroundColor());
+        scrollPane.getViewport().setBackground(UiUtil.getListBackgroundColor());
         final GridBagConstraints gbc_scrollPane = new GridBagConstraints();
         gbc_scrollPane.weighty = 1.0;
         gbc_scrollPane.gridwidth = 3;
