@@ -1,6 +1,5 @@
 To do for each test:
 ===================
-* change bundle
 * fix names (package + class)
 * add comment
 * use new approach
