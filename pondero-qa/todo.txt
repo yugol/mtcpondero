@@ -1,11 +1,7 @@
 To do for each test:
 ===================
-* fix names (package + class)
-* add comment
-* use new approach
 * clean warnings
 * use the new API
-* correct spelling
 
 State of the Art:
 

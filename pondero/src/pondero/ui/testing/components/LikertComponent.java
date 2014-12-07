@@ -49,6 +49,7 @@ public class LikertComponent extends SceneComponent {
         pnlInfo.add(lblInfo, BorderLayout.CENTER);
 
         pnlAnchors = new JPanel();
+        pnlAnchors.setBorder(new EmptyBorder(10, 0, 0, 0));
         pnlAnchors.addKeyListener(senzorKeyAdapter);
         pnlAnchors.setOpaque(true);
         add(pnlAnchors, BorderLayout.SOUTH);
