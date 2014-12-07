@@ -13,6 +13,7 @@ public class Question extends Trial implements HasLikertConfig {
     public Question(final String name) {
         super(name);
         getLayout().setCenter(QuestionItemComponent.class.getName());
+        setLikert(true);
     }
 
     @Override
@@ -24,7 +25,11 @@ public class Question extends Trial implements HasLikertConfig {
         return question;
     }
 
-    public void setLikert(final boolean flag) {
+    public void setQuestion(final String question) {
+        this.question = question;
+    }
+
+    private void setLikert(final boolean flag) {
         if (flag && likertConfig == null) {
             likertConfig = new LikertConfig();
             getLayout().setSouth(LikertComponent.class.getName());
@@ -33,10 +38,6 @@ public class Question extends Trial implements HasLikertConfig {
             likertConfig = null;
             getLayout().setSouth(null);
         }
-    }
-
-    public void setQuestion(final String question) {
-        this.question = question;
     }
 
 }
