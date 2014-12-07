@@ -3,10 +3,10 @@ package pondero.ui.testing.components;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import pondero.task.stimuli.VisualStimulus;
-import pondero.ui.testing.TestSceneComponent;
+import pondero.ui.testing.SceneComponent;
 
 @SuppressWarnings("serial")
-public class DrawableComponent extends TestSceneComponent {
+public class DrawableComponent extends SceneComponent {
 
     public DrawableComponent() {
         addKeyListener(senzorKeyAdapter);

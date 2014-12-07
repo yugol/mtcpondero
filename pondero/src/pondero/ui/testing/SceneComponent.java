@@ -14,22 +14,22 @@ import pondero.ui.testing.components.LikertComponent;
 import pondero.ui.testing.components.QuestionItemComponent;
 
 @SuppressWarnings("serial")
-public abstract class TestSceneComponent extends JComponent implements Senzor {
+public abstract class SceneComponent extends JComponent implements Senzor {
 
-    public static final TestSceneComponent getInstance(final String name) {
+    public static final SceneComponent getInstance(final String name) {
         return REGISTERED_COMPONENTS.get(name);
     }
 
-    public static final void registerComponent(final Class<? extends TestSceneComponent> componentClass) {
+    public static final void registerComponent(final Class<? extends SceneComponent> componentClass) {
         try {
-            final TestSceneComponent component = componentClass.newInstance();
+            final SceneComponent component = componentClass.newInstance();
             REGISTERED_COMPONENTS.put(componentClass.getName(), component);
         } catch (InstantiationException | IllegalAccessException e) {
             Logger.error(e);
         }
     }
 
-    private static final Map<String, TestSceneComponent> REGISTERED_COMPONENTS = new HashMap<>();
+    private static final Map<String, SceneComponent> REGISTERED_COMPONENTS = new HashMap<>();
 
     static {
         registerComponent(DrawableComponent.class);
@@ -44,13 +44,13 @@ public abstract class TestSceneComponent extends JComponent implements Senzor {
     protected TaskKeyAdapter                             senzorKeyAdapter      = new TaskKeyAdapter(this);
     protected TaskMouseAdapter                           senzorMouseAdapter    = new TaskMouseAdapter(this);
 
-    public TestSceneComponent() {
+    public SceneComponent() {
         setFocusable(true);
         test = null;
     }
 
     @Deprecated
-    public TestSceneComponent(final Test test) {
+    public SceneComponent(final Test test) {
         this.test = test;
         setFocusable(true);
     }

@@ -6,9 +6,9 @@ import pondero.task.controllers.StimulusFrame;
 import pondero.task.controllers.TrialController;
 import pondero.task.stimuli.AuditoryStimulus;
 import pondero.tests.elements.workflow.Trial.TrialLayout;
+import pondero.ui.testing.SceneComponent;
 import pondero.ui.testing.TestFrame;
 import pondero.ui.testing.TestScene;
-import pondero.ui.testing.TestSceneComponent;
 
 public class DefaultRenderer implements TaskRenderer {
 
@@ -75,9 +75,9 @@ public class DefaultRenderer implements TaskRenderer {
         uiFrame.showScene();
     }
 
-    private TestSceneComponent prepareComponent(TestSceneComponent component, final String name, final TrialController controller) {
+    private SceneComponent prepareComponent(SceneComponent component, final String name, final TrialController controller) {
         if (component == null || !component.getClass().getName().equals(name)) {
-            component = TestSceneComponent.getInstance(name);
+            component = SceneComponent.getInstance(name);
         }
         component.setController(controller);
         return component;

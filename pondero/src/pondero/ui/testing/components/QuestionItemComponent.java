@@ -11,11 +11,11 @@ import javax.swing.SwingConstants;
 import pondero.Constants;
 import pondero.task.controllers.TrialController;
 import pondero.tests.elements.workflow.trials.Question;
-import pondero.ui.testing.TestSceneComponent;
+import pondero.ui.testing.SceneComponent;
 import pondero.util.SwingUtil;
 
 @SuppressWarnings("serial")
-public class QuestionItemComponent extends TestSceneComponent {
+public class QuestionItemComponent extends SceneComponent {
 
     private final JLabel lblQuestion = new JLabel("1. Question?"); ;
 

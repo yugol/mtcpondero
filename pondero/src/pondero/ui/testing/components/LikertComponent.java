@@ -15,12 +15,12 @@ import javax.swing.border.EmptyBorder;
 import pondero.task.controllers.TrialController;
 import pondero.tests.elements.workflow.trials.LikertConfig;
 import pondero.tests.interfaces.HasLikertConfig;
-import pondero.ui.testing.TestSceneComponent;
+import pondero.ui.testing.SceneComponent;
 import pondero.util.StringUtil;
 import pondero.util.SwingUtil;
 
 @SuppressWarnings("serial")
-public class LikertComponent extends TestSceneComponent {
+public class LikertComponent extends SceneComponent {
 
     private static final int MAX_NUM_POINTS = 20;
 
@@ -50,7 +50,7 @@ public class LikertComponent extends TestSceneComponent {
 
         pnlInfo = new JPanel();
         pnlInfo.addKeyListener(senzorKeyAdapter);
-        pnlInfo.setBorder(new EmptyBorder(5, 5, 5, 5));
+        pnlInfo.setBorder(new EmptyBorder(5, 15, 5, 15));
         pnlInfo.setLayout(new BorderLayout(0, 0));
         final GridBagConstraints gbc_panel = new GridBagConstraints();
         gbc_panel.insets = new Insets(0, 0, 10, 0);
