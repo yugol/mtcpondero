@@ -25,7 +25,7 @@ public final class Constants {
     public static final Font      DEFAULT_INSTRUCT_FONT         = ElementUtil.createFont("Dialog", 24, true, false, false, false);
     public static final Character DEFAULT_INSTRUCT_NEXT_KEY     = ' ';
     public static final Character DEFAULT_INSTRUCT_PREV_KEY     = ',';
-    public static final Color     DEFAULT_INSTRUCT_SCREEN_COLOR = DEFAULT_ANSWERS_BG_COLOR;
-    public static final Color     DEFAULT_INSTRUCT_TEXT_COLOR   = DEFAULT_ANSWERS_FG_COLOR;
+    public static final Color     DEFAULT_INSTRUCT_SCREEN_COLOR = ElementUtil.createColor(0x39, 0x69, 0x8a);
+    public static final Color     DEFAULT_INSTRUCT_TEXT_COLOR   = ElementUtil.createColor(0xFF, 0xFF, 0xFF);
 
 }
