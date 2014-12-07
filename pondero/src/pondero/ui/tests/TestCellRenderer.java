@@ -19,7 +19,7 @@ public class TestCellRenderer extends JPanel implements ListCellRenderer<Test> {
 
     public TestCellRenderer() {
         lblImage = new JLabel("");
-        lblImage.setIcon(new ImageIcon(TestCellRenderer.class.getResource("/com/famfamfam/silk/bricks.png")));
+
         add(lblImage);
 
         lblName = new JLabel("N/A");
@@ -34,6 +34,15 @@ public class TestCellRenderer extends JPanel implements ListCellRenderer<Test> {
             final int index,
             final boolean isSelected,
             final boolean cellHasFocus) {
+
+        try {
+            value.getEvaluation(null);
+        } catch (final UnsupportedOperationException noEvaluation) {
+            lblImage.setIcon(new ImageIcon(TestCellRenderer.class.getResource("/com/famfamfam/silk/bricks.png")));
+        } catch (final NullPointerException hasEvaluation) {
+            lblImage.setIcon(new ImageIcon(TestCellRenderer.class.getResource("/com/famfamfam/silk/accept.png")));
+        }
+
         lblName.setText(value.getDescriptor().getCodeName());
         if (isSelected) {
             setBackground(UiUtil.getListSelectedBackgroundColor());
