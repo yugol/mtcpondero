@@ -10,7 +10,7 @@ To do for each test:
 
 State of the Art:
 
-- BFI
+- BIS
 - CCT
 - ISCA
 - IC
